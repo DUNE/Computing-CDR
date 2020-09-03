@@ -1,0 +1,28 @@
+
+% risk table values for subsystem SP-FD-INST
+\begin{footnotesize}
+%\begin{longtable}{p{0.18\textwidth}p{0.20\textwidth}p{0.32\textwidth}p{0.02\textwidth}p{0.02\textwidth}p{0.02\textwidth}}
+\begin{longtable}{P{0.18\textwidth}P{0.20\textwidth}P{0.32\textwidth}P{0.02\textwidth}P{0.02\textwidth}P{0.02\textwidth}} 
+\caption[SP module installation risks]{SP module installation risks (P=probability, C=cost, S=schedule) The risk probability, after taking into account the planned mitigation activities, is ranked as 
+L (low $<\,$\SI{10}{\%}), 
+M (medium \SIrange{10}{25}{\%}), or 
+H (high $>\,$\SI{25}{\%}). 
+The cost and schedule impacts are ranked as 
+L (cost increase $<\,$\SI{5}{\%}, schedule delay $<\,$\num{2} months), 
+M (\SIrange{5}{25}{\%} and 2--6 months, respectively) and 
+H ($>\,$\SI{20}{\%} and $>\,$2 months, respectively).  \fixmehl{ref \texttt{tab:risks:SP-FD-INST}}} \\
+\rowcolor{dunesky}
+ID & Risk & Mitigation & P & C & S  \\  \colhline
+RT-INST-01 & Personnel injury & Follow established safety plans. & M & L & H \\  \colhline
+RT-INST-02 & Shipping delays & Plan one month buffer to store  materials locally. Provide logistics manual. & H & L & L \\  \colhline
+RT-INST-03 & Missing components cause delays & Use detailed inventory system to verify availability of  necessary components.  & H & L & L \\  \colhline
+RT-INST-04 & Import, export, visa issues  & Dedicated \dshort{fnal} \dshort{sdsd}division will expedite import/export and visa-related issues. & H & M & M \\  \colhline
+RT-INST-05 & Lack of available labor  & Hire early and use Ash River setup to train \dshort{jpo} crew. & L & L & L \\  \colhline
+RT-INST-06 & Parts do not fit together & Generate \threed model, create interface drawings, and prototype detector assembly. & H & L & L \\  \colhline
+RT-INST-07 & Cryostat damage & Use cryostat false floor and temporary protection. & L & L & M \\  \colhline
+RT-INST-08 & Weather closes SURF & Plan for \dshort{surf} weather closures & H & L & L \\  \colhline
+RT-INST-09 & Detector failure during \cooldown & Cold test individual components then cold test \dshort{apa} assemblies immediately before installation. & L & H & H \\  \colhline
+
+\label{tab:risks:SP-FD-INST}
+\end{longtable}
+\end{footnotesize}

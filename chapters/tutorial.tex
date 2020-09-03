@@ -1,0 +1,80 @@
+\chapter{Example Chapter}
+\label{ch:chap-id}
+
+Some text.
+
+Maybe a figure. See Figure~\ref{fig:required-label}. Notice that only the first word is capitalized in both the short and full captions.  
+
+And here's how to use a dword: Figure~\ref{fig:required-label} is the logo for \dword{dune}. The dwords are defined in common/glossary.tex. You use \verb|\dword{}| the same way, whether the term is defined as a newduneword or a newduneabbrev.
+
+
+\begin{dunefigure}[Optional short caption for LoF]{fig:required-label}
+{Required full caption.}
+\includegraphics[width=0.8\textwidth]{dunelogo_colorhoriz}
+\end{dunefigure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{My Amazing Widget}
+\label{sec:chap-id:mywidget}
+
+The string of percent signs just makes it easier to spot where new sections start.
+
+Notice that all the main words in headings are capitalized.
+
+Let's add a reference. I'm sure that this reference is useful somewhere, but not here~\cite{Acciarri:2016sli}.
+
+Now let's add a table. See Table~\ref{tab:table-label}.
+
+\begin{dunetable}
+[The LoT caption]
+{cc}
+{tab:table-label}
+{The full caption that appears above the table.}
+Rows & Counts \\ \toprowrule
+Row 1 & First \\ \colhline
+Row 2 & Second \\ \colhline
+Row 3 & Third \\ % no \colhline on final row
+\end{dunetable}
+
+%%%%%%%%%%%%%%%%
+\subsection{Numbers for my Widget}
+\label{sec:chap-id:mywidget:num}
+
+The following shows (1) how to do a bulleted list (notice the commas, the ''and'', and the period.  It also shows how to write different kinds of numbers.
+
+\begin{itemize}
+    \item 100 is written as \num{100},
+    \item 1000 is written as \num{1000},
+    \item 123.456 is written as \num{123.456},
+    \item 1 plus or minus 2i is written as \num{1+-2i},
+    \item 3 times 10 to the 45th is written as \num{3e45},
+    \item 0.3 times 10 to the 45th is written as \num{.3e45} (keeps the decimal point before the 3), and 
+    \item ''10, 20 and 30'' is written as \numlist{10;20;30}.
+    \item 
+\end{itemize}
+
+%%%%%%%%%%%%%%%%
+\subsection{Numbers with Units for my Widget}
+\label{sec:chap-id:mywidget:numunit}
+
+Here's how to do a numbered list and write numbers with units. 
+\begin{enumerate}
+    \item 120 GeV is written as \SI{120}{\GeV}, and
+    \item 4850 feet is written as \SI{4850}{\ft}.
+\end{enumerate}
+
+These and many others are defined in the file common/units.tex.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{My Second Amazing Widget}
+\label{sec:chap-id:my2ndwidget}
+
+If you have one section, you need at least two; same goes for subsections, etc. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{More Information}
+\label{sec:chap-id:moreinfo}
+
+First, see Section~\ref{sec:chap-id:my2ndwidget} just to see how we do cross-sectional references.  The same goes for cross-chapter references, you just need to find the correct label for the chapter (or the section within the chapter).
+
+More information is at \url{https://dune.bnl.gov/docs/guidance.pdf}.
