@@ -17,7 +17,7 @@
 
 % Required values and their setters
 %\newcommand\thedoctitle{DRAFT Technical Design Report}
-\newcommand\thedoctitle{Technical Design Report}\newcommand\thedocsubtitle{Deep Underground Neutrino Experiment (DUNE) and Long-Baseline Neutrino Facility (LBNF)}
+\newcommand\thedoctitle{Conceptual Design Report}\newcommand\thedocsubtitle{Deep Underground Neutrino Experiment (DUNE)}
 \def\titleextra{ }
 
 %%% numbers below count section digits (not the chapter digit)

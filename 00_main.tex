@@ -14,9 +14,12 @@
 \input{common/init}
 \cleardoublepage
 
+% comment these lines out once we no longer need the example
+\setcounter{chapter}{-1}
 \input{chapters/00_tutorial}
 \cleardoublepage
 
+\part{Overview}
 \input{chapters/01_intro}
 \cleardoublepage
 
@@ -30,6 +33,27 @@
 \input{chapters/03b_use-cases}
 \cleardoublepage
 
+\part{Algorithms and Frameworks}
+
+\input{chapters/03c_algorithms}
+
+\input{chapters/03d_simulation}
+
+\input{chapters/07_frameworks}
+\cleardoublepage
+
+\input{chapters/06_databases}
+\cleardoublepage
+
+\input{chapters/code-management}
+\cleardoublepage
+
+\input{chapters/train-and-doc}
+\cleardoublepage
+
+
+\part{Global Computing Model}
+
 
 
 \input{chapters/04_data-management}
@@ -40,24 +64,28 @@
 \cleardoublepage
 
 
-\input{chapters/05_production-systems}
+\input{chapters/05_workflow}
 \cleardoublepage
 
 
-\input{chapters/06_databases}
+% \input{chapters/06_databases}
+% \cleardoublepage
+
+
+% \input{chapters/07_frameworks}
+% \cleardoublepage
+
+
+% \input{chapters/code-management}
+% \cleardoublepage
+
+
+% \input{chapters/train-and-doc}
+% \cleardoublepage
+
+\input{chapters/monitoring}
 \cleardoublepage
 
-
-\input{chapters/07_frameworks}
-\cleardoublepage
-
-
-\input{chapters/code-management}
-\cleardoublepage
-
-
-\input{chapters/train-and-doc}
-\cleardoublepage
 
 \input{chapters/ccboard}
 \cleardoublepage
@@ -65,6 +93,9 @@
 
 \input{chapters/monitoring}
 \cleardoublepage
+
+\part{Summary and Plans}
+
 
 
 \input{common/final}
