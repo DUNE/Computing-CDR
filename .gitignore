@@ -16,7 +16,7 @@ auto
 *.lot
 *.lof
 *.tdo
-vol-*.pdf
+*.pdf
 *.bbl
 *.blg
 *~
