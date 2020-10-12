@@ -144,7 +144,7 @@ An additional run of both \dword{pdsp} and \dword{pddp} is planned for 2021 and 
 
 \section{On to full DUNE}
 
-The full DUNE \dword{fd} will begin with one single phase module to be installed at Homestake starting in the middle of  this decade.  High intensity neutrino and anti-neutrino beams should arrive after a year or so of commissioning of the detector and \dword{lbnf} beamline.  This first module will largely resemble a scaled up version of \dword{pdsp} with 150 \dword{apa}s distributed 2-deep at the center and long edges of the cryostat.   The argon volume will be $15\times14\times62$ m$^3$ with a fiducial mass of 10kT.  Table \ref{volumes} summarizes the expected event rates and data volumes for one such detector module.  Additional detector modules, likely one dual-phase, another single-phase and  one with novel technology will be added.  For now, we assume that data volumes and rates coming from other technologies will be less than or equal to the single-phase values. 
+The full DUNE \dword{fd} will begin with one single phase module to be installed at Homestake starting in the middle of  this decade.  High intensity neutrino and anti-neutrino beams should arrive after a year or so of commissioning of the detector and \dword{lbnf} beamline.  This first module will largely resemble a scaled up version of \dword{pdsp} with 150 \dword{apa}s distributed 2-deep at the center and long edges of the cryostat.   The argon volume will be $15\times14\times62$ m$^3$ with a fiducial mass of 10kT.  Table \ref{tab:volumes} summarizes the expected event rates and data volumes for one such detector module.  Additional detector modules, likely one dual-phase, another single-phase and  one with novel technology will be added.  For now, we assume that data volumes and rates coming from other technologies will be less than or equal to the single-phase values. 
 
 
 
@@ -154,26 +154,22 @@ The data rates will be dominated by 4,500 cosmic rays expected per module/day.  
 
 Beam interactions themselves are expected to be quite rare, occurring in only 1/2000 beam gates.  Extraction of oscillation parameters will require both the powerful electron background rejection, discussed in the previous section,  and precise calibration of the energy scale of the experiment, hence the much larger calibration samples. 
 
-\fixme{Make a DUNE table}
- \begin{table}[htp]
-
-\begin{center}
-\begin{tabular}{|l |r r r |}
-\hline
-Process & Rate/module & \qquad size/instance &\qquad  size/module/year\\
-\hline
+ \begin{dunetable}
+[Data Sizes and Rates]
+{l |r r r }
+{tab:volumes}
+{Data sizes and rates for different processes in each far detector module.  Uncompressed data sizes are given. As readouts will be self-triggering an extended 5.4 ms readout window is used instead of the 3ms for the triggered \dword{pdsp} runs.  We assume beam uptime of 50\% and 100\% uptime for non-beam science. These numbers are derived from references \protect{\cite{bib:docdb16028}}and \protect{\cite{bib:docdb14983}}.}
+5
+Process & Rate/module & \qquad size/instance &\qquad  size/module/year\\ \toprowrule
+%
 Beam event & 41/day & 6 GB&47 TB/year\\
 Cosmic rays &4,500/day&  6 GB& 9.7 PB/year\\
 Supernova trigger& 1/month& 115 TB& 1.4 PB/year\\
 Calibrations&2/year&750 TB& 1.5 PB/year\\
-\hline 
+%\toprowrule 
 Total& & &12.9 PB/year\\
-\hline
-\end{tabular}
-\end{center}
-\caption{Data sizes and rates for different processes in each far detector module.  Uncompressed data sizes are given. As readouts will be self-triggering an extended 5.4 ms readout window is used instead of the 3ms for the triggered \dword{pdsp} runs.  We assume beam uptime of 50\% and 100\% uptime for non-beam science.These numbers are derived from references \protect{\cite{bib:docdb16028} }and \protect{\cite{bib:docdb14983}}.}
-\label{volumes}
-\end{table}%
+\end{dunetable}
+
 
 Overall, bottoms-up estimates yield data volumes of around 13 PB/year/module.  Lossless compression should reduce this volume and additional modules will likely increase these rates.  A maximum rate of 30PB/year across all modules and modes of operation has been specified.  We will note that 30 PB/year is  an average of 1.3 GB/sec, less than the rates already demonstrated for protoDUNE acquisition and storage.  In principle, at 2.5 CPU sec/MB of compressed input, 2000-3000 cores could keep up with these data rates  but this throughput must be maintained over many years.   In addition, supernova candidates may require bursts of  much higher acquisition and processing rates. Table \ref{tab:exec-comp-bigpicture-es} summarizes the computational characteristics expected for \dword{fd} data. 
 
@@ -195,12 +191,14 @@ Supernova candidates pose a unique problem for data acquisition and reconstructi
 
 
 \fixme{Make a DUNE table}
-\begin{table}
-\begin{center}
-\begin{tabular}{|l  l |c       | l |}
-\hline
-Quantity&&\qquad Value \qquad&Explanation\qquad \qquad \\
-\hline
+\begin{dunetable}
+[Useful FD Data Quantities]
+{|l  l |c       | l |}
+{tab:exec-comp-bigpicture-es}
+{Useful quantities for computing estimates for \dword{sp}
+readout. For  sparse \dword{fd} events, the pattern recognition phase, which scales with occupancy is expected to be substantially faster than the signal processing phase which scales with detector size.  }%
+Quantity&&\qquad Value \qquad&Explanation\qquad \qquad\\
+\toprowrule
 {\bf Far Detector Beam:}&&&\\ 
 &Single APA readout &41.5 MB& Uncompressed 5.4 ms\\ 
 &Single APA readout &16.6 MB& $\times 2.5$ compression\\
@@ -210,23 +208,116 @@ Quantity&&\qquad Value \qquad&Explanation\qquad \qquad \\
 Signal processing &CPU time/APA&40 sec&from MC/ProtoDUNE\\  
 Signal processing &CPU time/input MB& 2.5 sec/MB& compressed input\\
 &Memory footprint/APA&0.5-1 GB&ProtoDUNE experience\\  
-\hline
+\toprowrule
 {\bf Supernova:}&&&\\
 &Single channel readout &300 MB& Uncompressed 100 s\\  
 &Four module readout& 460 TB& Uncompressed 100 s\\  
 &Trigger rate&1  per month&(assumption)\\
-\hline
-\end{tabular}
-\caption{Useful quantities for computing estimates for \dword{sp}
-readout. For  sparse \dword{fd} events, the pattern recognition phase, which scales with occupancy is expected to be substantially faster than the signal processing phase which scales with detector size.  }%
-\label{tab:exec-comp-bigpicture-es}
-\end{center}
-\end{table}
+
+
+
+\end{dunetable}
 
 
 % \dword{dune} requires a global software and computing effort to store, catalog, reconstruct, calibrate and analyze approximately 30 PB of data/year from  multiple \dword{lartpc} detectors containing 17 kT of liquid each,  a larger scale than any previous neutrino experiment. Single event sizes are expected to range from 200 MB for the existing \dword{protodune} experiments running at \dword{cern}, to 6 GB for a far detector module, to 460 TB for a full readout of a 100 s supernova candidate across 4 modules. Full sensitivity to neutrino oscillations, supernovae neutrinos,  and beyond the standard model phenomena  require precise energy calibration and energy thresholds in the few MeV range, which present significant challenges for signal processing.  In addition to the general distributed computing issues that are common to large \dword{hep} experiments, the very large event sizes present  \dword{dune} with a unique computing challenge.  \dword{dune} intends to benefit from previous experience and will contribute to ongoing improvements in general \dword{hep} computing infrastructure, working in collaboration with the \dword{osg}, the \dword{wlcg} , and the \dword{hep} Software Foundation among others.  However, the unique nature of    \dword{dune} events will require dedicated effort to adapt and integrate   \dword{dune}-specific solutions to achieve the physics goals of the experiment.
 
+High precision oscillation physics requires a near detector system to allow measurement of the original neutrino flux and improved understanding of neutrino interaction physics.  The DUNE  collaboration is proposing a suite of near detectors optimized for these two goals. 
+ 
+ The near detectors will be located in an enclosure on the Fermilab site 574 meters from the target and will be exposed to the DUNE neutrino beam.    Interaction rates per spill (at 0.83 Hz) are expected to be very large, with 40-60 interactions per spill, including muons originating from interactions in material upstream of the fiducial volumes. Figure \ref{beamline} shows the beamline and location of the near detectors on the Fermilab site. There are three major subsystems:
+ A pixel readout liquid argon detector, \dword{ndlar}, is  the most upstream of the three sub-detectors shown in Figure \ref{nd}, where the beam propagates  from right to left. Immediately downstream of \dword{ndlar} is the gaseous liquid argon detector, \dword{ndgar}, which serves \dword{ndlar} as  a muon spectrometer and allows more detailed study of neutrino interactions that occur within its gas volume. Beyond \dword{ndgar}, is the \dword{sand} component of the ND that acts as a beam monitor. %Figure \ref{nd} shows the three \dword{nd} subdetectors in the near enclosure. 
+ 
+ \begin{figure}
+     \centering
+     \includegraphics[height=0.3\textwidth]{graphics/IntroFigures/beamline-sideview.png}
+     \caption{The LBNF neutrino beamline on the Fermilab site. The near detectors will be situated 574 m from the target and 62 m below grade.}
+     \label{beamline}
+ \end{figure}
+ 
+ \begin{figure}[ht]
+     \centering
+     \includegraphics[height=0.5\textwidth]{graphics/IntroFigures/All3Detectors.pdf}
+     \caption{The near detector systems in an on-axis configuration.  The beam enters from the lower right in this view. The \dword{sand} scintillating beam monitor remains at beam center while the pixel ND-LAr TPC detector and gaseous ND-GAr TPC detectors can be moved off-axis to make detailed studies of the neutrino flux at multiple angles.  }
+     \label{nd}
+ \end{figure}
+ 
+ \subsubsection{pixel LArTPC - ND-Lar}
+ 
+ As the target material in the Deep Underground Neutrino Experiment (DUNE) far detectors is liquid argon, optimal cancellation of systematic uncertainties between the near and far detectors requires that the near detector include a liquid argon component to match the \dword{fd}.  However, at the intense neutrino flux and high event rate in the ND region, occupancies will be too high to allow the 2-D readout provided by conventional wire planes. A new ArgonCube  technology has been developed that allows pixelized charge readout  and provides unambiguous 3D imaging of  particle interactions.  The ND-LAr component of the DUNE ND is made up of a configuration of ArgonCube LArTPCs  large enough to provide the required hadronic shower containment and statistics.  %The 5 m (along beam)×7 m (horizontal,  transverse to beam)×3 m (height), 67 t fiducial mass, of ND-LAr are optimized primarily for  hadronic containment under the assumption that ND-GAr will measure the sign and momentum  of downstream exiting muons. Figure 2.2 shows the arrangement of modules in the crystat for  ND-LAr.  Section 2.2 gives a discussion of the physics consideration
+ 
+ The pixel liquid argon detector will have 12~million $3\times 3$~mm$^2$ pixel channels and $\sim$4200~photon detector channels.  The LArTPC will read out only pulse times and integrals, in contrast to the far detector which reads out every time slice.  The photon detectors will, however, read out complete wave-forms.   A total of 3~MB of uncompressed data is anticipated per spill from the TPC with 5-MB from the photon detectors leading to an estimate of 144 TB/year for uncompressed in-spill data. Calibrations and cosmic ray data increase that data volume by around 20\%.
 
+% For calibrations, 300 runs are assumed to be taken per year, each generating 10~GB of data, for the TPC, and a similar set of runs for the photon detectors.  These runs include pulser runs, laser runs, radioactive source runs, or other special-condition runs that require taking data outside of the regular spills.  Since they are not tied to the spill timing structure, they can be collected at higher trigger rates and take less time.
+
+% In addition to the beam data, cosmic rays will contribute to the data volume.  For the \dword{ndlar} geometry in the ND hall, the anticipated rate
+% of cosmic rays is 100~Hz.  If all cosmic ray data were collected, the data volume would be approximately 1~MB/sec.  The scenario considered here is to
+% collect one spill's worth of cosmic ray data for every ten beam spills, for a data volume of 6.3 TB per year.  While the activity on the cosmic-ray triggers is expected to be much less than that on a beam spill, it is assumed that the cosmic-ray triggering will continue even when the beam is off.
+
+% The TPC-only out-of-spill and calibration numbers have been scaled by 8/3 to account for photon detector data, assuming full waveform readout in these samples, yielding the same ratio as in-spill data and the same compression. 
+
+\subsubsection{Near Detector Gaseous Argon TPC}
+\label{sec:comp-dataestimates-mpd}
+
+The \dword{ndgar} is a magnetized detector system consisting of a high-pressure gaseous argon TPC  (HPgTPC) surrounded by an electromagnetic calorimeter (ECAL) and a muon system. The \dword{ndgar} measures the momentum and sign of charged particles exiting the ND-LAr. In addition, for neutrino interactions occurring in the \dword{ndgar} itself, higher resolution and lower momentum thresholds can be achieved for charged particle tracks, leading to improved neutrino interaction models. This capability enables further constraints of systematic uncertainties for long-baseline neutrino  oscillation analyses.
+
+The \dword{ndgar} is composed of 678,136 readout pads in the TPC, and approximately 3~million channels in the \dword{ecal}.  Approximately one in five spills will generate an interaction in the gas TPC, but particles entering the gas from interactions in the \dword{ecal} will provide the bulk of the data volume.  The readout strategy will be similar to the LArTPC, with only time and integral recorded. A  data volume of 2 MB of uncompressed data per spill is expected from the TPC.  The calorimeter is expected to contribute approximately 1~MB per spill of uncompressed data.
+
+% For calibrations, 300 runs per year generating 10~GB of data per run are assumed for the TPC, and a similarly-sized set of calibration runs are assumed for the \dword{ecal}.  Cosmic rays are expected to be collected between spills and when the beam is off.
+
+
+
+\subsubsection{SAND}
+\label{sec:comp-dataestimates-sand}
+%The 3rd detector subsystem is the \dword{sand}, a scintillator based monitor, consists of a 3-D pixelated scintillator detector, an electromagnetic calorimeter and XXX
+
+The \dword{sand} component of the near detector (ND)'s primary function is the primary beam flux monitor.   SAND consists of an active scintillator target \dword{3dst} followed by a tracking system immersed in a solenoidal superconducting magnet  and  a $4\pi$ electromagnetic calorimeter.
+
+\dword{sand}'s \dword{3dst} calorimeter component is composed of 11,520,000 $1\times 1\times 1$~cm$^3$ scintillating cubes, read out by 153,600 fibers.  There are expected to be approximately 2,160 hits per spill with a total of 0.13 MB of data per spill.  The  \dword{ecal}~\cite{Adinolfi:2002zx} uses 4,850 PMTs, with an estimated 5,500 total hits per spill or 33 kB of packed data per spill.   The data volume from SAND is 4.3 TB/year with these assumptions.  The amount of data from out-of-spill cosmic rays is estimated to be 20\% of that of the in-spill data, or approximately 1 TB.  The data volume from SAND is significantly smaller than that from the \dword{ndlar} and the \dword{ndgar} due to the relative sizes of the three-dimensional tracking volumes and the segmentation choices.
+
+\subsubsection{CPU needs and simulation}
+
+Table \ref{tab:nd_data_volume_estimates} summarizes the expected data sizes from the near detector. Due to the much higher data density in the near detector, CPU times/beam spill are expected to be much higher and are estimated to be 300 CPU/sec/spill using current processors for $1.5\times 10^7$ spills/year. Simulated data samples will need to be an order of magnitude larger and thus require at least 10 times the CPU power.  This leads to a rough estimate of CPU needed of approximately 3,000 core-years/year.
+
+\begin{dunetable}[Near Detector Data Estimates]
+{l r}
+{tab:nd_data_volume_estimates}
+{Annual DUNE near detector data volume estimates.  No compression is assumed.}
+Type & Volume/year\\ \toprowrule
+    {\bf \dword{ndlar}}     &  \\
+    \quad\quad In-spill data & 144 TB \\
+    \quad\quad Out-of-spill cosmics & 16 TB\\
+    \quad\quad Calibration & 16 TB\\
+    \quad\quad Total & 176 \\\toprowrule
+    {\bf \dword{ndgar}}           & \\
+    \quad\quad In-spill data & 52 TB \\
+    \quad\quad Out-of-spill cosmics & 10 TB \\
+    \quad\quad Calibration & 6 TB\\
+    \quad\quad Total & 68 \\\toprowrule
+    {\bf \dword{sand}}        & \\
+        \quad\quad In-spill data & 4 TB\\
+    \quad\quad Out-of-spill cosmics & 1 TB\\
+    \quad\quad Calibration & 1 TB \\
+    \quad\quad Total & 6 \\\toprowrule
+    {\bf Total ND} & {\bf 250 TB}\\
+\end{dunetable}
+
+\begin{dunetable}
+[CPU estimates for Near Detector]
+{l r}
+{tab:NDCPUPerEvent}
+{Preliminary CPU estimates per event for the DUNE near detector components, in seconds.}
+Type&time/event\\ \toprowrule
+    {\bf LArTPC} &  \\
+    \quad\quad Monte Carlo gen+sim & 100 s \\
+    \quad\quad Reconstruction & 60 s\\\toprowrule
+  {\bf MPD} &  \\
+    \quad\quad Monte Carlo gen+sim & 100 s\\
+    \quad\quad Reconstruction & 12 s\\\toprowrule
+    {\bf SAND} & \\
+    \quad\quad Monte Carlo gen+sim & 100 s\\
+    \quad\quad Reconstruction & 10 s\\\toprowrule
+\end{dunetable}
+
+A Conceptual Design Report for the Near Detector systems is in preparation and the \dword{nd} computing efforts are being integrated with the existing far detector and protoDUNE efforts. 
 
 %{\it borrowed from TDR to test bib/glossary/units}
 
