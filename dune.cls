@@ -8,8 +8,6 @@
 
 \RequirePackage[letterpaper,margin=2cm]{geometry}
 
-
-
 \newif\iffinal
 %% Switch between draft or final:
 %\finalfalse

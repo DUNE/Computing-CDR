@@ -1,11 +1,45 @@
-\chapter{Introduction : Schellman }
+%We have decided to utilize the FP package for doing calculations and tracking constants in the CDR
+% (e.g. the limit of annual data from ll active FD modules to permanent storage at FNAL is 30 GB/year)
+% The template for a variable is this:
+% "chapter""section"variable where both "chapter" and "section" are abbreviations
+% with the Camel Caps used for readability
+% Note that you should not override the use of a variable defined in generated/parameters.tex
+
+%Start of Introduction variables (Intro)
+
+%End of Introduction varaibles
+
+% Data and Processing Volume Estimates (DatVol)
+
+\FPset{DatVolFDColdElecPrecision}{12} %number of bits in cold electronics digitization
+
+% Use Cases (UseCase)
+
+% Frameworks (Fra)
+
+% Databases (DBs)
+
+% Applications (App)
+
+% Computing Model (CompMod)
+
+% Site Resources (SiteRes)
+
+% Data Placement (DataPla)
+
+% Networking (Net)
+
+% Workflow Examples (Wrkflw)
+
+
+\chapter{Introduction : (Schellman) }
 \label{ch:intro}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{xyz}
 \label{sec:intro:xyz}  %% fix label according to section
 
-
+\todo{Need to add discussion of physics requirements that drive computing}
 
 \section{Introduction}
 
@@ -190,7 +224,7 @@ Overall, bottoms-up estimates yield data volumes of around 13 PB/year/module.  L
 Supernova candidates pose a unique problem for data acquisition and reconstruction.  Supernova physics in DUNE is discussed in some detail in the \dword{tdr}\cite{ Abi:2020evt} and only summarized here. A classic core-collapse supernova 10 kpc away would be expected to yield around 3,000  charged-current electron neutrino interactions across 4 detector modules.  The oscillation physics is not fully understand and can result in significant modulations of the event rates for different neutrino types  over the few tens of seconds of the burst.  DUNE's fine-grained tracking should allow significant pointing power with the most optimistic scenario of four modules and high electron neutrino fraction yielding pointing resolutions of less than 5 degrees.   Figure \ref{blips} illustrates simulated signatures of supernova neutrino interactions in the far detector. The ability to produce a reasonably fast pointing signal would be extremely valuable to optical astronomers doing followup, especially if a supernova was in a region where dust masks the primary optical signal.   The need to be alert to supernovae and to quickly transfer and process the data imposes significant requirements on triggering, data transfer and reconstruction beyond those imposed by the more regular beam-based oscillation physics.   For example, a compressed supernova readout of all four modules will be of order 184 TB in size and take a minimum of 4 hrs to transfer over a 100 Gbs network,  and then take of order 130,000 CPU-hrs for signal processing at present speeds.  If processing takes the same time as transfer, a peak of 30,000 cores would be needed. 
 
 
-\fixme{Make a DUNE table}
+\fixme{Move or copy to the data volumes section}
 \begin{dunetable}
 [Useful FD Data Quantities]
 {|l  l |c       | l |}
@@ -273,6 +307,7 @@ The \dword{sand} component of the near detector (ND)'s primary function is the p
 
 \dword{sand}'s \dword{3dst} calorimeter component is composed of 11,520,000 $1\times 1\times 1$~cm$^3$ scintillating cubes, read out by 153,600 fibers.  There are expected to be approximately 2,160 hits per spill with a total of 0.13 MB of data per spill.  The  \dword{ecal}~\cite{Adinolfi:2002zx} uses 4,850 PMTs, with an estimated 5,500 total hits per spill or 33 kB of packed data per spill.   The data volume from SAND is 4.3 TB/year with these assumptions.  The amount of data from out-of-spill cosmic rays is estimated to be 20\% of that of the in-spill data, or approximately 1 TB.  The data volume from SAND is significantly smaller than that from the \dword{ndlar} and the \dword{ndgar} due to the relative sizes of the three-dimensional tracking volumes and the segmentation choices.
 
+\fixme{Move this to the Data volumes section}
 \subsubsection{CPU needs and simulation}
 
 Table \ref{tab:nd_data_volume_estimates} summarizes the expected data sizes from the near detector. Due to the much higher data density in the near detector, CPU times/beam spill are expected to be much higher and are estimated to be 300 CPU/sec/spill using current processors for $1.5\times 10^7$ spills/year. Simulated data samples will need to be an order of magnitude larger and thus require at least 10 times the CPU power.  This leads to a rough estimate of CPU needed of approximately 3,000 core-years/year.

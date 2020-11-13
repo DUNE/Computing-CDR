@@ -18,29 +18,57 @@
 % \input{chapters/00_tutorial}
 % \cleardoublepage
 
+
+% We have decided to utilize the FP package for doing calculations and tracking constants in the CDR
+% (e.g. the limit of annual data from ll active FD modules to permanent storage at FNAL is 30 GB/year)
+% The template for a variable is this:
+% "chapter""section"variable where both "chapter" and "section" are abbreviations
+% with the Camel Caps used for readability
+% Note that you should not override the use of a variable defined in generated/parameters.tex
+
+% e.g. MonEtfDevPeople is the amount of effort for development in the ETF section of the Monitoring chapter
+%  \FPset{MonEtfOpsPeople}{3.2}
+%  \FPset{MonEtfDevPeople}{1.0}
+
+% You can do floating point operations on constants defined in this manner:
+% \FPadd\MonEtfTotalPeople\MonEtfOpsPeople\MonEtfDevPeople
+
+% But note that floating point operations generate numbers with large precision and so you need to make
+% sure to format numbers with printing them. In this example:
+
+%\num[round-mode=places,round-precision=1]{\MonEtfTotalPeople}
+
+% For FP set directly with \FPSet, then input precision will be maintained when printed.
+
+%Global numbers for the entire document
+
+\FPset{GlobalFDDataStorage}{30} % this is petabytes per year
+
+
 \part{Overview} %Heidi
 \input{chapters/intro-intro}
+
 \cleardoublepage
 
 
 
 
-\input{chapters/intro-volume-estimates}
+\input{chapters/intro-volume-estimates}% (Heidi and Kirby)}  % Heidi and Kirby
 \cleardoublepage
 
 \input{chapters/intro-use-cases}
 \cleardoublepage
 
-\part{Algorithms and Frameworks} % Junk
+\part{Algorithms and Frameworks} %  Tom Junk, David Adams
 
 
-\input{chapters/algo-frameworks}
+\input{chapters/algo-frameworks}  % Paul and Andrew
 \cleardoublepage
 
-\input{chapters/algo-databases}
+\input{chapters/algo-databases} % Norm and Paul 
 \cleardoublepage
 
-\input{chapters/algo-applications}
+\input{chapters/algo-applications} % Tom and Mathew and Elisabetta
 \cleardoublepage
 
 \input{chapters/algo-appl-reconstruction}
@@ -48,7 +76,7 @@
 \input{chapters/algo-appl-analysis}
 \cleardoublepage
 
-\part{Global Computing Model} % McNab
+\part{Global Computing Model  } % McNab
 
 \input{chapters/model-computing-model}
 \cleardoublepage
@@ -65,7 +93,7 @@
 \input{chapters/model-workflow-examples}
 \cleardoublepage
 
-\part{Computing Services} % Timm
+\part{Computing Services (Steve Timm)} % Timm
 
 \input{chapters/serv-services-overview}
 \cleardoublepage
@@ -85,7 +113,10 @@
 \input{chapters/serv-monitoring}
 \cleardoublepage
 
-\part{Resources Summary} 
+\input{chapters/serv-code-management} % Junk and Adams
+\cleardoublepage
+
+\part{Resources Summary} %Kirby
 
 %\input{chapters/ro-resource-needs}
 
@@ -101,8 +132,8 @@
 \input{chapters/coll-ccboard} %Clarke
 \cleardoublepage
 
-\input{chapters/coll-code-management} % Junk and Adams
-\cleardoublepage
+%\input{chapters/serv-code-management} % Junk and Adams
+%\cleardoublepage
 
 \input{chapters/coll-train-and-doc} % David
 \cleardoublepage
