@@ -6,7 +6,9 @@
 
 \newcommand{\gdaqchannelnumberfactor}{\num[round-mode=places,round-precision=1]{1.1}\xspace}
 
-\newcommand{\daqsamplerate}{\SI[round-mode=places,round-precision=1]{2.0}{\mega\hertz}\xspace}
+\newcommand\daqsampleratevalue{2.0}%MHz
+\newcommand\daqsamplerateunits{\mega\hertz}
+\newcommand{\daqsamplerate}{\SI[round-mode=places,round-precision=1]{\daqsampleratevalue}{\daqsamplerateunits}\xspace}
 
 \newcommand{\beamspillcycle}{\SI[round-mode=places,round-precision=1]{1.2}{\second}\xspace}
 

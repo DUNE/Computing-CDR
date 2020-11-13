@@ -1,7 +1,95 @@
-\chapter{Monitoring - Andrew McNab, Steve Timm, Jon Hays}
+\chapter{Monitoring }%- Andrew McNab, Steve Timm, Jon Hays}
 \label{ch:mon}
 
+% Create Parameter Values - most #'s will need to be handled this way
+% Preface parameter name with the chapter tag
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{xyz}
-\label{sec:mon:xyz}  %% fix label according to section
+\FPset{MonEtfOpsPeople}{3.1} % FTE
+\FPset{MonEtfDevPeople}{1.0} % FTE
+\FPadd\MonEtfTotalPeople\MonEtfOpsPeople\MonEtfDevPeople %FTE
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Tools}
+% \begin{dunetable}
+% [Monitoring Assumptions]
+% {l r l}
+% {tab:mon:assumptions}
+% {Assumptions for Monitoring}
+% Parameter&Value&Comment\\
+% ETF personnel&\etfPeople&no comment\\
+% \end{dunetable}
+\label{sec:mon:xyz}  %% fix label according to section
+\subsection{ETF}
+
+ETF is ... . Assume it will be supported by CERN for ... years. (Assumption reference for that)
+
+Further DUNE specific development will be required from time to time
+with N staff effort FTE needed.
+
+It is expected X virtual machines with minimum spec Y will be required to run the service, which can be located at any site (eg CERN).
+
+It is expect M FTE will be required to monitor the ETF results on a 
+daily basis, probably as part of more general computing shifts.
+
+See table X for a summary... 
+
+\subsection{PerfSonar}
+
+Same format as ETF: who supports it, ongoing dev and ops effort, any central computing resources needed.
+
+See table X for a summary... 
+
+% \section{Summary of Assumptions and Resources}
+% \subsection{Assumptions}
+
+% ETF support assumption reference
+
+% \subsection{Development needs}
+
+% ETF dev effort, N FTE
+
+% \subsection{Compute resource needs}
+
+% ETF resource requirements list
+
+% \subsection{Operations needs}
+
+% ETF ops effort, M FTE
+
+
+
+\section{Summary of Assumptions and Resource Requirements}
+
+% This section needs summary tables at the end which will be rolled up for the full document
+% Please replace #'s in the text with defined parameters and use those in the table (and teXt)
+% Place your parameters at the top of the section. 
+%
+
+
+\begin{dunetable}
+[Monitoring Assumptions]%{}
+{llrlll}
+{tab:mon:assumptions}
+{Assumptions for Monitoring}
+System&Parameter&Value&Units&Comment\\
+FD & Cosmic rate & 5000 & per day&\\
+%ETF personnel&\etfOpsPeople&no comment\\
+\end{dunetable}
+
+
+
+
+\begin{dunetable}
+[Resource Requirements for Monitoring]
+{llrlll}
+{mon:ops:needs}
+{Resource Requirements for Monitoring}
+  System & Resource & Value & Units & Timeline&  Comment\\ \toprowrule   
+  ETF Operations & Personnel &\MonEtfOpsPeople  & FTE & 2027-2040&\\ %\colhline % mon-ops-ETF
+ ETF Development  & Personnel &\MonEtfDevPeople  & FTE & 2021-2025& \\ %\colhline % mon-dev-ETF
+ ETF Total  & Personnel &\num[round-mode=places,round-precision=1]{\MonEtfTotalPeople}  & FTE & 2021-2025& \\ %\colhline % mon-tot-ETF
+      & Storage  &3  & GB&2021-2040& \\ 
+      \colhline % Start new section
+  PerfSonar & Operations &0.1 & FTE &\\ \colhline % mon-ops-PerSonar
+  Row 3 & \daqsamplerate & \\ 
+\end{dunetable}
