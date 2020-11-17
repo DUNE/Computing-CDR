@@ -2,6 +2,123 @@
 \label{ch:db}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{xyz}
-\label{sec:db:xyz}  %% fix label according to section
+\section{Introduction}
+\label{sec:db:intro} 
 
+In order to accommodate the large range of metadata that will be tracked by DUNE, the DUNE DB structure is made up of several databases. It is critical that users are able to access any metadata required throughout the full data processing and analysis chain with as little burden as possible. To achieve this users will interact with a centralized interface rather than with the individual databases. 
+
+It is expected that there will be reconstruction and analysis jobs distributed across large numbers of traditional and high-performance computing systems and the database access will need to be able to scale appropriately.
+
+\section{Conditions Database}
+\label{sec:db:conditions} 
+
+The configuration database is the central database that offline users, and processes, will interact with. This will reduce the number of database connections required by offline processes, ensuring that jobs will be "lightweight" and minimizing processing time.
+
+The conditions database will contain interpolated (eg. slow controls) and non-interpolated (eg. run configurations) information. Interpolated information may more naturally be keyed by time-stamps while configurations are more naturally keyed by run number. Tools will need to be developed to handle these two cases of database content. 
+
+\section{Run Configuration Database}
+\label{sec:db:config}  
+
+The run configuration database contains the intended configuration of the detectors during data collection - physics or otherwise. 
+
+Metadata contained in the run configuration database includes, hardware settings, run type, and run start and end times. Table~\ref{table:runconfig} contains some examples of typical metadata that will be contained in the run configuration database. 
+
+\begin{table}[h!]
+\centering
+ \begin{tabular}{||l| l ||} 
+ \hline
+ Metadata Value & Type  \\ [0.5ex] 
+ \hline\hline
+Start of run   &  Time \\ \hline
+Readout window size  & Integer  \\ \hline
+Readout trigger type  &  Integer \\ \hline
+Readout firmware version &  Integer \\ \hline
+Baseline start &  Integer \\ \hline
+Shifter comments &  Text \\ \hline
+Run end status & Integer \\ [1ex] 
+\hline
+\end{tabular}
+\caption{Example metadata values and types stored in the run configuration database.}
+\label{table:runconfig}
+\end{table}
+
+The majority of run configuration metadata comes form the configuration files used by the data acquisition system during run execution. Some additional metadata collected at the end of the run - or shortly thereafter may also be included. Examples are run completion status and comments made by the shifter during the run or in run-related checklists.
+
+Parameters used to configure the run will be collected and packed into JSON-formatted blocks in a single "blob" corresponding to a DAQ run.   
+
+\section{Data Quality and Monitoring Database}
+\label{sec:db:dqm}  
+
+The data quality and monitoring (DQM) database contains metadata derived from data collected during operation of the DUNE detectors. The DQM DB is an online database and interfaces with the conditions database directly or via an offline data quality database.
+
+\section{Offline Calibration Database}
+\label{sec:db:calib} 
+
+The calibration database contains calibration constants determined from collected data corresponding to intervals of validity (IOV). The calibration metadata will result from offline calculations using data collected from the DUNE detectors.
+
+There will generally be multiple versions of calibration constants corresponding to the same interval of validity. These versions will be contained within the database and accessible to users.  
+
+
+\section{Slow Control Database}
+\label{sec:db:slowcontrol}  
+
+The slow control DB contains metadata specific to the state of detector during the time data were collected as well as before and after. Examples of slow control metadata are measurements of power supply voltages and currents and temperatures. Each slow control quantity corresponds to a particular device. The slow control DB metadata is time-indexed and different devices can be sampled at different rates.
+
+\begin{table}[h!]
+\centering
+ \begin{tabular}{||l| l ||} 
+ \hline
+ Metadata Value & Type  \\ [0.5ex] 
+ \hline\hline
+PS1 Voltage  & float \\ \hline
+PS1 Current  & float  \\ \hline
+PS1 Temp  &  float \\ \hline
+PS2 Voltage & float \\ [1ex] 
+\hline
+\end{tabular}
+\caption{Example metadata values and types stored in the slow control database.}
+\label{table:sc}
+\end{table}
+
+\section{Beam Conditions Database - IFBeam}
+\label{sec:db:ifbeam}  
+
+The beam conditions database, IFBeam~\cite{ifbeam} will contain metadata related to the condition extracted beam and corresponding diagnostics.  The functional form of this database is essentially the same as that of the slow control database. A large number of devices are sampled into the IFBeam DB. The IFBeam metadata transferred to the conditions DB will be a coarser subset of the original set.
+
+Quantities contained in the IFBeam DB include beam currents, horn currents and polarities, and beam monitoring instrument metadata.
+
+\begin{table}[h!]
+\centering
+ \begin{tabular}{||l| l ||} 
+ \hline
+ Metadata Value & Type  \\ [0.5ex] 
+ \hline\hline
+Horn 1 Polarity &  Integer \\ \hline
+Horn 2 Polarity  & Integer  \\ \hline
+Beam current & Float \\ [1ex] 
+\hline
+\end{tabular}
+\caption{Example metadata values and types stored in the run configuration database.}
+\label{table:ifbeam}
+\end{table}
+
+\section{Hardware Database}
+\label{sec:db:hwdb}  
+
+The purpose of the hardware database is to track the lineage of hardware components. In this context a component can be a subdetector module or any of the individual parts comprising it. For example, a readout board is a component as is the a mezzanine daughter board or programmable logic chip mounted on the readout board. The lowest level component tracked within the HWDB will be unique to the corresponding hardware system.
+
+Hardware DB metadata will pertain to the following stages of component lifetime:
+
+\begin{itemize}
+\item Procurement 
+\item Fabrication
+\item Quality control testing
+\item Shipping and Storage
+\item Installation
+\item Maintenance 
+\end{itemize}
+
+The relationships between components will be reflected in the HWDB. Metadata corresponding to multiple instances of events such as QC tests will be handled using time series within the database. 
+
+\section{Service and Maintenance}
+\label{sec:db:service}  
