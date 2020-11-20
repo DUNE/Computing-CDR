@@ -1,2 +1,15 @@
 \section{Simulation Algorithms}
 \label{sec:algo:sim}
+
+\subsubsection{Event Generators}
+\label{sec:eventgen}
+
+Extracting physics results from the DUNE experiment requires comparing the observed data with simulations which include detailed simulations of the physics processes under study as well as the response of the detectors.  The physics simulation is performed by the neutrino generators GENIE~\cite{Andreopoulos:2009rq}, NuWRO~\cite{NuWro2012}, GIBUU~\cite{Gallmeister:2016dnq}, NEUT~\cite{Hayato:2009zz}, and others.  Cosmic-ray simulations are performed with CORSIKA~\cite{Wentz:2003bp,Dembinski:2020wrp} for detectors on the surface, and MUSUN/MUSIC for detectors deep underground~\cite{Kudryavtsev:2008qh,LBNEDOCDB9673}.  Radiological decays are modeled with BXDECAY0~\cite{Ponkratenko:2000um}. 
+
+\subsubsection{Detector Simulation}
+\label{sec:detsim}
+
+The factorization of the simulation into a generation stage and a detector simulation stage is a common situation in collider experiments, such as ATLAS and CMS.  The fact that the interactions simulated by generators for collider physics happen inside an evacuated beampipe means that the details of the detector geometry and materials are not relevant for most event generation.  Lists of four-vectors of particles emerging from a primary vertex will suffice.  In a neutrino experiment, however, the detector material is the target material, and hence the generators must be aware of the detector geometry and materials, which affects the structure and performance of the generator code.  Currently, GENIE, CORSIKA, MUSUN/MUSIC, and BXDECAY0 are integrated with LArSoft.  GENIE is integrated with GArSoft.
+
+
+Two classes of simulation of DUNE's detectors exist at the time of writing.  Parameterized, or ``fast'' detector simulations involve smearing truth-level physics quantities based on expected detector performance metrics, such as acceptance and energy resolution.  These fast simulations are useful when optimizing detector designs, and for engaging physicists outside of the DUNE collaboration.  Full simulations, on the other hand, are based on detailed geometry models and GEANT4~\cite{Agostinelli:2002hh,Allison:2016lfl}, and are needed for extraction of publication-level results.
