@@ -5,7 +5,7 @@
 [Processing time for reconstruction modules for a ProtoDUNE-SP event]
 {l r}
 {tab:protodune_cpu_reco_by_module}
-{Wall-clock module execution times for the reconstruction of a typical ProtoDUNE-SP event, in seconds.}
+{Wall-clock module execution times for the reconstruction of a typical ProtoDUNE-SP event, in seconds.  The event is a data event from Run 5809, a 1 GeV beam run.}
 Module Label & time/event (sec)\\ \toprowrule
 RootInput(read)                          &     0.147283          \\
 timingrawdecoder:TimingRawDecoder        &     0.0095498         \\
@@ -54,4 +54,33 @@ RootOutput                               &    2.8912e-05         \\
 RootOutput(write)                        &     2.79458               \\
 {\bf Total:}                             &     {\bf 507.881}      \\
     \toprowrule
+\end{dunetable}
+
+\begin{dunetable}
+[Average processing time for reconstruction modules for a GArSoft event consisting of just one interaction in the gas.]
+{l r}
+{tab:garsoft_cpu_reco_by_module}
+{Wall-clock module execution times for the reconstruction of a typical ProtoDUNE-SP event, in seconds.}
+Module Label & time/event (sec)\\ \toprowrule
+RootInput(read)                             &    0.000353765       \\
+init:EventInit                         &    1.31275e-05       \\
+hit:CompressedHitFinder                &    0.00488308        \\
+tpcclusterpass1:TPCHitCluster          &     0.0091922        \\
+vechit:tpcvechitfinder2                &     0.0103787        \\
+patrec:tpcpatrec2                      &     0.0130245        \\
+trackpass1:tpctrackfit2                &     0.014211         \\
+vertexpass1:vertexfinder1              &    0.000851081       \\
+tpccluster:tpccathodestitch            &     0.0269436        \\
+track:tpctrackfit2                     &     0.0135842        \\
+vertex:vertexfinder1                   &    6.19847e-05       \\
+veefinder1:veefinder1                  &    9.96417e-05       \\
+sipmhit:SiPMHitFinder                  &    0.00153375        \\
+sscalohit:CaloStripSplitter            &     0.0547754        \\
+calocluster:CaloClustering             &    0.00492599        \\
+trkecalassn:TPCECALAssociation         &    0.000237503       \\
+TriggerResults:TriggerResultInserter        &    2.36397e-05       \\
+RootOutput                                  &    3.6783e-06        \\
+RootOutput(write)                           &    0.214077         \\
+{\bf Total}                                  &     {\bf 0.369802}         \\
+   \toprowrule
 \end{dunetable}
