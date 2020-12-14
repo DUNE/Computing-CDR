@@ -105,7 +105,7 @@ Beam current & Float \\ [1ex]
 \section{Hardware Database}
 \label{sec:db:hwdb}  
 
-The purpose of the hardware database is to track the lineage of hardware components. In this context a component can be a subdetector module or any of the individual parts comprising it. For example, a readout board is a component as is the a mezzanine daughter board or programmable logic chip mounted on the readout board. The lowest level component tracked within the HWDB will be unique to the corresponding hardware system.
+The purpose of the hardware database is to track the lineage of hardware components. In this context a component can be a sub-detector module or any of the individual parts comprising it. For example, a readout board is a component as is the a mezzanine daughter board or programmable logic chip mounted on the readout board. The lowest level component tracked within the HWDB will be unique to the corresponding hardware system.
 
 Hardware DB metadata will pertain to the following stages of component lifetime:
 
@@ -122,3 +122,9 @@ The relationships between components will be reflected in the HWDB. Metadata cor
 
 \section{Service and Maintenance}
 \label{sec:db:service}  
+
+Most, if not all, of the DUNE databases will operate in advance of the full DUNE experiment coming online and these databases will need to be maintained and serviced once they are operational. 
+
+The second run of the ProtoDUNE experiment (ProtoDUNE II) will employ a suite of databases that will be the precursors to the full database system that will be in place for DUNE. Each of these databases (run configuration, beam instrumentation, conditions, slow controls, and hardware) will require stable monitoring, maintenance, and service to address operational issues that will arise in the lead up to and during the running of the ProtoDUNE II experiment. 
+
+Monitoring will be achieved using automated web-based tools [ref needed] and responses to offline database issues will be made within an 8-hour period corresponding to a typical operation or production "shift". For ProtoDUNE II databases will be located at both Fermilab and CERN, both of which have a long history of database support.
