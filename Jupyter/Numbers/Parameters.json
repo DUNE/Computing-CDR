@@ -50,7 +50,7 @@
   },
     
   "TapeLifetimes":{"Raw":100, "Test":0.5, "Reco":15, "Sim":15},
-  "DiskLifetimes":{"Raw":1, "Test":0.5, "Reco":2, "Sim":1},
+  "DiskLifetimes":{"Raw":1, "Test":0.5, "Reco":2, "Sim":2},
   "TapeCopies":{"Raw":2, "Test":1, "Reco":1, "Sim":1},
   "DiskCopies":{"Raw":1, "Test":0.5, "Reco":2, "Sim":2},
   "PerYear":
