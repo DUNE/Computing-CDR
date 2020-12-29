@@ -1,0 +1,60 @@
+437: 20-Oct-2020 21:27:36 CDT  Closed input file "xroot://fndca1.fnal.gov:1095/pnfs/fnal.gov/usr/dune/persistent/stash/ContinuousIntegration/protoDUNEsp/datareco/np04_raw_run005809_0004_dl6.root"
+438: 
+439: ======================================================================================================================================
+440: TimeTracker printout (sec)                              Min           Avg           Max         Median          RMS         nEvts   
+441: ======================================================================================================================================
+442: Full event                                            507.881       507.881       507.881       507.881          0            1     
+443: --------------------------------------------------------------------------------------------------------------------------------------
+444: source:RootInput(read)                               0.147283      0.147283      0.147283      0.147283          0            1     
+445: decode:timingrawdecoder:TimingRawDecoder             0.0095498     0.0095498     0.0095498     0.0095498         0            1     
+446: decode:ssprawdecoder:SSPRawDecoder                   0.126099      0.126099      0.126099      0.126099          0            1     
+447: decode:crtrawdecoder:CRTRawDecoder                   0.0181903     0.0181903     0.0181903     0.0181903         0            1     
+448: decode:ctbrawdecoder:PDSPCTBRawDecoder               0.0204753     0.0204753     0.0204753     0.0204753         0            1     
+449: decode:beamevent:BeamEvent                            1.6154        1.6154        1.6154        1.6154           0            1     
+450: decode:caldata:DataPrepByApaModule                    83.0324       83.0324       83.0324       83.0324          0            1     
+451: decode:wclsdatasp:WireCellToolkit                     79.8616       79.8616       79.8616       79.8616          0            1     
+452: decode:gaushit:GausHitFinder                          1.56342       1.56342       1.56342       1.56342          0            1     
+453: decode:nhitsfilter:NumberOfHitsFilter               0.00177549    0.00177549    0.00177549    0.00177549         0            1     
+454: decode:reco3d:SpacePointSolver                        9.44157       9.44157       9.44157       9.44157          0            1     
+455: decode:hitpdune:DisambigFromSpacePoints               1.52541       1.52541       1.52541       1.52541          0            1     
+456: decode:pandora:StandardPandora                        39.8787       39.8787       39.8787       39.8787          0            1     
+457: decode:pandoraWriter:StandardPandora                 0.370009      0.370009      0.370009      0.370009          0            1     
+458: decode:pandoraTrack:LArPandoraTrackCreation           4.57221       4.57221       4.57221       4.57221          0            1     
+459: decode:pandoraShower:LArPandoraShowerCreation         3.73432       3.73432       3.73432       3.73432          0            1     
+460: decode:pandoracalo:Calorimetry                        2.11152       2.11152       2.11152       2.11152          0            1     
+461: decode:pandoracalonosce:Calorimetry                   1.90852       1.90852       1.90852       1.90852          0            1     
+462: decode:pandorapid:Chi2ParticleID                     0.0115046     0.0115046     0.0115046     0.0115046         0            1     
+463: decode:pandoracali:CalibrationdEdXPDSP               0.106919      0.106919      0.106919      0.106919          0            1     
+464: decode:pandoracalipid:Chi2ParticleID                0.00851985    0.00851985    0.00851985    0.00851985         0            1     
+465: decode:pandoraShowercalo:ShowerCalorimetry            3.26953       3.26953       3.26953       3.26953          0            1     
+466: decode:pandoraShowercalonosce:ShowerCalorimetry       3.17698       3.17698       3.17698       3.17698          0            1     
+467: decode:emtrkmichelid:EmTrackMichelId                  233.794       233.794       233.794       233.794          0            1     
+468: decode:ophitInternal:OpHitFinder                     0.0190084     0.0190084     0.0190084     0.0190084         0            1     
+469: decode:ophitExternal:OpHitFinder                    0.00828164    0.00828164    0.00828164    0.00828164         0            1     
+470: decode:opflashInternal:OpFlashFinder                 0.0172739     0.0172739     0.0172739     0.0172739         0            1     
+471: decode:opflashExternal:OpFlashFinder                0.000597182   0.000597182   0.000597182   0.000597182        0            1     
+472: decode:opslicerInternal:OpSlicer                     0.0184422     0.0184422     0.0184422     0.0184422         0            1     
+473: decode:opslicerExternal:OpSlicer                    0.00538796    0.00538796    0.00538796    0.00538796         0            1     
+474: decode:crttag:SingleCRTMatchingProducer              0.0231673     0.0231673     0.0231673     0.0231673         0            1     
+475: decode:crtreco:TwoCRTMatchingProducer                0.0128138     0.0128138     0.0128138     0.0128138         0            1     
+476: decode:anodepiercerst0:T0RecoAnodePiercers            1.07673       1.07673       1.07673       1.07673          0            1     
+477: decode:pandora2Track:LArPandoraTrackCreation          11.6525       11.6525       11.6525       11.6525          0            1     
+478: decode:pandora2calo:Calorimetry                       4.95932       4.95932       4.95932       4.95932          0            1     
+479: decode:pandora2calonosce:Calorimetry                  4.55118       4.55118       4.55118       4.55118          0            1     
+480: decode:pandora2pid:Chi2ParticleID                    0.0211641     0.0211641     0.0211641     0.0211641         0            1     
+481: decode:pandora2cali:CalibrationdEdXPDSP              0.0867829     0.0867829     0.0867829     0.0867829         0            1     
+482: decode:pandora2calipid:Chi2ParticleID                0.0206842     0.0206842     0.0206842     0.0206842         0            1     
+483: decode:pandora2Shower:LArPandoraShowerCreation        4.17815       4.17815       4.17815       4.17815          0            1     
+484: decode:pandora2Showercalo:ShowerCalorimetry           4.1729        4.1729        4.1729        4.1729           0            1     
+485: decode:pandora2Showercalonosce:ShowerCalorimetry      3.83562       3.83562       3.83562       3.83562          0            1     
+486: [art]:TriggerResults:TriggerResultInserter          0.000349372   0.000349372   0.000349372   0.000349372        0            1     
+487: end_path:out1:RootOutput                            2.8912e-05    2.8912e-05    2.8912e-05    2.8912e-05         0            1     
+488: end_path:out1:RootOutput(write)                       2.79458       2.79458       2.79458       2.79458          0            1     
+489: ======================================================================================================================================
+490: 
+491: ====================================================================================================
+492: MemoryTracker summary (base-10 MB units used)
+493: 
+494:   Peak virtual memory usage (VmPeak)  : 3474.9 MB
+495:   Peak resident set size usage (VmHWM): 1944.83 MB
+496:   Details saved in: 'mem.db'
