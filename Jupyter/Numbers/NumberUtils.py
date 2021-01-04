@@ -47,7 +47,8 @@ def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines):
     ax.set_title(Value)
     ax.set_xlabel("Year")
     ax.set_ylabel(Value + ", " + Units[Value])
-    plt.savefig(Value+".png",transparent=True)
+    #plt.savefig(Value+".png",transparent=True)
+    plt.savefig(Value+"_w.jpg",transparent=False)
     plt.show()
 
 
@@ -66,6 +67,7 @@ def DrawType(Value,Years,Data,Types,Units,typecolors,typelines):
     ax.set_xlabel("Year")
     ax.set_ylabel(Value + ", " + Units[Value])
     ax.set_title(Value)
-    plt.savefig(Value+".png",transparent=True)
+    #plt.savefig(Value+".png",transparent=True)
+    plt.savefig(Value+"_w.jpg",transparent=False)
     plt.show()
 
