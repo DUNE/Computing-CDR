@@ -160,15 +160,34 @@ The \threed points are obtained using the Space~Point~Solver reconstruction algo
 
 \subsection{\dword{pddp}}
 
-The \dword{pddp} detector began taking data using cosmic rays in August 2019.  Thanks to preceding data challenges, those data have been successfully integrated into the full data cataloging and reconstruction chains and are now being reconstructed as they arrive.   The \dword{pddp} technology locates the readout systems above a thin layer of argon gas above the liquid argon surface.  This gas layer allows an external electric field to accelerate the electrons and produce gas amplification.  The result is a substantial increase in signal-to-noise in the resulting signals, at the cost of longer electron drifts from the bottom of the liquid volume.  Figure \ref{dpevent} illustrates early data from \dword{pddp}. 
+%The \dword{pddp} detector began taking data using cosmic rays in August 2019.  Thanks to preceding data challenges, those data have been successfully integrated into the full data cataloging and reconstruction chains and are now being reconstructed as they arrive.   The \dword{pddp} technology locates the readout systems above a thin layer of argon gas above the liquid argon surface.  This gas layer allows an external electric field to accelerate the electrons and produce gas amplification.  The result is a substantial increase in signal-to-noise in the resulting signals, at the cost of longer electron drifts from the bottom of the liquid volume.  Figure \ref{dpevent} illustrates early data from \dword{pddp}. 
 
+The \dword{pddp} detector began taking data using cosmic rays in August 2019. Thanks to preceding data challenges, those data have been successfully integrated into the full data cataloging and reconstruction chains and are now being reconstructed as they arrive.The basic operating principle shown in figure \ref{dp_principle} is very similar to that of the  \dword{pdsp} design. Charged particles that traverse the active volume of the LArTPC ionize the medium while also producing scintillation
+light. The ionization electrons drift in the vertical direction toward an extraction grid just below the liquid-vapor interface. 
+After reaching the grid,
+an E field stronger than the drift field extracts the electrons from the liquid up into the gas phase.
+Once in the gas, electrons encounter micro-pattern gas detectors, called large electron multipliers
+(LEMs), with high-field regions. The LEMs amplify the electrons in avalanches that occur in these
+high-field regions. The amplified charge is then collected and recorded on a 2D anode consisting
+of two sets of 3.125 mm-pitch gold-plated copper strips that provide the x and y coordinates (and
+thus two views) of an event.  
+\begin{figure}
+\centering
+\includegraphics[width=0.85\textwidth]{graphics/IntroFigures/Fig_11_protodune-dp-principle.png}
+\caption {Principle of DP readout (left), and Thicknesses and HV values for electron extraction from liquid to gaseous argon, their
+multiplication by LEMs, and their collection on the x and y readout anode plane (right) The HV values are
+indicated for a drift field of 0.5 kV/cm in LAr.}
+\label{dp_principle}
+\end{figure}
+The \dword{pddp} detector   consists of a 700 ton volume of liquid argon, with  a drift length of 6m.
+Data taking with  cosmic rays  started in August 2019: a total of 1.9M events has been collected. 
 \begin{figure}
 \centering
 \includegraphics[width=0.85\textwidth]{graphics/IntroFigures/Fig_09_protodune-dp-event.png}
 \caption {Cosmic ray data from the dual phase prototype}
 \label{dpevent}
 \end{figure}
-
+The size of the raw data files (run sequence files) corresponds 3GB, each file containing 30 events. All data( ($\sim$ 200TB)  have been copied to FERMILAB. A subsample is composed by data sets taken during detector transient conditions, motivated by various specific testing needs;  all cosmic ray data taken in well defined and stable detector conditions in 2019 and 2020 ($\approx$  377K events) have been processed with LArSoft by performing the reconstruction of hits and 2D tracks. 
 
 \subsection{Conclusions from prototype tests}
 \dword{protodune} prototype runs are ongoing and will continue through beam tests in 2021-22 at \dword{cern}.  Data cataloging, movement and storage techniques were tested before the start of the \dword{pdsp} and \dword{pddp}  runs and were able to handle the full rate of the experiments.   Reconstruction algorithms were also in place on time and were able to produce early results that led to increased understanding of the detector and improved calibrations for a second iteration.  These tests also identified some deficiencies in our infrastructure, including incomplete schemes for the transmission of configuration and conditions information between hardware operations and  offline computing.  The test-beam runs have been extremely valuable in allowing us to determine which variables are important to transmit and in designing improved systems for gathering and storing that information. 
