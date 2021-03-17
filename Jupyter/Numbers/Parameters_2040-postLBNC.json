@@ -1,7 +1,7 @@
 # raise PD sim to 20/year but reduce disk lifetime to 1 year for sim 3-9-2020
 {"Years":
     [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040],
-    "MaxYears":23,
+    "MaxYears":13,
   "Units":
   {"Events":"Million", "Raw":"PB", "Test":"PB", "Reco":"PB", "CPU":"MHr", "Sim Events":"M", "Sim":"PB", "Sim-CPU":"MHr", "All":"PB", "Years":"", "Total-CPU":"MHr", "Cumulative Tape":"PB", "Cumulative Disk":"PB", "Cores":"2020 Vintage Cores"},
   "Detectors":["SP","DP","FD","ND"],
