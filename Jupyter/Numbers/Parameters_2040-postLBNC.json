@@ -6,6 +6,7 @@
   {"Events":"Million", "Raw":"PB", "Test":"PB", "Reco":"PB", "CPU":"MHr", "Sim Events":"M", "Sim":"PB", "Sim-CPU":"MHr", "All":"PB", "Years":"", "Total-CPU":"MHr", "Cumulative Tape":"PB", "Cumulative Disk":"PB", "Cores":"2020 Vintage Cores","SPEC06":"kSPEC06"},
   "Detectors":["SP","DP","FD","ND"],
   "CombinedDetectors":["ProtoDUNE","FD","ND"],
+  "Splits":{"Raw":0.5,"Sim":0.75,"Reco":0.75,"Test":0.5}, # collaboration share of each data type
   "SP":
   {"Raw":70, # from first beam test
     "CPU":0.1667, #Hr/Event
