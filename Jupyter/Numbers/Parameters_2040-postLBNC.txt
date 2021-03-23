@@ -1,7 +1,8 @@
 Fiscal year starts: April 1
 Tape is accounted for at: end of fiscal year
 Disk is accounted for on: October 1
-CPU is accounted for at: end fiscal yearReco passes per Year: 1
+CPU is accounted for at: end fiscal year
+Reco passes per Year: 1
 Sim passes per Year: 1
 Analysis relative to Sim+Reco: 1
 For data type Raw
