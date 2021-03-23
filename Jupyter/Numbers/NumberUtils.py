@@ -35,10 +35,13 @@ def dump(det,datatype,a,Units):
 
 # for detector values
 def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines):
+    
+    maxyears = Years[-1]
 
     fig=plt.figure()
     ax = fig.add_axes([0.2,0.2,0.7,0.7])
-    ax.set_xlim(Years[0],Years[-1])
+    ax.set_xlim(Years[0],maxyears)
+    
     ax.spines['bottom'].set_position('zero')
     toplot = Data[Value]
     for type in Types:
@@ -47,8 +50,10 @@ def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines):
     ax.set_title(Value)
     ax.set_xlabel("Year")
     ax.set_ylabel(Value + ", " + Units[Value])
-    #plt.savefig(Value+".png",transparent=True)
-    plt.savefig(Value+"_w.jpg",transparent=False)
+    plt.grid()
+    plt.savefig(Value.replace(" ","-")+".png",transparent=True)
+    #plt.savefig(Value+"_w.jpg",transparent=False)
+   
     plt.show()
 
 
@@ -59,15 +64,20 @@ def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines):
 def DrawType(Value,Years,Data,Types,Units,typecolors,typelines):
     fig=plt.figure()
     ax = fig.add_axes([0.2,0.2,0.7,0.7])
-    ax.set_xlim(Years[0],Years[-1])
+    maxyears = Years[-1]
+    ax.set_xlim(Years[0],maxyears)
+   
     ax.spines['bottom'].set_position('zero')
     for type in Types:
       ax.plot(Years,Data[type][Value],color=typecolors[type],linestyle=typelines[type],label=type)
+    
     ax.legend(frameon=False)
     ax.set_xlabel("Year")
     ax.set_ylabel(Value + ", " + Units[Value])
     ax.set_title(Value)
-    #plt.savefig(Value+".png",transparent=True)
-    plt.savefig(Value+"_w.jpg",transparent=False)
+    plt.grid()
+    plt.savefig(Value.replace(" ","-")+".png",transparent=True)
+    #plt.savefig(Value+"_w.jpg",transparent=False)
+    
     plt.show()
 

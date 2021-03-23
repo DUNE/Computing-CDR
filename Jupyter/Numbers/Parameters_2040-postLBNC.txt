@@ -1,32 +1,44 @@
 For data type Raw
-    Raw Tape lifetime 100.0, years
-   Raw Disk lifetime   1.0, years
-   Raw Collaboration fraction  0.50
+   Raw Tape lifetime 100.0, years
+   Raw Tape Copies   2.0
+   Raw Collaboration Tape fraction  0.50
+   Raw Disk lifetime   0.5, years
+   Raw Disk Copies   1.0
+   Raw Collaboration Disk fraction  0.50
 For data type Test
-   Test Tape lifetime   0.5, years
+  Test Tape lifetime   0.5, years
+  Test Tape Copies   1.0
+  Test Collaboration Tape fraction  0.50
   Test Disk lifetime   0.5, years
-  Test Collaboration fraction  0.50
+  Test Disk Copies   0.5
+  Test Collaboration Disk fraction  0.00
 For data type Reco
-   Reco Tape lifetime  15.0, years
+  Reco Tape lifetime  15.0, years
+  Reco Tape Copies   1.0
+  Reco Collaboration Tape fraction  0.50
   Reco Disk lifetime   2.0, years
-  Reco Collaboration fraction  0.75
+  Reco Disk Copies   2.0
+  Reco Collaboration Disk fraction  0.75
 For data type Sim
-    Sim Tape lifetime  15.0, years
+   Sim Tape lifetime  15.0, years
+   Sim Tape Copies   1.0
+   Sim Collaboration Tape fraction  0.50
    Sim Disk lifetime   2.0, years
-   Sim Collaboration fraction  0.75
-Years,	   CPU(Mhrs),	 kSPEC06 	 CPU(cores),	 Tape(PB),	 Collab 	 Disk(PB)	 Collab
-2018,	       11,	       27,	     1797,	      2.5,	      1.5,	      2.7,	      1.8
-2019,	       36,	       87,	     5795,	      8.9,	      5.5,	     10.0,	      7.1
-2020,	       43,	      105,	     6991,	     14.2,	      9.1,	     15.4,	     11.3
-2021,	       52,	      128,	     8541,	     21.3,	     14.1,	     20.5,	     15.1
-2022,	       88,	      216,	    14380,	     39.6,	     25.4,	     33.6,	     23.9
-2023,	      105,	      257,	    17163,	     52.7,	     34.3,	     38.3,	     28.0
-2024,	      100,	      244,	    16239,	     61.7,	     41.0,	     36.9,	     27.6
-2025,	       41,	      101,	     6752,	     65.7,	     44.0,	     26.3,	     19.7
-2026,	       31,	       76,	     5055,	     70.9,	     47.8,	     18.2,	     13.5
-2027,	       31,	       76,	     5055,	     80.3,	     53.8,	     22.2,	     16.0
-2028,	       54,	      132,	     8806,	     95.8,	     63.5,	     31.8,	     22.3
-2029,	       70,	      171,	    11416,	    113.6,	     74.6,	     40.1,	     28.3
-2030,	       97,	      237,	    15819,	    139.5,	     90.0,	     48.3,	     33.5
+   Sim Disk Copies   2.0
+   Sim Collaboration Disk fraction  0.75
+Calendar YearsYears,	   CPU(Mhrs),	 kSPEC06 	 CPU(cores),	 Tape(PB),	 Collab 	 Disk(PB)	 Collab
+2018,	       11,	       27,	     1797,	      2.5,	      1.3,	      2.3,	      1.6
+2019,	       36,	       87,	     5795,	      8.9,	      4.4,	      9.3,	      6.7
+2020,	       43,	      105,	     6991,	     14.2,	      7.1,	     15.1,	     11.1
+2021,	       52,	      128,	     8541,	     21.3,	     10.6,	     20.1,	     14.8
+2022,	       88,	      216,	    14380,	     39.6,	     19.8,	     31.5,	     22.3
+2023,	      105,	      257,	    17163,	     52.7,	     26.4,	     37.0,	     27.2
+2024,	      100,	      244,	    16239,	     61.7,	     30.9,	     36.9,	     27.5
+2025,	       41,	      101,	     6752,	     65.7,	     32.9,	     26.3,	     19.5
+2026,	       31,	       76,	     5055,	     70.9,	     35.4,	     18.2,	     13.4
+2027,	       31,	       76,	     5055,	     80.3,	     40.1,	     22.2,	     14.7
+2028,	       54,	      132,	     8806,	     95.8,	     47.9,	     29.9,	     20.0
+2029,	       70,	      171,	    11416,	    113.6,	     56.8,	     38.1,	     25.7
+2030,	       97,	      237,	    15819,	    139.5,	     69.7,	     44.3,	     29.9
 Assume present core is  0.015 kSPEC06 
 CPU # is real CPU, Cores and SPEC06 are Walltime with CPU/Walltime =  0.70
