@@ -1,7 +1,6 @@
 {
-  "Changes":[
-    "2021-03-24 try with CERN/FNAL combined for raw and test.",
-    "2021-03-22 add Collab vs FNAL shares, restore sim disk lifetime to 2."
+  "Changes":["2021-03-24 try with CERN/FNAL combined for raw.",
+  "2021-03-22 add Collab vs FNAL shares, restore sim disk lifetime to 2."
   ],
   "Years":[
     2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040
@@ -14,22 +13,22 @@
   "Detectors":["SP","DP","FD","ND"],
   "CombinedDetectors":["ProtoDUNE","FD","ND"],
   "SplitsEarly":{
-    "Tape":{"Raw":0.0,"Sim":0.50,"Reco":0.50,"Test":0.00},
+    "Tape":{"Raw":0.0,"Sim":0.50,"Reco":0.50,"Test":0.50},
     "Disk":{"Raw":0.0,"Sim":0.75,"Reco":0.75,"Test":0.00}
   },
   "SplitsLater":{
-  "Tape":{"Raw":0.5,"Sim":0.50,"Reco":0.50,"Test":0.50},
-  "Disk":{"Raw":0.5,"Sim":0.75,"Reco":0.75,"Test":0.00}
-  },
+  "Tape":{"Raw":0.0,"Sim":0.50,"Reco":0.50,"Test":0.50},
+  "Disk":{"Raw":0.0,"Sim":0.75,"Reco":0.75,"Test":0.00}
+  },  
   "SP":
-  {"Raw":70, # from first beam test
-    "CPU":0.1667, #Hr/Event
-    "Sim-CPU":0.75, #Hr/Event
-    "Reco":35, #MB/Event -
-    "Sim":220, #MB/Event
-    "Events":[10.9, 19.4, 6.5, 6.5, 43.5, 20, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0], #millions
-    "Test":[157, 600, 500, 769.23, 3346.15, 500, 500, 500, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0], # commissioning stuff in TB
-    "Sim Events":[1.25, 5, 5, 10, 20, 20, 20, 5, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0] #millions
+  {"Raw":70,
+    "CPU":0.1667,
+    "Sim-CPU":0.75,
+    "Reco":35,
+    "Sim":220,
+    "Events":[10.9, 19.4, 6.5, 6.5, 43.5, 20, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0],
+    "Test":[157, 600, 500, 769.23, 3346.15, 500, 500, 500, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0],
+    "Sim Events":[1.25, 5, 5, 10, 20, 20, 20, 5, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0]
   },
   "DP":
     {"Raw":110,
@@ -58,25 +57,24 @@
     "Reco":20,
     "Sim":50,
     "Events":[0, 0, 0, 0, 10, 10, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25],
-    "Test":[0, 0, 0, 0, 300, 300, 0, 0, 0, 0, 0, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500,500, 500 ],
+    "Test":[0, 0, 0, 0, 300, 300, 0, 0, 0, 0, 0, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500,500, 500, ],
     "Sim Events":[0, 0, 10, 25, 10, 10, 10, 10, 50, 50, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
   },
   "Analysis":
     {"Scale":1,
       "Add":["ProtoDUNE", "FD", "ND"]
   },
-  "RecoMemory":{"SP":3,"DP":3,"ProtoDUNE":3,"FD":100,"ND":100}, # of years of data reprocessed when do a new pass
-  "PatternFraction":{"SP":0.7,"DP":0.7,"ProtoDUNE":0.7,"FD":0.1,"ND":0.9}, #fraction of time spent on PR as opposed to hit-finding
+  "RecoMemory":{"SP":3,"DP":3,"ProtoDUNE":3,"FD":100,"ND":100},
+  "PatternFraction":{"SP":0.7,"DP":0.7,"ProtoDUNE":0.7,"FD":0.1,"ND":0.9},
   "TapeLifetimes":{"Raw":100, "Test":0.5, "Reco":15, "Sim":15},
-  "DiskLifetimes":{"Raw":1, "Test":0.5, "Reco":2, "Sim":2},  # raw and test only hang around a short while, can be restaged
-  "TapeCopies":{"Raw":2, "Test":1, "Reco":1, "Sim":1},  # will take some coding to make these work out with 2 copies.
+  "DiskLifetimes":{"Raw":1., "Test":0.5, "Reco":2, "Sim":2},
+  "TapeCopies":{"Raw":2, "Test":1, "Reco":1, "Sim":1},
   "DiskCopies":{"Raw":1, "Test":0.5, "Reco":2, "Sim":2},
   "PerYear":
-  {"Raw":1, "Test":1, "Reco":1, "Sim":1, "Events":1, "Sim Events":1, "CPU":1, "Sim-CPU":1, "Analysis":1, "Analysis-CPU":1}, # of times you redo them per year, CPU is reco CPU, Sim-CPU is sim CPU
+  {"Raw":1, "Test":1, "Reco":1, "Sim":1, "Events":1, "Sim Events":1, "CPU":1, "Sim-CPU":1, "Analysis":1, "Analysis-CPU":1},
   "Cores":{
-    "Efficiency":0.7,  # CPU reasonable
-    "2020Units":1  # raise this # if machines get faster
-  },
+    "Efficiency":0.7,
+    "2020Units":1
   "kHEPSPEC06PerCPU":0.015,
   "FiscalYearStart":"April 1",
   "CPU Accounting":"end of fiscal year",
