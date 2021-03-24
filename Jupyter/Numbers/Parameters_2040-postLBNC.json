@@ -68,7 +68,7 @@
   },
   "kHEPSPEC06PerCPU":0.015,
   "FiscalYearStart":"April 1",
-  "CPU Accounting":"end fiscal year",
+  "CPU Accounting":"end of fiscal year",
   "Tape Accounting":"end of fiscal year",
   "Disk Accounting":"October 1",
   "TypeColors": {"Raw":"blue", "Test":"orange", "Reco":"red", "Sim":"grey", "Total":"black"},
