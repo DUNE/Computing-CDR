@@ -1,8 +1,61 @@
-\chapter{Authentication/Authorization - (Timm - any others? )}
+\chapter{Authentication/Authorization \hideme{Timm - any others}}
 \label{ch:auth}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{xyz}
-\label{sec:auth:xyz}  %% fix label according to section
+\section{Authentication and Authorization for Distributed Computing}
+%\label{sec:auth:xyz}  %% fix label according to section
+\subsection{Obtaining access to DUNE Computing}
 
-Need to describe present methods and future landscape.
+DUNE collaborators obtain access to computing currently by applying for a computing account at Fermilab.  
+The DUNE secretariat then verifies that they are members of DUNE.  There is a central repository called FERRY
+which is used to determine who can log into Fermilab interactive resources and also who can obtain Grid X.509
+credentials.  When the Fermilab ID of the collaborator is expired, the access is automatically removed.
+
+\subsection{Current State of Authentication and Authorization}
+
+Interactive login to Fermilab is authenticated via Kerberos 5 credentials.  Only currently registered DUNE
+users have accounts.
+
+Authentication for batch submission and access to storage is done via X.509 certificates and proxies
+on the grids of which we are members, namely the Open Science Grid (OSG) in the USA and the Worldwide LHC 
+Computing Grid (WLCG) elsewhere in the world.  There are automated means at Fermilab which dynamically generate 
+X.509 certificates on behalf of the user at the time of batch submission, from the CILogon-Silver 
+certificate authority. This authentication is used to submit batch jobs both to the local
+Fermilab clusters known as FermiGrid and to the rest of the distributed computing sites.  The proxies are
+also used to access files on storage on the global storage elements around the world.  
+X.509 certificates are issued by members of the International Global Trust Federation (IGTF).  They are then verified 
+by the DUNE VOMS server.
+
+Access to internal DUNE web sites can be done either by the certificates mentioned above, or by the Fermilab 
+Single Sign On.  In either case new collaborators have to request access independently to these resources
+when first joining DUNE, and at the moment a Fermilab computing account is required.  Some DUNE meeting web sites
+are protected by password keys.
+
+\subsection{Planned Changes to Authentication Currently Under Way}
+
+The OSG and WLCG are both in the process of changing over to JSON Web Tokens for authentication of
+batch jobs and storage. This is an authentication protocol which has significant adoption in industry.
+Fermilab has set up a token-issuing service to issue these tokens on behalf of DUNE and early tests have been 
+done to successfully access storage elements with these tokens.  The token issuer is populated with information 
+from the FERRY server mentioned above. The tokens include a unique identifier to 
+know which user is doing it, and a list of capabilities that the user is allowed to have, including which 
+areas in the storage element the user is allowed to write.  The token infrastructure is supposed to 
+be fully deployed by the end of calendar year 2021, but will probably run in parallel with the X.509 
+based authentication infrastructure for some number of years.
+
+It is not as yet clear if these JWT tokens will also be used for web access going forward.  It is likely 
+that web access will continue to be via the Fermilab Single Sign-on for the foreseeable future.
+
+\subsection{Requirements for Authentication/Authorization Going Forward}
+
+DUNE Computing Management has expressed to Fermilab the following requirements:
+We need a way for DUNE collaborators who may not yet have Fermilab credentials to see and edit internal DUNE 
+web pages.  We also need a way for computing staff who work at institutions where we have access to the 
+which are not themselves DUNE collaborators to have access to the computing documentation if needed.
+There are a number of technical solutions for federated web identity including the Edugain federation
+of identity providers.  
+
+
+
+
+

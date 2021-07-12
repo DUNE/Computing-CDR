@@ -1,5 +1,5 @@
 \documentclass{dune} % Duke of English - Kirby
-\usepackage{subfiles}
+
 \input{common/preamble}
 %\renewcommand\thedoctitle{\voltitletc} % defined in common/defs.tex
 %\newcommand\thevolumenumber{\volnumbertc} 
@@ -11,7 +11,7 @@
 \cleardoublepage
 
 % use this for things you want to only show up in some cases
-%\newcommand{\hideme}[1]{{\it( #1)}}  moved to defs
+\newcommand{\hideme}[1]{{\it( #1)}}
 % comment next line out to see assigned authors
 %\renewcommand{\hideme}[1]{}
 \input{common/init}
@@ -50,28 +50,30 @@ https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
 
 \part{Overview} %Heidi
 \label{part:overview}
-\subfile{chapters/intro-intro}
+\input{chapters/intro-intro}
 
 \cleardoublepage
 
 
 
 
-\subfile{chapters/intro-volume-estimates}% (Heidi and Kirby)}  % Heidi and Kirby
+\input{chapters/intro-volume-estimates}% (Heidi and Kirby)}  % Heidi and Kirby
 \cleardoublepage
 
-\subfile{chapters/intro-use-cases}
+\input{chapters/intro-use-cases}
 \cleardoublepage
 
-\subfile{chapters/intro-cooperation}
+\input{chapters/intro-cooperation}
 \cleardoublepage
 
+\input{common/final}
+\end{document}
 
 \part{Algorithms and Frameworks} %  Tom Junk, David Adams
 
 In order to accomplish the goals outlined in Part~\ref{part:overview}, a large number of algorithms must be applied to a large sample of data and also large samples of simulated data.  Care must be taken to apply the right calibrations and catalog the outputs so that the computational steps are unambiguous, complete and reproducible.  This part describes the frameworks in Chapter~\ref{ch:fworks}, databases in Chapter~\ref{ch:db}, applications in Chapter~\ref{ch:appl}, including simulation, reconstruction, and analysis tasks.
 
-\subfile{chapters/algo-frameworks}  % Paul and Andrew
+\input{chapters/algo-frameworks}  % Paul and Andrew
 \cleardoublepage
 
 \input{chapters/algo-databases} % Norm and Paul 
@@ -137,7 +139,7 @@ In order to accomplish the goals outlined in Part~\ref{part:overview}, a large n
 \input{chapters/coll-org} %Schellman
 \cleardoublepage
 
-\subfile{chapters/coll-ccboard} %Clarke
+\input{chapters/coll-ccboard} %Clarke
 \cleardoublepage
 
 \input{chapters/coll-preservation} %Clarke

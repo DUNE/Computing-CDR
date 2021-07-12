@@ -1,7 +1,78 @@
-\chapter{Frameworks (Andrew Norman, Paul Laycock, Mathew Muether)}
+\documentclass[../main-00.tex]{subfiles}
+\begin{document}
+
+\chapter{Frameworks \hideme{Andrew Norman, Paul Laycock, Mathew Muether}}
 \label{ch:fworks}
-
+\todo{Define all the fun data concepts  - Schellman}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{xyz}
-\label{sec:fworks:xyz}  %% fix label according to section
+%\section{xyz}
+%\label{sec:fworks:xyz}  %% fix label according to section
 
+\section{Current status \hideme{ Junk/Muether}}
+
+The data processing framework in use by the \dword{fd} simulation and reconstruction efforts, the \dword{protodune} detectors and \dword{ndgar} is \dword{art}.  The \dword{art} framework defines the data processing loop, manages memory, interfaces to I/O tools, defines uniform mechanisms for defining, associating, and persisting data products, provides a uniform mechanism for job configuration, stores job configuration information in its output files, and manages messages, random numbers and exceptions.  The \dword{art} framework runs user code that is provided as {\it plug-ins}, which are built as separate shared object libraries that can be dynamically selected and loaded at runtime.  The \dword{art} framework is also used by the NOvA, Muon g-2, MicroBooNE, ICARUS, LArIAT and ArgoNeuT collaborations.  The \dword{art} framework evolved from CMS's software framework and started being used by intensity-frontier experiments in 2011~\cite{Green:2012gv}. It is developed, maintained and supported by Fermilab's \dword{scd}.
+
+The \dword{larsoft} toolkit is a collection of \dword{art} plug-ins and associated algorithm code, configuration files, and static data such as geometry specification files and photon visibility maps.  \dword{larsoft} provides the interface to event generators like \dword{genie} and \dword{corsika}, detector simulation via \dword{geant4}, custom simulation and reconstruction software, event displays and tutorials.  Experiment-specific metadata plug-ins assist in batch workflow organization.  \dword{larsoft} is supported by Fermilab's \dword{scd}, though much of the software has been contributed by participating experiment collaborations.
+
+TODO - paragraph on SSRI/\dword{tms}
+
+\dword{garsoft} is patterened on \dword{larsoft}.  It is a software toolkit for simulating and reconstructing data from \dword{ndgar}.  It is based on the \dword{art} framework.  Like \dword{larsoft}, it provides interfaces to event generators and \dword{geant4}, custom simulation and reconstruction software, and event displays.  It also provides simulation and reconstruction for \dword{ndgarlite}.  \dword{garsoft} is written, maintained, and supported by the DUNE collaboration.
+
+The \dword{ndlar} software effort is currently being developed as a series of standalone tools for simulating and reconstructing pixel-based \dword{lartpc} data.  Toolchains have been developed for analyzing SingleCube prototype data.
+
+The \dword{sand} software effort benefits from long experience with the \dword{kloe} detector, which provides the magnet and calorimeter.  New software is developed for the \dword{3dst} and other components of SAND.  Flexibility is important at this stage in order to allow studies of different detector designs to fill in between the \dword{3dst} and the calorimeter, such as a gaseous \dword{tpc}.  Because \dword{sand} will not move off axis with \dword{ndlar} and \dword{ndgar}
+
+\section{Requirements summary}
+% Taken from vCHEP paper
+Modern HEP software frameworks are in the process of addressing the increasing heterogeneity of computing architectures that are redefining the computing landscape, work that is closely followed by the HEP Software Foundation~\cite{Alves:2017she, Calafiura:2018rwe}. The DUNE collaboration is keen to leverage this work to minimise the development effort needed for its own software framework.  Nevertheless,
+given the unique challenges that DUNE data pose, the collaboration assembled a task force to define the requirements for its software framework.  Some of their findings are detailed in the following.
+
+\subsection{Data and I/O layer}
+Following the discussion on raw data processing, the DUNE software framework must have the ability to change its unit of data processing with extreme flexibility and ensure that memory is treated as a precious commodity.  
+It must be possible to correlate these units to DUNE data-taking "events" for exposure accounting, and experiment conditions.
+Partial reading of data is another strong requirement needed to keep memory usage under control.  There must be no assumptions on the data model, the framework must separate data and algorithms and further separate the persistent data representation from the in-memory representation seen by those algorithms.  DUNE data is well suited to massively parallel processing compute architectures, so the framework will need to have a flexible I/O layer supporting multiple persistent data formats as different formats may be preferred at different stages of data processing.  The sparsity of DUNE data also imply that compression will play an important role in controlling the storage footprint, especially for raw data, and the sparsity of physics signals further emphasise support for data reduction (skimming, slimming and thinning) in the framework.  The framework needs to be able to handle the reading and writing of parallel data streams, and navigate the association (if any) between these streams with a critical need to allow experiment code to mix simulation and (overlay) data.
+
+\subsection{Concurrency}
+Many aspects of DUNE data processing are well suited to concurrency solutions and the framework should be able to offload work to different compute architectures efficiently, facilitate access to co-processors for developers and schedule thread-safe and non-thread-safe work.  It must be possible to derive the input data requirements for any algorithm in order to define the sequence of all algorithms needed for a particular use case, and it must be possible to only configure those components required for that use case.
+
+\subsection{Reproducibility and provenance}
+As previously stated, the framework must ensure that memory is treated as a precious commodity, implying that intermediate data products cannot occupy memory beyond their useful lifetime.  Nevertheless, reproducibility is a key requirement of any scientific tool and the framework must provide a full provenance chain for any and all data products which must include enough information to reproduce identically every persistent data product. By definition, the chain will also need to include sufficient information to reproduce the transient data passed between algorithm modules, even though the product is not persisted in the final output.
+It is also highly desirable that the framework broker access to random number generators and seeds in order to guarantee reproducibility.  All of the preceding considerations imply that the software framework will need a very robust configuration system capable of handling the requirements in a consistent, coherent, and systematically reproducible way.
+
+\subsection{Analysis}
+Machine learning is already heavily used in analysis of ProtoDUNE data and the framework should give special attention to machine learning inference in the design, both to allow simple exchanges of inference backends and to record the provenance of those backends and all necessary versioning information.  Finally, the framework should be able to work with both Near Detector and Far Detector data on an equal footing, and within the same job.
+
+
+\section{HSF software frameworks review \hideme{Norman/Laycock}}
+
+Ideally we can cite an HSF review here \cite{HSF-fwk-review}.  The review studied the physics requirements laid out by the task force and gave expert feedback on those requirements, further distilling them to technical requirements.  The review found that several frameworks are capable of fulfilling many of \dword{dune}'s requirements, key requirements are the following:
+
+\begin{itemize}
+    \item one
+    \item two
+    \item three
+    \item four
+    \item five
+\end{itemize}
+
+\subsection{The closest match to \dword{dune}'s requirements}
+
+Following on from the HSF review, the \dword{dune} collaboration assessed the selection of frameworks suggested by HSF that warranted further investigation.  The framework that matches most closely to \dword{dune}'s needs is (drum roll).
+
+\subsection{Missing functionality}
+
+Even if the Captain Amazing framework is amazing, and it really is, there are still requirements that are not completely fulfilled by it.  These are:
+
+\begin{itemize}
+    \item one
+    \item two
+\end{itemize}
+
+\section{Plan to go forward \hideme{ Norman}}
+
+Development plan.
+
+%This plan was further reviewed by the HSF, maybe.
+%
+%\subsection{HSF recommendation for a path forward}
+\end{document}

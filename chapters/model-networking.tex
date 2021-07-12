@@ -1,7 +1,23 @@
-\chapter{Networking: (Mike Kirby and Peter Clarke)}
+\chapter{Networking \hideme{Mike Kirby and Peter Clarke}}
 \label{ch:netw}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{xyz}
-\label{sec:netw:xyz}  %% fix label according to section
+%\section{xyz}
+%\label{sec:netw:xyz}  %% fix label according to section
 
+
+\todo{{\it }Kirby to write first about US side of the network including 
+- US OSG site connectivity 
+- FNAL connection to ESNET
+Pete then hooks Europe on to this.}
+
+\todo{Some of this may move into cooperation section}
+
+Connection to European sites is accomplished via ESNET peering with Geant.  
+ESNET provides redundant transatlantic links at xxxx Gbit/s. These peer with Geant in ???London??? and ???Amsterdam??.
+Geant is the EU wide research network with a core capacity of several hundred Gbits/s. Geant in turn peers with NRENS (National Research and Education Networks) in each participating country, although details pertaining to each DUNE site vary. As example, in the UK the NREN is JISC-JANET, which at the time of writing has a 400 Gbit/s core and connects to the GridPP-RAL site redundantly at 100 Gbits/s. 
+Similarly CC-IN2P3 site in France is connected to RENATER at 100 Gbits/s, and the FZU site in the Czech Republic is connected to CESNET at 100 Gbit/s Gbit/s.  DUNE expects all participating countries to ensure that as part of their pledges of CPU and storage capacity, that the sites offered have commensurate network connections. We do not expect any systematic issues to arise, and none have done so in the WLCG/LHC context. DUNE participates in the worldwide HEP Network coordination body.
+
+In respect of layer-3 VRF provision (Virtual Routing and Forwarding), use of this technology is now very prevalent in HEP. VRFs provide a logical routing overlay that can allow for traffic engineering to utilise high capacity paths where needed. The LHC community uses a VRF called LHCONE, and this has also been used for DUNE traffic along with other non-LHC experiments such as BELLE. 
+At present DUNE is agnostic to the use of LHCONE, and since FNAL is connected to LHCONE it can easily accommodate sites with or without such provision.
+Investigations are currently underway to determine the technical requirements for the creation of a separate DUNEONE VRF were it to ever be required. It is however not currently foreseen, and does not form part of our baseline planning.

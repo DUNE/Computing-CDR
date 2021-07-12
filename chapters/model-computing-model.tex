@@ -1,4 +1,4 @@
-\chapter{Overview of Computing Model ()}
+\chapter{Overview of Computing Model \hideme{McNab}}
 \label{ch:cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -9,7 +9,7 @@ SURF -> FNAL -> off site storage -> processing -> analysis
 
 Simulation -> storage -> analysis
 
-
+\todo{Add diagrams}
 
 \section{Sites and Services}
 \label{sec:cm:sites_and_services}  %% fix label according to section
@@ -58,7 +58,9 @@ We envisage 5 classes of service, on which we will put requirements and request 
 \subsection{Network}
 \label{sec:cm:network}
 
-Networking is needed at all sites, with basic requirements including IPv4 and IPv6 support, an acceptable level of support, and unrestricted connectivity to other sites and on required port ranges. Other DUNE approved services impose further requirements in terms of network capacity which they require,
+Networking is needed at all sites, with basic requirements including IPv4 and IPv6.
+All sites should be connected to the wide area network, typically via their NREN, with sufficient capacity to handle the data I/O commensurate with their fraction of the workload. In practice this means at least 40 Gbit/s for major sites with large amounts of storage (with 100 Gbit/s becoming the normal expectation for a shared site such as a WLCG Tier-1) and at least 20 Gbit/s for smaller CPU only sites (but with 40-100 Gbit/s becoming the norm in shared sites).
+Other DUNE approved services may impose further requirements in terms of network capacity which they require,
 
 \subsection{DUNE Computing Element}
 \label{sec:cm:dce}
@@ -108,7 +110,7 @@ Networking. Cache? Support level? Tape without saying only tape forever.
 
 What we need DUNE services to be able to do, to do the above.
 
-
+\todo{consider both cases of data to job and job to data - discuss current issues but be vague about the future}
 
 %%%%%%%%%%% notes from 10-29
 
@@ -121,3 +123,5 @@ What we need DUNE services to be able to do, to do the above.
 % Mention possible need for cache for 
 
 %(How do they get the code? cvmfs or container.  
+
+\todo{Andrew compares the use case footprint table into a sites comparison}
