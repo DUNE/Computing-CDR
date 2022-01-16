@@ -4,17 +4,20 @@
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
+from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,
+                               AutoMinorLocator)
+
 # sum backwards over lifetime of record
-def cumulate(a,lifetime=100):
-  if lifetime < 1:
-    return a*lifetime
-  b = np.zeros(len(a))
-  for i in range(0,len(a)):
-    begin = max(0,i-lifetime+1)
-    for j in range(begin,i+1):
-      b[i] += a[j]
-  return b
-  
+#def cumulate(a,lifetime=100):
+#  if lifetime < 1:
+#    return a*lifetime
+#  b = np.zeros(len(a))
+#  for i in range(0,len(a)):
+#    begin = max(0,i-lifetime+1)
+#    for j in range(begin,i+1):
+#      b[i] += a[j]
+#  return b
+#
 
 
 # Utility function: string = dump(datatype,det,object)
@@ -41,7 +44,7 @@ def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines):
     fig=plt.figure()
     ax = fig.add_axes([0.2,0.2,0.7,0.7])
     ax.set_xlim(Years[0],maxyears)
-    
+    ax.xaxis.set_major_locator(MultipleLocator(5))
     ax.spines['bottom'].set_position('zero')
     toplot = Data[Value]
     for type in Types:
@@ -66,7 +69,7 @@ def DrawType(Value,Years,Data,Types,Units,typecolors,typelines):
     ax = fig.add_axes([0.2,0.2,0.7,0.7])
     maxyears = Years[-1]
     ax.set_xlim(Years[0],maxyears)
-   
+    ax.xaxis.set_major_locator(MultipleLocator(5))
     ax.spines['bottom'].set_position('zero')
     for type in Types:
       ax.plot(Years,Data[type][Value],color=typecolors[type],linestyle=typelines[type],label=type)
