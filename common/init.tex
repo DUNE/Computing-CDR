@@ -1,6 +1,7 @@
 % This should be \input first thing after \begin{document}
 
 
+
 \pagestyle{titlepage}
 
 \begin{center}
@@ -14,7 +15,9 @@
 
  
 
-%\titleextra  --- add back in if you want a picture here
+\titleextra  %--- add back in if you want a picture here
+
+\includegraphics[width=\textwidth]{graphics/dune-firstVersionNotBad-show.jpg}
 
   \vspace{10mm}
   \today
@@ -63,8 +66,8 @@ The DUNE collaboration also acknowledges the international, national, and region
 \renewcommand{\chaptermark}[1]{%
 \markboth{Chapter \thechapter:\ #1}{}}
 \fancyhead{}
-\fancyhead[RO,LE]{\textsf{\footnotesize \thechapter--\thepage}}
-\fancyhead[LO,RE]{\textsf{\footnotesize \leftmark}}
+\fancyhead[RO,L]{\textsf{\footnotesize \thechapter--\thepage}}
+\fancyhead[LO,R]{\textsf{\footnotesize \leftmark}}
 
 \fancyfoot{}
 \fancyfoot[RO]{\textsf{\footnotesize Conceptual Design Report}}

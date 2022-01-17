@@ -134,7 +134,7 @@
 \RequirePackage{tikz}
 \RequirePackage[skins]{tcolorbox}
 
-\usetikzlibrary{snakes}
+%\usetikzlibrary{snakes}
 \usetikzlibrary{matrix}
 \usetikzlibrary{trees}
 \usetikzlibrary{positioning,arrows}

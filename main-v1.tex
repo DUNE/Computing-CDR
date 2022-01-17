@@ -1,5 +1,7 @@
 \documentclass{dune} % Duke of English - Kirby
+% new version with rearranged section, Januay 7, 2021
 \usepackage{subfiles}
+\renewcommand{\familydefault}{\sfdefault}
 \input{common/preamble}
 %\renewcommand\thedoctitle{\voltitletc} % defined in common/defs.tex
 %\newcommand\thevolumenumber{\volnumbertc} 
@@ -51,109 +53,111 @@ https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
 \part{Overview} %Heidi
 \label{part:overview}
 \subfile{chapters/intro-intro}
+\cleardoublepage
 
+%\subfile{chapters/intro-global}
+%\cleardoublepage
+
+
+\part{`Event' scale}\label{part:event} %  Tom Junk, David Adams \label{part:event}
+
+
+\subfile{chapters/algo-use-cases}. %This text moves into different section 
+\cleardoublepage
+
+\subfile{chapters/algo-applications} % Tom and Mathew and Elisabetta - merge with use cases? 
+\cleardoublepage
+
+\subfile{chapters/algo-data-format}  % Paul and Andrew
+\cleardoublepage
+
+\subfile{chapters/algo-frameworks}  % Paul and Andrew
+\cleardoublepage
+
+\subfile{chapters/algo-databases} % Norm and Paul 
+\cleardoublepage
+
+\part{Global Computing Model  }\label{part:model} % McNab \label{part:model}
+
+\subfile{chapters/model-volume-estimates}% (Heidi and Kirby)}  % Heidi and Kirby
+\cleardoublepage
+
+\subfile{chapters/model-computing-model}
+\cleardoublepage
+
+\subfile{chapters/model-data-management}
+\cleardoublepage
+
+\subfile{chapters/model-networking}
+\cleardoublepage
+
+\subfile{chapters/model-workflow}
 \cleardoublepage
 
 
-
-
-\subfile{chapters/intro-volume-estimates}% (Heidi and Kirby)}  % Heidi and Kirby
+\subfile{chapters/model-workflow-examples}
 \cleardoublepage
 
-\subfile{chapters/intro-use-cases}
+%\part{Computing Services \hideme{Steve Timm}} % Timm
+
+%\subfile{chapters/serv-services-overview}
+%\cleardoublepage
+
+%\subfile{chapters/serv-information-systems}
+%\cleardoublepage
+
+%\subfile{chapters/serv-monitoring}
+
+
+\part{Integration and Evolution}
+
+\subfile{chapters/serv-services-overview}
+\cleardoublepage
+
+\subfile{chapters/serv-information-systems}
+\cleardoublepage
+
+\subfile{chapters/serv-monitoring}
+
+\subfile{chapters/serv-auth}
+\cleardoublepage
+
+\subfile{chapters/serv-code-management} % Junk and Adams
+\cleardoublepage
+
+
+\subfile{chapters/coll-train-and-doc} % David
+\cleardoublepage
+
+\subfile{chapters/coll-preservation} %Clarke
+\cleardoublepage
+
+\part{Conclusions and Resources} %Kirby
+
+%\subfile{chapters/intro-cooperation}  
+%\cleardoublepage
+
+\subfile{chapters/coll-org} %Schellman
 \cleardoublepage
 
 \subfile{chapters/intro-cooperation}
 \cleardoublepage
 
-
-\part{Algorithms and Frameworks} %  Tom Junk, David Adams
-
-In order to accomplish the goals outlined in Part~\ref{part:overview}, a large number of algorithms must be applied to a large sample of data and also large samples of simulated data.  Care must be taken to apply the right calibrations and catalog the outputs so that the computational steps are unambiguous, complete and reproducible.  This part describes the frameworks in Chapter~\ref{ch:fworks}, databases in Chapter~\ref{ch:db}, applications in Chapter~\ref{ch:appl}, including simulation, reconstruction, and analysis tasks.
-
-\subfile{chapters/algo-frameworks}  % Paul and Andrew
-\cleardoublepage
-
-\input{chapters/algo-databases} % Norm and Paul 
-\cleardoublepage
-
-\input{chapters/algo-applications} % Tom and Mathew and Elisabetta
-
-\cleardoublepage
-
-\part{Global Computing Model  } % McNab
-
-\input{chapters/model-computing-model}
-\cleardoublepage
-
-\input{chapters/model-site-resources}
-\cleardoublepage
-
-\input{chapters/model-data-placement}
-\cleardoublepage
-
-\input{chapters/model-networking}
-\cleardoublepage
-
-\input{chapters/model-workflow-examples}
-\cleardoublepage
-
-\part{Computing Services \hideme{Steve Timm}} % Timm
-
-\input{chapters/serv-services-overview}
-\cleardoublepage
-
-\input{chapters/serv-data-management}
-\cleardoublepage
-
-\input{chapters/serv-workload-management}
-\cleardoublepage
-
-\input{chapters/serv-workflow}
-\cleardoublepage
-
-\input{chapters/serv-information-systems}
-\cleardoublepage
-
-\input{chapters/serv-monitoring}
-
-\input{chapters/serv-auth}
-
-\cleardoublepage
-
-\input{chapters/serv-code-management} % Junk and Adams
-\cleardoublepage
-
-\part{Resources Summary} %Kirby
-
-%\input{chapters/ro-resource-needs}
-
-%\input{chapters/ro-personnel-needs}
-
-%\input{chapters/ro-work-packages}
-
-\part{Collaboration} 
-
-\input{chapters/coll-org} %Schellman
-\cleardoublepage
-
 \subfile{chapters/coll-ccboard} %Clarke
 \cleardoublepage
 
-\input{chapters/coll-preservation} %Clarke
+\printglossaries
+
 \cleardoublepage
-
-%\input{chapters/serv-code-management} % Junk and Adams
-%\cleardoublepage
-
-
-\input{chapters/coll-train-and-doc} % David
+%begin stuff from init per Thomas 6/2/2106
+% end stuff from init
 \cleardoublepage
-
-\part{Summary and Plans}
-
-\fixme{Where do personnel needs go?}
-
-
-\input{common/final}
+\renewcommand{\bibname}{References}
+\bibliographystyle{utphys} 
+% To understand the style chosen, see:
+% https://arxiv.org/hypertex/bibstyles/ (very bottom -- additions) and
+% https://www.sharelatex.com/learn/Bibtex_bibliography_styles
+% July 2017, AH and BV (and AM)
+\bibliography{common/tdr-citedb}
+%\input{common/final}
 \end{document}

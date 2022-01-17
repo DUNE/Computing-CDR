@@ -1,4 +1,6 @@
-\section{Reconstruction Algorithms\hideme{ TRJ}}
+\documentclass[../main-v1.tex]{subfiles}
+\begin{document}
+\section{Reconstruction Algorithms\hideme{ TRJ - draft}}
 \label{sec:algo:reco}
 
 This section gives brief outlines of reconstruction algorithms in use in DUNE's detectors.  The \dword{fd} will consist of four modules, at least three of which will be \dwords{lartpc}, and the fourth module, the module of opportunity, has yet to be designed.  The near detector will have a \dword{lartpc}, in addition to a muon spectrometer and/or \dword{ndgar}, and \dword{sand}, each of which consists of multiple subdetectors.  \dword{ndlar} will have a pixel-based readout, which enables a much easier reconstruction of densely-packed objects.  The \dword{pdsp} detector is also a \dword{lartpc}, and a vertical-drift prototype is planned.
@@ -6,7 +8,7 @@ This section gives brief outlines of reconstruction algorithms in use in DUNE's 
 \subsection{Liquid Argon TPC Reconstruction}
 \label{sec:algo:reco:lartpc}
 
-\subsubsection{Wire and Strip-Based Liquid Argon TPC Recontruction}
+\subsubsection{Wire- and Strip-Based Liquid Argon TPC Reconstruction}
 \label{sec:algo:reco:lartpc:wirestrip}
 
 Reconstructing events in a \dword{lartpc} is challenging.  Each trigger record contains a large number of waveforms, one for each readout channel.  In \dword{pdsp}, the waveforms typically were 6000 time ticks long, with one \dword{adc} sample per time tick.  A detailed description of the reconstruction procedures, starting with these waveforms, is given in~\cite{Abi:2020mwi}, and summarized briefly here.
@@ -24,11 +26,12 @@ Separating track-like energy deposits from shower-like deposits is a key part of
 \subsubsection{Pixel-Based Liquid Argon TPC Recontruction}
 \label{sec:algo:reco:lartpc:pixels}
 
-\begin{dunetable}
-[Processing time for reconstruction modules for a \dword{pdsp} event]
+
+
+\begin{longtable}
 {l r}
-{tab:protodune_cpu_reco_by_module}
-{Wall-clock module execution times for the reconstruction of a typical ProtoDUNE-SP event, in seconds.  The event is a data event from Run 5809, a 1 GeV beam run.}
+\caption[Processing time for reconstruction modules for a \dword{pdsp} event]{Wall-clock module execution times for the reconstruction of a typical ProtoDUNE-SP event, in seconds.  The event is a data event from Run 5809, a 1 GeV beam run.} \\ \toprowrule
+  \rowcolor{dunesky}
 Module Label & time/event (sec)\\ \toprowrule
 RootInput(read)                          &     0.147283          \\
 timingrawdecoder:TimingRawDecoder        &     0.0095498         \\
@@ -75,21 +78,26 @@ pandora2Showercalonosce:ShowerCalorimetry&      3.83562          \\
 TriggerResults:TriggerResultInserter     &     0.000349372        \\
 RootOutput                               &    2.8912e-05         \\
 RootOutput(write)                        &     2.79458               \\
-{\bf Total:}                             &     {\bf 507.881}      \\
-    \toprowrule
-\end{dunetable}
+{\bf Total:}                             &     {\bf 507.881}      \\ \colhline
+\label{tab:protodune_cpu_reco_by_module}
+\end{longtable}
+
+
 
 \subsubsection{Pixel-Based Gaseous Argon TPC Recontruction}
 \label{sec:algo:reco:gartpc:pixels}
 
-The \dword{ndgar} consists of two primary detectors -- a copy of the ALICE pixel-based \dword{tpc} in a 10-bar gas consisting predominantly of argon, surrounded by a calorimeter and a superconducting magneti coil.  A muon system is envisaged outside of the calorimeter but is not included in the simulation or the reconstruction at the time of writing.  Data are unpacked and hits are found on the per-readout-pad waveforms, similarly to how the initial stages of reconstruction for a \dword{lartpc} are followed.  Hits are then clustered into TPC clusters, which reduces the memory and CPU usage of subseuqent steps, and also increases the spatial resolution of individual clusters.  Vector hits are found by grouping TPC clusters into short line segments, and the vector hits themselves are grouped into track candidates by a pattern recognition module.  A track fit based on a Kalman filter then finds the best estimates of the track parameters.  Vertices are then found using tracks with nearby endpoints.  Because there is a cathode in the middle of the drift volume in the nominal design, a cathode stitch module is then run to associate track segments on either side of the cathode, bring them together by solving for the best interaction time that lines the segments up, and also moves the associated tracks and vertices.  Vees ($K^0_s$ and
+The \dword{ndgar} consists of two primary detectors -- a copy of the ALICE pixel-based \dword{tpc} in a 10-bar gas consisting predominantly of argon, surrounded by a calorimeter and a superconducting magneti coil.  A muon system is envisaged outside of the calorimeter but is not included in the simulation or the reconstruction at the time of writing.  Data are unpacked and hits are found on the per-readout-pad waveforms, similarly to how the initial stages of reconstruction for a \dword{lartpc} are followed.  Hits are then clustered into TPC clusters, which reduces the memory and CPU usage of subsequent steps, and also increases the spatial resolution of individual clusters.  Vector hits are found by grouping TPC clusters into short line segments, and the vector hits themselves are grouped into track candidates by a pattern recognition module.  A track fit based on a Kalman filter then finds the best estimates of the track parameters.  Vertices are then found using tracks with nearby endpoints.  Because there is a cathode in the middle of the drift volume in the nominal design, a cathode stitch module is then run to associate track segments on either side of the cathode, bring them together by solving for the best interaction time that lines the segments up, and also moves the associated tracks and vertices.  Vees ($K^0_s$ and
 $\Lambda^0$ candidates) are found by pairing nearby tracks together, optionally requiring a displacement from another vertex, and forming the invariant mass.  The calorimeter consists of a mixture of strips and pads.  Calorimeter hits are found in the \dword{sipm} waveforms provided by the calomrimeter \dword{daq}, and they are clustered together to form reconstructed three-dimensional energy deposit objects with positions, directions, and energies.
 
+
+
+
 \begin{dunetable}
-[Average processing time for reconstruction modules for GArSoft events consisting of just one interaction in the gas.  An actual spill will contain of order 60 interactions, mostly  in the calorimeter, though many tracks will pass through the gas.]
+[Average \dshort{ndgar} event wall-clock module execution times]
 {l r}
 {tab:garsoft_cpu_reco_by_module}
-{Wall-clock module execution times for the reconstruction of a typical \dword{ndgar} event, in seconds.}
+{Average wall-clock processing time for reconstruction modules for GArSoft events consisting of just one interaction in the gas.  An actual spill will contain of order 60 interactions, mostly  in the calorimeter, though many tracks will pass through the gas.}
 Module Label & time/event (sec)\\ \toprowrule
 RootInput(read)                             &    0.000353765       \\
 init:EventInit                         &    1.31275e-05       \\
@@ -110,6 +118,10 @@ trkecalassn:TPCECALAssociation         &    0.000237503       \\
 TriggerResults:TriggerResultInserter        &    2.36397e-05       \\
 RootOutput                                  &    3.6783e-06        \\
 RootOutput(write)                           &    0.214077         \\
-{\bf Total}                                  &     {\bf 0.369802}         \\
-   \toprowrule
+{\bf Total}                                  &     {\bf 0.369802}       \\ 
 \end{dunetable}
+
+
+
+\section {Anything missing? \hideme{??? -needed}}
+\end{document}

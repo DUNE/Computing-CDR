@@ -1,5 +1,6 @@
 \documentclass{dune} % Duke of English - Kirby
-
+\usepackage{subfiles}
+\renewcommand{\familydefault}{\sfdefault}
 \input{common/preamble}
 %\renewcommand\thedoctitle{\voltitletc} % defined in common/defs.tex
 %\newcommand\thevolumenumber{\volnumbertc} 
@@ -11,7 +12,7 @@
 \cleardoublepage
 
 % use this for things you want to only show up in some cases
-\newcommand{\hideme}[1]{{\it( #1)}}
+%\newcommand{\hideme}[1]{{\it( #1)}}  moved to defs
 % comment next line out to see assigned authors
 %\renewcommand{\hideme}[1]{}
 \input{common/init}
@@ -50,80 +51,80 @@ https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
 
 \part{Overview} %Heidi
 \label{part:overview}
-\input{chapters/intro-intro}
+\subfile{chapters/intro-intro}
 
 \cleardoublepage
 
 
 
 
-\input{chapters/intro-volume-estimates}% (Heidi and Kirby)}  % Heidi and Kirby
+\subfile{chapters/intro-volume-estimates}% (Heidi and Kirby)}  % Heidi and Kirby
 \cleardoublepage
 
-\input{chapters/intro-use-cases}
+\subfile{chapters/intro-use-cases}
 \cleardoublepage
 
-\input{chapters/intro-cooperation}
+\subfile{chapters/intro-cooperation}
 \cleardoublepage
 
-\input{common/final}
-\end{document}
 
 \part{Algorithms and Frameworks} %  Tom Junk, David Adams
 
-In order to accomplish the goals outlined in Part~\ref{part:overview}, a large number of algorithms must be applied to a large sample of data and also large samples of simulated data.  Care must be taken to apply the right calibrations and catalog the outputs so that the computational steps are unambiguous, complete and reproducible.  This part describes the frameworks in Chapter~\ref{ch:fworks}, databases in Chapter~\ref{ch:db}, applications in Chapter~\ref{ch:appl}, including simulation, reconstruction, and analysis tasks.
+In order to accomplish the goals outlined in Part~\ref{part:overview}, a large number of algorithms must be applied to a large sample of data and also large samples of simulated data.  Care must be taken to apply the right calibrations and catalog the outputs so that the computational steps are unambiguous, complete and reproducible.  This part describes the data formats in Chapter~\ref{ch:format},  frameworks in Chapter~\ref{ch:fworks}, databases in Chapter~\ref{ch:db}, applications in Chapter~\ref{ch:appl}, including simulation, reconstruction, and analysis tasks.
 
-\input{chapters/algo-frameworks}  % Paul and Andrew
+\subfile{chapters/algo-data-format}  % Paul and Andrew
+\cleardoublepage
+\subfile{chapters/algo-frameworks}  % Paul and Andrew
 \cleardoublepage
 
-\input{chapters/algo-databases} % Norm and Paul 
+\subfile{chapters/algo-databases} % Norm and Paul 
 \cleardoublepage
 
-\input{chapters/algo-applications} % Tom and Mathew and Elisabetta
+\subfile{chapters/algo-applications} % Tom and Mathew and Elisabetta
 
 \cleardoublepage
 
 \part{Global Computing Model  } % McNab
 
-\input{chapters/model-computing-model}
+\subfile{chapters/model-computing-model}
 \cleardoublepage
 
-\input{chapters/model-site-resources}
+\subfile{chapters/model-site-resources}
 \cleardoublepage
 
-\input{chapters/model-data-placement}
+\subfile{chapters/model-data-placement}
 \cleardoublepage
 
-\input{chapters/model-networking}
+\subfile{chapters/model-networking}
 \cleardoublepage
 
-\input{chapters/model-workflow-examples}
+\subfile{chapters/model-workflow-examples}
 \cleardoublepage
 
 \part{Computing Services \hideme{Steve Timm}} % Timm
 
-\input{chapters/serv-services-overview}
+\subfile{chapters/serv-services-overview}
 \cleardoublepage
 
-\input{chapters/serv-data-management}
+\subfile{chapters/serv-data-management}
 \cleardoublepage
 
-\input{chapters/serv-workload-management}
+%\subfile{chapters/serv-workload-management}
+%\cleardoublepage
+
+\subfile{chapters/serv-workflow}
 \cleardoublepage
 
-\input{chapters/serv-workflow}
+\subfile{chapters/serv-information-systems}
 \cleardoublepage
 
-\input{chapters/serv-information-systems}
-\cleardoublepage
+\subfile{chapters/serv-monitoring}
 
-\input{chapters/serv-monitoring}
-
-\input{chapters/serv-auth}
+\subfile{chapters/serv-auth}
 
 \cleardoublepage
 
-\input{chapters/serv-code-management} % Junk and Adams
+\subfile{chapters/serv-code-management} % Junk and Adams
 \cleardoublepage
 
 \part{Resources Summary} %Kirby
@@ -136,13 +137,13 @@ In order to accomplish the goals outlined in Part~\ref{part:overview}, a large n
 
 \part{Collaboration} 
 
-\input{chapters/coll-org} %Schellman
+\subfile{chapters/coll-org} %Schellman
 \cleardoublepage
 
-\input{chapters/coll-ccboard} %Clarke
+\subfile{chapters/coll-ccboard} %Clarke
 \cleardoublepage
 
-\input{chapters/coll-preservation} %Clarke
+\subfile{chapters/coll-preservation} %Clarke
 \cleardoublepage
 
 %\input{chapters/serv-code-management} % Junk and Adams
@@ -152,10 +153,25 @@ In order to accomplish the goals outlined in Part~\ref{part:overview}, a large n
 \input{chapters/coll-train-and-doc} % David
 \cleardoublepage
 
-\part{Summary and Plans}
+\part{Summary and Plans \hideme{all- needed}}
 
 \fixme{Where do personnel needs go?}
 
+% this is added just after end of document
 
-\input{common/final}
+\cleardoublepage
+\printglossaries
+
+\cleardoublepage
+%begin stuff from init per Thomas 6/2/2106
+% end stuff from init
+\cleardoublepage
+\renewcommand{\bibname}{References}
+\bibliographystyle{utphys} 
+% To understand the style chosen, see:
+% https://arxiv.org/hypertex/bibstyles/ (very bottom -- additions) and
+% https://www.sharelatex.com/learn/Bibtex_bibliography_styles
+% July 2017, AH and BV (and AM)
+\bibliography{common/tdr-citedb}
+%\input{common/final}
 \end{document}
