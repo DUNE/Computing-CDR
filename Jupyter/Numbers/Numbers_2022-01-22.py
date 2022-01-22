@@ -31,7 +31,7 @@ t = 0
 for p in tapepoints:
     t += tapepoints[p][1]
 tapepoints["Total"] = [2021,t]
-cpupoints = {"Total":[2021,67.7-17.0],"Analysis":[2021,46.6-17.0]}
+cpupoints = {"Total":[2021,41.2],"Analysis":[2021,41.2-17.2-9.3],"MARS":[2021,17.2],"Production":[2021,9.3]}
 # were walltime, need to derate
 
 def testcumulate():

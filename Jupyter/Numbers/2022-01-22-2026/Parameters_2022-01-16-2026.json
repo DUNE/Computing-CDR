@@ -121,7 +121,9 @@
   "TypeColors": {"Raw":"blue", "Test":"orange", "Reco":"red", "Sim":"grey", "Total":"black"},
   "TypeLines": {"Raw":"solid", "Test":"dashed", "Reco":"solid", "Sim":"dashed", "Total":"solid"},
   "DetColors": {"SP":"green", "DP":"green", "ProtoDUNE":"blue", "HD":"red",
-      "VD":"red","FD":"red","ND":"grey", "Analysis":"orange", "Total":"black"},
+      "VD":"red","FD":"red","ND":"grey", "Analysis":"orange", "Total":"black","MARS":"green",
+      "Production":"blue"
+  },
   "DetLines": {"SP":"solid", "DP":"dotted", "ProtoDUNE":"solid", "HD":"solid",
       "VD":"dashed","FD":"solid","ND":"solid", "Analysis":"dashed", "Total":"solid"}
 }
