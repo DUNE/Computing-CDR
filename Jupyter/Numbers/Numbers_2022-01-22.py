@@ -17,7 +17,7 @@ import numpy as np
 # In[2]:
 # actual points for 2021 - need to fix this structure to add more years.
 # these #'s come frmo sam queries. Disk imposes 2 year lifetime
-diskpoints = {"Sim":[2021,6.9],"Raw":[2021,3.3],"Reco":[2021,1.75],"Test":[2021,0]}
+diskpoints = {"Sim":[2021,6.9],"Raw":[2021,3.3],"Reco":[2021,1.75],"Test":[2021,0.0]}
 tapepoints = {"Sim":[2021,10.0],"Raw":[2021,3.3],"Test":[2021,1.7],"Reco":[2021,4.3]}
 # patch the number of copies.
 diskpoints["Sim"][1] *=2
@@ -632,7 +632,7 @@ DrawType("Cumulative Tape",Years,Data,StorageTypes+["Total"],Units,TypeColors,Ty
 DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,diskpoints)
 #DrawType("Disk",Years,Data,StorageTypes,Units,TypeColors,TypeLines)
 # draw twice to fool print
-DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines)
+DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,diskpoints)
 
 
 # In[23]:
