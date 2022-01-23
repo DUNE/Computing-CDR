@@ -50,9 +50,10 @@ def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines,points=None):
     for type in Types:
       ax.plot(Years,toplot[type],color=detcolors[type],linestyle=detlines[type],label="model "+type)
     if points != None:
-        for t in points:
-            print ("t is ",t)
-            ax.plot(points[t][0],points[t][1],color=detcolors[t],marker="s",label="actual "+ t,markerfacecolor='none')
+        for y in points:
+            for t in points[y]:
+                print ("t is ",t)
+                ax.plot(y,points[y][t],color=detcolors[t],marker="s",label="actual "+ t,markerfacecolor='none')
     ax.legend(frameon=False)
     ax.set_title(Value)
     ax.set_xlabel("Year")
@@ -78,8 +79,9 @@ def DrawType(Value,Years,Data,Types,Units,typecolors,typelines,points=None,contr
     for type in Types:
       ax.plot(Years,Data[type][Value],color=typecolors[type],linestyle=typelines[type],label="model "+type)
     if points != None:
-        for t in points:
-                ax.plot(points[t][0],points[t][1],color=typecolors[t],marker="o",label="model "+t)
+        for y in points:
+            for t in points[y]:
+                ax.plot(y,points[y][t],color=typecolors[t],marker="o",label="model "+t)
     
     if contributions != None:
         for y in contributions:

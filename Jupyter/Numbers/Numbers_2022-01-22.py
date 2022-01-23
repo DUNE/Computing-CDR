@@ -5,6 +5,7 @@
 
 # In[1]:
 
+Nominal = True # this being false changes to not having 2 copies for real model
 
 import os,sys,string,time,commentjson,datetime, math
 from csv import reader
@@ -17,21 +18,28 @@ import numpy as np
 # In[2]:
 # actual points for 2021 - need to fix this structure to add more years.
 # these #'s come frmo sam queries. Disk imposes 2 year lifetime
-diskpoints = {"Sim":[2021,6.9],"Raw":[2021,3.3],"Reco":[2021,1.75],"Test":[2021,0.0]}
-tapepoints = {"Sim":[2021,10.0],"Raw":[2021,3.3],"Test":[2021,1.7],"Reco":[2021,4.3]}
-# patch the number of copies for disk and tape
-diskpoints["Sim"][1] *=2
-diskpoints["Reco"][1] *=2
-tapepoints["Raw"][1]*=2
-t = 0
-for p in diskpoints:
-    t += diskpoints[p][1]
-diskpoints["Total"] = [2021,t]
-t = 0
-for p in tapepoints:
-    t += tapepoints[p][1]
-tapepoints["Total"] = [2021,t]
-cpupoints = {"Total":[2021,41.2],"Analysis":[2021,41.2-17.2-9.3],"MARS":[2021,17.2],"Production":[2021,9.3]}
+diskpoints = {2021:{"Sim":6.9,"Raw":3.3,"Reco":1.75,"Test":0.0}}
+tapepoints = {2021:{"Sim":10.0,"Raw":3.3,"Test":1.7,"Reco":4.3}}
+
+diskcopies={"Sim":2,"Reco":2,"Test":0.5,"Raw":1}
+tapecopies={"Sim":1,"Reco":1,"Test":0.5,"Raw":2}
+if not Nominal:
+    diskcopies={"Sim":1,"Reco":1,"Test":0.5,"Raw":1}
+    tapecopies={"Sim":1,"Reco":1,"Test":0.5,"Raw":2}
+for y in diskpoints:
+    t = 0
+    for p in diskpoints[y]:
+        diskpoints[y][p]*=diskcopies[p]
+        t += diskpoints[y][p]
+    diskpoints[y]["Total"] = t
+
+for y in tapepoints:
+    t = 0
+    for p in tapepoints[y]:
+        tapepoints[y][p]*=tapecopies[p]
+        t += tapepoints[y][p]
+    tapepoints[y]["Total"] = t
+cpupoints = {2021:{"Total":41.2,"Analysis":41.2-17.2-9.3,"MARS":17.2,"Production":9.3}}
 # were walltime, these will be converted to CPU and to cores occupied later.
 diskactual={2021:{"FNAL":4.0,"CERN":0.975,"UK":2.177,"CZ":0.30}}
 tapeactual={2021:{"FNAL":19.804,"CERN":5.02}}
@@ -497,16 +505,20 @@ for k in Data["Total-CPU"].keys():
 
 # CPU numbers at top are actually wall so need to correct for efficiency to get "cpu"
 
-for c in cpupoints:
-    cpupoints[c][1]*=efficiency
-    
 corepoints = {}
-for c in cpupoints:
-    corepoints[c] = []
-    corepoints[c].append(cpupoints[c][0])
-    corepoints[c].append(cpupoints[c][1]*MHrsPerYear/efficiency/scaleTo2020)
+for y in cpupoints:
+    corepoints[y] = {}
+    for c in cpupoints[y]:
+        cpupoints[y][c]*=efficiency
+        corepoints[y][c] = cpupoints[y][c]
     
-# In[19]:
+ 
+ 
+for y in corepoints:
+    for c in corepoints[y]:
+        corepoints[y][c]*=MHrsPerYear/efficiency/scaleTo2020
+    
+
 
 
 
@@ -576,7 +588,7 @@ Types = ["ProtoDUNE","FD","ND","Analysis","Total"]
 
 tex.write("\\begin{table}\n\\footnotesize\n \\centering \\begin{tabular}[h]{crrrrrcccc}\n")
              
-s =  " ,\t CPU ,\tWall,\tWall F/C,\t\qquad  ,\t Tape\qquad,\t Tape\qquad  ,\t Disk\qquad  ,\t Disk\qquad \n"
+s =  " ,\t CPU ,\tWall,\tWall F/Collab,\t\qquad  ,\t Tape\qquad,\t Tape\qquad  ,\t Disk\qquad  ,\t Disk\qquad \n"
 s +=  "Years,\t(Mhrs),\tkSPEC06,\tkSPEC06,\tcores,\t Total(PB),\tF/C/Collab ,\t Total(PB) ,\tF/C/Collab\n"
 
 table.write(s)
@@ -600,6 +612,7 @@ tapeC = Data["Collab"]["Cumulative Tape"]
 hep = Data["SPEC06"]["Total"]
 #print (cpu,cores,disk,tape)
 
+   
 # CPUused = np.zeros(len(Years))
 
   
@@ -629,6 +642,23 @@ tex.write(s.replace("\n","\\\\\n").replace(",","&"))
 tex.write("\\end{tabular}\n\\caption{%s}"%caption)
 tex.write("\\normalsize\n \\end{table}\n")    
 
+caption = "Values for the points shown in the figures. Model disk and tape are the amounts we would project based on actual data cataloged if we had the number of copies expected in the model. This serves as a crosscheck on the inputs to the model but does not change its assumptions.  The actual numbers are derived from wall time measured for 2021, the disk reported by rucio + FNAL disk cache and the total tape used at FNAL at CERN. Disk usage is lower as not all data have been copied. CPU usage is lower due to the delay in ProtoDUNE II running."
+tex.write("\\begin{table}\n\\footnotesize\n \\centering \\begin{tabular}[h]{crrrrrrrr}\n")
+headers = ["model disk","model tape","actual cpu","actual cores","actual disk","actual tape"]
+s = ""
+i = -1
+for thing in [diskpoints,tapepoints,cpupoints,corepoints,diskactual,tapeactual]:
+    
+    i +=1
+    for y in thing:
+        s += "%20s,%4d"%(headers[i],y)
+        for item in thing[y]:
+            s += ",%s:%4.1f"%(item,thing[y][item])
+        s += "\n"
+tex.write(s.replace("\n","\\\\\n").replace(",","&"))
+tex.write("\\end{tabular}\n\\caption{%s}"%caption)
+tex.write("\\normalsize\n \\end{table}\n")
+
 asssume = "Assume present core is %6.3f kSPEC06 \nCPU # is real CPU, Cores and SPEC06 are Walltime with CPU/Walltime = %5.2f\n"%(config["kHEPSPEC06PerCPU"], config["Cores"]["Efficiency"])
 
 print (s)
@@ -654,10 +684,10 @@ DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,Ty
 
 table.close()
 tex.write("\\pagebreak")
-tex.write(DrawTex("Total-CPU.png","CPU time in Wall Hours/year","TotalCPU"))
-tex.write(DrawTex("Cores.png","Cores needed, including efficiency loss","Cores"))
-tex.write(DrawTex("Cumulative-Tape.png","Tape tape needs, PB, all types are cumulative over tape lifetime","CumulativeTape"))
-tex.write(DrawTex("Cumulative-Disk","Disk needs, PB.  Reco and Sim are cumulative over disk lifetime.  Raw and Test have sub-year lifetimes.","CumulativeDisk"))
+tex.write(DrawTex("Total-CPU.png","CPU time in Wall Hours/year. Open squares are measured values for 2021.","TotalCPU"))
+tex.write(DrawTex("Cores.png","Cores needed, including efficiency loss. Open squares are measured values for 2021.","Cores"))
+tex.write(DrawTex("Cumulative-Tape.png","Projected  tape needs, PB, all types are cumulative over tape lifetime. Closed circles are model calculation based on actual data volumes in 2021. Open squares are actual numbers by site. Offsets of square points are for clarity.","CumulativeTape"))
+tex.write(DrawTex("Cumulative-Disk","Disk needs, PB.  Raw, Reco and Sim are cumulative over disk lifetime.  Test has sub-year lifetime.  Closed circles are model calculation based on actual disk volumes in 2021. Open squares are actual numbers from rucio as of 1/22/2022. Offsets of square points are for clarity.","CumulativeDisk"))
 tex.write("\\vskip 3 in\\pagebreak \n {\\bf Change log:}\\\\\n")
 for c in config["Changes"]:
     tex.write("%s\\\\"%c)
