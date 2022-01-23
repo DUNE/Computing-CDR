@@ -39,7 +39,7 @@ for y in tapepoints:
         tapepoints[y][p]*=tapecopies[p]
         t += tapepoints[y][p]
     tapepoints[y]["Total"] = t
-cpupoints = {2021:{"Total":41.2,"Analysis":41.2-17.2-9.3,"MARS":17.2,"Production":9.3}}
+wallpoints = {2021:{"Total":41.2,"Analysis":41.2-17.2-9.3,"MARS":17.2,"Production":9.3}}
 # were walltime, these will be converted to CPU and to cores occupied later.
 diskactual={2021:{"FNAL":4.0,"CERN":0.975,"UK":2.177,"CZ":0.30}}
 tapeactual={2021:{"FNAL":19.804,"CERN":5.02}}
@@ -506,17 +506,17 @@ for k in Data["Total-CPU"].keys():
 # CPU numbers at top are actually wall so need to correct for efficiency to get "cpu"
 
 corepoints = {}
-for y in cpupoints:
+cpupoints = {}
+for y in wallpoints:
     corepoints[y] = {}
-    for c in cpupoints[y]:
-        cpupoints[y][c]*=efficiency
-        corepoints[y][c] = cpupoints[y][c]
+    cpupoints[y] = {}
+    for c in wallpoints[y]:
+        corepoints[y][c] = wallpoints[y][c]*MHrsPerYear/scaleTo2020
+        cpupoints[y][c] = wallpoints[y][c]*efficiency
     
  
  
-for y in corepoints:
-    for c in corepoints[y]:
-        corepoints[y][c]*=MHrsPerYear/efficiency/scaleTo2020
+
     
 
 

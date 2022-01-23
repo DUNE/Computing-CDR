@@ -1,5 +1,6 @@
 {
   "Changes":[
+      "2022-01-22 add actual #'s",
       "2022-01-14 updates for VD channels and new drift times.",
     "2021-07-25 see effects of PD 2 delay",
     "2021-04-27 change HSPEC06 to 11 from 15 per CMS numbers from Kirby",
@@ -118,10 +119,12 @@
   "CPU Accounting":"end of fiscal year",
   "Tape Accounting":"end of fiscal year",
   "Disk Accounting":"October 1",
-  "TypeColors": {"Raw":"blue", "Test":"orange", "Reco":"red", "Sim":"grey", "Total":"black"},
+  "TypeColors": {"Raw":"blue", "Test":"orange", "Reco":"red", "Sim":"grey", "Total":"black","FNAL":"blue","UK":"red","CZ":"green","CERN":"cyan","US":"orange"},
   "TypeLines": {"Raw":"solid", "Test":"dashed", "Reco":"solid", "Sim":"dashed", "Total":"solid"},
   "DetColors": {"SP":"green", "DP":"green", "ProtoDUNE":"blue", "HD":"red",
-      "VD":"red","FD":"red","ND":"grey", "Analysis":"orange", "Total":"black"},
+      "VD":"red","FD":"red","ND":"grey", "Analysis":"orange", "Total":"black","MARS":"green",
+      "Production":"blue"
+  },
   "DetLines": {"SP":"solid", "DP":"dotted", "ProtoDUNE":"solid", "HD":"solid",
       "VD":"dashed","FD":"solid","ND":"solid", "Analysis":"dashed", "Total":"solid"}
 }
