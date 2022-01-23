@@ -1,5 +1,5 @@
 \centerline{\bf{DUNE Resource Needs for 2022}}\vskip 1 in \par Configuration: Parameters_2022-01-16-2026.json
-Date: 2022-01-23 00:13TZ
+Date: 2022-01-23 03:09TZ
  
 Fiscal year starts: April 1
 Tape is accounted for at: end of fiscal year
@@ -84,7 +84,7 @@ Analysis relative to Sim+Reco: 1
    Sim Collaboration Disk fraction for PD  0.75
    Sim Collaboration Disk fraction for DUNE  0.75
 \pagebreak
- ,	 CPU ,	Wall,	Wall F/C,	\qquad  ,	 Tape\qquad,	 Tape\qquad  ,	 Disk\qquad  ,	 Disk\qquad 
+ ,	 CPU ,	Wall,	Wall F/Collab,	\qquad  ,	 Tape\qquad,	 Tape\qquad  ,	 Disk\qquad  ,	 Disk\qquad 
 Years,	(Mhrs),	kSPEC06,	kSPEC06,	cores,	 Total(PB),	F/C/Collab ,	 Total(PB) ,	F/C/Collab
 2021,	  40,	  73,	  18/  54,	  6594,	     21.1,	  14.1/  3.6/  3.5,	     20.4,	   5.3/  0.4/ 14.7
 2022,	  48,	  86,	  21/  64,	  7779,	     33.4,	  21.8/  6.5/  5.1,	     27.3,	   7.6/  1.6/ 18.1
@@ -92,10 +92,10 @@ Years,	(Mhrs),	kSPEC06,	kSPEC06,	cores,	 Total(PB),	F/C/Collab ,	 Total(PB) ,	F/
 2024,	  70,	 126,	  32/  95,	 11455,	     62.2,	  40.2/ 12.9/  9.1,	     35.2,	   9.5/  1.4/ 24.3
 2025,	  60,	 108,	  27/  81,	  9824,	     69.8,	  45.9/ 12.9/ 11.0,	     32.2,	   8.1/  0.2/ 23.9
 2026,	  45,	  80,	  20/  60,	  7257,	     76.6,	  51.0/ 13.0/ 12.7,	     28.7,	   7.3/  0.2/ 21.2
-2021,	  40,	  73,	  18/  54,	  6594,	     21.1,	  14.1/  3.6/  3.5,	     20.4,	   5.3/  0.4/ 14.7
-2022,	  48,	  86,	  21/  64,	  7779,	     33.4,	  21.8/  6.5/  5.1,	     27.3,	   7.6/  1.6/ 18.1
-2023,	  63,	 113,	  28/  85,	 10286,	     49.4,	  31.7/ 10.7/  7.0,	     33.0,	   9.4/  2.4/ 21.2
-2024,	  70,	 126,	  32/  95,	 11455,	     62.2,	  40.2/ 12.9/  9.1,	     35.2,	   9.5/  1.4/ 24.3
-2025,	  60,	 108,	  27/  81,	  9824,	     69.8,	  45.9/ 12.9/ 11.0,	     32.2,	   8.1/  0.2/ 23.9
-2026,	  45,	  80,	  20/  60,	  7257,	     76.6,	  51.0/ 13.0/ 12.7,	     28.7,	   7.3/  0.2/ 21.2
+          model disk,2021,Sim:13.8,Raw: 3.3,Reco: 3.5,Test: 0.0,Total:20.6
+          model tape,2021,Sim:10.0,Raw: 6.6,Test: 0.8,Reco: 4.3,Total:21.8
+          actual cpu,2021,Total:28.8,Analysis:10.3,MARS:12.0,Production: 6.5
+        actual cores,2021,Total:4703.2,Analysis:1678.1,MARS:1963.5,Production:1061.6
+         actual disk,2021,FNAL: 4.0,CERN: 1.0,UK: 2.2,CZ: 0.3,Total: 7.5
+         actual tape,2021,FNAL:19.8,CERN: 5.0,Total:24.8
 https://github.com/DUNE/Computing-CDR/blob/master/Jupyter/Numbers/

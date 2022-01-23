@@ -8,7 +8,7 @@
 \setlength{\textheight=9.5 in}
 \begin{document}
 \centerline{\bf{DUNE Resource Needs for 2022}}\vskip 1 in \par Configuration: Parameters\_2022-01-16-2026.json\\
-  Date: 2022-01-23 00:13TZ\\
+  Date: 2022-01-23 03:09TZ\\
    \\
   \input intro.tex
  Fiscal year starts: April 1\\ 
@@ -98,7 +98,7 @@ Analysis relative to Sim+Reco: 1\\
 \begin{table}
 \footnotesize
  \centering \begin{tabular}[h]{crrrrrcccc}
- & CPU &Wall&Wall F/C&\qquad  & Tape\qquad& Tape\qquad  & Disk\qquad  & Disk\qquad \\
+ & CPU &Wall&Wall F/Collab&\qquad  & Tape\qquad& Tape\qquad  & Disk\qquad  & Disk\qquad \\
 Years&(Mhrs)&kSPEC06&kSPEC06&cores& Total(PB)&F/C/Collab & Total(PB) &F/C/Collab\\
 \hline
 2021&	  40&	  73&	  18/  54&	  6594&	     21.1&	  14.1/  3.6/  3.5&	     20.4&	   5.3/  0.4/ 14.7\\
@@ -110,21 +110,33 @@ Years&(Mhrs)&kSPEC06&kSPEC06&cores& Total(PB)&F/C/Collab & Total(PB) &F/C/Collab
 \end{tabular}
 \caption{Assume present core is   11 SPEC06. CPU number is real CPU. Cores and SPEC06 are Walltime with CPU/Walltime =  0.70.  F means FNAL, C means CERN. Assume CERN storage is only  for ProtoDUNE. CPU should be divided 25\% FNAL, 75\% Collab}\normalsize
  \end{table}
+\begin{table}
+\footnotesize
+ \centering \begin{tabular}[h]{crrrrrrrr}
+          model disk&2021&Sim:13.8&Raw: 3.3&Reco: 3.5&Test: 0.0&Total:20.6\\
+          model tape&2021&Sim:10.0&Raw: 6.6&Test: 0.8&Reco: 4.3&Total:21.8\\
+          actual cpu&2021&Total:28.8&Analysis:10.3&MARS:12.0&Production: 6.5\\
+        actual cores&2021&Total:4703.2&Analysis:1678.1&MARS:1963.5&Production:1061.6\\
+         actual disk&2021&FNAL: 4.0&CERN: 1.0&UK: 2.2&CZ: 0.3&Total: 7.5\\
+         actual tape&2021&FNAL:19.8&CERN: 5.0&Total:24.8\\
+\end{tabular}
+\caption{Values for the points shown in the figures. Model disk and tape are the amounts we would project based on actual data cataloged if we had the number of copies expected in the model. This serves as a crosscheck on the inputs to the model but does not change its assumptions.  The actual numbers are derived from wall time measured for 2021, the disk reported by rucio + FNAL disk cache and the total tape used at FNAL at CERN. Disk usage is lower as not all data have been copied. CPU usage is lower due to the delay in ProtoDUNE II running.}\normalsize
+ \end{table}
 \pagebreak\begin{figure}
 \centering\includegraphics[height=0.4\textwidth]{Total-CPU.png}\label{TotalCPU}
-\caption{CPU time in Wall Hours/year}
+\caption{CPU time in Wall Hours/year. Open squares are measured values for 2021.}
 \end{figure}
 \begin{figure}
 \centering\includegraphics[height=0.4\textwidth]{Cores.png}\label{Cores}
-\caption{Cores needed, including efficiency loss}
+\caption{Cores needed, including efficiency loss. Open squares are measured values for 2021.}
 \end{figure}
 \begin{figure}
 \centering\includegraphics[height=0.4\textwidth]{Cumulative-Tape.png}\label{CumulativeTape}
-\caption{Tape tape needs, PB, all types are cumulative over tape lifetime}
+\caption{Projected  tape needs, PB, all types are cumulative over tape lifetime. Closed circles are model calculation based on actual data volumes in 2021. Open squares are actual numbers by site. Offsets of square points are for clarity.}
 \end{figure}
 \begin{figure}
 \centering\includegraphics[height=0.4\textwidth]{Cumulative-Disk}\label{CumulativeDisk}
-\caption{Disk needs, PB.  Reco and Sim are cumulative over disk lifetime.  Raw and Test have sub-year lifetimes.}
+\caption{Disk needs, PB.  Raw, Reco and Sim are cumulative over disk lifetime.  Test has sub-year lifetime.  Closed circles are model calculation based on actual disk volumes in 2021. Open squares are actual numbers from rucio as of 1/22/2022. Offsets of square points are for clarity.}
 \end{figure}
 \vskip 3 in\pagebreak 
  {\bf Change log:}\\
