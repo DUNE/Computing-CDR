@@ -37,7 +37,7 @@ def dump(det,datatype,a,Units):
 # Utility function: DrawDet(Value,Years,Data,Types,Units,detcolors,detlines)
 
 # for detector values
-def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines):
+def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines,points=None):
     
     maxyears = Years[-1]
 
@@ -48,7 +48,11 @@ def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines):
     ax.spines['bottom'].set_position('zero')
     toplot = Data[Value]
     for type in Types:
-      ax.plot(Years,toplot[type],color=detcolors[type],linestyle=detlines[type],label=type)
+      ax.plot(Years,toplot[type],color=detcolors[type],linestyle=detlines[type],label="model "+type)
+    if points != None:
+        for t in points:
+            print ("t is ",t)
+            ax.plot(points[t][0],points[t][1],color=detcolors[t],marker="s",label="actual "+ t,markerfacecolor='none')
     ax.legend(frameon=False)
     ax.set_title(Value)
     ax.set_xlabel("Year")
@@ -64,7 +68,7 @@ def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines):
 
 # draw by data type (transpose of the detectors)
 
-def DrawType(Value,Years,Data,Types,Units,typecolors,typelines):
+def DrawType(Value,Years,Data,Types,Units,typecolors,typelines,points=None,contributions=None):
     fig=plt.figure()
     ax = fig.add_axes([0.2,0.2,0.7,0.7])
     maxyears = Years[-1]
@@ -72,8 +76,15 @@ def DrawType(Value,Years,Data,Types,Units,typecolors,typelines):
     ax.xaxis.set_major_locator(MultipleLocator(5))
     ax.spines['bottom'].set_position('zero')
     for type in Types:
-      ax.plot(Years,Data[type][Value],color=typecolors[type],linestyle=typelines[type],label=type)
+      ax.plot(Years,Data[type][Value],color=typecolors[type],linestyle=typelines[type],label="model "+type)
+    if points != None:
+        for t in points:
+                ax.plot(points[t][0],points[t][1],color=typecolors[t],marker="o",label="model "+t)
     
+    if contributions != None:
+        for y in contributions:
+            for t in contributions[y]:
+                ax.plot(y+.2,contributions[y][t],color=typecolors[t],marker="s",label="actual  "+t,markerfacecolor='none')
     ax.legend(frameon=False)
     ax.set_xlabel("Year")
     ax.set_ylabel(Value + ", " + Units[Value])

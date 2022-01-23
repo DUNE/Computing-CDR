@@ -19,7 +19,7 @@ import numpy as np
 # these #'s come frmo sam queries. Disk imposes 2 year lifetime
 diskpoints = {"Sim":[2021,6.9],"Raw":[2021,3.3],"Reco":[2021,1.75],"Test":[2021,0.0]}
 tapepoints = {"Sim":[2021,10.0],"Raw":[2021,3.3],"Test":[2021,1.7],"Reco":[2021,4.3]}
-# patch the number of copies.
+# patch the number of copies for disk and tape
 diskpoints["Sim"][1] *=2
 diskpoints["Reco"][1] *=2
 tapepoints["Raw"][1]*=2
@@ -32,7 +32,21 @@ for p in tapepoints:
     t += tapepoints[p][1]
 tapepoints["Total"] = [2021,t]
 cpupoints = {"Total":[2021,41.2],"Analysis":[2021,41.2-17.2-9.3],"MARS":[2021,17.2],"Production":[2021,9.3]}
-# were walltime, need to derate
+# were walltime, these will be converted to CPU and to cores occupied later.
+diskactual={2021:{"FNAL":4.0,"CERN":0.975,"UK":2.177,"CZ":0.30}}
+tapeactual={2021:{"FNAL":19.804,"CERN":5.02}}
+
+for y in tapeactual:
+    t = 0
+    for p in tapeactual[y]:
+        t += tapeactual[y][p]
+    tapeactual[y]["Total"]=t
+
+for y in diskactual:
+    t = 0
+    for p in diskactual[y]:
+        t += diskactual[y][p]
+    diskactual[y]["Total"]=t
 
 def testcumulate():
 
@@ -628,11 +642,11 @@ table.write(s)
 DrawDet("Total-CPU",Years,Data,Types,Units,DetColors,DetLines,cpupoints)
 DrawDet("Cores",Years,Data,Types,Units,DetColors,DetLines,corepoints)
 
-DrawType("Cumulative Tape",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,tapepoints)
-DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,diskpoints)
+DrawType("Cumulative Tape",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,tapepoints,tapeactual)
+DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,diskpoints,diskactual)
 #DrawType("Disk",Years,Data,StorageTypes,Units,TypeColors,TypeLines)
 # draw twice to fool print
-DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,diskpoints)
+DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,diskpoints,diskactual)
 
 
 # In[23]:
