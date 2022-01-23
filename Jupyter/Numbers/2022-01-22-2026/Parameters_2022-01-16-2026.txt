@@ -1,5 +1,5 @@
 \centerline{\bf{DUNE Resource Needs for 2022}}\vskip 1 in \par Configuration: Parameters_2022-01-16-2026.json
-Date: 2022-01-23 03:09TZ
+Date: 2022-01-23 03:23TZ
  
 Fiscal year starts: April 1
 Tape is accounted for at: end of fiscal year
