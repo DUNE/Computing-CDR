@@ -118,7 +118,7 @@
   "CPU Accounting":"end of fiscal year",
   "Tape Accounting":"end of fiscal year",
   "Disk Accounting":"October 1",
-  "TypeColors": {"Raw":"blue", "Test":"orange", "Reco":"red", "Sim":"grey", "Total":"black"},
+  "TypeColors": {"Raw":"blue", "Test":"orange", "Reco":"red", "Sim":"grey", "Total":"black","FNAL":"blue","UK":"red","CZ":"green","CERN":"cyan","US":"orange"},
   "TypeLines": {"Raw":"solid", "Test":"dashed", "Reco":"solid", "Sim":"dashed", "Total":"solid"},
   "DetColors": {"SP":"green", "DP":"green", "ProtoDUNE":"blue", "HD":"red",
       "VD":"red","FD":"red","ND":"grey", "Analysis":"orange", "Total":"black","MARS":"green",
