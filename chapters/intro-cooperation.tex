@@ -1,0 +1,59 @@
+\documentclass[../main-v1.tex]{subfiles}
+\begin{document}
+
+\chapter{Cooperation strategy \hideme{Kirby, Schellman, McNab}}
+\label{ch:coop}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{xyz}
+%\label{sec:coop:xyz}  %% fix label according to section
+\section{Cooperation}
+Describe the cooperation strategy, connection as stakeholder with:
+\subsection{overview of strategy\hideme{Schellman-needed}}
+
+\subsection{Relation with Fermilab, CERN, Sanford \hideme{Schellman -needed}}
+
+\hideme{this training section can be merged with the later training section}
+
+% \subsection{HSF \hideme{Laycock, David, DeMuth}}
+
+% The HEP Software Foundation facilitates cooperative and common efforts in High Energy Physics software and computing internationally.(cite)  The HEP experiments which have adopted an embrace of the HSF education platform include CMS, Atlas, ALice, LHCb.
+
+% HSF meetings are held regularly, utilizing Indico agendas and Zoom for video conferencing, these focused on coordination, and for specific content areas. DUNE has benefited from HSF workshops, such as the C++ training offered in Fall 2021 and now base our own training on the HSF template.  Geant4, HTCondor, and Rucio are other examples of HSF training workshops. With each  iteration of these workshops, learning designs become optimized, and more HEP stakeholders are trained, particularly university students.
+
+% The DUNE Computing Consortium began offering computing training workshops to collaboration members in 2018, and now has a mastered version hosted on github which utilize the Software Carpentries web templates which allow for both synchronous and asynchronous participation.(cite) The DUNE computing training planning group has received solicitations for developing specific training, for example one on MARLEY (Model of Argon Reaction Low Energy Yields) which is a Monte Carlo event generator for neutrino-nucleus interactions.
+
+% DUNE has started  utilizing the HSF training materials that are currently available, encouraging participation in PyHEP workshop (cite) for example, and to work with the HSF directly on co-developing trainings that will benefit the community at large.
+
+
+% \subsection{Training \hideme{ C. David -needed }}
+
+% The Software Carpentry project offers beginner lessons programming; newcomers in the DUNE collaboration are directed to their website for learning the basics on the terminal, version-control, python, etc. The DUNE Computing tutorials are using the lesson template from the Carpentries, the umbrella organization of the Software Carpentry. It is based on Markdown and hosted on DUNE github. The tutorial pages are public, allowing newcomers not yet member of the DUNE collaboration to access the content and start learning while obtaining their Fermilab credentials.
+
+% The DUNE Computing Training working group frequently reports to the HEP Software Foundation (HSF), attending their weekly meetings. Collected feedback from attendees of past tutorials are discussed and the HSF give advice on how to improve future training events. The HSF wants to harmonize the post-tutorial satisfaction survey and DUNE will be leading the effort on that front. The DUNE Computing Training working group advertises HSF-branded event such as workshops on general programming skills.
+
+% The Institute for Research and Innovation in Software for High Energy Physics (IRIS-HEP) has ongoing projects in the areas of innovative algorithms, advanced analysis systems and data organization, management, and access (DOMA). These projects are LHC-centered as they prepare its detectors for the High-Luminosity program. These projects will benefit DUNE given the high computing challenges the experiment will face. A prototyping effort of an interactive analysis facility for ProtoDUNE and DUNE has started in July 2021. IRIS-HEP will be an essential partner to provide the relevant training for the component of this analysis facility. All IRIS-HEP hosted events such as workshops and schools will be advertised by the DUNE Computing Consortium to all DUNE members.
+
+\subsection{WLCG/OSG \hideme{ McNab and Kirby -needed}}
+\subsection{Benchmarking \hideme{ McNab -needed}}
+\subsection{Rucio \hideme{Timm -needed}}
+\subsection{Networking} \hideme{Schellman, Kirby and Clarke -draft}
+Although \dword{dune}'s overall networking needs are substantially smaller than for the large LHC experiments, our distributed data model, the remote location of the experiment and the need for fast movement of supernova candidate data require engagement with regional and international networking entities. 
+We are working with \dword{esnet} to include \dword{dune} in the long term US networking strategy\cite{osti_1804717} and \todo{add something about interface with European networking}.   \dword{surf} and \dword{fnal} are working with the state of South Dakota on improved networking for the far detector. 
+
+\subsection{LArSoft \hideme{ Tom/Kirby-draft}}
+The \dword{larsoft} software toolkit is supported by Fermilab's \dword{scd}.  It consists largely of software and associated configuration and parametric data files contributed by the stakeholder experiments.  These are \dword{argoneut}, \dword{lariat}, \dword{microboone}, \dword{icarus}, \dword{sbnd}, and \dword{dune}.  \dword{larsoft} is based on the \dword{art} framework.  It is designed to maximize reuse of software components, which take significant effort to develop, optimize, maintain and support.  \dword{larsoft} is currently hosted on \dword{github}.  Code is contributed via a pull-request model, and members of contributing collaborations provide the personpower to review and approve code modifications.  Release support and package management is supplied by Fermilab's \dword{scd}.  Testing duties are shared between the contributing experiments and the \dword{larsoft} team.  
+
+Bi-weekly \dword{larsoft} coordination meetings are scheduled for members of contributing collaborations to present proposed changes to \dword{larsoft}, and to provide news from the management team to the stakeholders.  Annual \dword{larsoft} steering group meetings are scheduled to review the \dword{larsoft} team's work plans for the year.  The spokespersons of the stakeholder collaborations are invited to attend and provide feedback.  Quarterly \dword{larsoft} offline leads meetings gather together software and computing experts from the stakeholder experiments to discuss work plans and issues arising from changes to the software and its management procedures.
+
+\subsection{Art / ... \hideme{ Tom -draft} }
+
+The \dword{art} framework is developed, maintained, and supported by Fermilab's \dword{scd}.  In addition to the \dword{larsoft} stakeholder collaborations, which are also \dword{art} stakeholders, the \dword{nova} and \dword{mu2e} collaborations also use \dword{art}.  Unlike \dword{larsoft}, code is not contributed by stakeholders, but rather is developed by the \dword{art} team.  Bi-weekly \dword{art} stakeholder meetings are held where news of upcoming \dword{art} features, breaking changes, and bug-fixes is disseminated, as well as upcoming release plans and discussions regarding supported platforms.  Members of stakeholder collaborations report concerns that affect their use of \dword{art}.  Representatives of stakeholder collaborations are asked to approve changes to \dword{art}'s behavior that could impact experiment workflows.  Feature requests from one experiment can sometimes cause issues with other experiments' workflows, and changes to \dword{art} have only been made when consensus is reached on an appropriate course of action.
+
+%\subsection{Networking \hideme{Kirby}}
+\subsection{Authentication \hideme{ Timm - needed}}
+
+
+\todo{ For each of the above, lay out current plan for engagement and resources needed}
+
+\end{document}

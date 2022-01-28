@@ -1,0 +1,144 @@
+algo-appl-analysis.tex:\label{sec:algo:an}
+algo-appl-reconstruction.tex:\label{sec:algo:reco}
+algo-appl-reconstruction.tex:\label{sec:algo:reco:lartpc}
+algo-appl-reconstruction.tex:\label{sec:algo:reco:lartpc:wirestrip}
+algo-appl-reconstruction.tex:\label{sec:algo:reco:lartpc:pixels}
+algo-appl-reconstruction.tex:\label{sec:algo:reco:gartpc:pixels}
+algo-appl-simulation.tex:\label{sec:algo:sim}
+algo-appl-simulation.tex:\label{sec:beamsim}
+algo-appl-simulation.tex:\label{sec:eventgen}
+algo-appl-simulation.tex:\label{sec:detsim}
+algo-applications.tex:\label{ch:appl}
+algo-databases.tex:\label{ch:db}
+algo-databases.tex:\label{sec:db:intro} 
+algo-databases.tex:\label{table:metadata}
+algo-databases.tex:\label{sec:db:conditions} 
+algo-databases.tex:\label{fig:dbmap}
+algo-databases.tex:\label{sec:db:config}  
+algo-databases.tex:\label{table:runconfig}
+algo-databases.tex:\label{sec:runconfigPD}
+algo-databases.tex:\label{fig:protoconditions}
+algo-databases.tex:\label{sec:db:dqm}  
+algo-databases.tex:\label{sec:db:calib} 
+algo-databases.tex:\label{sec:db:slowcontrol}  
+algo-databases.tex:\label{sec:slowcontrolPD}
+algo-databases.tex:\label{sec:db:ifbeam}  
+algo-databases.tex:\label{table:ifbeam}
+algo-databases.tex:\label{sec:db:hwdb}  
+algo-databases.tex:\label{table:partsid}
+algo-databases.tex:\label{sec:db:service}  
+algo-databases.tex:\label{table:dbneeds}
+algo-frameworks.tex:\label{ch:fworks}
+algo-frameworks.tex:%\label{sec:fworks:xyz}  %% fix label according to section
+coll-ccboard.tex:\label{ch:ccb}
+coll-ccboard.tex:%\label{sec:ccb:xyz}  %% fix label according to section
+coll-org.tex:\label{ch:org}
+coll-org.tex:%\label{sec:org:xyz}  %% fix label according to section
+coll-preservation.tex:\label{ch:pres}
+coll-preservation.tex:%\label{sec:pres:xyz} 
+coll-train-and-doc.tex:\label{ch:train}
+coll-train-and-doc.tex:%\label{sec:train:xyz}  %% fix label according to section
+intro-cooperation.tex:\label{ch:coop}
+intro-cooperation.tex:%\label{sec:coop:xyz}  %% fix label according to section
+intro-intro.tex:\label{ch:intro}
+intro-intro.tex:%\label{sec:intro:xyz}  %% fix label according to section
+intro-intro.tex:\section{Introduction\hideme{Schellman-draft}}\label{sec:intro-introduction}
+intro-intro.tex:    \label{fig:neutrinos}
+intro-intro.tex:    \label{fig:Argoneut}
+intro-intro.tex:\label{DUNESchematic}
+intro-intro.tex:%    \subfloat[EM]{\label{Blob1_const}
+intro-intro.tex:    \label{tpcconcept}
+intro-intro.tex:\label{deconvolution}
+intro-intro.tex:\label{wire-cell-bee}
+intro-intro.tex:\label{pandora}
+intro-intro.tex:\label{sites}
+intro-intro.tex:\label{dp_principle}
+intro-intro.tex:\label{dpevent}
+intro-intro.tex:\label{vd_principle}
+intro-intro.tex:\section{On to full DUNE \hideme{Schellma-draft}}\label{sec:intro-fd}
+intro-intro.tex:\subsubsection{Supernova candidates \hideme{Schellma - draft}}\label{sec:supernova}
+intro-intro.tex: \label{blips}
+intro-intro.tex:     \label{beamline}
+intro-intro.tex:     \label{nd}
+intro-intro.tex:\label{sec:comp-dataestimates-mpd}
+intro-intro.tex:\label{sec:comp-dataestimates-sand}
+intro-use-cases.tex:\label{ch:use}
+intro-use-cases.tex:\section{ProtoDUNEdata: raw data acquisition, cataloging and storage \hideme{Schellman - draft}}\label{sec:use:pdii-daq}
+intro-use-cases.tex:\section{ProtoDUNE data: reconstruction - hits \hideme{Schellman-draft}}\label{sec:use:pdii}
+intro-use-cases.tex:\label{sec:use:fdbeam}  %% fix label according to section
+intro-use-cases.tex:\label{sec:use:ndbeam}  %% fix label according to section
+intro-use-cases.tex:\subsection{Beam simulation\hideme{Junk-draft}}\label{sec:use:beamsim}
+intro-use-cases.tex:\subsection{Interaction simulation\hideme{Schellman-draft}}\label{sec:use:intmodel}
+intro-use-cases.tex:\subsection{Particle tracing\hideme{Junk-draft}}\label{sec:use:tracing}
+intro-use-cases.tex:\subsection{Detector response simulation\hideme{Schellman-draft}}\label{sec:use:detsim}
+intro-use-cases.tex:\subsection{Overlay\hideme{Schellman-draft}}\label{sec:use:overlay}
+intro-use-cases.tex:\subsection{Reconstruction} \label{sec:use:mcreco}
+intro-use-cases.tex:\label{sec:use:osc}
+intro-use-cases.tex:\label{sec:use:supernova}  %% fix label according to section
+intro-use-cases.tex:\label{sec:use:BSManalysis}
+intro-use-cases.tex:\label{sec:use:calib}  %% fix label according to section
+intro-use-cases.tex:\label{sec:use:hdb} 
+intro-use-cases.tex:\label{sec:use:analysis}
+intro-use-cases.tex:\label{sec:use:todo}
+intro-volume-estimates.tex:\label{ch:est}
+intro-volume-estimates.tex:\label{sec:est:assume}  %% fix label according to section
+intro-volume-estimates.tex:\label{sec:est:ProtoDUNE}  
+intro-volume-estimates.tex:\label{sec:est:FD}  
+intro-volume-estimates.tex:\label{sec:est:ND}  
+intro-volume-estimates.tex:\label{sec:est:volumes}
+model-computing-model.tex:\label{ch:cm}
+model-computing-model.tex:\label{sec:cm:sites_and_services}  %% fix label according to section
+model-computing-model.tex:\label{sec:cm:federations}
+model-computing-model.tex:\label{sec:cm:types_of_service}
+model-computing-model.tex:\label{sec:cm:network}
+model-computing-model.tex:\label{sec:cm:dce}
+model-computing-model.tex:\label{sec:cm:data_cache}
+model-computing-model.tex:\label{sec:cm:dse}
+model-data-placement.tex:\label{ch:place}
+model-data-placement.tex:%\label{sec:places:xyz}  %% fix label according to section
+model-networking.tex:\label{ch:netw}
+model-networking.tex:%\label{sec:netw:xyz}  %% fix label according to section
+model-site-resources.tex:\label{ch:sites}
+model-site-resources.tex:\label{sec:sites:overview}
+model-site-resources.tex:\label{sec:sites:grid}  %% fix label according to section
+model-site-resources.tex:\label{sec:sites:hpc}
+model-site-resources.tex:\label{sec:sites:cloud}
+model-workflow-examples.tex:\label{ch:wkex}
+model-workflow-examples.tex:%\label{sec:wkex:xyz}  %% fix label according to section
+serv-auth.tex:\label{ch:auth}
+serv-auth.tex:%\label{sec:auth:xyz}  %% fix label according to section
+serv-code-management.tex:\label{ch:codemgmt}
+serv-code-management.tex:\label{sec:codemgmt:dunetpc}  %% fix label according to section
+serv-code-management.tex:    \label{fig:dunetpcdeptree}
+serv-code-management.tex:\label{sec:codemgmt:neardet}  %% fix label according to section
+serv-code-management.tex:    \label{fig:garsoftdeptree}
+serv-code-management.tex:\label{sec:codemgmt:ci}
+serv-data-management.tex:\label{ch:datamgmt}
+serv-data-management.tex:\label{sec:datamgmt:xyz}  %% fix label according to section
+serv-data-management.tex:    \label{fig:datamanagement}
+serv-information-systems.tex:\label{ch:is}
+serv-information-systems.tex:%\label{sec:is:xyz}  %% fix label according to section
+serv-monitoring.tex:\label{ch:mon}
+serv-monitoring.tex:\label{sec:mon:xyz}  %% fix label according to section
+serv-services-overview.tex:\label{ch:serv}
+serv-services-overview.tex:%\label{sec:serv:xyz}  %% fix label according to section
+serv-workflow.tex:\label{ch:flow}
+serv-workflow.tex:%\label{sec:flow:xyz}  %% fix label according to section
+serv-workload-management.tex:\label{ch:wkload }
+serv-workload-management.tex:%\label{sec:wkload:xyz}  %% fix label according to section
+tutorial.tex:\label{ch:chap-id}
+tutorial.tex:\label{sec:chap-id:intro}
+tutorial.tex:Sections and subsections should have labels for cross-referencing. Labels must be unique. See the suggested format.
+tutorial.tex:See Figure~\ref{fig:required-label}. Notice that only the first word is capitalized in both the short and full captions.  
+tutorial.tex:\label{sec:chap-id:intro}
+tutorial.tex:\label{sec:chap-id:intro}
+tutorial.tex:Figure~\ref{fig:required-label} is the logo for \dword{dune}. 
+tutorial.tex:{fig:required-label}
+tutorial.tex:\label{sec:chap-id:mywidget}
+tutorial.tex:Now let's add a ``dunetable.'' See Table~\ref{tab:table-label}.
+tutorial.tex:{tab:table-label}
+tutorial.tex:\label{sec:chap-id:mywidget:num}
+tutorial.tex:\label{sec:chap-id:mywidget:numunit}
+tutorial.tex:\label{sec:chap-id:my2ndwidget}
+tutorial.tex:\label{sec:chap-id:moreinfo}
+tutorial.tex:First, see Section~\ref{sec:chap-id:my2ndwidget} just to see how we do cross-sectional references.  The same goes for cross-chapter references, you just need to find the correct label for the chapter (or the section within the chapter).
