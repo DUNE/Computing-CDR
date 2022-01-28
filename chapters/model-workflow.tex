@@ -4,7 +4,7 @@
 \label{ch:wkflow}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Introduction}
+\section{Introduction \hideme{McNab - draft}}
 \label{sec:flow:intro} 
 
 The Workflow subsystem includes all aspects of orchestrating the execution of DUNE code to generate simulated data and to process real or simulated data at computing sites around the world. 
@@ -12,7 +12,7 @@ The Workflow subsystem includes all aspects of orchestrating the execution of DU
 To make the most efficient use of the finite computing, network and storage resources available to the experiment, the workflow system's choices are driven by the location and availability of data to be processed and its proximity to computing capacity as it becomes available to DUNE. The Workflow subsystem caches information provided by the Data Management and Information subsystems and uses it to make its decisions.
 
 
-\section{Current production workflow submission infrastructure}
+\section{Current production workflow submission infrastructure \hideme{Herner - draft}}
 \label{sec:current}
 
 \subsection{Production Operations Management System}
@@ -59,7 +59,7 @@ to Cori's global scratch filesystem. For job outputs, a separate process perform
 will follow a similar approach, especially at places without external connectivity on the worker nodes.
 
 
-\section{Workflow Proposal} 
+\section{Workflow Proposal \hideme{McNab - draft}} 
 \subsection{Request lifecycle}
 \label{sec:flow:lifecycle}
 
@@ -81,21 +81,21 @@ Once the various agents have finished building the request, it can move to the r
 \includegraphics[height=8cm]{graphics/Workflow/wfs.png}
 \end{dunefigure}\todo{Get better figure}
 
-\section{Grid workload systems}
+\subsection{Grid workload systems}
 \label{sec:flow:grid}
 
 The workflow system makes use of the existing global grid infrastructures to deliver jobs for execution on worker nodes at sites. This allows us to operate alongside other experiments in the Worldwide LHC Computing Grid without placing special requirements on sites.
 
 FNAL operates a global HTCondor pool for DUNE which makes use of the existing OSG Pilot Factory service and HEPCloud to provision execution slots at sites. By using these existing systems we are able to use computing capacity presented with ARC CE or HTCondor CE grid interfaces, or on cloud and High Throughput Computing services supported by HEPCloud.
 
-\section{Generic job factory}
+\subsection{Generic job factory \hideme{McNab - draft}}
 \label{sec:flow:factory}
 
 The Generic Job Factory agent creates and submits HTCondor jobs which are each assigned to a single execution site. It will use a mixture of matching successes, site limits from DUNE CRIC, and prioritization of sites to determine how many generic jobs to submit and have waiting at each site. It may also use inspection of the central workflow database to estimate whether more generic jobs should be submitted for a particular site. For ordinary jobs, the job factory must be able to prioritise use of pledged academic and lab sites over commercial cloud sites and specialised sites like NERSC, which are managed by HEPCloud, to allow those services to be used for specialised workflows. Inspection of files waiting to be allocated in the database may be more appropriate for HEPCloud managed sites, so that work requiring their features may be satisfied.
 
 Once a generic job lands on a worker node, it contacts the Workflow Allocator described later which determines which unallocated files from one stage best match that worker node.
 
-\section{Workflow Database}
+\subsection{Workflow Database \hideme{McNab - draft}}
 \label{sec:flow:wfdb}
 
 The central Workflow Database stores definitions of requests and their stages, and cached information about files, replicas, sites, and storage services. Together all this information is used by queries to determine what work to carry out where. It is implemented as an SQL relational database.
@@ -115,7 +115,7 @@ The Request Builder agent will use the input dataset definition in a request to 
 
 The Archiver agent will have responsibility for removing information about requests, stage, files, and replicas once they are no longer needed, archiving whatever is needed for future reference to long term storage. It is intended that important information about how and where files were processed will be stored in the MetaCat database by the generic jobs themselves, but some higher level information about the operation of the workflow system and the processing of requests will be saved by the Archiver.
 
-\section{Workflow Allocator}
+\subsection{Workflow Allocator}
 \label{sec:flow:allocator}
 
 Once a generic job arrives at a worker node, it contacts the Workflow Allocator service which determines which unallocated file from one stage best matches that worker node. This matching includes the characteristics of the worker node job slot (memory, time limit etc), and whether the site is eligible to access a replica of that data file. Replicas are prioritised based on whether the worker node and replica are at the same site, ``nearby'', or elsewhere but still eligible. 
@@ -124,16 +124,17 @@ A list of suitable input files from the same, matching stage is returned to the 
 
 If the stage is not the final stage for that request, each output data file is also inserted into the list of files associated with the next stage for that request, in the unallocated state. 
 
-\section{User commands}
+\subsection{User commands \hideme{McNab - draft}}
 \label{sec:flow:commands}
 
 Command line tools are provided to operators and users to allow queries of Workflow Database contents and the creation of requests. These tools are envisaged to be of most use during testing of new workflows and for short workflows during analysis. 
 
-\section{Workflow Dashboard}
+\subsection{Workflow Dashboard}
 \label{sec:flow:dashboard}
 
 The same functionality as the command line tools outlined above will be provided by a Workflow Dashboard web interface. This will allow more sophisticated searches in the Workflow Database to monitor the progress of running requests, and allow members of the operations team to examine the state of the system at the level of individual files and replicas which are due to be processed, or have recently been processed to enable debugging of problems with sites or workflow definitions.
 
 The Workflow Dashboard is also intended to be used for all large scale productions, and will allow submitters to draft request definitions, circulate their proposal with colleagues for checking, before submitting them to any formal approval and checking procedure. The lifecycle of a workflow request accommodates manual approval and prioritization of large requests while smaller requests can be approved automatically according to a pre set limits. A library of bootstrap script templates and requests will be provided as part of the dashboard to help users make sensible choices for common types of workflow.
 
+\section{Implementation Plan \hideme{McNab/Timm/Herner needed}}
 \end{document}

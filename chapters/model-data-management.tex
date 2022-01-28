@@ -1,10 +1,10 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Data Management \hideme{Steve Timm and Robert Illingworth - draft} }
+\chapter{Data Management \hideme{Timm, Mandrichenko - draft} }
 \label{ch:datamgmt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Introduction}
+\section{Introduction \hideme{Timm - draft}}
 \label{sec:datamgmt:xyz}  %% fix label according to section
 
 The Data Management subsystem brings data from the detectors to the archival storage facility 
@@ -38,7 +38,7 @@ Data files themselves are not stored in \dword{sam}, their metadata is, and that
 
 For example, the time of the original design, the main storage medium was 8mm tapes using consumer-grade drives.  Drive and tape failure rates were $> 1$\%.  Several \dword{sam} design concepts, notably luminosity blocks and parentage tracking, were introduced to allow accurate tracking of files and their associated normalization in a high error-rate environment. 
 
-\section{Requirements in replacing SAM functionality}
+\section{Requirements in replacing SAM functionality \hideme{Schellman/Mandrichencko - draft}}
 
 The \dword{sam} system has seen us through the first protoDUNE runs but going forward, a replacement is needed. 
 
@@ -277,7 +277,7 @@ Example file metadata from DUNE. Note that many of the values are specific to th
 \todo{Get better figure}
 
 
-\section{Data Ingest Manager}
+\section{Data Ingest Manager \hideme{Timm - draft}}
 
 The Data Ingest Manager will run at detector sites.  It consists of two components:  the Ingest Daemon and the Declaration Daemon.  The Ingest Daemon will 
 run within the detector hall, detect new files in the data store, extract the metadata and add new metadata fields
@@ -292,7 +292,7 @@ These daemons will be performing most of the functions that the current data tra
 require modification to contact the new replica manager and metadata catalog rather than the current ones.  The 
 requirements for these daemons have been defined   and we expect coding work to start in mid to late summer 2021.
 
-\section{Replica Manager}
+\section{Rucio Replica Manager \hideme{Timm - draft}}
 
 The replica manager has the functionality of tracking where all data files are located and ensuring that they 
 are moved from point to point as needed.  The choice that we have made for this functionality is the \dword{rucio} data
@@ -311,7 +311,7 @@ DUNE has contributed several features to the Rucio base software.  These include
 
 Rucio has a internal metadata functionality but our evaluation indicates that it doesn't provide the full functionality currently provided by the \dword{sam} catalog, and thus DUNE has proceeded to develop our own metadata catalog. 
 
-\section{Metadata Catalog}
+\section{Metadata Catalog \hideme{Mandrichenko, Schellman - draft - too long}}
 
 The current \dword{sam} data catalog combines file description with location and delivery.  The new \dword{metacat} catalog will provide the permanent file description information, with location and delivery handled by \dword{rucio} and a data dispatch system. 
 
@@ -398,7 +398,7 @@ The \dword{metacat} should not need knowledge of physical file replicas, aside f
 
 Based on our experience with \dword{sam} an important improvement is to provide a mechanism to use data from external metadata sources, such as conditions or runs databases, as part of metadata queries without copying the external data into or making it appear as part of the metadata database. 
 
-\subsection{ Metacat data model }
+\section{ Metacat data model \hideme{Timm/Mandrichenko - draft}}
 In \dword{sam} files were identified by a unique immutable name within a single namespace.  To support  multiple use cases (for example user and production spaces) \dword{metacat}s objects and be identified  by names within namespaces. The name of an object is unique within its namespace. A namespace/name pair uniquely identifies  an object in \dword{metacat}. In addition to namespace/name, files are assigned unique text identifiers. These identifiers are primarily for internal use within the \dword{metacat} database, but are available to the user. At the time of the file declaration, the user can specify a file id, which must be unique, otherwise \dword{metacat} will generate a unique file id. After a file is declared to \dword{metacat}, it can be renamed. Both namespace and name can be changed, providing the new namespace/name pair is unique. However, file id can not be changed. 
 
 As in \dword{sam}, \dword{metacat} stores metadata associated with files and datasets. 
@@ -507,7 +507,7 @@ Command line interface with basic set of commands to enter (modify) data into th
 %     \end{verbatim}
 
 
-\section{Data Dispatcher}
+\section{Data Dispatcher \hideme{Mandrichenko/Timm - more needed}}
 
 The Data Dispatcher replaces the project management and file delivery functions that were previously done by the SAM system.  The Data Dispatcher functions include:
 \begin{itemize}
@@ -527,7 +527,7 @@ The Data Dispatcher replaces the project management and file delivery functions 
 
 
 
-\section{Tools}
+\section{Tools \hideme{Timm - needs more}}
 
 The data management system relies on several sets of underlying tools.  The \dword{rucio} replica manager is dependent on the CERN File Transfer Service (FTS3) \cite{Kiryanov:2015fts} to actually move files from one storage element to another, although it can also use the proprietary
 Globus protocol particularly when moving files to and from US HPC centers.  The FTS3 service in turn is dependent on the

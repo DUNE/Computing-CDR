@@ -8,43 +8,43 @@
 
 \section{Introduction}
 
-To introduce the \dword{tr} level processing issues for \dword{dune} computing, we describe some of the known use cases.  We start with  the experience gained from  ProtoDUNE,  using lessons learned from the 2018 run to understand the performance of future near and far detector modules. 
+To introduce the \dword{tr} level processing issues for \dword{dune} computing, we describe some of the known use cases.  We start with  the experience gained from  \dword{proto},  using lessons learned from the 2018 run to understand the performance of future near and far detector modules. 
 
-We note that, in addition to the challenges faced by HL-LHC experiments, as described in the HSF White Paper \cite{HEPSoftwareFoundation:2017ggl} DUNE (along with some dark matter and astrophysics experiments) faces considerable challenges in extracting very weak signals from large, noisy, data volumes.  This additional challenge places strains on memory management beyond those anticipated at collider experiments. 
+In addition to the challenges faced by HL-LHC experiments, as described in the HSF White Paper \cite{HEPSoftwareFoundation:2017ggl} DUNE, along with some dark matter and astrophysics experiments, faces considerable challenges in extracting very weak signals from large volumes of noisy data.  This additional challenge places strains on memory management beyond those anticipated at collider experiments. 
 
 \section{Data Acquisition and Storage}
 
-Data Acquisition software and hardware are the responsibility of the \dword{daq} group with significant interfaces to offline computing. Important factors include communication of calibration and configuration information between on and offline computing, high speed networking for data, high reliability networking for configuration and monitoring and adequate disk and CPU on both ends of the connection to allow efficient data transfer and continued data taking in the event of an extended network interruption. 
+Data Acquisition software and hardware are responsibilities of the \dword{daq} group, with significant interfaces to offline computing. Important factors include communication of calibration and configuration information between online and offline computing, high-speed networking for data, high-reliability networking for configuration and monitoring, and adequate disk and CPU on both ends of the connection to allow efficient data transfer and continued data collection in the event of an extended network interruption or component failure on either end.
 
 These considerations apply to \dword{proto}, where data taking occurs at CERN with offline databases and archival storage in the US,  and, in future, the far and near detectors in South Dakota. 
 
 Current status and proposed solutions are discussed in Chapters \ref{ch:db}(Databases) and \ref{ch:netw}(Networking). 
 
 \subsection{Data Transfer from the Experiment}
-Data need to be buffered locally and then transferred to permanent storage at the host lab(s).  Transfer activities include the generation of descriptive metadata, file transfer, writing the files to permanent storage and integrity checks.  Once data are confirmed to have successfully reached permanent storage, the local buffer may be cleared.  Current specifications call for the local buffers at remote sites to be able to store 3-7 days worth of data or 1 supernova worth ($\sim 500$ TB) minimum. 
+Data need to be buffered locally and then transferred to permanent storage at the host lab(s).  Transfer activities include the generation of descriptive metadata, file transfer, writing the files to permanent storage and integrity checks.  Once data are confirmed to have successfully reached permanent storage, the local buffer may be cleared.  Current specifications call for the local buffers at remote sites to be able to store 3-7 days worth of data or 1 supernova trigger record's worth ($\sim 500$ TB) at a minimum. 
 
 %{\it Major concerns:  Network bandwidth and reliability between Sanford and Fermilab. The ability of host lab systems to absorb and redistribute those data quickly. }
 {\it Major challenges: Here the major area of concern is the remote location of the far detectors and space and power limitations at both the detector level and the surface. Other challenges include  the need for adequate lossless data compression to prevent data volume explosion. Chapter \ref{ch:netw} describes the status and plans for networking.}
 
 \subsection{Control, Configuration, Conditions and Calibrations}
 %\subsubsection{Configuration and Monitoring}
-In addition to large scale data transfers, online data-taking configurations and conditions need to stored and communicated to the offline systems. High reliability network connections are needed to ensure that control signals, configuration and monitoring information is exchanged between the remote sites, local control facilities and the host laboratory.
+In addition to large-scale data transfers, online data-taking configurations and conditions need to stored and communicated to the offline systems. High-reliability network connections are needed to ensure that control signals as well as configuration and monitoring information are exchanged between the remote sites, local control facilities and the host laboratory.
 This is the responsibility of the Fermilab networking groups and the \dword{daq} consortia with input and assistance from offline computing. 
 
 
 \subsubsection{Slow controls}
-Data from slow control and monitoring systems needs to be recorded for offline use.  Examples include set points and readback for high voltage systems, pressure, temperature and the outputs of purity monitors. 
+Data from slow-control and monitoring systems needs to be recorded for offline use.  Examples include set points and readback for high-voltage systems, pressure, temperature and the outputs of purity monitors. 
 
-{it Major challenge: Commercial SCADA systems tie us to proprietary software which may have limited interfaces, require expensive licenses and need migration to new systems if the vendor stops support.}
+{\it Potential challenge: Commercial SCADA systems tie us to proprietary software which may have limited interfaces, require expensive licenses and need migration to new systems if the vendor stops support.  A legacy SCADA system may only operate with aging hardware.}
 
 \subsubsection{Online calibrations}
-Online calibration information (for example pedestal information) needs to passed to the offline systems. 
+Online calibration information, such as channel noise and gain information, needs to passed to the offline systems. 
 
 %{\it No novel concerns.}
 
 \subsubsection{Beam monitors}
 Beam monitoring, either per spill for neutrino interactions, or per particle in the CERN test beams, needs to be recorded and made available for offline processing. 
-The IFBEAM system used for NuMI is already in use for protoDUNE.
+The IFBEAM system used for NuMI is already in use for \dword{proto}.
 
 \subsection{Monitoring information}
 Local online monitoring of data and experimental conditions will be done by the \dword{daq} groups but fast feedback on data movement and quality will also need to be provided based on fast processing of a subset of the data transferred offsite. 
@@ -56,7 +56,7 @@ This is not yet part of the data plan but there may be a need for offsite filter
 
 {\it  Initiation of a High Level Trigger offsite remains a possibility if need arises. Local space, power and cooling issues make this difficult to do at Sanford.}
 
-\subsection{End point}
+\subsection{Outputs from DAQ and monitoring}
 At the end of data transfer and after acquisition of configuration information,  we assume that data, metadata and configuration/calibration/beam information from the detectors have been transferred to offline computing facilities and can them be distributed and reconstructed. 
 
 
@@ -69,22 +69,24 @@ There is more description of the algorithms used in the relevant algorithms chap
 \subsection{MARS}
 The \dword{mars}\cite{abs1} simulation is used in the design of the beamline and near detector systems and  for safety/environmental calculations.  It is a significant user of CPU time. 
 
-{\it Unique challenge: the MARS codes are under export controls.}
+{\it Unique challenge: the MARS codes are not available outside of Fermilab.}
 
 \subsection{Beam simulations}
 The \dword{lbnf} beamline is simulated using the \dword{g4lbnf} framework.  Inputs include random number seeds and the beamline and target region geometry and materials.  Outputs are flux files containing simulated neutrino trajectories.  The flux files contain sufficient information to allow reweighting based on interaction cross sections.  These flux files must be cataloged and made available to offline simulation jobs.
 
 {\it Minor challenge:  Distribution of flux files to remote sites requires use of \dword{stashcache} and careful record keeping.}
 
-\subsection{Non-beam interaction simulations}
-Simulations of non-standard model physics (e.g. neutron decay) and of cosmic ray and rock muon backgrounds are also used. 
 
-{\it No major concerns.}
 
 \subsection{Neutrino event generation}
 Neutrino event generators are used to simulate neutrino interactions within a detector volume.  Input requirements are the neutrino beam flux, random number seeds and the detailed detector geometry. The output is 4-vectors for final state particles, including short-lifetime decay chains.  DUNE currently uses \dword{genie}\cite{GENIE} as the default but other default generators are possible. 
 
 {\it We can rely on strong international efforts to produce standard generators. One challenge is the complexity of integrating multiple simulation code versions into our framework to ensure that there is timely evolution of the generators used as the physics understanding evolves.}
+
+\subsection{Non-beam interaction simulations}
+Simulations of non-standard model physics (e.g. neutron decay) and of cosmic ray and rock muon backgrounds are also used. 
+
+{\it No major concerns.}
 
 \subsection{Detector Interaction simulation}
 A detector simulation such as GEANT4\cite{Allison:2016lfl} or FLUKA\cite{Bohlen:2014buj} is used to simulate the interaction of the particles described by the 4-vectors produced by the event generator. Input requirements are the geometry and outputs are the tree of interactions and energy deposits in the detector materials. 

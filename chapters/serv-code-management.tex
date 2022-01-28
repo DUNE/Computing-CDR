@@ -4,7 +4,7 @@
 \label{ch:codemgmt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Liquid Argon TPC Code Management}
+\section{Liquid Argon TPC Code Management \hideme{Junk/Calcutt - needs update}}
 \label{sec:codemgmt:dunetpc}  %% fix label according to section
 
 Software for simulation, data read-in, and reconstruction shares significant commonality across the liquid-argon time projection chamber detectors planned to be deployed by DUNE and also prototypes.  These comprise the 35-ton prototype, ProtoDUNE-SP, ProtoDUNE-DP, ICEBERG, and the pixel near detector and its prototypes.  The interfaces to event generators, GEANT4, {\it art}, and the data handling systems require effort to build and maintain.  Data products need to be thought out carefully.  To reduce the development burden and expand the pool of expertise, DUNE has chosen to use the LArSoft toolkit, which is built on NuTools and {\it art}.  A dependency graph as of November 2020 is shown in Figure~\ref{fig:dunetpcdeptree}.
@@ -29,7 +29,7 @@ We are evaluating Spack as a replacement for {\tt mrb} and UPS.  Spack is a buil
 The use of Spack is under evaluation.  UPS is now approximately 25 years old and it is not an industry standard, somewhat linked to Fermilab.  Spack has a significant community using it outside of HEP, and thus there is a large volume of documentation available for it on the web.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Near Detector Code Management}
+\section{Near Detector Code Management \hideme{Muether/Cremonisi/Junk needs update}}
 \label{sec:codemgmt:neardet}  %% fix label according to section
 
 
@@ -40,7 +40,7 @@ The use of Spack is under evaluation.  UPS is now approximately 25 years old and
 \includegraphics[width=\textwidth]{graphics/CodeManagementFigures/garsoft_v02_08_00_depgraph.pdf}
 \end{dunefigure}
 
-\section{Continuous Integration}
+\section{Continuous Integration \hideme{Junk - draft}}
 \label{sec:codemgmt:ci}
 
 The stability of the performance of a large base of shared software requires attention to each change that is committed.  Software releases require validation and approval before being used in analyses intended for publication.  The rapid pace of software development early in the life cycle of the experiment, as well as increased activity as data are first collected and conferences come up, requires constant vigilance to ensure that bugs are not introduced and that software remains backwards compatible.
