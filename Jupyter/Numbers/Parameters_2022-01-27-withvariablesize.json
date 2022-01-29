@@ -45,6 +45,7 @@
   "SP":
   {"Comment":"move main test beam to 2023, extend cosmics by one year",
     "Raw":70, # from first beam test
+    "RawVsTime"=[70, 70, 70, 70, 200, 200, 200, 200, 5, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0]
     "CPU":0.1667, #Hr/Event
     "Sim-CPU":0.75, #Hr/Event
     "Reco":35, #MB/Event -

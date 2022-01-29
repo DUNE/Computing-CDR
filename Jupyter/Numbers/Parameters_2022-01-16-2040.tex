@@ -1,12 +1,17 @@
 \documentclass[12pt]{article}
 \usepackage{graphicx}
-\begin{document}
+\usepackage{hyperref}
 \parindent=0pt
-\setlength{\textwidth=7.0 in}
-\setlength{\oddsidemargin=0.00 in}
+\setlength{\textwidth=7in}
+\setlength{\oddsidemargin=-.25 in}
 \setlength{\topmargin=0 in}
 \setlength{\textheight=9.5 in}
-\centerline{\bf{DUNE Resource Report}}\vskip 1 in \par Configuration: Parameters\_2021-04-28-EB.json\\  Date: 2021-07-25 16:46TZ\\   \\  Fiscal year starts: April 1\\ 
+\begin{document}
+\centerline{\bf{DUNE Resource Needs for 2022}}\vskip 1 in \par Configuration: Parameters\_2022-01-16-2040.json\\
+  Date: 2022-01-24 14:52TZ\\
+   \\
+  \input intro.tex
+ Fiscal year starts: April 1\\ 
 Tape is accounted for at: end of fiscal year\\ 
 Disk is accounted for on: October 1\\ 
 CPU is accounted for at: end of fiscal year\\ 
@@ -32,6 +37,7 @@ Analysis relative to Sim+Reco: 1\\
    Raw CERNDisk fraction for DUNE  0.00\\
    Raw Collaboration Disk fraction for PD  0.00\\
    Raw Collaboration Disk fraction for DUNE  0.00\\
+\pagebreak\\
 \\
 {\bf For data type Test}\\
   Test Tape lifetime   0.5 in years\\
@@ -50,6 +56,7 @@ Analysis relative to Sim+Reco: 1\\
   Test CERNDisk fraction for DUNE  0.00\\
   Test Collaboration Disk fraction for PD  0.00\\
   Test Collaboration Disk fraction for DUNE  0.50\\
+\pagebreak\\
 \\
 {\bf For data type Reco}\\
   Reco Tape lifetime  15.0 in years\\
@@ -68,6 +75,7 @@ Analysis relative to Sim+Reco: 1\\
   Reco CERNDisk fraction for DUNE  0.00\\
   Reco Collaboration Disk fraction for PD  0.75\\
   Reco Collaboration Disk fraction for DUNE  0.75\\
+\pagebreak\\
 \\
 {\bf For data type Sim}\\
    Sim Tape lifetime  15.0 in years\\
@@ -86,20 +94,52 @@ Analysis relative to Sim+Reco: 1\\
    Sim CERNDisk fraction for DUNE  0.00\\
    Sim Collaboration Disk fraction for PD  0.75\\
    Sim Collaboration Disk fraction for DUNE  0.75\\
+\pagebreak\\
 \begin{table}
 \footnotesize
  \centering \begin{tabular}[h]{crrrrrcccc}
  & CPU &Wall&Wall F/C&\qquad  & Tape\qquad& Tape\qquad  & Disk\qquad  & Disk\qquad \\
 Years&(Mhrs)&kSPEC06&kSPEC06&cores& Total(PB)&F/C/Collab & Total(PB) &F/C/Collab\\
 \hline
-2020&	  30&	  54&	  14/  41&	  4915&	     14.2&	   9.1/  3.0/  2.1&	     15.4&	   4.0/  0.4/ 10.9\\
-2021&	  40&	  73&	  18/  54&	  6594&	     21.3&	  14.1/  3.7/  3.5&	     20.5&	   5.3/  0.5/ 14.7\\
-2022&	  64&	 115&	  29/  86&	 10443&	     39.6&	  25.4/  8.6/  5.6&	     33.6&	   9.7/  2.6/ 21.3\\
-2023&	  73&	 130&	  33/  98&	 11835&	     52.7&	  34.3/ 10.5/  7.9&	     38.3&	  10.3/  1.4/ 26.6\\
-2024&	  70&	 125&	  31/  94&	 11373&	     61.7&	  41.0/ 10.5/ 10.2&	     36.9&	   9.3/  0.1/ 27.5\\
-2025&	  29&	  53&	  13/  40&	  4795&	     65.7&	  44.0/ 10.5/ 11.2&	     26.3&	   6.6/  0.1/ 19.5\\
-2026&	  29&	  52&	  13/  39&	  4729&	     70.9&	  47.8/ 10.6/ 12.4&	     18.2&	   4.6/  0.2/ 13.4\\
-2027&	  29&	  52&	  13/  39&	  4729&	     80.3&	  40.1/  0.0/ 40.1&	     22.2&	   6.2/  0.0/ 16.0\\
+2021&	  40&	  73&	  18/  54&	  6594&	     21.1&	  14.1/  3.6/  3.5&	     20.4&	   5.3/  0.4/ 14.7\\
+2022&	  48&	  86&	  21/  64&	  7779&	     33.4&	  21.8/  6.5/  5.1&	     27.3&	   7.6/  1.6/ 18.1\\
+2023&	  63&	 113&	  28/  85&	 10286&	     49.4&	  31.7/ 10.7/  7.0&	     33.0&	   9.4/  2.4/ 21.2\\
+2024&	  70&	 126&	  32/  95&	 11455&	     62.2&	  40.2/ 12.9/  9.1&	     35.2&	   9.5/  1.4/ 24.3\\
+2025&	  60&	 108&	  27/  81&	  9824&	     69.8&	  45.9/ 12.9/ 11.0&	     32.2&	   8.1/  0.2/ 23.9\\
+2026&	  45&	  80&	  20/  60&	  7257&	     76.6&	  51.0/ 13.0/ 12.7&	     28.7&	   7.3/  0.2/ 21.2\\
+2027&	  28&	  50&	  13/  38&	  4591&	     84.0&	  42.0/  0.0/ 42.0&	     24.4&	   6.6/  0.0/ 17.8\\
+2028&	  47&	  84&	  21/  63&	  7608&	    101.5&	  50.8/  0.0/ 50.8&	     31.6&	  11.5/  0.0/ 20.1\\
+2029&	  61&	 110&	  27/  82&	  9989&	    132.6&	  66.3/  0.0/ 66.3&	     47.4&	  20.6/  0.0/ 26.8\\
+2030&	  76&	 136&	  34/ 102&	 12370&	    164.9&	  82.4/  0.0/ 82.4&	     52.7&	  22.0/  0.0/ 30.7\\
+2031&	  90&	 162&	  41/ 122&	 14750&	    197.9&	  98.9/  0.0/ 98.9&	     57.8&	  23.3/  0.0/ 34.5\\
+2032&	 105&	 188&	  47/ 141&	 17131&	    232.2&	 116.1/  0.0/116.1&	     62.9&	  24.5/  0.0/ 38.3\\
+2033&	 132&	 236&	  59/ 177&	 21486&	    288.5&	 144.2/  0.0/144.2&	     79.9&	  36.6/  0.0/ 43.3\\
+2034&	 158&	 284&	  71/ 213&	 25840&	    344.5&	 172.2/  0.0/172.2&	     88.1&	  38.7/  0.0/ 49.4\\
+2035&	 185&	 332&	  83/ 249&	 30194&	    401.7&	 200.9/  0.0/200.9&	     96.2&	  40.7/  0.0/ 55.5\\
+2036&	 212&	 380&	  95/ 285&	 34548&	    459.3&	 229.7/  0.0/229.7&	    104.4&	  42.8/  0.0/ 61.7\\
+2037&	 239&	 428&	 107/ 321&	 38902&	    513.4&	 256.7/  0.0/256.7&	    110.1&	  43.5/  0.0/ 66.5\\
+2038&	 265&	 476&	 119/ 357&	 43257&	    573.0&	 286.5/  0.0/286.5&	    118.2&	  45.6/  0.0/ 72.6\\
+2039&	 292&	 524&	 131/ 393&	 47611&	    634.1&	 317.0/  0.0/317.0&	    126.4&	  47.6/  0.0/ 78.8\\
+2040&	 319&	 572&	 143/ 429&	 51965&	    698.1&	 349.0/  0.0/349.0&	    134.5&	  49.7/  0.0/ 84.9\\
 \end{tabular}
 \caption{Assume present core is   11 SPEC06. CPU number is real CPU. Cores and SPEC06 are Walltime with CPU/Walltime =  0.70.  F means FNAL, C means CERN. Assume CERN storage is only  for ProtoDUNE. CPU should be divided 25\% FNAL, 75\% Collab}\normalsize
  \end{table}
+\pagebreak\begin{figure}
+\centering\includegraphics[height=0.4\textwidth]{Total-CPU.png}\label{TotalCPU}
+\caption{CPU time in Wall Hours/year}
+\end{figure}
+\begin{figure}
+\centering\includegraphics[height=0.4\textwidth]{Cores.png}\label{Cores}
+\caption{Cores needed, including efficiency loss}
+\end{figure}
+\begin{figure}
+\centering\includegraphics[height=0.4\textwidth]{Cumulative-Tape.png}\label{CumulativeTape}
+\caption{Tape tape needs, PB, all types are cumulative over tape lifetime}
+\end{figure}
+\begin{figure}
+\centering\includegraphics[height=0.4\textwidth]{Cumulative-Disk}\label{CumulativeDisk}
+\caption{Disk needs, PB.  Reco and Sim are cumulative over disk lifetime.  Raw and Test have sub-year lifetimes.}
+\end{figure}
+\vskip 3 in\pagebreak 
+ {\bf Change log:}\\
+2022-01-14 updates for VD channels and new drift times.\\2021-07-25 see effects of PD 2 delay\\2021-04-27 change HSPEC06 to 11 from 15 per CMS numbers from Kirby\\2021-04-21 clarify CERN vs Collab for first 10 years\\2021-03-26 clearer plots, go to v3 of the code to preserve the RRB code in v2\\2021-03-24 try with CERN/FNAL combined for raw and test.\\2021-03-22 add Collab vs FNAL shares, restore sim disk lifetime to 2.\\\end{document}

@@ -41,7 +41,7 @@ for y in tapepoints:
     tapepoints[y]["Total"] = t
 wallpoints = {2021:{"Total":41.2,"Analysis":41.2-17.2-9.3,"MARS":17.2,"Production":9.3}}
 # were walltime, these will be converted to CPU and to cores occupied later.
-diskactual={2021:{"FNAL":4.0,"CERN":0.975,"UK":2.177,"CZ":0.30}}
+diskactual={2021:{"FNAL":4.6,"CERN":0.975,"UK":2.177,"CZ":0.30}}
 tapeactual={2021:{"FNAL":19.804,"CERN":5.02}}
 
 for y in tapeactual:
@@ -684,10 +684,10 @@ DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,Ty
 
 table.close()
 tex.write("\\pagebreak")
-tex.write(DrawTex("Total-CPU.png","CPU time in Wall Hours/year. Open squares are measured values for 2021.","TotalCPU"))
-tex.write(DrawTex("Cores.png","Cores needed, including efficiency loss. Open squares are measured values for 2021.","Cores"))
-tex.write(DrawTex("Cumulative-Tape.png","Projected  tape needs, PB, all types are cumulative over tape lifetime. Closed circles are model calculation based on actual data volumes in 2021. Open squares are actual numbers by site. Offsets of square points are for clarity.","CumulativeTape"))
-tex.write(DrawTex("Cumulative-Disk","Disk needs, PB.  Raw, Reco and Sim are cumulative over disk lifetime.  Test has sub-year lifetime.  Closed circles are model calculation based on actual disk volumes in 2021. Open squares are actual numbers from rucio as of 1/22/2022. Offsets of square points are for clarity.","CumulativeDisk"))
+tex.write(DrawTex("Total-CPU.png","CPU time in Wall Hours/year. Squares are measured values for 2021.","TotalCPU"))
+tex.write(DrawTex("Cores.png","Cores needed, including efficiency loss. Squares are measured values for 2021.","Cores"))
+tex.write(DrawTex("Cumulative-Tape.png","Projected  tape needs, PB, all types are cumulative over tape lifetime. Open circles are model calculation based on actual data volumes in 2021. Closed squares are actual numbers by site. Offsets of square points are for clarity.","CumulativeTape"))
+tex.write(DrawTex("Cumulative-Disk","Disk needs, PB.  Raw, Reco and Sim are cumulative over disk lifetime.  Test has sub-year lifetime.  Open circles are model calculation based on actual disk volumes in 2021. Closed squares are actual numbers from rucio as of 1/22/2022. Offsets of square points are for clarity.","CumulativeDisk"))
 tex.write("\\vskip 3 in\\pagebreak \n {\\bf Change log:}\\\\\n")
 for c in config["Changes"]:
     tex.write("%s\\\\"%c)

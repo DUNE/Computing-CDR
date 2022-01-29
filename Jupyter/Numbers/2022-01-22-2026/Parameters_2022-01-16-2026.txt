@@ -1,5 +1,5 @@
 \centerline{\bf{DUNE Resource Needs for 2022}}\vskip 1 in \par Configuration: Parameters_2022-01-16-2026.json
-Date: 2022-01-23 03:23TZ
+Date: 2022-01-24 14:53TZ
  
 Fiscal year starts: April 1
 Tape is accounted for at: end of fiscal year
@@ -96,6 +96,6 @@ Years,	(Mhrs),	kSPEC06,	kSPEC06,	cores,	 Total(PB),	F/C/Collab ,	 Total(PB) ,	F/
           model tape,2021,Sim:10.0,Raw: 6.6,Test: 0.8,Reco: 4.3,Total:21.8
           actual cpu,2021,Total:28.8,Analysis:10.3,MARS:12.0,Production: 6.5
         actual cores,2021,Total:4703.2,Analysis:1678.1,MARS:1963.5,Production:1061.6
-         actual disk,2021,FNAL: 4.0,CERN: 1.0,UK: 2.2,CZ: 0.3,Total: 7.5
+         actual disk,2021,FNAL: 4.6,CERN: 1.0,UK: 2.2,CZ: 0.3,Total: 8.1
          actual tape,2021,FNAL:19.8,CERN: 5.0,Total:24.8
 https://github.com/DUNE/Computing-CDR/blob/master/Jupyter/Numbers/
