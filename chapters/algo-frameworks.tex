@@ -1,7 +1,93 @@
-\chapter{Frameworks (Andrew Norman, Paul Laycock, Mathew Muether)}
+\documentclass[../main-v1.tex]{subfiles}
+\begin{document}
+
+\chapter{Frameworks \hideme{Norman,  Laycock,  Muether}}
 \label{ch:fworks}
-
+\todo{Define all the fun data concepts }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{xyz}
-\label{sec:fworks:xyz}  %% fix label according to section
+%\section{xyz}
+%\label{sec:fworks:xyz}  %% fix label according to section
 
+The unique challenges of reconstructing time-series based objects from the DUNE far detectors and of adapting code to run on new generations of computing resources such as \dwords{hpc} requires that we reoptimize our main computing frameworks.  In this Chapter we provide a brief overview or our existing codes followed by a description of our process for designing the optimal framework needed when full \dword{dune} begins operations.  
+
+
+\section{Current status \hideme{ Junk/Muether - draft}}
+
+The data processing framework in use by the \dword{fd} simulation and reconstruction efforts, the \dword{protodune} detectors and \dword{ndgar} is \dword{art} developed at Fermilab.  The \dword{art} framework defines the data processing loop, manages memory, interfaces to I/O tools, defines uniform mechanisms for defining, associating, and persisting data products, provides a uniform mechanism for job configuration, stores job configuration information in its output files, and manages messages, random numbers and exceptions.  The \dword{art} framework runs user code that is provided as {\it plug-ins}, which are built as separate shared object libraries that can be dynamically selected and loaded at runtime.  The \dword{art} framework is also used by the \dword{nova}, Muon g-2, MicroBooNE, ICARUS, LArIAT and ArgoNeuT collaborations.  The \dword{art} framework evolved from CMS's software framework and started being used by intensity-frontier experiments in 2011~\cite{Green:2012gv}. It is developed, maintained and supported by Fermilab's \dword{scd}.
+
+The \dword{larsoft} toolkit is a collection of \dword{art} plug-ins and associated algorithm code, configuration files, and static data such as geometry specification files and photon visibility maps.  \dword{larsoft} provides the interface to event generators such as \dword{genie} and \dword{corsika}, detector simulation via \dword{geant4}, custom simulation and reconstruction software, event displays and tutorials.  Experiment-specific metadata plug-ins assist in batch workflow organization.  \dword{larsoft} is supported by Fermilab's \dword{scd}, though much of the software has been contributed by participating experimental collaborations.
+
+% paragraph on SSRI/\dword{tms}
+
+The gaseus detector simulation, \dword{garsoft} is patterned on \dword{larsoft}.  It is a software toolkit for simulating and reconstructing data from \dword{ndgar}.  It is also based on the \dword{art} framework.  Like \dword{larsoft}, it provides interfaces to event generators and \dword{geant4}, custom simulation and reconstruction software, and event displays.  It also provides simulation and reconstruction for \dword{ndgarlite}.  \dword{garsoft} is written, maintained, and supported by the DUNE collaboration.
+
+The \dword{ndlar} software effort is currently being developed as a series of standalone tools for simulating and reconstructing pixel-based \dword{lartpc} data.  Toolchains have been developed for analyzing \dword{singlecube} prototype data.
+
+The \dword{sand} software effort benefits from long experience with the \dword{kloe} detector, which provides the magnet and calorimeter.  New software is developed for the \dword{3dst} and other components of SAND.  Flexibility is important at this stage in order to allow studies of different detector designs to fill in between the \dword{3dst} and the calorimeter, such as a gaseous \dword{tpc}.  Because \dword{sand} will not move off axis with \dword{ndlar} and \dword{ndgar}.
+
+
+\section{Framework Requirements \hideme{Laycock/Norman - needs update}}
+\subsection{Requirements Process} %-\hideme{Norman/Laycock in progress}}
+% Taken from vCHEP paper
+Modern \dword{hep} software frameworks are in the process of addressing the increasing heterogeneity of computing architectures that are redefining the computing landscape, work that is closely followed by the HEP Software Foundation~\cite{Alves:2017she, Calafiura:2018rwe}. The \dword{dune} collaboration is keen to participate in these efforts to minimize unnecessary development effort in improving our own framework. 
+
+Given the unique challenges that \dword{dune} data pose, in 2020, the collaboration assembled a task force to define the requirements for its software framework based largely on physics use cases \cite{bib:docdb21934}.  The collaboration then approached the \dword{hsf} who assembled a panel of software framework experts from various experimental backgrounds to review these requirements. The report \cite{bib:docdb24423} produced by this panel was discussed in a workshop involving the panelists which resulted in a followup workshop to address the outstanding issues, mostly around the topic of concurrency.  The findings of the panelists and the summary of the concurrency workshop \cite{bib:docdb24426} have been incorporated into the \dword{dune} software framework requirements presented in the following.
+
+\subsection{Summary of Use Cases}
+
+\todo{Summarise the use cases in section 2 in a table.}
+
+The use cases for \dword{dune} are summarized in table BLAH.
+
+THIS IS TABLE BLAH
+%Would be useful to identify "production" use cases and "analysis" use cases.
+
+
+One striking feature of the use cases that \dword{dune} needs to support is the diversity in scale of the data processing atom, the smallest unit of data that can be processed independently.  Somewhat counter-intuitively, although the raw trigger records are themselves very large, the data processing atom (a single APA) is relatively small and compatible with the same high-throughput computing workflows adopted by most \dword{hep} experiments.  Meanwhile at the analysis level although the quantity of data related to a single trigger record is small, nuisance parameter extraction requires correlations across all trigger records in an analysis dataset, which is then the data processing atom.  This is a very good fit to high performance computing, particularly if the analysis framework can take advantage of many \dword{hpc} nodes at the same time. Experience from the \dword{hsf} panelists encouraged \dword{dune} to separate the analysis and production use cases when considering the software framework design.
+
+\subsection{Analysis\hideme{Norman/Laycock - still needs more}}
+
+Based on the recommendations of the \dword{hsf} panel experts, the analysis use case is not required to be supported by the same software framework as that used for production.
+
+\todo{Needs much more on the actual analysis requirements, including ML.}
+
+Machine learning is already heavily used in analysis of ProtoDUNE data and the framework should give special attention to machine learning inference in the design, both to allow simple exchanges of inference backends and to record the provenance of those backends and all necessary versioning information.  Finally, the framework should be able to work with both Near Detector and Far Detector data on an equal footing, and within the same job.
+
+%Now move on to discussing "the" framework requirements, separate section? 
+
+\subsection{Data and I/O layer} % Needs some updating but mostly ok
+As noted the discussion on raw data processing, the DUNE software framework must have the {\bf ability to  change its unit of data processing} from single planes to supernova readouts with extreme flexibility and ensure that memory is treated as a precious commodity.  
+It must be possible to correlate these units to DUNE data-taking "events" for exposure accounting, and experiment conditions.
+{\bf Partial reading of data} is another strong requirement needed to keep memory usage under control.  There must be {\bf no assumptions on the data model}, {\bf the framework must separate data and algorithms} and,  further, {\bf separate the persistent data representation from the in-memory representation} seen by those algorithms.  DUNE data is well suited to massively parallel processing compute architectures, so the framework will need to {\bf have a flexible I/O layer supporting multiple persistent data formats} as different formats may be preferred at different stages of data processing.  The sparsity of DUNE data also imply that compression will play an important role in controlling the storage footprint, especially for raw data, and the sparsity of physics signals further emphasize support for data reduction (skimming, slimming and thinning) in the framework.  The framework {\bf needs to be able to handle the reading and writing of parallel data streams}, and navigate the association (if any) between these streams with a {\bf critical need to allow experiment code to  mix simulation and (overlay) data}.
+
+\subsection{Concurrency} % Need to distinguish production and analysis
+Many aspects of DUNE data processing are well suited to concurrency solutions and {\bf the framework should be able to offload work to different compute architectures efficiently}, facilitate access to co-processors for developers and {\bf schedule thread-safe and non-thread-safe work}.  {\bf It must be possible to derive the input data requirements for any algorithm in order to define the sequence of all algorithms needed for a particular use case, and it must be possible to only configure those components required for that use case.}
+
+\subsection{Reproducibility and provenance} % HSF had lots of comments
+As previously stated, the framework must ensure that memory is treated as a precious commodity, implying that {\bf intermediate data products cannot occupy memory beyond their useful lifetime}.  Nevertheless, reproducibility is a key requirement of any scientific tool and {\bf the framework must provide a full provenance chain} for any and all data products which must include enough information to reproduce identically every persistent data product. By definition, the chain will also need to include sufficient information to reproduce the transient data passed between algorithm modules, even though the product is not persisted in the final output.
+It is also highly desirable that the framework broker access to random number generators and seeds in order to guarantee reproducibility.  All of the preceding considerations imply that {\bf the software framework will need a very robust configuration system} capable of handling the requirements in a consistent, coherent, and systematically reproducible way.
+
+
+\section{Timeline \hideme{Norman/Laycock needs a lot more}}
+
+Near term vs long-term plans.  As the production use case can be taken care of by a traditional software framework, the focus in the near term should be to continue as we are and thereby learn more about the physics use cases and ultimately the needs of DUNE.  The long-term plan should not be saddled with supporting short-term needs for ProtoDUNE.  Given the timeline for DUNE, implementation of its framework is envisioned to start at (DISCUSS !!) the end of ProtoDUNE.
+
+\subsection{Missing functionality \hideme{Norman/Laycock - needs more}}
+
+The DUNE production framework will ultimately need to handle much more demanding trigger record sizes than ProtoDUNE and this will be the main development challenge.  In addition, major development work will be needed for:
+
+\begin{itemize}
+    \item one
+    \item two
+\end{itemize}
+
+For analysis, early investigations into an MPI-based framework (CITATION NEEDED) already showed promising results.  The compatibility of DUNE analysis to HPCs suggests that this would be an efficient way for analysis computing resources to be provisioned to DUNE.
+
+\subsection{Plan to go forward \hideme{ Norman/Laycock -needed }}
+
+Development plan.
+
+%This plan was further reviewed by the HSF, maybe.
+%
+%\subsection{HSF recommendation for a path forward}
+\end{document}

@@ -1,0 +1,69 @@
+\documentclass{dune} % Duke of English - Kirby
+
+\input{common/preamble}
+%\renewcommand\thedoctitle{\voltitletc} % defined in common/defs.tex
+%\newcommand\thevolumenumber{\volnumbertc} 
+
+\begin{document}
+
+\pagestyle{titlepage}
+%\includepdf[pages={-}]{name of cover file.pdf}
+\cleardoublepage
+
+% use this for things you want to only show up in some cases
+%\newcommand{\hideme}[1]{{\it( #1)}}  moved to defs
+% comment next line out to see assigned authors
+%\renewcommand{\hideme}[1]{}
+\input{common/init}
+\cleardoublepage
+
+% comment these lines out once we no longer need the example
+% \setcounter{chapter}{-1}
+% \input{chapters/00_tutorial}
+% \cleardoublepage
+
+
+% We have decided to utilize the FP package for doing calculations and tracking constants in the CDR
+% (e.g. the limit of annual data from ll active FD modules to permanent storage at FNAL is 30 GB/year)
+% The template for https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2a variable is this:
+% "chapter""section"variable where both "chapter" and "section" are abbreviations
+% with the Camel Caps used for readability
+% Note that you should not override the use of a variable defined in generated/parameters.tex
+https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
+% e.g. MonEtfDevPeople is the amount of effort for development in the ETF section of the Monitoring chapter
+%  \FPset{MonEtfOpsPeople}{3.2}
+%  \FPset{MonEtfDevPeople}{1.0}
+
+% You can do floating point operations on constants defined in this manner:
+% \FPadd\MonEtfTotalPeople\MonEtfOpsPeople\MonEtfDevPeople
+
+% But note that floating point operations generate numbers with large precision and so you need to make
+% sure to format numbers with printing them. In this example:
+
+%\num[round-mode=places,round-precision=1]{\MonEtfTotalPeople}
+
+% For FP set directly with \FPSet, then input precision will be maintained when printed.
+
+%Global numbers for the entire document
+
+\FPset{GlobalFDDataStorage}{30} % this is petabytes per year
+
+
+
+\subfile{Algorithms and Frameworks} %  Tom Junk, David Adams
+
+In order to accomplish the goals outlined in Part~\ref{part:overview}, a large number of algorithms must be applied to a large sample of data and also large samples of simulated data.  Care must be taken to apply the right calibrations and catalog the outputs so that the computational steps are unambiguous, complete and reproducible.  This part describes the frameworks in Chapter~\ref{ch:fworks}, databases in Chapter~\ref{ch:db}, applications in Chapter~\ref{ch:appl}, including simulation, reconstruction, and analysis tasks.
+
+\input{chapters/algo-frameworks}  % Paul and Andrew
+\cleardoublepage
+
+\input{chapters/algo-databases} % Norm and Paul 
+\cleardoublepage
+
+\input{chapters/algo-applications} % Tom and Mathew and Elisabetta
+
+\cleardoublepage
+
+
+\input{common/final}
+\end{document}

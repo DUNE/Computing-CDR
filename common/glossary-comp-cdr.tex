@@ -6,7 +6,23 @@
 
 %\newduneabbrev{label}{abbreviation}{full term}{description with no period at end}
 
+% ADDED TO OVERALL GLOSSARY 26 Feb by Anne; REFRESH glossary.tex 
+%\newduneabbrev{corsika}{CORSIKA}{Cosmic Ray SImulations for KAscade}{a program for detailed simulation of extensive air showers initiated by high-energy cosmic-ray particles.}
 
+%\newduneabbrev{scd}{SCD}{Scientific Computing Division}{Fermilab's Scientific Computing Division}
+
+%\newduneabbrev{garsoft}{GArSoft}{Gaseous Argon Software}{A software toolkit similar to LArSoft, but targeted at the gaseous argon time projection chamber and calorimeter of ND-GAr}
+
+%\newduneword{ndgarlite}{ND-GAr-Lite}{a temporary muon spetrometer consisting of the magnet and steel flux return of ND-GAr, but with a simplified tracking chamber made with scintillating bars}
+
+%\newduneword{github}{GitHub}{a commerical web service providing code version management, storage, and browsing via git}
+
+%\newduneword{git}{git}{a distributed version-control system, commonly used to manage software}
+
+%\newduneword{xrootd}{xrootd}{XRootD is a high performance data system widely used in HEP to store and to distribute data to jobs.  It allows streaming of data.}
+
+%\newduneabbrev{gpuaas}{GPUAAS}{GPU As A Service}{A technique which allows many non-GPU-enabled compute nodes to share a GPU resource by sending work to it over the network and waiting for results to be returned.}
+% END ADDED TO OVERALL GLOSSARY 26 Feb by Anne
 
 % ADDED TO OVERALL GLOSSARY; REFRESH glossary.tex \newduneabbrev{cvmfs}{{\tt cvmfs}}{CernVM File System}{The CernVM File System provides a scalable, reliable and low-maintenance software distribution service. It was developed to assist High Energy Physics (HEP) collaborations to deploy software on the worldwide-distributed computing infrastructure used to run data processing applications} %TRJ put this in an issue; different (shorter) def: A distributed file system designed for scalable, high-performance distribution of software to interactive and batch computers
 
@@ -17,3 +33,103 @@
 
 %\newduneabbrev{ups}{{\tt ups}}{Unix Product Support}{UPS is a Fermilab developed package manager that supports installation of multiple versions of a product and multiple builds per version.} %TRJ put this in an issue; exists, but should we change definition?
 
+\newduneabbrev{vd}{VD}{Vertical Drift}{Detector using vertical drift TPC technology.}
+
+\newduneabbrev{hd}{HD}{Horizontal Drift}{Detector using horizontal drift TPC technology.}
+
+%\newduneabbrev{hv}{HV}{High Voltage}{High voltage system for TPC or other detector system.}
+
+%\newduneabbrev{cisc}{CISC}{Cryogenic Instrumentation and Slow Controls}{DAQ subgroup responsible for monitoring detector systems. }
+
+\newduneabbrev{poms}{POMS}{Production Operations Management System}{A Fermilab web service interface that enables automated jobs submission on distributed resources and subsequent monitoring and recovery of failed submissions, debugging and record keeping.}
+
+\newduneabbrev{compass}{Compass}{
+Common Muon and Proton Apparatus for Structure and Spectroscopy (COMPASS)}{
+COMPASS is a multipurpose experiment at CERN’s Super Proton Synchrotron (SPS).}
+
+\newduneabbrev{esnet}{ESnet}{Energy Sciences Network}{The Department of Energy's dedicated science network.}
+
+\newduneword{project.py}{project.py}{xml based job configuration system developed by the MicroBooNE collaboration.}
+
+\newduneabbrev{ppfx}{PPFX}{Package to Predict the FluX}{Fermilab supported package which implements hadron production corrections to geant4 simulations and propagates uncertainties for the NuMI  and LBNF beam lines.}
+
+\newduneabbrev{ml}{ML}{Machine Learning}{Machine Learning}
+
+\newduneabbrev{proto}{ProtoDUNE}{ProtoDUNE}{The protoDUNE detectors at CERN, includes the single phase, dual phase and vertical drift prototypes.} %Anne - not needed; already have {protodune}
+
+\newduneabbrev{metacat}{MetaCat}{MetaCat}{Metadata Catalog, a modern replacement for the file description portion of the sam metadata catalog.}
+
+\newduneword{g4lbnf}{g4lbnf}{LBNF neutrino beamline simulation program\cite{g4lbnf}.}
+
+\newduneword{Geant4Reweight}{Geant4Reweight}{Framework for evaluating and propagating hadronic interaction uncertainties in Geant4\cite{Calcutt:2021zck}.}
+
+\newduneword{geantnet}{G\'EANT}{G\'EANT interconnects Europe's national research and education networking (NREN) organizations with the high bandwidth, high speed and highly resilient pan-European backbone.
+}
+
+\newduneabbrev{nren}{NREN}{National Research and Education Network}{National level research computing network infrastructure.}
+
+\newduneabbrev{vrf}{VRF}{Virtual Routing and Forwarding}{Networking overlays that provide  a logical routing infrastructure  that allows flexible traffic engineering.}
+
+\newduneword{samvalue}{value}{A generic quantity describing a file in the \dword{sam} data catalog.}
+
+\newduneword{samparameter}{parameter}{A user or experiment described quantity describing a file in the \dword{sam} data catalog.}
+
+\newduneword{samproject}{project}{A server process running centrally that maintains a predefined list of files and delivers information about  their locations when asked by distributed processes. The project tracks success and failure of file processing.}
+
+\newduneword{samconsumer}{consumer}{A client process that requests information about file locations from a \dword{samproject}, process the file and reports success or failure.}
+
+\newduneword{samdataset}{dataset}{ A dynamic collection of files defined by queries to the \dword{sam} data catalog.}
+
+\newduneword{samsnapshot}{snapshot}{A fixed collection of files corresponding to a \dword{sam} \dword{samdataset} at a particular point in time.}
+
+\newduneabbrev{mql}{MQL}{\dword{metacat} Queryl Language} {A query language which supports queries of the \dword{metacat} data catalog, including parentage and logical functions such as union, join and subtraction.}
+
+\newduneword{pdhd}{ProtoDUNE-HD}{ProtoDUNE with horizontal drift technology.  This refers to the \dword{apa}-based prototype to run in ProtoDUNE Run II.} 
+
+\newduneword{pdvd}{ProtoDUNE-VD}{ProtoDUNE with vertical drift technology.  This refers to the \dword{crp}-based prototype to run in ProtoDUNE Run II.} 
+
+\newduneabbrev{ucondb}{uconDB}{Unstructured Conditions Database}{Unstructured conditions database developed for FNAL fixed target experiements\cite{bib:ucondb}.}
+
+\newduneabbrev{json}{JSON}{JavaScript Object Notation}{Open standard data interchange format that uses pair-value pairs and maps well onto python data formats such as tuples and lists.}
+
+\newduneabbrev{dqmd}{DQMD}{Data Quality and Monitoring Database}{Database storing the results of data quality monitoring.}
+
+\newduneabbrev{db}{DB}{Database}{Database, can have many formats based on optimal use.}
+
+\newduneabbrev{vm}{VM}{Virtual Machine}{Emulator of a physical computer that allows multiple users to configure different operating systems  while sharing physical hardware. }
+
+\newduneword{enstore}{enstore}{Enstore is a mass storage system developed by Fermilab that provides distributed access and management of data stored on tapes \cite{Litvintsev:2012dw}.}
+
+%\newduneabbrev{nas}{NAS}{Network Attached Storage}{High performance disk available on interactive nodes.}
+
+
+\newduneword{stashcache}{StashCache}{A distributed caching federation that enables opportunistic users to utilize nearby opportunistic storage\cite{bib:stashcache}}
+
+\newduneabbrev{hdf5}{HDF5}{Hierarchical Data Format}{Data format\cite{bib:hdf5} widely used in \dword{ml}.}
+
+\newduneword{pdcoldbox}{ProtoDUNE-VD coldbox}{  Coldbox used for testing the \dword{pdvd} electronics and \dword{daq} systems.}
+
+\newduneword{protoii}{ProtoDUNE Run II}{2022-23 run of the \dword{proto} prototypes at CERN.}
+
+\newduneword{glideinwms}{GlideinWMS}{GlideninWMS \cite{sfiligoi2009pilot}.}
+
+\newduneword{mars}{MARS}{The MARS code system is a set of Monte Carlo programs for detailed simulation of coupled hadronic and electromagnetic cascades, with heavy ion, muon and neutrino production and interactions.}
+
+\newduneabbrev{fife}{FIFE}{Fabric for Intensity Frontier Experiments}{Fermilab computing infrastructure for Intensity Frontier Experiments \cite{box2014fife}.}
+
+\newduneword{tr}{trigger record}{A data record produced by the \dword{dune} \dword{daq} system.  A Trigger Record can contain multiple interaction "events" or none.}%anne made it lower case
+
+\newduneword{postgres}{Postgres}{PostgreSQL, also known as Postgres, is a free and open-source relational database management system used extensively for databases in HEP.}
+
+\newduneword{hllhc}{HL-LHC}{High-luminosity \gls{lhc}} %anne added
+
+\newduneword{garfield}{GARFIELD}{add def} %anne added
+
+\newduneabbrevs{iov2}{IOV}{interval of validity}{intervals of validity}{Interval over which something is valid} %anne added - plural was wrong - may need to fix orig {iov} too
+
+\newduneword{fhicl}{FHICL}{Fermilab Hierarchical Configuration Language; a standard configuration language for the
+storage, communication, and manipulation of scientific parameter sets}  %anne added
+
+\newduneword{hwdb}{HWDB}{hardware database}   %anne added
+
+\newduneword{singlecube}{SingleCube}{add def}  %anne added
