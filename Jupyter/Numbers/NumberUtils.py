@@ -81,12 +81,12 @@ def DrawType(Value,Years,Data,Types,Units,typecolors,typelines,points=None,contr
     if points != None:
         for y in points:
             for t in points[y]:
-                ax.plot(y,points[y][t],color=typecolors[t],marker="o",label="model "+t)
+                ax.plot(y,points[y][t],color=typecolors[t],marker="o",label="model "+t,markerfacecolor='none')
     
     if contributions != None:
         for y in contributions:
             for t in contributions[y]:
-                ax.plot(y+.2,contributions[y][t],color=typecolors[t],marker="s",label="actual  "+t,markerfacecolor='none')
+                ax.plot(y+.2,contributions[y][t],color=typecolors[t],marker="s",label="actual  "+t)
     ax.legend(frameon=False)
     ax.set_xlabel("Year")
     ax.set_ylabel(Value + ", " + Units[Value])
