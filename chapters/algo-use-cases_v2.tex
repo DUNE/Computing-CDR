@@ -444,7 +444,104 @@ Before final pattern recognition can be applied to physics events,  the processe
 %
 %{\it Challenge:  At some point after either signal or  hit processing, the data from a full interaction must be brought together in memory in an appropriate format for pattern recognition. Each \dword{apa} can still produce up to 1 MB of hits, leading to memory footprints of up to 100 MB for pattern recognition inputs.}
 
+\section{Visualization}\hideme{Tom Junk}
+\label{sec:visualization}
 
+Both raw and reconstructed data from each of DUNE's detectors must be visualized graphically in multiple ways in order to successfully design, commission and operate the detectors, and to extract meaningful physics results.  While reconstruction is automated and hand-scanning is no longer used to extract physics results, event displays are critical for a large number of necessary steps:
+\begin{enumerate}
+    \item {\bf Design of the detectors.}   It is important to visualize interactions in the detectors in order to ascertain which among them are easy to identify and measure, and which ones are difficult.
+    \item{\bf Optimizing reconstruction algorithms}  Comparisons of true particle trajectories and energies with reconstructed versions thereof in simulated interactions provides guidance for improving reconstruction algorihtms.  Quantitative metrics such as completeness and purity can be optimized, but it is easier to do so when viewing an event display that shows which pieces of which interactions have failed to reconstruct well.
+    \item{\bf Operating prototypes and learning from them}  Data from prototypes, such as the coldboxes, the ProtoDUNEs, and ICEBERG must be analyzed quickly to ascertain what the noise level is and to search for the presence of signals.  This is part of an iterative experimental process to commission the prototypes by searching for noise sources, checking high-voltage and cryogenic performance, drift medium purity, etc.  Dead channels or other artifacts such as long-range induction effects are plainly visible on raw data displays.  Various artifacts may be addressable with software, such as correcting for front-end amplifier artifacts, correlated noise, and ADC issues.  These are all discovered first with event visiualization.
+    \item{\bf Interpreting calibration data}  Laser calibrations, neutron source data and radioactive source data must be inspected first before use, as unanticipated artifacts may confound the intended calibration use.
+    \item{\bf Providing educational and public outreach materials}  Introducing new students to DUNE's physics program involves showing them what interactions look like in each of our detectors.  Materials for DUNEs public-facing web sites and press releases also reuquire high-quality data visualizations.
+\end{enumerate}
+Each of these uses places different requirments on the visualization software.  Furthermore, the event display programs must be responsive and easy to use, though specialist functions may require additional configuration.
+
+\subsection{Two-Dimensional event displays}
+\label{sec:visualization:2d}
+
+The data from the FD-HD and FD-VD modules are inherently two dimensional, with ADC values read out per wire (or strip) for each sample time.  Inspecting the raw waveforms side by side in a grayscale or colored map for each of the three views is critical for understanding the features of the raw data.  LArSoft provides such a display, optimized for X-Window connections.  Users can zoom in on rectangular subsets of the data and clicking on the image brings up a one-dimensional waveform plot for the corresponding channel.  An example of such a display for a ProtoDUNE-SP event with cosmic rays is given in Figure~\ref{fig:vis:larsoftraw}.  An example of a two-dimensional display of reconstructed tracks, vertices and showers is given in Figure~\ref{fig:vis:larsoftreco}.  
+
+\begin{dunefigure}
+[LArSoft Raw Data Display]
+{fig:vis:larsoftraw} 
+{Example raw data display produced with LArSoft.  One APA's worth of data are shown for a ProtoDUNE-SP trigger record. The top panel shows the collection-plane data, the next panel V-plane data, and the bottom colored panel shows U-plane data.  Below those three is a single channel's waveform.  The colored panels show the pedestal-subtracted ADC values for each channel on the horizontal axes with sample time on the vertical axes.  The time between samples is 500~ns.  White vertical lines in the collection plane correspond to channels that have been flagged as noisy or dead.}
+\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/pdsp_larsoft_rawevent.png}
+\end{dunefigure}
+
+The raw data display provided by LArSoft is best run interactively.  The user can step through the events in a file, forwards or backwards, or skip to a desired event number.  This event display is not built for non-interactive use.  There are use cases in which large numbers of raw event displays need to be produced in a batch.  For this purpose, dedicated modules have been written in DUNE's LArSoft-based software that provide two-dimensional displays of raw data and data that have been processed through each step of data preparation.  {\color{red} TODO:  add some of these as a figure?}
+
+\begin{dunefigure}
+[LArSoft Reconstructed Data Display]
+{fig:vis:larsoftreco} 
+{Example reconstructed data display produced with LArSoft.  One APA's worth of data are shown for a ProtoDUNE-SP trigger record. The top panel shows the collection-plane data, the next panel V-plane data, and the bottom colored panel shows U-plane data.  Below those three is a single channel's deconvolved waveform and fitted hits.  Reconstructed vertices, tracks and showers are displayed in the top three panels, with identifying numbers attached to each.}
+\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/larsoft_reco_example_evd.png}
+\end{dunefigure}
+
+%this event is the first one in this file:  np04_raw_run005387_0080_dl11_reco1_38694915_0_20201116T180838Z_reco2_48964460_0_20210930T150928Z.root
+
+\subsection{Three-dimensional event displays}
+\label{sec:visualization:3d}
+
+ LArSoft also provides a three-dimensional event display, showing the same reconstructed objects.  An example is given in Figure~\ref{fig:vis:larsoft3dreco}.  Only reconstructed objects are available in three dimensions as the data in the ProtoDUNEs and the Far Detector modules are two-dimensional.
+ 
+\begin{dunefigure}
+[Three-dimensional LArSoft Reconstructed Data Display]
+{fig:vis:larsoft3dreco} 
+{Example three-dimensional reconstructed data display produced with LArSoft, showing data from a ProtoDUNE-SP trigger record, for all APAs.  Reconstructed space points are shown in gray while shower cones are drawn in red.  The display can be pan, zoom, and rotate under user control.  The LArSoft 3d event viewer can also produce animated gifs.}
+\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/larsoft_reco_evd_3d.png}
+\end{dunefigure}
+
+\subsection{Web-based event displays}
+\label{sec:visualization:web}
+
+In addition to the LArSoft-based event displays, DUNE has multiple web-based event displays.  One, called the Bee event display, is made for displaying ProtoDUNE-SP events in a web browser.  The server is hosted at Brookhaven National Laboratory and contains a short list of typical ProtoDUNE-SP events, one of which is shown in Figure~\ref{fig:vis:bee}. No software needs to be installed on the user's computer, and no data files need to be copied.  The user only needs a modern web browser and the experience is enhanced with a capable graphics card.
+
+\begin{dunefigure}
+[Three-dimensional ProtoDUNE-SP Bee Data Display]
+{fig:vis:bee} 
+{Example three-dimensional reconstructed data display for a ProtoDUNE-SP data trigger record produced with the web-based Bee event display.  Users interact with the data needing only a modern web browser on their computer.  They can pan, zoom, rotate, and change display colors, point sizes, and transparency.}
+\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/bee_pdsp_evd1.png}
+\end{dunefigure}
+
+Another web-based event display is called WebEVD.  It runs as a LArSoft module, and it sets up a local web server owned by the user process on an interactive computer.  The user then must ssh in to the interactive computer running the web server, with a specified port forwarded.  The user then connects to that port with a local web browser and interacts with the event display with it.  This user-owned web server which is only visible via authenticated ssh has the advantage that it provides the user with full control over which data are to be displayed, as the web server is not centrally managed.  An example display of two-dimensional deconvolved waveforms for a simulated $\nu_e$CC event in a far detector workspace geometry run is shown in Figure~\ref{fig:vis:webevd2d}.  An example three-dimensional event display from a ProtoDUNE-SP data run produce using WebEVD is shown in Figure~\ref{fig:vis:webevd3d}.
+
+\begin{dunefigure}
+[Two-dimensional WebEVD of a simulated $\nu_e$CC interaction.  ]
+{fig:vis:webevd2d} 
+{A simulated $nu_e$CC interaction in a far detector workspace geometry run. The display is of charge reconstructed on collection wires (recob::Wire). The horizontal axis is the z-axis (beam direction) in the detector. The vertical axis corresponds to drift time ($x$ position in the detector). Both axes are labeled in cm. Rendered with WebEVD. }
+\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/webevd_nuecc_sim.png}
+\end{dunefigure}
+
+\begin{dunefigure}
+[Three-dimensional WebEVD of a ProtoDUNE-SP trigger record. ]
+{fig:vis:webevd3d} 
+{ Example three-dimensional reconstructed data display for a ProtoDUNE-SP data trigger record, rendered with WebEVD. Reconstructed tracks and space points are shown in blue, and detector elements are shown in red.}
+\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/webevd_pdsp3d.png}
+\end{dunefigure}
+
+\subsection{Near detector event displays}
+\label{sec:visualization:neardetector}
+
+TODO:  {\color{red}Add text and figure for ND-LAr.}
+
+An example of a reconstructed event in ND-GAr is shown in Figure~\ref{fig:vis:garsoftreco} rendered with the ROOT-based event display in GArSoft.  The same event is shown in Figure~\ref{fig:vis:garsoft2}, rendered with the TEve-based event display in GArSoft.
+
+\begin{dunefigure}
+[GArSoft reconstructed data display, ROOT-based]
+{fig:vis:garsoftreco} 
+{Example reconstructed $\nu_\mu$CC event produced with GArSoft, using an ALICE-inspired detector geometry.  The reconstructed vertex is indicated with a yellow dot, and tracks are shown in green, blue, and red.  Reconstructed calorimeter clusters are shown with green tetrahedra.  The annotations giving the Monte Carlo particle identities were added by hand.}
+\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/nd_gar_evdwp2_withcaloclusters.pdf}
+\end{dunefigure}
+
+\begin{dunefigure}
+[GArSoft Reconstructed data display, TEve-based]
+{fig:vis:garsoftrecoevd3d} 
+{The same ND-GAr event as shown in Figure~\ref{fig:vis:garsoftreco}, rendered here with GArSoft's TEve-based event display.}
+\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/nd_gar_evd_3d.png}
+\end{dunefigure}
+
+TODO:  {\color{red}Add text and figure for SAND.}
 
 \section{Production of Analysis Samples\hideme{Calcutt - needs more}}
 
@@ -455,7 +552,7 @@ The interaction data, which are in the output format supplied by the full recons
 
 In the long run this processing will be done as coherent production steps but may also be done by small groups while the data formats and procedures are being developed.
 
-DUNE's primary analysis framework is currently   the \dword{cafana} framework, originally developed for the NOvA experiment \cite{Backhouse:2015wlj,  bib:cafana}. The HighLAnd framework used by T2K is also used for some analyses. 
+DUNE's primary analysis framework for oscillation physics is currently   the \dword{cafana} framework, originally developed for the NOvA experiment \cite{Backhouse:2015wlj,  bib:cafana}. The HighLAnd framework used by T2K is also used for some analyses. 
 
 
 
