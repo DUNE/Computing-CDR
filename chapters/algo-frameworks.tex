@@ -12,9 +12,26 @@ The unique challenges of reconstructing time-series based objects from the DUNE 
 
 \section{Defining a Framework}
 
-Borrow heavily from https://arxiv.org/pdf/1812.07861.pdf, might be useful to include one of the Gaudi framework diagrams (the original paper sketches are B+W so maybe the one stolen from the requirements report).
+Borrow heavily from https://arxiv.org/pdf/1812.07861.pdf, might be useful to include one of the Gaudi framework diagrams (the original paper sketches are B+W so maybe the one stolen for the requirements report).
 
 Common functionality (I/O, scheduling, configuration, logging) that allows algorithmic code to be developed separately and provided as plug-ins.  Most frameworks provide some level of support for parallelism, often using a task-based model. Define all of the terms.
+% Overlap with the first para of "Current Status" that comes next
+%Still needed
+"Service", "I/O", "Scheduling", "Algorithm".
+
+The Data Processing Atom, the smallest unit of data that can be processed independently
+
+A “Data Store” is defined as the framework’s repository for storing data in memory beyond the lifetime of particular algorithms.
+
+Configuration - The framework needs to perform many different data processing steps with potentially very many different variations.  As the code base will be rather large, targeted (re)compilation for particular purposes is not desirable, especially if e.g. only a handful of parameters for one algorithm need to be changed.  Instead, the components of the framework are configured to perform a particular task in a particular way, e.g. performing signal processing on raw input data.  
+
+Framework states - Frameworks typically use state transitions similar to those used in data acquisition and run control, including configuration, initialization, execution (where algorithmic code is typically run) and finalization.  These state transitions are used by the framework to guarantee that all framework components have their work scheduled coherently.  The components of a framework depend on the particular design but key requirements are
+
+
+%"services are treated with single source of truth authority and do not  permit operations that can corrupt a data state between two concurrent access operations."  
+%OR
+%"A “service” is a source of information or block data which is not populated from event records.  Examples of services are calibration or alignment constants, beam line information, databases and other sources of non-event data."
+
 
 Interplay between framework and workflow management tools.  Evolving compute architectures and HPCs.
 
@@ -28,7 +45,7 @@ The \dword{larsoft} toolkit is a collection of \dword{art} plug-ins and associat
 
 % paragraph on SSRI/\dword{tms}
 
-The gaseus detector simulation, \dword{garsoft} is patterned on \dword{larsoft}.  It is a software toolkit for simulating and reconstructing data from \dword{ndgar}.  It is also based on the \dword{art} framework.  Like \dword{larsoft}, it provides interfaces to event generators and \dword{geant4}, custom simulation and reconstruction software, and event displays.  It also provides simulation and reconstruction for \dword{ndgarlite}.  \dword{garsoft} is written, maintained, and supported by the DUNE collaboration.
+The gaseous detector simulation, \dword{garsoft} is patterned on \dword{larsoft}.  It is a software toolkit for simulating and reconstructing data from \dword{ndgar}.  It is also based on the \dword{art} framework.  Like \dword{larsoft}, it provides interfaces to event generators and \dword{geant4}, custom simulation and reconstruction software, and event displays.  It also provides simulation and reconstruction for \dword{ndgarlite}.  \dword{garsoft} is written, maintained, and supported by the DUNE collaboration.
 
 The \dword{ndlar} software effort is currently being developed as a series of standalone tools for simulating and reconstructing pixel-based \dword{lartpc} data.  Toolchains have been developed for analyzing \dword{singlecube} prototype data.
 
@@ -40,7 +57,7 @@ The \dword{sand} software effort benefits from long experience with the \dword{k
 % Taken from vCHEP paper
 Modern \dword{hep} software frameworks are in the process of addressing the increasing heterogeneity of computing architectures that are redefining the computing landscape, work that is closely followed by the HEP Software Foundation~\cite{Alves:2017she, Calafiura:2018rwe}. The \dword{dune} collaboration is keen to participate in these efforts to minimize unnecessary development effort in improving our own framework. 
 
-Given the unique challenges that \dword{dune} data pose, in 2020, the collaboration assembled a task force to define the requirements for its software framework based largely on physics use cases \cite{bib:docdb21934}.  The collaboration then approached the \dword{hsf} who assembled a panel of software framework experts from various experimental backgrounds to review these requirements. The report \cite{bib:docdb24423} produced by this panel was discussed in a workshop involving the panelists which resulted in a followup workshop to address the outstanding issues, mostly around the topic of concurrency.  The findings of the panelists and the summary of the concurrency workshop \cite{bib:docdb24426} have been incorporated into the \dword{dune} software framework requirements presented in the following.
+Given the unique challenges that \dword{dune} data pose, in 2020, the collaboration assembled a task force to make a preliminary definition of the requirements for its software framework based largely on physics use cases \cite{bib:docdb21934}.  The collaboration then approached the \dword{hsf} who assembled a panel of software framework experts from various experimental backgrounds to review these preliminary requirements. The report \cite{bib:docdb24423} produced by this panel was discussed in a workshop involving the panelists and task force members, which resulted in a followup workshop to address the outstanding issues, mostly around the topic of concurrency.  The findings of the panelists, and the summary of the concurrency workshop \cite{bib:docdb24426}, have been incorporated into the \dword{dune} software framework requirements presented in the following.
 
 \subsection{Summary of Use Cases}
 
@@ -59,86 +76,11 @@ THIS IS TABLE BLAH
 %Would be useful to identify "production" use cases and "analysis" use cases.
 
 
-One striking feature of the use cases that \dword{dune} needs to support is the diversity in scale of the data processing atom, the smallest unit of data that can be processed independently.  Somewhat counter-intuitively, although the raw trigger records are themselves very large, the data processing atom (a single APA) is relatively small and compatible with the same high-throughput computing workflows adopted by most \dword{hep} experiments.  Meanwhile at the analysis level although the quantity of data related to a single trigger record is small, nuisance parameter extraction requires correlations across all trigger records in an analysis dataset, which is then the data processing atom.  This is a very good fit to high performance computing, particularly if the analysis framework can take advantage of many \dword{hpc} nodes at the same time. Experience from the \dword{hsf} panelists encouraged \dword{dune} to separate the analysis and production use cases when considering the software framework design.
-
-
-\subsection{Analysis\hideme{Norman/Laycock - still needs more}}
-
-Based on the recommendations of the \dword{hsf} panel experts, the analysis use case is not required to be supported by the same software framework as that used for production.
-
-\todo{Needs much more on the actual analysis requirements}
-
-
-Analysis includes the extraction of oscillation parameters, but is not limited to that, encompassing, as a minimum, comparisons between data and Monte Carlo, extraction of calibration and detector performance parameters, cross-section measurements, measurements of atmospheric, solar, and supernova neutrinos, and searches for non-standard phenomena.
-
-%%% THIS REQUIRES THE FLEXIBLE DATA ATOM INTRODUCTION - FROM TR TO SLICE
-The event-by-event paradigm is not a good match here. Spectra are filled by looping over neutrino candidates, or any other particle candidate, but then may undergo substantial processing in their own right. For example, the main work of an oscillation fit is the evaluation of many different combinations of oscillation and nuisance parameters.  While slices provide sub Trigger Record control flow, particle candidate control flow ignores the Trigger Record structure entirely.
-
---REQ It must be possible to define arbitrary units of execution that are independent of Trigger Records.  It must be possible to correlate these units to Trigger Records for exposure accounting, and experiment conditions.
-
-
-%% MOVE TO I/O
-Efficient data access for typical analysis workflows is also very different to data processing using the event-by-event paradigm. It is very common to require access to only a small subset of the Trigger Record information (the variables required to make a cut, or reconstruct a quantity), and for the amount of information to vary across Trigger Records (e.g. in the case of early rejection in a physics analysis selection).
-
---REQ The framework should make minimal assumptions about the data model, i.e. it should not assume an event-by-event paradigm.
-%%---
-
---REQ Analysis must be able to use particle-candidate-based control flow, without any constraints arising from the event-by-event paradigm.
-
-%% MOVE TO I/O
---REQ The framework must support partial reading of the persistent data and must not require reading an entire Trigger Record unless required (i.e. it must not force the entire Trigger Record to be read).
-%---
-
-%--REQ ON DUNE, NOT THE FWK - Calibration, reconstruction, and selection algorithms must be framework-agnostic, i.e. able to run transparently in any official DUNE framework where equivalent requisite data products exist.
-
-Analysis work will be undertaken by a large number of collaborators, with varying levels of experience. In many cases, rapid feedback and iteration will be required to make progress:
-
---REQ The analysis framework should have a low entry-level in terms of software expertise.
-
-Experience shows that oscillation fits accounting for large numbers of systematic uncertainties are resource intensive, while analysts will likely only have access to modest local resources for prototyping and development.  Therefore the framework should make scaling and concurrency transparent both to the analyst and the developer as far as possible.  The use of declarative analysis techniques should be strongly encouraged to support this even when co-processors (and low-level implementation) changes.
-
---REQ The analysis framework should easily scale from local resources such as a laptop, up to multi-node compute at an HPC.
-
-It is noted that MPI-enabled frameworks written in python already exist and would be a good match to the above requirements.
-
-Analysis files, of course, are derived from the data-processing framework files, and it must be possible to reconstruct this history. Due to the very large number of Trigger Records expected to be summarized in a single analysis file, the size requirements, and the fact that per Trigger Record information remains available in the parent files, we require:
-
---REQ Analysis files must record their parent framework files, but no Trigger Record provenance is required.  The full provenance information need not be retained in analysis files as this could easily become larger than the data itself.
-
-One common and insidious class of mistakes is errors in exposure accounting and normalization. This is also a problem that is entirely solvable at the technical level.  Each individual Trigger Record (beam spill or other trigger) has exposure associated with it, whether POT or livetime or both. When filling a summary histogram from processing Trigger Records, the exposure should be calculated and stored as an integral part of the histogram, and operations between histograms should take correct notice of the exposure, e.g. ratio of one large exposure sample to a smaller exposure sample should produce a dimensionless ratio that has allowed for the differing exposures.
-
---REQ The framework must have native support for exposure accounting (POT and livetime), so as to make errors of this sort difficult.
-
-All but the simplest analyses require a treatment of systematic uncertainties. There are three main technical means by which these systematics can be introduced. The most common, and most convenient, is reweighting. For example, the effect of various cross-section and flux uncertainties may be encapsulated by applying weights to Trigger Records of certain categories, to increase or decrease their representation in the final spectra. Secondly, Trigger Record data may be shifted. For example, an energy scale uncertainty may be most conveniently represented by rewriting of Trigger Records to increase or decrease reconstructed energies by a certain amount. Finally, the least convenient method is alternate simulation samples. The profusion of files requiring processing and bookkeeping makes this a heavyweight option, but in the case of uncertainties early in the analysis chain with complex effects, it may be the only way to handle them accurately. The treatment of systematics is cross-cutting across all analyses, it is important it is handled correctly, and the framework is able to offer substantive technical assistance.
-
-%% I/O ???
-In addition to being able to handle multiple input data streams:
-
---REQ The analysis framework should provide some means of cross-referencing (labelling) multiple input streams to correlate them in order to facilitate evaluation of systematic uncertainties.
-
-For oscillation analysis, it will be important to work with both Near and Far detector data. Whether in an explicit joint fit, or where extracting constraints from the ND to apply to the FD analysis, there must be a uniformity in the treatment of various systematics. In general, experience gained with the Near Detector (where the majority of analysis work is likely to happen) should be transferable to the Far Detector.  This re-emphasises the importance of the framework making minimal assumptions about the Data Model.
-
---REQ The analysis framework should be able to work with both ND and FD data on an equal footing, and within the same job.
-%%---
-
-
-\subsection{Machine Learning} % ML is used at all stages of data processing
-Machine learning is already heavily used in analysis of ProtoDUNE data and the framework should give special attention to machine learning inference in the design, both to allow simple exchanges of inference backends and to record the provenance of those backends and all necessary versioning information.  Finally, the framework should be able to work with both Near Detector and Far Detector data on an equal footing, and within the same job.
-
-DUNE will use several libraries outside of the framework software stack, and it will also be necessary to record the precise versions of all of these libraries to guarantee reproducibility of the physics results.  It is noted that containers (docker et al) could potentially make provenance tracking easier in this respect.  Random number generation is an important aspect of code and given the additional complications of multi-threading and co-processors:
-
---REQ it is highly desirable that the framework broker access to random number generators and seeds in order to guarantee reproducibility.  
-
-One important source of external libraries relates to machine learning, and machine learning inference is expected to play a significant role in all stages of data processing including analysis.  
-
---REQ The framework should give special attention to machine learning inference in the design, both to allow simple exchanges of inference backends and to record the provenance of those backends and all necessary versioning information.
-
-
-%Now move on to discussing "the" framework requirements, separate section? 
+One striking feature of the use cases that \dword{dune} needs to support is the diversity in scale of the Data Processing Atom.  Somewhat counter-intuitively, although the raw trigger records are themselves very large, the data processing atom (a single APA) is relatively small and compatible with the same high-throughput computing workflows adopted by most \dword{hep} experiments.  Meanwhile at the analysis level although the quantity of data related to a single trigger record is small, nuisance parameter extraction requires correlations across all trigger records in an analysis dataset, which is the effective data processing atom.  This is a very good fit to high performance computing, particularly if the analysis framework can take advantage of many \dword{hpc} nodes at the same time. Experience from the \dword{hsf} panelists encouraged \dword{dune} to separate the analysis and production use cases when considering the software framework design.
 
 
 
-\subsection{Data and I/O layer} % Needs some updating but mostly ok
+\subsection{Data and I/O layer}
 
 %As noted the discussion on raw data processing, the DUNE software framework must have the {\bf ability to  change its unit of data processing} from single planes to supernova readouts with extreme flexibility and ensure that memory is treated as a precious commodity.  
 
@@ -148,35 +90,73 @@ One important source of external libraries relates to machine learning, and mach
 
 %{\bf Partial reading of data} is another strong requirement needed to keep memory usage under control.  There must be {\bf no assumptions on the data model}, {\bf the framework must separate data and algorithms} and,  further, {\bf separate the persistent data representation from the in-memory representation} seen by those algorithms.  DUNE data is well suited to massively parallel processing compute architectures, so the framework will need to {\bf have a flexible I/O layer supporting multiple persistent data formats} as different formats may be preferred at different stages of data processing.  The sparsity of DUNE data also imply that compression will play an important role in controlling the storage footprint, especially for raw data, and the sparsity of physics signals further emphasize support for data reduction (skimming, slimming and thinning) in the framework.  The framework {\bf needs to be able to handle the reading and writing of parallel data streams}, and navigate the association (if any) between these streams with a {\bf critical need to allow experiment code to  mix simulation and (overlay) data}.
 
-%The main aim of this document is to describe the data processing steps for simulation and reconstruction of DUNE data.  
-The first stage of processing in offline jobs, after job configuration and initialization, is reading in detector data.  Offline jobs must read in data produced directly by the data acquisition system and also data produced by Monte Carlo simulation.  Input data files may be retrieved from a persistent storage system, delivered over a network, or reside on local storage.
+%37 - this could be tied to req #1, separation of data and algorithms?
+%--REQ ON DUNE, NOT THE FWK - Calibration, reconstruction, and selection algorithms must be framework-agnostic, i.e. able to run transparently in any official DUNE framework where equivalent requisite data products exist.
 
---REQ The framework must support reading and writing different persistent data formats.
+%%% Andrew's notes on memory management
+Notes On Memory Footprints in DUNE:
+The DUNE LArTPC data is naturally organized into geometrically distinct regions corresponding to Anode Plane Assembly (APA) regions.  In the far detector, the uncompressed readout is estimated at 6 GB/readout, but can be subdivided into 150 separate 40 MB/readout regions corresponding to each APA.  The actual data footprint that a DUNE data processing algorithm requires to be present in core memory varies depending on the total number of APAs on which the algorithm needs to operate on at a given time.  (i.e. if an algorithm needs the entire readout it requires a minimum of 6 GB of memory, while if it operates on only a single APA then it requires a minimum of only 40 MB.)   Many DUNE algorithms are transformations of the base data and require a multiple of the base memory footprint to be computed (i.e. large matrix style multiplications require the base data, transformation matrix and resultant matrix.)  Other operations require data from temporally adjacent readout windows and similarly require a multiple of the base data size to be accomplished.
 
-Every version of the framework must be able to read data files written by that version of the framework and all previous versions, with no loss in functionality or change in meaning of the data elements.
+For the purpose of these requirements we have considered the known limiting cases of data processing as being the drivers for memory requirements.  While optimization of specific algorithms may be possible, we consider the generalized unoptimized cases at this time are representative of real world data processing.
+%%%%
 
---REQ The framework I/O functionality must be backward compatible across versions.  
+Given the uncertainty in the choice of data format:
+
+%21
+--REQ the framework must support reading and writing different persistent data formats
+
+%2
+-- REQ the framework must separate the persistent data representation from the in-memory representation seen by algorithms
+
+%1
+-- REQ the framework must separate data and algorithms 
+
+For developers, highly modular code must be encouraged, allowing evolution or replacement of sub-algorithms that lend themselves to particular approaches.  It is assumed that algorithmic code will be organized in “algorithm modules” and this term is used in this document.  The codebase will therefore likely contain several alternatives for (sub)algorithms, the choice of which would depend on the available hardware.  The framework will need to run in heterogeneous and potentially dynamic environments where the availability and type of co-processors may be known late.  While the design of this technically challenging aspect is left to framework developers, it is worth pointing out the added challenge of developing algorithms for diverse hardware if the framework does not easily allow it.  Therefore:
+
+%11 - related to separating data from algos or belongs there?  Not concurrency
+--REQ it is highly desirable that it be possible to write algorithmic code independently of the framework.
+
+This also helps keep the gap between analysis and production code as low as possible.  Furthermore, 
+
+%12
+--REQ it is highly desirable that the framework be sufficiently modular in design to allow re-use of framework services and functionality both within and outside of the framework context, as far as that is possible.
+
+
+
+%The first stage of processing in offline jobs, after job configuration and initialization, is reading in detector data.  Offline jobs must read in data produced directly by the data acquisition system and also data produced by Monte Carlo simulation.  Input data files may be retrieved from a persistent storage system, delivered over a network, or reside on local storage.
+
+%% Andrew added a comment on needing to specifically support both row-wise and column-wise representations of data but this seems to be getting into the I/O implementation?  Could be used as an example rather than a requirement.
+
+Every version of the framework must be able to read data files written by that version of the framework and all previous versions, with no loss in functionality or change in meaning of the data elements:
+
+%22
+--REQ The framework I/O read functionality must be backward compatible across versions.
 
 We do not require forward compatibility, in which data written with newer versions of the framework are also readable by older versions.  Cases in which forward compatibility is broken need to be documented as far as possible, however, as these are breaking changes.  
 
 Experimenters may change their minds about the contents of data products.  For example, data members may be added because they were initially not included in the design but later found to be necessary, and rather than create a new data product, an expansion of an old one is more convenient.  Framework programs reading old and new data files need to behave seamlessly if the data product has changed definition.
 
---REQ A mechanism for user-defined schema evolution of data products needs to be provided.
+%23
+--REQ The framework I/O layer needs to provide a mechanism for user-defined schema evolution of data products.
 
 The DUNE data model allows for Trigger Record data to be stored in persistable representations which are generated by customized hardware or which are optimized for specific acceleration hardware or computing systems.  As a result, the data model expects that data will have custom “packed” representations that do not conform to 32-bit or 64-bit little-endian words. Furthermore, compression of the raw waveform data will be performed in the DAQ, though some data may arrive uncompressed.  Some highly compressible data products may benefit from dedicated compression algorithms scheduled to run before output. Therefore, 
 
---REQ the framework must provide a mechanism to register/associate and to run/apply custom serialization/deserialization and compression/decompression algorithms to data on write/read of that data from a persistable form.  
+%24
+--REQ the framework I/O layer must provide a mechanism to register/associate and to run/apply custom serialization/deserialization and compression/decompression algorithms to data on write/read of that data from a persistable form.  
 
 Data products that do not have dedicated compression algorithms associated with them can still benefit from automatic compression that is enabled by default.
 
---REQ The framework should support compression on output data in a manner that is transparent to users and is configurable.  It must be possible to disable the automatic compression of output data or provide compression transforms that are effectively identity transforms.
+%25
+--REQ The framework I/O layer should support compression on output data in a manner that is transparent to users and is configurable.  It must be possible to disable the automatic compression of output data.
 
 Experience shows that it is highly desirable to be able to configure a maximum file size such that output files are the correct size for efficient storage and for units of data processing; currently a file size of several GBs is considered optimal.  As this requires the closure of an existing output file and creation and opening of a new file (with sensible filename) then this needs to be addressed at the framework level.
 
---REQ The framework should allow a configurable maximum output file size and provide appropriate file-handling functionality.
+%26
+--REQ The framework I/O layer should allow a configurable maximum output file size and provide appropriate file-handling functionality.
+% What does "appropriate" mean?
 
 
-%%%% FROM MEMORY IN THE SFRT REPORT
+
 
 An issue that arises during data read-in and decompression and unpacking is the memory footprint used.  The DUNE Far Detector is big.  Supernova-burst (SNB) processing in the DUNE Far Detector presents unique challenges due to the large volume of data that are produced in each Trigger Record.  An uncompressed SNB Readout for 100 seconds will take about 120TB of storage for one single-phase far detector module for just the TPC wire data, and DUNE will have four detector modules.  These data will be divided into smaller chunks both in time and by detector component.  For single-phase detector modules, these components are likely to be the anode plane assemblies (APA) due to the granularity of the data preparation processing.
 
@@ -184,56 +164,101 @@ In the first stage of offline processing, waveforms from the channels are de-noi
 
 A common ratio of RAM to CPU cores on existing grids is 2 GB/core.  Memory usage beyond this results in poor performance and can lead to job eviction depending on the resource configuration.  An uncompressed DUNE Far Detector module Trigger Record will be larger than this, about 6 GB.  A supernova Trigger Record of 100s will be more than five orders of magnitude bigger again.  Clearly the framework will need to be able to act on subsets of Trigger Records, while respecting the overlap criteria noted above in order to avoid creating artefacts.
 
+%27
 --REQ The framework must be able to operate on subsets of a Trigger Record.  Specifically, it must be possible to break Trigger Records down into smaller chunks (e.g. one APA) and be able to stitch those chunks back together.  For supernovae, it must also be possible to reuse a fraction (nominally 100 us) of the previous chunk (nominally 5ms) of data to allow stitching in time.
 
 Data unpacking and initial processing can be arranged to operate on these subsets.  In order to realize the benefit from operating in this way, however, intermediate data products that are no longer needed must no longer occupy space in memory.  Data products that have been written out and are no longer needed in memory are also good examples of those that can be evicted from memory, but there are also cases of intermediate products which must be flushed instead of written out.
 
+%28
 --REQ Data products should not occupy memory beyond their useful lifetimes.
 
 As noted in “General Considerations”, the framework must be aware of which algorithms need which data products, while the algorithmic code, by nature of its modularity and re-use/reconfigurability, is expected to be unaware of what other components may be run in the same job.  Therefore, the framework must be responsible for garbage collection, capable of freeing up memory at the earliest possible time.  Furthermore, the framework will need to respect the memory constraints imposed by the processing environment which will entail supporting partial reading of data objects into memory and potentially purging any data objects or partial data objects not immediately required.
 
+%29
 --REQ The framework must manage memory of data products in the Data Store.
 
 Frameworks need to provide configurable, flexible I/O access so that experiments can control the output of their jobs in fine-grained detail.  This is needed to save on storage and also experimenter time, as smaller datasets take less time to analyze than larger ones.
  
+%30
 --REQ The framework needs to support skimming/slimming/thinning for data reduction.
 
 Similarly, processing and analysis is made much more convenient (or even possible) if the skimmed/slimmed/thinned output streams can be associated with information in other streams that may be stored separately.  Some analyzers may need the auxiliary data streams while others may not, and so a framework job that produces outputs for collaboration use would need to read all of the necessary streams.  This also allows efficient use of storage, as data does not need to be co-located in the same file to be available for processing.  In the case of writing, I/O cost can be very efficiently amortized if several output streams can be written based on one input file.
 
+%31
 --REQ The framework needs to be able to read and write several parallel data streams (including friend trees).  Labelling of data objects across streams should be intuitive and not error prone.  Provenance information should support correlating related data objects across streams.
 
 A common offline job need that goes beyond the 1->1 input to output data model is mixing real Trigger Record data with Monte Carlo simulation.  Monte Carlo simulation is often not sufficiently realistic, perhaps it fails to capture the time dependence of detector conditions or the generator or detector simulation simply lacks sufficient accuracy for the physics use case.  In this case, Monte Carlo simulation can be augmented by adding actual detector data, e.g. to embed single tracks or entire Trigger Records into simulated data and reconstruct them as if they were actual Trigger Records.  This can lead to a 2->many input output situation with asynchrony in both input and output. 
 
+%32
 --REQ The framework needs to allow experiment code to mix simulation and (overlay) data.
 
 
-\subsection{Configuration}
+%36
+--REQ The framework must support partial reading of the persistent data and must not require reading an entire Trigger Record unless required (i.e. it must not force the entire Trigger Record to be read).
+%---
+
+Efficient data access for typical analysis workflows is also very different to data processing using the event-by-event paradigm. It is very common to require access to only a small subset of the Trigger Record information (the variables required to make a cut, or reconstruct a quantity), and for the amount of information to vary across Trigger Records (e.g. in the case of early rejection in a physics analysis selection).
+
+
+
+
+
+
+\subsection{General Requirements} % Fancier name ?
+
+The reproducibility of physics results and the knowledge of how physics results were obtained is essential to DUNE and to the neutrino community as a whole.  It must be possible both to replicate physics results using identical input data, or to repeat an analysis using a different set of input data with an identical sequence of identically configured algorithms. 
+
+The framework must ensure that memory is treated as a precious commodity, implying that {\bf intermediate data products cannot occupy memory beyond their useful lifetime}.  Nevertheless, reproducibility is a key requirement of any scientific tool and {\bf the framework must provide a full provenance chain} for any and all data products which must include enough information to reproduce identically every persistent data product. By definition, the chain will also need to include sufficient information to reproduce the transient data passed between algorithm modules, even though the product is not persisted in the final output.
+
+Andrew's Note on Reproducibility: For the purpose of these requirements, we consider data to be reproducible, if:
+The products in a given event record are bitwise identical for integer fields
+Floating point numbers in a given event record are the same to within the floating point precision of the machine they were generated on.
+The ordering of data products within an event record are the same.
+These criteria for reproducibility are designed to allow DUNE simulate “rare” events with well defined single event sensitivities, and to perform numeric transform operations on data values across different hardware platforms and runtime concurrency topologies.
+
+It is also highly desirable that the framework broker access to random number generators and seeds in order to guarantee reproducibility.  Random number generation is an important aspect of code and given the additional complications of multi-threading and co-processors:
+
+%16
+--REQ it is highly desirable that the framework broker access to random number generators and seeds in order to guarantee reproducibility.  
+
+All of the preceding considerations imply that {\bf the software framework will need a very robust configuration system} capable of handling the requirements in a consistent, coherent, and systematically reproducible way.
+
+%14
+--REQ the framework must provide a full provenance chain for any and all data products which must include enough information to reproduce identically every persistent data product.  By definition, the chain will also need to include sufficient information to reproduce the transient data passed between algorithm modules, even though the product is not persisted in the final output.  
+
+\subsubsection{Configuration}
 
 Configuration is distinct from initialization of the framework objects; configuration happens first.  Given that RAII is an important concept for multi-threaded design, it is best to have a fully configured framework instance in the initialization phase.  Given the abundance of variations that make up HEP workflows a robust and easily programmable configuration system is a foundational component of all modern frameworks.  Some use a strictly declarative language and some use a Turing complete language.  The former must be augmented with scripts that write the declarations in a Turing complete language (usually it is part of the workflow management system, WMS) because it turns out that control flow is a requirement.  Given this, there is a requirement that:
 
+%3 - HSF really didn't like this requirement
+--REQ NEEDS UPDATING TO REMOVE TURING - the framework should provide a Turing complete configuration language as a foundational component so that it can ensure coherence of its configuration.
 
---REQ the framework should provide a Turing complete configuration language as a foundational component so that it can ensure coherence of its configuration.
+The WMS needs to be able to supply framework configuration parameters such as input file(s) or random number seeds to each framework application instance, which it should do using the framework’s configuration language.  To minimize errors, these parameters should be self-describing and validatable, and so:
 
-The WMS needs to be able to supply framework configuration parameters such as input file(s) or random number seeds to each framework application instance, which it should do using the framework’s configuration language.  To minimise errors, these parameters should be self-describing and validatable, and so:
-
+%4
 --REQ the framework should provide a suitable API so that algorithm writers can ensure their required parameters are self-describing and validatable.
 
 The framework should provide the concept of parameter sets that are nestable.  The set of all parameter sets that define a framework application instance should be identifiable, referred to here as a FrameworkConfigID.  Tracking that identity is one of the ingredients necessary to ensure scientific reproducibility.  However some parameters do not (and should not) change the algorithmic results, such as a debug print flag.  Independent of the state of such a flag it should be possible to define equivalence between FrameworkConfigIDs.
 
+%5
 --REQ The framework configuration system needs to have a robust persistency and versioning system that makes it easy to document and reproduce previous results.  It must be possible to create, tag, check-sum, store and compare configurations.  This configuration management system should be external to the framework or data files so that configurations can reliably be reused and audited.  
 
 Further fundamental requirements related to the framework configuration to guarantee reproducibility are:
 
+%6
 --REQ The resulting state of the configured framework and its components should be deterministic and precisely reproducible given a set of environmental conditions which include the available hardware, operating system, input data, etc.  
 
+%7
 --REQ the ensemble of the framework+environmental conditions must give reproducible results.  
 
 Following on from the discussion of supporting fast analysis R\&D:
 
+%8
 --REQ it is desirable that it should be possible to only configure those framework components required for a particular data processing use case.  
 
 This generates a further requirement that 
 
+%9
 --REQ it must be possible to derive the input data requirements for any algorithm, in order to define the sequence of all algorithms needed for a particular use case.
  
 \subsubsection{Conditions Configuration}
@@ -242,55 +267,131 @@ In addition to the Trigger Record data, data processing requires access to other
 
 Access to the external conditions data should preferably proceed via REST interfaces that support loose coupling of the framework and the external conditions management system.  As conditions data may need to be transformed from its persistent format into a format required by an algorithm, and as multi-threading makes the cache validity of conditions data complicated: 
 
---REQ the framework must provide a conditions service that is a single point of access to conditions data.  
+%18
+--REQ the framework must provide a thread-safe conditions service that is a single point of access to conditions data.  
 
+%19
 --REQ The configuration of the framework conditions service should ideally be via one configuration parameter (a global tag). 
 
 Developers must not hard-code conditions data in their algorithms, although 
 
+%20
 --REQ it must be possible to override a subset of global tag configured conditions for testing purposes.  
 
 Developers usually find it convenient if such alternative conditions payloads can be provided outside of the main managed conditions system, e.g. via a local file.
 
 
-\subsection{Concurrency} % Need to distinguish production and analysis
+\subsubsection{Concurrency} % Need to distinguish production and analysis
 Many aspects of DUNE data processing are well suited to concurrency solutions and {\bf the framework should be able to offload work to different compute architectures efficiently}, facilitate access to co-processors for developers and {\bf schedule thread-safe and non-thread-safe work}.  {\bf It must be possible to derive the input data requirements for any algorithm in order to define the sequence of all algorithms needed for a particular use case, and it must be possible to only configure those components required for that use case.}
 
 The arrival of concurrency and heterogeneous architectures has added a further level of complication for framework designers and developers alike.  Much of the existing code-base still relies heavily on serial programming for CPU architectures, meanwhile the co-processor market is evolving rapidly resulting in a diverse hardware landscape.  Both multi-threading and co-processors present challenges for both frameworks and developers.  
 
+%10
 --REQ It is therefore desirable that the framework should help facilitate the use of multi-threaded data processing and facilitate access to co-processors in an efficient manner. 
 
-For developers, highly modular code must be encouraged, allowing evolution or replacement of sub-algorithms that lend themselves to particular approaches.  It is assumed that algorithmic code will be organized in “algorithm modules” and this term is used in this document.  The codebase will therefore likely contain several alternatives for (sub)algorithms, the choice of which would depend on the available hardware.  The framework will need to run in heterogeneous and potentially dynamic environments where the availability and type of co-processors may be known late.  While the design of this technically challenging aspect is left to framework developers, it is worth pointing out the added challenge of developing algorithms for diverse hardware if the framework does not easily allow it.  Therefore:
-
---REQ it is highly desirable that it be possible to write algorithmic code independently of the framework.
-
-This also helps keep the gap between analysis and production code as low as possible.  Furthermore, 
-
---REQ it is highly desirable that the framework be sufficiently modular in design to allow re-use of framework services and functionality both within and outside of the framework context, as far as that is possible.
 
 Multi-threading presents additional, well-documented challenges, particularly given that many important libraries are not thread-safe.  Summarising briefly: algorithmic code, including sub-algorithms, should be thread-safe and must declare their compatibility to the framework.
 
+%13
 --REQ The framework must be able to schedule thread-safe and non-thread-safe work appropriately.  
 
 Thread-safety implicitly includes a general requirement on developers that algorithms and their sub-algorithms do not store state information in a thread-unsafe manner.  Further, data exchange should be done in controlled ways to ensure thread-safety, e.g. via some service which manages transient data - again the implementation of this challenging aspect is left to the framework designers.
 
 
-\subsection{Reproducibility and provenance} % HSF had lots of comments
-As previously stated, the framework must ensure that memory is treated as a precious commodity, implying that {\bf intermediate data products cannot occupy memory beyond their useful lifetime}.  Nevertheless, reproducibility is a key requirement of any scientific tool and {\bf the framework must provide a full provenance chain} for any and all data products which must include enough information to reproduce identically every persistent data product. By definition, the chain will also need to include sufficient information to reproduce the transient data passed between algorithm modules, even though the product is not persisted in the final output.
-It is also highly desirable that the framework broker access to random number generators and seeds in order to guarantee reproducibility.  All of the preceding considerations imply that {\bf the software framework will need a very robust configuration system} capable of handling the requirements in a consistent, coherent, and systematically reproducible way.
+\subsubsection{Provenance} % Does it need a separate subsection
 
-
-The reproducibility of physics results and the knowledge of how physics results were obtained is essential to DUNE and to the neutrino community as a whole.  It must be possible both to replicate physics results using identical input data, or to repeat an analysis using a different set of input data with an identical sequence of identically configured algorithms.  Therefore, 
-
---REQ the framework must provide a full provenance chain for any and all data products which must include enough information to reproduce identically every persistent data product.  By definition, the chain will also need to include sufficient information to reproduce the transient data passed between algorithm modules, even though the product is not persisted in the final output.  
 
 The need for transient data products is driven by the large Trigger Record sizes that can be encountered in the DUNE data, and whose transformation may be required, but for storage considerations are not written out.
 
 The use of highly parallel and heterogeneous computing environments leads to additional provenance requirements regarding the execution ordering and computing architectures on which the algorithms were executed.  The need for this information arises because of the possibility of different computing architectures producing different results, and of accelerators and other computing offload mechanisms producing different results than serially executed or non-accelerated codes (i.e. GPU accelerated code producing different results than the same code executed on the host processor).  Therefore 
 
+%15
 --REQ the framework must provide full provenance information and all of the metadata required to ensure reproducibility.  
 
 This will include the computing architecture, including any specialized hardware used, on which the application is run as well as the runtime environment, execution model and concurrency level that the application used.  It is likely that a full picture of the necessary metadata will also require information only known to the workflow management system.  In such a complex environment, it is highly desirable that the framework provide support to allow the effect of configuration changes and computing environments to be easily understood.
+
+
+
+\subsubsection{Externals including Machine Learning}
+Machine learning is already heavily used in analysis of ProtoDUNE data and the framework should give special attention to machine learning inference in the design, both to allow simple exchanges of inference backends and to record the provenance of those backends and all necessary versioning information.  Finally, the framework should be able to work with both Near Detector and Far Detector data on an equal footing, and within the same job.
+
+DUNE will use several libraries outside of the framework software stack, and it will also be necessary to record the precise versions of all of these libraries to guarantee reproducibility of the physics results.  It is noted that containers (docker et al) could potentially make provenance tracking easier in this respect.  
+
+%% ANDREW Added
+%(16a) The framework must provide deterministic results when run with different levels of concurrency.
+%% and
+%(16b) The framework must persist data in the same ordering when run under differing levels of concurrency.
+
+
+One important source of external libraries relates to machine learning, and machine learning inference is expected to play a significant role in all stages of data processing including analysis.  
+
+%17
+--REQ The framework should give special attention to machine learning inference in the design, both to allow simple exchanges of inference backends and to record the provenance of those backends and all necessary versioning information.
+
+
+%Now move on to discussing "the" framework requirements, separate section? 
+
+
+
+
+\subsection{Analysis\hideme{Norman/Laycock - still needs more}}
+
+Based on the recommendations of the \dword{hsf} panel experts, the analysis use case is not required to be supported by the same software framework as that used for production.
+
+
+Analysis includes the extraction of oscillation parameters, but is not limited to that, encompassing, as a minimum, comparisons between data and Monte Carlo, extraction of calibration and detector performance parameters, cross-section measurements, measurements of atmospheric, solar, and supernova neutrinos, and searches for non-standard phenomena.
+
+The event-by-event paradigm is not a good match here. Spectra are filled by looping over neutrino candidates, or any other particle candidate, but then may undergo substantial processing in their own right. For example, the main work of an oscillation fit is the evaluation of many different combinations of oscillation and nuisance parameters.  While slices provide sub Trigger Record control flow, particle candidate control flow ignores the Trigger Record structure entirely.
+
+% #33
+--REQ It must be possible to define arbitrary units of execution that are independent of Trigger Records.  It must be possible to correlate these units to Trigger Records for exposure accounting, and experiment conditions.
+
+
+%34
+--REQ The framework should make minimal assumptions about the data model, i.e. it should not assume an event-by-event paradigm.
+%%---
+
+%35
+--REQ Analysis must be able to use particle-candidate-based control flow, without any constraints arising from the event-by-event paradigm.
+
+
+Analysis work will be undertaken by a large number of collaborators, with varying levels of experience. In many cases, rapid feedback and iteration will be required to make progress:
+
+% added, changed #38
+--REQ The analysis framework should have a low entry-level in terms of software expertise.
+
+Experience shows that oscillation fits accounting for large numbers of systematic uncertainties are resource intensive, while analysts will likely only have access to modest local resources for prototyping and development.  Therefore the framework should make scaling and concurrency transparent both to the analyst and the developer as far as possible.  The use of declarative analysis techniques should be strongly encouraged to support this even when co-processors (and low-level implementation) changes.
+
+% adapted 39
+--REQ The analysis framework should easily scale from local resources such as a laptop, up to multi-node compute at an HPC.
+
+It is noted that MPI-enabled frameworks written in python already exist and would be a good match to the above requirements.
+
+Analysis files, of course, are derived from the data-processing framework files, and it must be possible to reconstruct this history. Due to the very large number of Trigger Records expected to be summarized in a single analysis file, the size requirements, and the fact that per Trigger Record information remains available in the parent files, we require:
+
+%40
+--REQ Analysis files must record their parent framework files, but no Trigger Record provenance is required.  The full provenance information need not be retained in analysis files as this could easily become larger than the data itself.
+
+One common and insidious class of mistakes is errors in exposure accounting and normalization. This is also a problem that is entirely solvable at the technical level.  Each individual Trigger Record (beam spill or other trigger) has exposure associated with it, whether POT or livetime or both. When filling a summary histogram from processing Trigger Records, the exposure should be calculated and stored as an integral part of the histogram, and operations between histograms should take correct notice of the exposure, e.g. ratio of one large exposure sample to a smaller exposure sample should produce a dimensionless ratio that has allowed for the differing exposures.
+
+%41
+--REQ The framework must have native support for exposure accounting (POT and livetime), so as to make errors of this sort difficult.
+
+All but the simplest analyses require a treatment of systematic uncertainties. There are three main technical means by which these systematics can be introduced. The most common, and most convenient, is reweighting. For example, the effect of various cross-section and flux uncertainties may be encapsulated by applying weights to Trigger Records of certain categories, to increase or decrease their representation in the final spectra. Secondly, Trigger Record data may be shifted. For example, an energy scale uncertainty may be most conveniently represented by rewriting of Trigger Records to increase or decrease reconstructed energies by a certain amount. Finally, the least convenient method is alternate simulation samples. The profusion of files requiring processing and bookkeeping makes this a heavyweight option, but in the case of uncertainties early in the analysis chain with complex effects, it may be the only way to handle them accurately. The treatment of systematics is cross-cutting across all analyses, it is important it is handled correctly, and the framework is able to offer substantive technical assistance.
+
+In addition to being able to handle multiple input data streams:
+
+%42
+--REQ The analysis framework should provide some means of cross-referencing (labelling) multiple input streams to correlate them in order to facilitate evaluation of systematic uncertainties.
+
+For oscillation analysis, it will be important to work with both Near and Far detector data. Whether in an explicit joint fit, or where extracting constraints from the ND to apply to the FD analysis, there must be a uniformity in the treatment of various systematics. In general, experience gained with the Near Detector (where the majority of analysis work is likely to happen) should be transferable to the Far Detector.  This re-emphasises the importance of the framework making minimal assumptions about the Data Model.
+
+%43
+--REQ The analysis framework should be able to work with both ND and FD data on an equal footing, and within the same job.
+%%---
+
+
+
 
 
 

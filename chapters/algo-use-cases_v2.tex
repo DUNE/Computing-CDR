@@ -43,6 +43,9 @@ vendor support becomes unavailable.}
 
 \subsubsection{Online Calibrations}
 Online calibration information (e.g., pedestal information) needs to be passed to the offline systems. 
+\todo{Tom: Pedestals are not the best example, as we fit them to the full waveforms in the TPC data.
+Other detectors than LArTPCs may have pedestal information.  But things like gains, electron lifetimes,
+efficiencies, dE/dx calibs are all offline calibrations.}
 
 %{\it No novel concerns.}
 
@@ -92,7 +95,19 @@ Inputs include random number seeds and the beamline and target region geometry a
 
 {\it Minor challenge:  Distribution of flux files to remote sites requires use of \dword{stashcache} and careful record keeping.}
 
+\subsection{Detector Geometry Description}
 
+Offline event generation, simulation, reconstruction and visualization tasks require descriptions of the geometries of the relevant detectors.  In contrast to a colliding-beam experiment in which most physics processes of interest take place at a collision point in an evacuated beam pipe, a neutrino experiment's detector is the interaction target.  Therefore, the event generator must be aware of the spatial distribution of significant amounts of material, listed separately for each element's contribution, and the local densities.  Neutrino cross sections on some elements are poorly known and do not form the primary constituents of the detector materials, and so a simplified geometry for use in the event generation is often useful.
+
+GEANT4~\cite{geant4} requires a representation of the spatial locations of materials in order to simulate interactions of all particles except neutrinos.  As for the generator, a very detailed geometry with a cylinder of CuBe for each wire in a horizontal-drift APA, uses a large amount of memory and CPU for a very small amount of non-fiducial interaction modeling, and so simplified geometry descriptions are needed.
+
+The common language used in DUNE for geometry description is Geometry Description Markup Language (GDML)~\cite{gdml}.  It is stored in human-readable text files.  Versions of each detector's geometry are saved alongside software source code in the code repository.  When a release is built, these GDML files are copied into directories that are visible to running jobs.  At the time of writing, CVMFS is the chosen distribution method for pre-compiled code and small auxiliary files like GDML files.   Both GEANT4 and ROOT have functionality for reading GDML files.
+
+One notable difference with respect to code versioning is that all supported versions of the GDML files for a detector must be available in each release.  If a geometry description is updated for a release of the software, the older versions must be kept, with the old GDML filenames, in order to ensure backwards compatibility, as data files are stored on disk and tape, assuming the old geometry.  DUNE thus uses a simple additional versioning system by adding a version number to each detector's GDML filename.  LArSoft and GArSoft jobs allow for FCL configuration of the detector geometry GDML file.  A LArSoft job, if run as input with data from an earlier LArSoft job, will check the compatibility of the requested GDML file and that used for the input.  By default, if there is a mismatch, an exception will be thrown and the job stops.  Sometimes, however, it is desired to simulate and reconstruct Monte Carlo samples with different geometries, in order to simulate misalignments, for example.  In order to accommodate these cases, the geometry consistency check can be disabled by setting an appropriate FCL parameter.
+
+GDML files contain many similar blocks in them for detectors with repeated, similar structures.  The GDML files for the Horizontal and Vertical Drift far detector modules and the ProtoDUNEs are made with Perl scripts and a number of small shell scripts to make final adjustments.  Some of the inputs are not repetitive, such as material mixture definitions, and these fragments are hand-edited.  GDML files for the near detectors are made with DUNENDGGD~\cite{ref:ggd}.  DUNENDGGD takes as input Python classes called ``bulders'' and produces GDML files.  The near detector GDML file creation requires additional steps, as two of the detectors move off-axis while a third remains stationary.  Particles travel from ND-LAr to the TMS and thus they must be simulated together, with a single GDML file.  In addition to a full hall description, detector working groups may prefer to work with a geometry that only has one detector elment in it for computational convenience.
+
+Computational convenience also drives the need for workspace geometries for the far detetor modules.  A subset with only 12 APAs instead of the full complement of 150 is a popular geometry to use for physics simulations, though care must be exercised regarding differences in event containment between the workspace geometry and the full geometry.
 
 \subsection{Neutrino Event Generation}
 
@@ -185,12 +200,12 @@ This method is 20 to 50 times faster than the \dword{geant4} simulation while ke
 The model inference also requires a relatively small amount of memory. The samples for \dword{protodune}-like and %anne DUNE-like 
 far detector-like geometries show the required memory for the model inference is around 15\% of the \dword{geant4} simulation. Further, this memory use is not directly correlated to the volume of the detectors. \todo{anne: is the GEANT4 directly correlated to vol?}
 
-\subsubsection{Semi-analytical Models}
+\subsubsection{Semi-Analytical Models}
 A large number of photons is generated at different points within the cryostat volume and propagated using \dword{geant4}. Gaisser-Hillas functions are fitted to the %anne number of 
 photons reaching the photon detectors as a function of source-detector distance and relative angle, and the resulting parameters are used during event simulation %anne in order 
 to extract the fraction of photons produced at a certain point that arrives at a given sensor.
  
-\subsubsection{Comparison between Fast Simulation Methods}
+\subsubsection{Comparison Between Fast Simulation Methods}
 The semi-analytic model and the use of  optical library models for fast simulation have been compared to the full light simulation in \dword{geant4} for the \dword{sbnd} experiment. This used a highly segmented and large-photon-count optical library, created with $\sim$1.6M voxels, with 0.5M photons %anne being 
 generated in each voxel (total of $7.9 \times  10^{11}$ photons), resulting in a  1.2\,GB file size. A similar optical library for the DUNE 1$times$2$times$6 geometry (volume of $7 \times 12 times 13.9$ m$^3$) would be prohibitively large.
 All DUNE optical libraries produced so far have larger voxels and fewer photons simulated per voxel %anne being simulated in comparison with the
@@ -285,7 +300,7 @@ At this point we should have simulated data that is equivalent to the raw data c
 \includegraphics[width=0.8\textwidth]{graphics/IntroFigures/Data_processing_FD_v3.png}
 \end{dunefigure}
 
-\subsection{ProtoDUNE and Far Detector reconstruction\hideme{Schellman-draft}}\label{sec:use:pdii}
+\subsection{ProtoDUNE and Far Detector Reconstruction\hideme{Schellman-draft}}\label{sec:use:pdii}
 
 Figure~\ref{fig:ch:use:pdii} shows the data flow for regular reconstruction in \dword{proto}.  %anne There are in principle multiple stages in reconstruction that 
 In principle, multiple stages in reconstruction are well suited to different computer architectures.  We expect the full \dword{fd} data processing to follow a similar path to that used by \dword{protodune}.  
@@ -457,7 +472,7 @@ Both raw and reconstructed data from each of DUNE's detectors must be visualized
 \end{enumerate}
 Each of these uses places different requirments on the visualization software.  Furthermore, the event display programs must be responsive and easy to use, though specialist functions may require additional configuration.
 
-\subsection{Two-Dimensional event displays}
+\subsection{Two-Dimensional Event Displays}
 \label{sec:visualization:2d}
 
 The data from the FD-HD and FD-VD modules are inherently two dimensional, with ADC values read out per wire (or strip) for each sample time.  Inspecting the raw waveforms side by side in a grayscale or colored map for each of the three views is critical for understanding the features of the raw data.  LArSoft provides such a display, optimized for X-Window connections.  Users can zoom in on rectangular subsets of the data and clicking on the image brings up a one-dimensional waveform plot for the corresponding channel.  An example of such a display for a ProtoDUNE-SP event with cosmic rays is given in Figure~\ref{fig:vis:larsoftraw}.  An example of a two-dimensional display of reconstructed tracks, vertices and showers is given in Figure~\ref{fig:vis:larsoftreco}.  
@@ -480,7 +495,7 @@ The raw data display provided by LArSoft is best run interactively.  The user ca
 
 %this event is the first one in this file:  np04_raw_run005387_0080_dl11_reco1_38694915_0_20201116T180838Z_reco2_48964460_0_20210930T150928Z.root
 
-\subsection{Three-dimensional event displays}
+\subsection{Three-Dimensional Event Displays}
 \label{sec:visualization:3d}
 
  LArSoft also provides a three-dimensional event display, showing the same reconstructed objects.  An example is given in Figure~\ref{fig:vis:larsoft3dreco}.  Only reconstructed objects are available in three dimensions as the data in the ProtoDUNEs and the Far Detector modules are two-dimensional.
@@ -492,7 +507,7 @@ The raw data display provided by LArSoft is best run interactively.  The user ca
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/larsoft_reco_evd_3d.png}
 \end{dunefigure}
 
-\subsection{Web-based event displays}
+\subsection{Web-Based Event Displays}
 \label{sec:visualization:web}
 
 In addition to the LArSoft-based event displays, DUNE has multiple web-based event displays.  One, called the Bee event display, is made for displaying ProtoDUNE-SP events in a web browser.  The server is hosted at Brookhaven National Laboratory and contains a short list of typical ProtoDUNE-SP events, one of which is shown in Figure~\ref{fig:vis:bee}. No software needs to be installed on the user's computer, and no data files need to be copied.  The user only needs a modern web browser and the experience is enhanced with a capable graphics card.
@@ -520,7 +535,7 @@ Another web-based event display is called WebEVD.  It runs as a LArSoft module, 
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/webevd_pdsp3d.png}
 \end{dunefigure}
 
-\subsection{Near detector event displays}
+\subsection{Near Detector Event Displays}
 \label{sec:visualization:neardetector}
 
 TODO:  {\color{red}Add text and figure for ND-LAr.}
@@ -541,7 +556,15 @@ An example of a reconstructed event in ND-GAr is shown in Figure~\ref{fig:vis:ga
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/ndgar_evd3d.png}
 \end{dunefigure}
 
-TODO:  {\color{red}Add text and figure for SAND.}
+The third component of the near detector, SAND, consists of a staw-tube tracker and a calorimeter inside a solenoidal magnet.  A small cryostat containing liquid argon, called GRAIN, is to be installed upstream of the straw-tube tracker inside the ECAL.  Design and performance studies are underway.  Basic event visualization tools have been developed to aid in the development of the reconstruction algorithms.  An example display of simulated and reconstructed particles in SAND is shown in Figure~\ref{fig:vis:sandevd}.
+
+\begin{dunefigure}
+[SAND Event Display]
+{fig:vis:sandevd} 
+{A rendering of a simulated full spill of neutrino interactions in the SAND detector. Magenta stars indicate true neutrino interaction vertices, blue curves indicate true simulated muon tracks, and thick green curves show proton tracks  Thin red lines indicate electrons and photons.  The red circles show the outline of the electromagnetic calorimeter.  Blue dots indicate calorimeter hits.}
+\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/sand_detector_view_stt_17924.pdf}
+\end{dunefigure}
+
 
 \section{Production of Analysis Samples\hideme{Calcutt - needs more}}
 
