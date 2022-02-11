@@ -582,6 +582,28 @@ DUNE's primary analysis framework for oscillation physics is currently   the \dw
 {\it Challenge:  This phase of processing is I/O limited and can put considerable strain on storage and network resources.  This and calibration drive the need to put most of the reconstructed data and simulation on disk at distributed sites as described in Part~\ref{part:model}
 A typical \dword{pdsp} data or simulation pass produces  10,000-100,000 2-8\,GB reconstructed files and  then produces much smaller tuple outputs for analysis.  These reduction jobs stream using \dword{xrootd} and are I/O bound. Preliminary monitoring studies indicate that average input rates of 5-30\,MB/sec per process can be achieved within a single site, with aggregate rates of several GB/sec across multiple processes. We are currently mining data access records to measure rates and reliability as a function of source and sink. }
 
+\subsection{Example of protoDUNE analysis \hideme{Jake Calcutt}}
+
+
+One of the protoDUNE analyzers (Jacob Calcutt) provided information on workflow for a typical ongoing analysis. 
+
+
+\subsubsection{Ntuple Production}
+
+Standardized analysis ntuples are produced on the grid from the reconstructed PDSPProd4a simulation samples (133 TB, 691,200 events)  and  PDSPProd4 data (48 TB, 1,295,813 events )  for an example 1 GeV/c beam momentum setting. The tuple production code pdspana  partially reruns partial reconstruction to include updated calibrations and then extracts physics information and stores it in root ntuple format. The full MC ntuple took 2,332 CPU hours to create. The data ntuple took 335 CPU hours to create. This processing is found to be IO bound even when reading from local dCache storage at $\sim 20-30 $MB/s. The outputs are 14 and 13 GB in size respectively and cataloged in the \dword{sam} system.  
+
+\sububsection{Preliminary Event Selection Studies}
+
+A set of python scripts are then used to produce distributions of important reconstructed observables. These are used to refine event selections, including determining cut values to use and estimating efficiencies and purities. These scripts use pyroot to interface with the data/mc files and to create/display the distributions. These studies  are done interactively on a dunegpvm virtual machine at Fermilab.
+Refined ntuples are then produced with bad events (mainly those missing beam information) filtered out and labels applied to simulated information. The event selection code uses ROOT’s `RDataFrame' class to perform filtering & labeling. This takes about 20 minutes to perform for the full ntuples.  These final samples contain 159,083 data and 170,238 simulated events. 
+
+\subsubsection{Cross Section Analysis Extraction}
+
+The filtered/labeled ntuples are then passed to custom  ROOT based C++ fitting code for cross section extraction. Multiple types of extraction fits are performed with varying input parameters and samples, including data, full simulation and toy samples.  
+Individual extractions are run interactively or on the grid for fake data tests and the ultimate real data fit. They can take O(5-45) minutes depending on how the fit is configured (i.e. what percentage of the input MC is used or how many parameter throws are performed post-fit to propagate error to measured/extracted cross sections). Sets of 1000 toy fits – where the nominal MC is systematically and statistically varied and used as fake data – are performed to study the overall behavior of a specific configuration of the fit.
+
+
+
 \subsection{Event Classification}
 Events will need to be classified.  Much of this is now done using \dword{ml} techniques and is likely best done at the analysis tuple production phase rather than as part of the pattern recognition. 
 
