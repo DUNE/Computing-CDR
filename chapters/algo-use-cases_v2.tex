@@ -77,6 +77,19 @@ it is assumed that data, metadata and configuration/calibration/beam information
 
 \section{Supernova \hideme{Schellman/Kirby - needed}}
 
+\cite{Cuesta:2020dy} % CHEP talk
+
+As noted in the introduction, the  \dword{dune} far detectors are sensitive to core-collapse supernovae.  Reference \cite{DUNE:2020zfm} describes recent simulation studies of DUNE's sensitivity to core-collapse supernova signals in our Galaxy. \dword{dune} is uniquely sensitive to $\nu_e$ through the reaction $\nu_e + Ar \rightarrow e^- + K*$ which leaves an electron trajectory that can be used to estimate the direction of the supernova.  Figure \ref{fig:SNrates} shows the expected neutrino interaction rates from supernovae as a function of their distance.
+The number of neutrino interactions actually detected depends on the physics of the supernova burst, oscillation physics and the minimum energy threshold achievable in the DUNE \dword{tpc} in the presencen of radiological backgrounds. 
+
+The detectors produce several signals of increasing precision.  First, scintillation light is detected by the photon detectors, yielding fast triggering information.  Trigger primitives based on a subset of the \dword{lartpc} information can also be searched for supernova signatures.  Finally a full detector readout can be mined for information across the full spatial and energy range of the detector over a period of up to 100 s.  Trigger information from the \dwords{pds} and trigger primitives is available quickly and can lead to a completed long readout of the full detector system. 
+
+In reference \cite{DUNE:2020zfm} the performance and efficiency of fast triggering on scintillation light and \dword{tpc} hits are investigated.  Radiological and noise backgrounds are required to produce less than 1 false trigger/month. Both \dword{pd} and \dword{tpc} based triggers are sensitive relatively low numbers of interactions ($\sim10-25$) at acceptable background rates, yielding expected sensitivities out to the Large Magellanic cloud.
+
+Once the trigger system has identified a potential \dword{sne} signal  the \dword{daq} then records information for 100 s, yielding 130 TB of uncompressed information for a \dword{hd} module and 170 TB for a \dword{vd} module.  These data must then be transferred offsite for processing with the full algorithms. 
+
+
+\todo{more test on the network and processing challenges}
 
 \section{Simulation Chain \hideme{Junk and Schellman - draft}}
 
