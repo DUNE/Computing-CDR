@@ -8,20 +8,38 @@
 %\section{xyz}
 %\label{sec:fworks:xyz}  %% fix label according to section
 
-The unique challenges of reconstructing time-series based objects from the DUNE far detectors and of adapting code to run on new generations of computing resources such as \dword{hpc} requires that we reoptimize our main computing frameworks.  In this Chapter we provide a brief overview of our existing codes followed by a description of our process for designing the optimal framework needed when full \dword{dune} begins operations.  
+DUNE presents an unique challenge for data analysis and data processing. For DUNE to be successful, we will need to be able to extract high fidelity physics information from the reconstruction, processing and filtering of large datasets, which are organized as variable time-series.   Accomplishing this will require that data from the DUNE far and near detectors  be efficiently processed using modern computing techniques and that traditional HEP computing techniques be adapted and coded to run on new generations of advanced and accelerated computing resources such as \dword{hpc}, \dword{GPUs} and other novel computing architectures.  
+
+Development of this type of modern computing pipeline and analysis structure will require the development and reoptimize the formal computing frameworks that are used for data manipulation by the DUNE experiment and to large extent the greater neutirno community to which DUNE and its computing ecosystem belong.
+
+In this Chapter we provide a brief overview of our existing code bases and methodologies followed by a description of our process for designing the optimal frameworks for data processing and analysis that will be needed when the full \dword{dune} begins operations.  
 
 \section{Defining a Framework}
 
-Borrow heavily from https://arxiv.org/pdf/1812.07861.pdf, might be useful to include one of the Gaudi framework diagrams (the original paper sketches are B+W so maybe the one stolen for the requirements report).
+Modern high energy physics experiments generate large volumes of primary detector data, as well as auxiliary and ancillary data from secondary systems, and vast amounts of simulation which mimic these detectors and their responses to provided estimates and predictions for the different physics processes that may be observed in the experiments.  The management, flow, formal structure, transformations, analysis and interaction of these data and their algorithms require a well defined \dword{framework} for governing and sequencing these tasks.  In particular in HEP analyses, data processing and analysis frameworks are designed to provide "event loops" which allow for experimenters to step through the data and simulation in a manner that can break up the information into discrete chunks which represent physical processes.  These discrete chunks are referred to as the "data processing atoms".
 
-Common functionality (I/O, scheduling, configuration, logging) that allows algorithmic code to be developed separately and provided as plug-ins.  Most frameworks provide some level of support for parallelism, often using a task-based model. Define all of the terms.
+Historically in HEP experiments the data atoms have been associated with well defined external time structures which govern the data collection.  For collider experiments these are often associated with a beam or bunch crossing, while for fixed target experiments they have often been associated with pulsed beam extraction to target stations (often referred to as a "spill"), or substructure within the beam spills defined by the data acquisition and triggering systems (i.e. the data atoms are the individual triggers).  
+
+In the case of DUNE, the DUNE readout systems, and the DUNE physics mission the definition of these data atoms is not as simple or as static as it has been historically in other experiments.  The near continuous time series nature of the DUNE data, results in data atoms which vary in size and structure from chunks representing a) an arbitrary time window representing a time period of interest b) a time window representing the drift of ionization across the detector volume c) a spatially and temporally isolated region of the detector readout d) a sub-region of interest within a spatially/temporally distinct portion of the detector or e) other segmentations of the DUNE detector readouts corresponding to potential physical signatures with time structures defined by the physicial process (i.e. extended time objects like supernova neutrino bursts, or different delayed coincience).
+
+In this manner, the DUNE data framework is a formal software structure that can ingest and apply transformations and filters to the individual data atoms.  The framework has a responsibility for controlling and managing the I/O associated with ingesting the data atoms, for sequencing and scheduling the algorithms and transforms that run on the data, and for providing logging, provenance and other bookkeeping tasks associated with describing and enumerating how the data was handled and new information derived.  
+
+To these ends, the framework provides mechanisms (such as "plug-in" structures) for experimenters to develop modular algorithms which can be included or excluded from a given analysis chain and be run either serially or in parallel depending on the data context. 
+
+A formal framework also provides mechanisms for data to be passed between different algorithmic portions of the data processing and analysis chain.  This formal mechanism, referred to as the \dword{data store} is a controlled form data access, for both transient and long term information.  The framework needs to manage the data store in order to permit the analyses to be run and to fit within the memory footprints that are allowed by modern computing and to coordinated the ingress and egress of data from the data store and to the underlying I/O systems of the computing that the code is running on (i.e. saving data to disks, streaming data to/from external facilities). 
+
+The framework is a configuration driven entity.  
+
+%Borrow heavily from https://arxiv.org/pdf/1812.07861.pdf, might be useful to include one of the Gaudi framework diagrams (the original paper sketches are B+W so maybe the one stolen for the requirements report).
+
+%Common functionality (I/O, scheduling, configuration, logging) that allows algorithmic code to be developed separately and provided as plug-ins.  Most frameworks provide some level of support for parallelism, often using a task-based model. Define all of the terms.
 % Overlap with the first para of "Current Status" that comes next
 %Still needed
-"Service", "I/O", "Scheduling", "Algorithm".
+%"Service", "I/O", "Scheduling", "Algorithm".
 
-The Data Processing Atom, the smallest unit of data that can be processed independently
+%The Data Processing Atom, the smallest unit of data that can be processed independently
 
-A “Data Store” is defined as the framework’s repository for storing data in memory beyond the lifetime of particular algorithms.
+% A “Data Store” is defined as the framework’s repository for storing data in memory beyond the lifetime of particular algorithms.
 
 Configuration - The framework needs to perform many different data processing steps with potentially very many different variations.  As the code base will be rather large, targeted (re)compilation for particular purposes is not desirable, especially if e.g. only a handful of parameters for one algorithm need to be changed.  Instead, the components of the framework are configured to perform a particular task in a particular way, e.g. performing signal processing on raw input data.  
 

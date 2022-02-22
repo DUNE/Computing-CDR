@@ -35,7 +35,7 @@
 % Workflow Examples (Wrkflw)
 
 
-\chapter{Introduction \hideme{Schellman/Muether/Junk/Pennacchio needs numbers and figures update} }
+\chapter{Introduction \hideme{Schellman/Muether/Junk/Pennacchio needs numbers and figures update - SN added 2/19} }
 \label{ch:intro}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -47,7 +47,8 @@
 
 %\todo{Need to add a section on simulation}
 \todo{And brief subsection on solar/atmospheric/BSM physics}
-
+\section{Mission Statement}
+This document describes Software and Computing for the \dword{dune} experiment. Our emphasis on this document is on the development of the computing infrastructure needed to acquire, catalog, reconstruct, simulate and analyze the data from the \dword{dune} experiment and its prototypes. In this effort, we concentrate on developing the tools and systems that facilitate the development and deployment of advanced algorithms rather than the details of the algorithms themselves. Our goal is to, rather than prescribe particular algorithms, to provide resources that are flexible and accessible enough to support creative software solutions as \dword{HEP} computing evolves. 
 
 \section{Introduction \hideme{Schellman - draft based on CHEP paper}}\label{sec:intro-introduction}
 
@@ -58,11 +59,11 @@ The international \dword{dune} experiment, hosted by the U.S. Department of Ener
 \todo{How do I do this?}
  % I will concentrate on the neutrino oscillation and supernova capabilities of the experiment and the ways that they drive computing. 
 
-The neutrino beam from \dword{fnal} will consist almost entirely of muon-type neutrinos. %Anne when produced.  
+When produced, the neutrino beam from \dword{fnal} will consist almost entirely of muon-type neutrinos. %Anne when produced. %HMS done 
 Neutrinos are known to come in (at least) three flavors that can be distinguished by their interactions -- electron %Anne type 
-neutrinos produce electrons when they interact via charged currents; muon neutrinos, muons; and tau neutrinos, tau particles.  But these flavors do not correspond to fixed mass states.  All three flavors of neutrinos are mixtures of mass states, much as  light polarized in the $x$ direction  can be considered a superposition of  $x^\prime$ and $y^\prime$ polarizations along  alternate axes rotated by 45 degrees.  When neutrinos propagate through space, it is the mass state that sets their wavelength and if the neutrino goes far enough, the multiple mass states  corresponding to the initial flavor state will get out of phase.  When the mixture is later probed about its flavor, it may be different than it was originally. %Anne give a different answer than the neutrino that started out. 
-This phenomenon is known as neutrino oscillation, and has been %Anne shown to exist 
-demonstrated in multiple experiments since it was first confirmed in 1998\cite{Kajita2006}.
+neutrinos produce electrons when they interact via charged currents; muon neutrinos, muons; and tau neutrinos, tau particles.  But these flavors do not correspond to fixed mass states.  All three flavors of neutrinos are mixtures of mass states, much as  light polarized in the $x$ direction  can be considered a superposition of  $x^\prime$ and $y^\prime$ polarizations along  alternate axes rotated by 45 degrees.  When neutrinos propagate through space, it is the mass state that sets their wavelength and if the neutrino goes far enough, the multiple mass states  corresponding to the initial flavor state will get out of phase.  When the mixture is later probed about its flavor, it may be different than it was when the neutrino was produced. %Anne give a different answer than the neutrino that started out. %HMS done
+This phenomenon is known as neutrino oscillation, and has been %Anne shown to exist %HMS observed 
+observed in multiple experiments since it was first confirmed in 1998\cite{Kajita2006}.
 
 
 \begin{dunefigure}
@@ -82,14 +83,14 @@ demonstrated in multiple experiments since it was first confirmed in 1998\cite{K
 \end{dunefigure}
 
 
-DUNE,  in particular,   wishes to understand the conversion of muon neutrinos created in %Anne Illinois 
-the beam into electron neutrinos at the \dword{fd} % in the Homestake mine in South Dakota 
+DUNE,  in particular,   wishes to understand the conversion of the muon neutrinos created in Illinois%Anne Illinois 
+into electron neutrinos at the \dword{fd} in the Homestake mine in South Dakota  %HMS made the change
 and compare that conversion rate between neutrino and antineutrino beams. The location of the \dword{fd} and energy of the neutrino beam were chosen to maximize the oscillation effect.   A difference in the conversion rate for neutrinos and antineutrinos could be evidence for matter-antimatter asymmetry in the neutrino sector, a phenomenon called \dword{cpv}.  
 
-To make these measurements, %Anne we need to be able to distinguish 
-electron neutrino interactions appearing in the muon neutrino beam must be distinguishable from the dominant muon neutrino interactions one would expect in the absence of oscillations.  %Anne Doing t
-This requires a very large detector, as neutrino interactions are intrinsically rare, but an extremely  fine-grained one, as well.  Noble liquid \dwords{tpc}, %Anne time projection detectors, 
-which read out large transparent volumes of liquid by drifting electrons from interactions to charge-sensitive detectors through strong electric fields (\efield{s}), have the needed capabilities of extremely large scale and fine-grained resolution. The proposed DUNE far detector will instrument four  $14\times12 \times58$ meter volumes of \dword{lar} with readout granularity of $\sim$0.5\,cm.  The detector modules will be located 4850\,ft below the surface to lower the rate of cosmic rays traversing the detector by orders of magnitude and thus allow sensitivity to very low-energy solar and astrophysical neutrinos, as well as the higher-energy neutrinos produced in the beam from Fermilab. %Anne at Fermilab. 
+To make these measurements, we need to be able to distinguish %Anne we need to be able to distinguish 
+electron neutrino interactions  from the dominant muon neutrino interactions one would expect in the absence of oscillations.  %Anne Doing t
+Doing this requires a very large detector, as neutrino interactions are intrinsically rare, but an extremely  fine-grained one, as well.  Noble liquid  time projection detectors,  HSM doesn't \dword{tpc} do that? 
+which read out large transparent volumes of liquid by drifting electrons from interactions to charge-sensitive detectors through strong electric fields (\efield{s}), have the needed capabilities of extremely large scale and fine-grained resolution. The proposed DUNE far detector will instrument four  $14\times12 \times58$ meter volumes of \dword{lar} with readout granularity of $\sim$0.5\,cm.  The detector modules will be located 4850\,ft below the earth's surface to lower the rate of cosmic rays traversing the detector by orders of magnitude and thus allow sensitivity to very low-energy solar and astrophysical neutrinos, as well as the higher-energy neutrinos produced in the beam at Fermilab.  %Anne at Fermilab. 
 %Anne - I would reference the FD TDR Vol 1 where there is an excellent discussion of how LArTPC satisfy physics requirements.
 
 
@@ -102,15 +103,15 @@ yielding of order 15 million pulses per year.  Because neutrinos interact  extre
 %Anne - I would leave this out Construction of the detector halls and infrastructure for the large 10\,kt fiducial volume \dword{fd} modules is starting now, as are design and construction of detector readout modules.  
 A full \dword{tdr} for the first far detector module, a horizontal-drift \dword{lartpc},
 % Anne program has recently been completed and 
-is available% anne in references 
+is available in references% anne in references 
 \cite{DUNE:2020lwj, Abi:2020evt, Abi:2020oxb, Abi:2020loh}.
-The  \dword{dune} neutrino oscillation experiment will receive beam late in this decade with commissioning of the \dword{daq} %anne data acquisition 
-systems for the first far detector module expected to start in 2026. % anne-28.  
+%The  \dword{dune} neutrino oscillation experiment will receive beam late in this decade with commissioning of the \dword{daq} %anne data acquisition 
+The first far detector modules should go live late in this decade with commissioning of the data acquisition systems for the first far detector modules expected to start in 2027. % anne-28.  
 
 
 \begin{dunefigure}
 [A far detector cryostat and the horizontal drift \dshort{tpc} structure]
-{DUNESchematic} % Anne: label should have fig:
+{fig:DUNESchematic} % Anne: label should have fig:
 {(Left) A far detector cryostat that houses a 10\,kt \dword{fd} module with horizontal drift technology. The figure of a person indicates the scale.  (Right) A 10\,kt  \dword{dune} \dword{fd} \dword{spmod}, showing the alternating 58\,m long (into the page), 12\,m high anode (A) and cathode (C) planes, as well as the field cage that surrounds the drift regions between the anode and cathode planes. The modular anode and cathode planes are constructed of units called \dwords{apa} and \dwords{cpa}; the blank area on the left side was added to show the profile of a single \dword{apa}.}
 \includegraphics[height=0.35\textwidth]{graphics/IntroFigures/Fig_03a_cryostat-scale.png}
 \includegraphics[height=0.35\textwidth]{graphics/IntroFigures/Fig_03b_DUNESchematic.pdf}
@@ -337,11 +338,48 @@ Beam and cosmic ray interactions are reasonably localized in time and space, inv
 \end{dunefigure}
 
 
-Supernova candidates pose a unique problem for data acquisition and reconstruction.  \dword{snb} physics in DUNE is discussed in some detail in the far detector \dword{tdr}\cite{ Abi:2020evt} and a dedicated paper \cite{DUNE:2020zfm} and only summarized here. A classic core-collapse supernova 10\,kpc away would be expected to yield around 3,000  \dword{cc} electron neutrino interactions across four detector modules. \dword{snb} candidates will be quite different from beam interactions, having small interactions with energies in the 5-30\,MeV range spread across the full volume of the detector modules over many seconds, in contrast to the localized, coincident,  500-10,000\,MeV signature of beam neutrino interactions. These differences impose interesting requirements on the \dword{daq} and computing models for the experiment.  
+
+Supernova candidates pose a unique problem for data acquisition and reconstruction.  \dword{snb} physics in DUNE is discussed in some detail in the far detector \dword{tdr}\cite{ Abi:2020evt}, reference \cite{Cuesta:2020dy} and a dedicated paper \cite{DUNE:2020zfm} and only summarized here. 
+
+\dword{dune} is uniquely sensitive to $\nu_e$ through the reaction $\nu_e + Ar \rightarrow e^- + K*$ which leaves an electron trajectory that can be used to estimate the direction of the supernova.  Figure \ref{fig:SNrates} shows the expected neutrino interaction rates from supernovae as a function of their distance.
+%The number of neutrino interactions actually detected depends on the physics of the supernova burst, oscillation physics and the minimum energy threshold achievable in the DUNE \dword{tpc} in the presencen of radiological backgrounds.
+
+A classic core-collapse supernova 10\,kpc away would be expected to yield around 3,000  \dword{cc} electron neutrino interactions across four detector modules. \dword{snb} candidates will be quite different from beam interactions, having small interactions with energies in the 5-30\,MeV range spread across the full volume of the detector modules over many seconds, in contrast to the localized, coincident,  500-10,000\,MeV signature of beam neutrino interactions. These differences impose interesting requirements on the \dword{daq} and computing models for the experiment.  
 
 
 \dword{snb} physics and its influence on neutrino emission are not fully understood and will result in significant modulations of the event rates for different neutrino types  over the few tens of seconds of the burst.  DUNE's fine-grained tracking should allow significant pointing power with the most optimistic scenario of four modules and high electron neutrino fraction yielding pointing resolutions of less than 5 degrees.   Figure \ref{SNe} illustrates simulated signatures of \dword{snb} neutrino interactions in the far detector. The ability to produce a reasonably fast pointing signal would be extremely valuable to optical astronomers doing followup, especially if the supernova were in a region where dust masks the primary optical signal.   The need to be alert to supernovae and to quickly transfer and process the data imposes significant requirements on triggering, data transfer and reconstruction beyond those imposed by the %anne more regular 
-beam-based oscillation physics.   For example, a compressed \dword{snb} readout of all four modules will be of order 184\,TB in size and take a minimum of four hrs to transfer over a 100\,Gbs network,  and then take of order 130,000 CPU-hrs for signal processing at present speeds.  If processing takes the same time as transfer, a peak of 30,000 cores would be needed. 
+beam-based oscillation physics. 
+%For example, a compressed \dword{snb} readout of all four modules will be of order 184\,TB in size and take a minimum of four hrs to transfer over a 100\,Gbs network,  and then take of order 130,000 CPU-hrs for signal processing at present speeds.  If processing takes the same time as transfer, a peak of 30,000 cores would be needed. 
+
+%%\subsection{Supernova \hideme{Schellman/Kirby - needed}}
+%\todo{should this move to the introduction} 
+%\cite{Cuesta:2020dy} % CHEP talk
+
+%As noted in the introduction, the  \dword{dune} far detectors are sensitive to core-collapse supernovae.  References \cite{DUNE:2020zfm, Cuesta:2020dy} describe recent simulation studies of DUNE's sensitivity to core-collapse supernova signals in our Galaxy.
+
+% \dword{dune} is uniquely sensitive to $\nu_e$ through the reaction $\nu_e + Ar \rightarrow e^- + K*$ which leaves an electron trajectory that can be used to estimate the direction of the supernova.  Figure \ref{fig:SNrates} shows the expected neutrino interaction rates from supernovae as a function of their distance.
+% The number of neutrino interactions actually detected depends on the physics of the supernova burst, oscillation physics and the minimum energy threshold achievable in the DUNE \dword{tpc} in the presencen of radiological backgrounds. 
+
+The \dword{tpc} and \dword{pd} detectors produce several signals of increasing precision.  First, scintillation light is detected by the photon detectors, yielding fast triggering information.  Trigger primitives based on a subset of the \dword{lartpc} information can also be searched for supernova signatures.  Finally a full detector readout can be mined for information across the full spatial and energy range of the detector over a period of up to 100 s.  Trigger information from the \dwords{pds} and trigger primitives is available quickly and would lead to a completed long readout of the full detector system in the event that a candidate \dword{snb} is detected. 
+
+In reference \cite{DUNE:2020zfm} the performance and efficiency of fast triggering on scintillation light and \dword{tpc} hits are investigated.  Radiological and noise backgrounds are required to produce less than 1 false trigger/month. Both \dword{pd} and \dword{tpc} based triggers are sensitive relatively low numbers of interactions ($\sim10-25$) at acceptable background rates, yielding expected sensitivities out to the Large Magellanic cloud.
+
+Once the trigger system has identified a potential \dword{snb} signal  the \dword{daq} then records information for 100 s, yielding 130 TB of uncompressed information for a \dword{hd} module and 170 TB for a \dword{vd} module.  These data must then be transferred offsite for processing with the full algorithms. 
+
+%Information from \dword{dune} comes at three levels.  First,  fast identification of a supernova candidate, based on raw \dwprd{toc} and \dword{pd}  information, second, first-pass pattern recognition on a subset of the data which could provide pointing information on a time scale of seconds to hours and finally, full reconstruction of all information available down to the detector threshold in the few MeV range to exact maximal physics information from these extremely rare events. %Optimal use of this information requires 
+
+
+
+Moving  300 TB (assuming the first 2 modules) of uncompressed data   from \dword{surf} to processing centers will require, at minimum, 6-7 hours with the planned 100Gbs network link.  This can be accelerated by implementing onboard data compression and may require upgrades to the network when the projected third and fourth modules come online.  The need to store up to 300 TB of data from a supernova candidate while also continuing normal data taking drives the size of local disk buffers at \dword{surf} and presumably required similar reserved or rapidly-preemptable space at the centers where the data would be processed. Our \dword{protodune} experience indicates that reconstruction of \dword{lartpc} data takes between 1 and 3 sec/MB of raw data on present day computing resources.  It will thus take of order 12,000-40,000 cores to perform a preliminary reconstruction the data as fast as it comes in. In principle, a significant fraction of the neutrino data could be processed  in the 2-4 hours before a supernova becomes visible at optical frequencies.
+
+Other neutrino detectors worldwide will also be able to provide fast information but the \dword{dune} information will be unique in its sensitivity to electron neutrinos. 
+
+
+
+
+%\todo{more test on the network and processing challenges}
+
+
 
 \section{Near Detector \hideme{Junk/Muether - needs update}}
 
