@@ -435,15 +435,24 @@ The \dword{ndgar} is composed of 678,136 readout pads in the \dword{tpc}, and ap
 
 % For calibrations, 300 runs per year generating 10~GB of data per run are assumed for the TPC, and a similarly-sized set of calibration runs are assumed for the \dword{ecal}.  Cosmic rays are expected to be collected between spills and when the beam is off.
 
+\subsection{Near Detector Day One Muon Spectrometer (TMS) \hideme{Muether - draft}}
+\label{sec:comp-dataestimates-mpd}
+
+The TMS, a low-cost low-risk detector, will operate for the early part of the DUNE running when beam intensities are at their lowest and DUNE is not systematics limited. The TMS is a magnetized steel range stack (similar to MINOS \cite{minosNIM}) between ND-LAr and SAND.  The purpose of the TMS is to measure the momentum of 1 - 5 GeV muons that exit ND-LAr by range with a momentum precision comparable to the Far Detector (taken to be 4\%). The steel will be magnetized to identify the charge of muons it detects with better than 98\% accuracy. These metrics are designed to ensure the DUNE physics program will function for the first 2-3 years of TMS operations with no degradation to physics output.
+
+The TMS consist of 200 total layers of alternating steel and scintillator. The first 40 layers of steel are 1.5 cm thick. The rear 60 layers of steel are 4 cm thick. There is a 4 cm gap between each steel layer. The steel plates are magnetized in the geometry. The thin (thick) central steel is given a vertically oriented downward pointing field of 1.25 T (0.9 T), while the outer steel thin (thick) steel plates have their field pointing upwards with a strength of 1.5 T (1.0 T). The scintillator is implemented as a collection of 3.5~cm wide by 3~m tall by 1~cm thick vertical bars arranged into modules of 1.68 m wide. Four modules are placed side by side into a layer. These scintillator layers are replicated in the gap between steel layers.  
+
+The TMS is placed 8.2 m downstream from the ND-LAr (center to center) and centered 2.51 m below the origin in $y$. 
 
 
-\subsubsection{SAND \hideme{Muether - draft}}
+\subsection{SAND \hideme{Muether - draft}}
 \label{sec:comp-dataestimates-sand}
 %The 3rd detector subsystem is the \dword{sand}, a scintillator based monitor, consists of a 3-D pixelated scintillator detector, an electromagnetic calorimeter and XXX
 
 The \dword{sand} component of the \dword{nd}'s primary function is the primary beam flux monitor.   \dword{sand} consists of an active scintillator target \dword{3dst} followed by a tracking system immersed in a solenoidal superconducting magnet  and  a $4\pi$ electromagnetic calorimeter.
 
 \dword{sand}'s \dword{3dst} calorimeter component is composed of 11,520,000 $1\times 1\times 1$~cm$^3$ scintillating cubes, read out by 153,600 fibers.  There are expected to be approximately 2,160 hits per spill with a total of 0.13\,MB of data per spill.  The  \dword{ecal}~\cite{Adinolfi:2002zx} uses 4,850 \dwords{pmt}, with an estimated 5,500 total hits per spill or 33\,kB of packed data per spill.   The data volume from \dword{sand} is 4.3\,TB/year with these assumptions.  The amount of data from out-of-spill cosmic rays is estimated to be 20\% of that of the in-spill data, or approximately 1\,TB.  The data volume from \dword{sand} is significantly smaller than that from the \dword{ndlar} and the \dword{ndgar} due to the relative sizes of the three-dimensional tracking volumes and the segmentation choices.
+
 
 
 % Test using \dword{tms}

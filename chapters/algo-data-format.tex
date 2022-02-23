@@ -5,7 +5,28 @@
 
 \section{Introduction \hideme{Schellman - draft}} 
 
+\dword{dune} data are stored and processed in a variety of forms.  In particular, they are characterized by their \dword{datatier} and their data format.  
+
 \section{Data tiers \hideme{Schellman - add a discussion here}}
+
+As data are processed, they evolve through a series of \dwords{datatier}.  The \dword{datatier} concept was first adopted by the D0 and CDF collaborations two decades ago and is an important component in the definition of datasets in the data catalog.   Examples of \dwords{datatier} are raw, hit-reconstructed, full-reconstructed, reco-recalibrated and root-tuple. 
+Reconstruction algorithms transform files from one \dword{datatier} to another in a defined way.  
+Policies for reading and storage can be defined at the data-tier level. 
+Table \ref{table:format1} summarizes some of the more common formats.
+
+\begin{dunetable}
+[Data Tier Summary]
+{l l l l l} 
+ {table:format1}
+ {Example data tiers}
+Data Tier & Content & Copies & Disk Lifetime  & Tape Lifetime \\ [0.5ex] 
+raw&raw data&2&few months&$>20$years\\
+hit-reconstructed&reconstructed hits&1&short&2-5 years\\
+full-reconstructed&physics quality reconstruction&2&2 years&5-10 years\\
+root-tuple&analysis samples&1&short&5-10 years\\
+\end{dunetable}
+
+Within a data tier, data can have different formats.  An example is the use of \dword{root} formats for ProtoDUNE Run I raw data and \dword{hdf5} format for ProtoDUNE Run II.
 
 \section{I/O formats \hideme{Schellman/Bashyal - draft}}
 \dword{dune} has historically used the \dword{root} data format throughout the processing chain.  \dword{root} provides data objects and methods that have been optimized for \dword{hep} applications.  The \dword{larsoft} framework is \dword{root}-compatible and \dword{root} was used for the full processing chain for \dword{protodune} Run 1. 

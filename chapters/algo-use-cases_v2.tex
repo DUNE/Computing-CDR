@@ -304,6 +304,9 @@ Describe the flux model, geometry, generators, edep-sim.
 
 \subsubsection{Detector Response Simulation}
 
+\subsubsection{ND-LAr detector simulation}
+\subsubsection{TMS detector simulation}
+\subsubsection{SAND detector simulation}
 
 \subsubsection{ND-GAr detector simulation}
 \label{sec:usecases_ndgardetsim}
@@ -496,6 +499,9 @@ RootOutput(write)                        &     2.79\\%458               \\
 %
 %{\it The major challenge here is the radically different processing modality relative to hit finding.  Where signal processing can largely be implemented by matrix operations, hit finding algorithms make heavy use of code branching and external fitting algorithms. Accommodating both signal processing and hit finding on a single  architecture may be challenging. }
 \subsection{Near Detector Reconstruction\hideme{Junk/Muether - needs revision}}
+
+Description about general Reco organization.
+
 \subsubsection{Pixel-Based Gaseous Argon TPC Recontruction}
 \label{sec:algo:reco:gartpc:pixels}
 \todo{anne: is this ready for me to go over? 26 Jan.}
@@ -505,7 +511,11 @@ The \dword{ndgar} consists of two primary detectors -- a copy of the ALICE pixel
 $\Lambda^0$ candidates) are found by pairing nearby tracks together, optionally requiring a displacement from another vertex, and forming the invariant mass.  The calorimeter consists of a mixture of strips and pads.  Calorimeter hits are found in the \dword{sipm} waveforms provided by the calomrimeter \dword{daq}, and they are clustered together to form reconstructed three-dimensional energy deposit objects with positions, directions, and energies.  Calorimeter clusters are associated with tracks, and they must match both in position and in time.  Before association with a calorimeter cluster, a track's position along the drift direction is uncertain due to the unknown interaction time.
 The nanosecond-scale timing resolution of the calorimeter allows the updating of track positions along the drift direction.
 
+\subsubsection{LAR}
 
+\subsubsection{TMS}
+
+\subsubsection{SAND}
 
 
 \begin{dunetable}
