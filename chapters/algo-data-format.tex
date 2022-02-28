@@ -5,25 +5,28 @@
 
 \section{Introduction \hideme{Schellman - draft}} 
 
-\dword{dune} data are stored and processed in a variety of forms.  In particular, they are characterized by their \dword{datatier} and their data format.  
+\dword{dune} data are stored and processed in a variety of forms.   They are characterized by their \dword{datatier} and their data format.  The data format refers to the low level format of the data, for example text, root or \dword{hdf5} while the data tier is linked to the processing transformations that produced the file.  
 
 \section{Data tiers \hideme{Schellman - add a discussion here}}
 
 As data are processed, they evolve through a series of \dwords{datatier}.  The \dword{datatier} concept was first adopted by the D0 and CDF collaborations two decades ago and is an important component in the definition of datasets in the data catalog.   Examples of \dwords{datatier} are raw, hit-reconstructed, full-reconstructed, reco-recalibrated and root-tuple. 
-Reconstruction algorithms transform files from one \dword{datatier} to another in a defined way.  
+Reconstruction algorithms transform files from one \dword{datatier} to another in a defined way and files in a given data tier can be expected to contain similar detector and physics information.   
 Policies for reading and storage can be defined at the data-tier level. 
-Table \ref{table:format1} summarizes some of the more common formats.
+Table \ref{table:format1} summarizes some of the more common formats and their sizes. 
 
 \begin{dunetable}
 [Data Tier Summary]
-{l l l l l} 
+{l l r c l l} 
  {table:format1}
- {Example data tiers}
-Data Tier & Content & Copies & Disk Lifetime  & Tape Lifetime \\ [0.5ex] 
-raw&raw data&2&few months&$>20$years\\
-hit-reconstructed&reconstructed hits&1&short&2-5 years\\
-full-reconstructed&physics quality reconstruction&2&2 years&5-10 years\\
-root-tuple&analysis samples&1&short&5-10 years\\
+ {Example data tiers.  The sizes given are the total on tape, not the amount present on disk under the retention policies.}
+Data Tier & Produced by &current size & Copies & Disk Lifetime  & Tape Lifetime \\ [0.5ex] 
+raw&DAQ&5.2 PB&2&few months&$>20$years\\
+detector-simulated&geant4+detsim&4.1 PB&1&transient&5-10 years\\
+hit-reconstructed&hit finding&0.2 PB&1&transient&5-10 years\\
+full-reconstructed (MC)&pattern recognition&5.7 PB&1&2 years&5-10 years\\
+full-reconstructed (data)&pattern recognition&3.4 PB&1&2 years&5-10 years\\
+root-tuple&data reductions&24 TB&1
+&2-3 years&5-10 years\\
 \end{dunetable}
 
 Within a data tier, data can have different formats.  An example is the use of \dword{root} formats for ProtoDUNE Run I raw data and \dword{hdf5} format for ProtoDUNE Run II.
