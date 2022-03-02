@@ -1,9 +1,9 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Use Cases\hideme{Ready for editing - 2/28}}
+\chapter{Use Cases\fixme{Doug - what use cases? needs another adjective} \hideme{Ready for editing - 2/28}}
 \label{ch:use}
 \newcommand{\ignore}[1]{{}}
-
+\hideme{Doug B: This chapter is mostly done - Near Detector Simulation and Reconstruction subsection needs to be added}
 
 
 \section{Introduction \hideme{Schellman - draft}}
@@ -51,7 +51,7 @@ These considerations apply to \dword{proto}, where data taking occurs at the \dw
 Current status and proposed solutions are discussed in Chapters~\ref{ch:db}(Databases) and \ref{ch:netw}(Networking). 
 
 \subsection{Data Transfer from the Experiment}
-Data need to be buffered locally and then transferred to permanent storage at the host lab(s).  Transfer activities include the generation of descriptive metadata, file transfer, writing the files to permanent storage, and integrity checks.  Once data are confirmed to have successfully reached permanent storage, the local buffer may be cleared.  Current specifications call for the local buffers at remote sites to be able to store 3-7 days worth of data or one \dword{snb}'s worth ($\sim 600$ TB) at a minimum. 
+Data needs to be buffered locally and then transferred to permanent storage at the host lab(s).  Data transfer activities include the generation of descriptive metadata, file transfer, writing the files to permanent storage, and integrity checks.  Once data are confirmed to have successfully reached permanent storage, the local buffer may be cleared.  Current specifications call for the local buffers at remote sites to be able to store 3-7 days worth of data or one \dword{snb}'s worth ($\sim 600$ TB) at a minimum. 
 
 %{\it Major concerns:  Network bandwidth and reliability between Sanford and Fermilab. The ability of host lab systems to absorb and redistribute those data quickly. }
 {\it Major challenges: Here the major areas of concern are the remote location of the far detector, and space and power limitations at both the \dword{4850l} detector level and the surface. Chapter \ref{ch:netw} describes the status and plans for networking.} %anne Other challenges include 
@@ -83,8 +83,8 @@ Beam monitoring information, either per spill for neutrino interactions or per p
 The \dword{ifbeam} system used for \dword{numi} is already in use for \dword{protodune}.
 
 \subsection{Monitoring Information} 
-Local online monitoring of data and experimental conditions will be done by the \dword{daq} %anne groups 
-consortium, but fast feedback on data movement and quality will also need to be provided based on fast processing of a subset of the data transferred offsite. \todo{anne: Computing will provide this?}
+Local online monitoring of data and experimental conditions will be done by the \dword{daq}. %anne groups 
+The offline computing consortium will provide fast feedback on data movement and data quality based on the fast processing of a subset of the data transferred offsite. \todo{anne: Computing will provide this?, Doug - made change}
 
 {\it There are no novel concerns, but substantial effort will be needed to build and maintain the system over the lifetime of the experiment.}
 \subsection{Data compression}
@@ -105,6 +105,7 @@ In \dword{pdsp} lossless compression was performed as part of the \dword{daq}. F
 
 \subsection{Outputs from DAQ and monitoring}
 
+\fixme{Doug: this sentence does not make sense.when it is compiled in LaTeX.}
 At the end of data transfer and after acquisition of configuration information,  %anne we assume 
 data, metadata and configuration/calibration/beam information from the detectors  have been transferred to offline computing facilities to  be distributed and reconstructed. 
 
@@ -246,7 +247,7 @@ to extract the fraction of photons produced at a certain point that arrives at a
  
 \subsubsection{Comparison Between Fast Simulation Methods}
 The semi-analytic model and the use of  optical library models for fast simulation have been compared to the full light simulation in \dword{geant4} for the \dword{sbnd} experiment. This used a highly segmented and large-photon-count optical library, created with $\sim$1.6M voxels, with 0.5M photons being %anne being HMS done
-generated in each voxel (total of $7.9 \times  10^{11}$ photons), resulting in a  1.2\,GB file size. A similar optical library for the DUNE 1$times$2$times$6 geometry (volume of $7 \times 12 times 13.9$ m$^3$) would be prohibitively large.
+generated in each voxel (total of $7.9 \times  10^{11}$ photons), resulting in a  1.2\,GB file size. A similar optical library for the DUNE $1\times2\times6$ geometry (volume of $7 \times 12 \times 13.9$ m$^3$) would be prohibitively large.
 
 All DUNE optical libraries produced so far have larger voxels and fewer total photons simulated per voxel %anne being simulated in comparison with the
 in comparison to  \dword{sbnd}, one optical library of which 
@@ -392,7 +393,7 @@ At this point we should have simulated data that is equivalent to the raw data c
 
 \subsection{ProtoDUNE and Far Detector Reconstruction\hideme{Schellman-draft}}\label{sec:use:pdii}
 
-A detailed description of the ProtoDUNE-SP and Far Detector reconstruction algorithms is given in Ref.~\cite{DUNE:2020ypp}.  This section outlines those aspects of the reconstruction processing that are directly related to sofware and computing issues.
+A detailed description of the ProtoDUNE-SP and Far Detector reconstruction algorithms is given in Ref.~\cite{DUNE:2020ypp}.  This section outlines those aspects of the reconstruction processing that are directly related to software and computing issues.
 Figure~\ref{fig:ch:use:pdii} shows the data flow for regular reconstruction in \dword{proto}.  %anne There are in principle multiple stages in reconstruction that 
 There are, in principle,  multiple stages in reconstruction that are each well suited to different computer architectures.  We expect the full \dword{fd} data processing to follow a similar path to that used by \dword{protodune}.  
 

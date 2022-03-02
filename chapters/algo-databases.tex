@@ -7,7 +7,7 @@
 \section{Introduction  \hideme{Buchanan and Laycock - draft} }
 \label{sec:db:intro} 
 
-In order to accommodate the large range of metadata that will be tracked by DUNE, the DUNE \dword{db} structure comprises several databases specialized for the information, or metadata, that they contain. It is critical that users be able to access any required metadata throughout the full data processing and analysis chain with as little burden as possible. To achieve this, users will interact with a centralized high-level interface   described in Section~\ref{sec:db:conditions}.
+In order to accommodate the large range of metadata that will be tracked by DUNE, the DUNE \dword{db} structure comprises several databases specific to the information, or metadata, that they contain. It is critical that users be able to access any required metadata throughout the full data processing and analysis chain with as little burden as possible. To achieve this, users will interact with a centralized high-level interface   described in Section~\ref{sec:db:conditions}.
 
 The DUNE experiment is expected to operate for 20-30 years and the DUNE databases need to be reliably maintained and operated for that entire period. In order to accommodate this requirement, the database system should not rely on implementation solutions that possess the risk of becoming unavailable during the operation period. Open-source, non-proprietary solutions will therefore be used. Currently the databases housed at \dword{fnal} use the open-source PostgreSQL (Postgres) relational database management system. Postgres is supported by the Fermilab Scientific Computing Division.       
 
@@ -162,9 +162,7 @@ Parameters used to configure the run will be collected and packed into \dword{js
  blob of key-value pairs in \dword{json} format. Any additional information, such as end-of-run time, are added to the blob, which is then transferred to the \dword{ucondb} at \dword{fnal}. A typical metadata blob is on order 10\,MB in and contains more information than most users will want to use. An additional step of reducing the metadata is performed to produce a subset of metadata needed by offline users. The reduced set of metadata is stored in a single table in a relational database referred to as the ``run history database.'' An interface is provided to users, enabling them to retrieve run numbers and file locations based on queries of the history database. 
 
 For %anne Run II of 
-\dword{protodune2} the conditions \dword{db} will include metadata from multiple sources, as will be the case for DUNE. Metadata from the beam conditions database (IFBeam), the slow controls database, and data quality data database (DQMD),
-\todo{(anne) data quality management database?} will be included in addition to the run configuration information. The \dword{ucondb} is able to store data keyed by either non-interpolated values (run number) or interpolated values (timestamps). Users are then able to access information using run numbers or dates and times.
-
+\dword{protodune2} the conditions \dword{db} will include metadata from multiple sources, as will be the case for DUNE. Metadata from the beam conditions database (IFBeam), the slow controls database, and data quality monitoring database (DQMDB), will be included in addition to the run configuration information. The \dword{ucondb} is able to store data keyed by either non-interpolated values (run number) or interpolated values (timestamps). Users are then able to access information using run numbers or dates and times.
 
 \begin{dunefigure}
 [Flow of metadata from \dshort{protodune} DAQ to user interface]
