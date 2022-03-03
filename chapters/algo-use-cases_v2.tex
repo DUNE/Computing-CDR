@@ -55,7 +55,7 @@ Current status and proposed solutions are discussed in Chapters~\ref{ch:db}(Data
 Data needs to be buffered locally and then transferred to permanent storage at the host lab(s).  Data transfer activities include the generation of descriptive metadata, file transfer, writing the files to permanent storage, and integrity checks.  Once data are confirmed to have successfully reached permanent storage, the local buffer may be cleared.  Current specifications call for the local buffers at remote sites to be able to store 3-7 days worth of data or one \dword{snb}'s worth ($\sim 600$ TB) at a minimum. 
 
 %{\it Major concerns:  Network bandwidth and reliability between Sanford and Fermilab. The ability of host lab systems to absorb and redistribute those data quickly. }
-{\it %Major challenges: Here 
+{\it Major challenges: %anne Here 
 The %major 
 primary areas of concern are the remote location of the far detector, and space and power limitations at both the \dword{4850l} detector level and the surface. Chapter \ref{ch:netw} describes the status and plans for networking.} %anne Other challenges include 
 %Another challenge is the need for adequate lossless data compression to prevent data volume explosion. Chapter \ref{ch:netw} describes the status and plans for networking.}
@@ -105,7 +105,7 @@ The data volumes and rates anticipated are significant. Storage and network reso
 In \dword{pdsp} lossless compression was performed as part of the \dword{daq}. For \dword{pdsp2} this is not planned due to the need to keep processing overheads low in the \dword{daq}. Lossless compression of \dword{fd} \dword{tpc} data will need to be applied later in the processing chain, most likely using the intrinsic compression methods of the chosen data format(s).  \dword{root} allows implementation of lossless compression, as does \dword{hdf5}.  The \dword{nd} detector currently plan to take advantage of their higher signal/noise ratio and do lossy zero-suppression. 
 
 
-\subsection{Outputs from DAQ and monitoring}
+\subsection{Outputs from DAQ and Monitoring}
 
 \fixme{Doug: this sentence does not make sense.when it is compiled in LaTeX.}
 At the end of data transfer and after acquisition of configuration information,  %anne we assume 
@@ -184,7 +184,7 @@ Energy thresholds need to be quite low, as the detector systems are sensitive to
 Hadronic cross section on \dword{lar} are not yet fully understood.  DUNE has developed a reweighting framework 
 \dword{Geant4Reweight}~\cite{Calcutt:2021zck} to allow reuse of existing simulation as interaction rates are refined.
 
-{\it %anne Major concern: 
+{\it Major concern: 
 Due to the high granularity and low energy thresholds, interaction records can become very large. Simulated \dword{protodune} records are currently 200-300\,MB, substantially larger than the raw waveforms.}
 
 \subsection{Detector Simulation}
@@ -205,7 +205,7 @@ External imperfections such as the grounded electron diverters in \dword{pdsp} a
 Once the electrons drift to the anode plane in wire-based \dwords{lartpc} in the simulation, a detailed \twod model of the wire responses is applied~\cite{Abi:2020mwi}.  The two dimensions are wire number and time, and the effects of induced currents on neighboring wires are included in the simulation.  The electronics response function is folded in to a final model of the observed waveforms.  Simulated waveforms have been compared with real ones  in \dword{pdsp} and are found to be very similar.
 In the pixel-based \dword{ndlar} and \dword{ndgar}, the electronics simulation is at a simpler level, as the electronics have not been fully designed.
 
-{\it %anneChallenges:  
+{\it Challenges:  
 \dword{protodune} experience indicates that, although simulation is reasonably fast relative to reconstruction (3 to 1), memory utilization, even for \dword{protodune} %anne even for \dword{protodune} 
 is very high in simulation jobs.  Process sizes of 5-6\,GB in memory are typical for six \dwords{apa}.  High energy \dword{fd} interactions are expected to span more detector volume and thus require even more memory. Multiple %\todo{anne: simulation?} 
 simulation and reconstruction passes may be needed since optimization of the electron trajectory model is recursive and generally requires multiple reconstruction passes. }
@@ -329,17 +329,19 @@ The \dword{garsoft} suite of \dword{art}-based modules is used to simulate the \
 
 Once the energy deposits are available, a module that simulates the division between ionization and scintillation quanta is invoked.  Electron drift through the gaseous medium is parameterized, and longitudinal and transverse diffusion is modeled by sampling from Gaussian distributions of widths that grow with the square root of the drift time.  The effect of attenuation due to attachment of drifting electrons on electronegative impurities in the gas is also simulated at this time. 
 
-The anode planes are modeled as re-purposed ALICE inner and outer readout chambers (IROCs and OROCs)~\cite{Dellacasa:2000bm}.  Charge is amplified by avalanches on the anode wires, and induced charge on the nearby readout pads provides the charge detection.  The pad response functions are taken from Ref.~\cite{Dellacasa:2000bm}.
+The anode planes are modeled as re-purposed ALICE %inner and outer readout chambers (
+\dwords{iroc} and \dwords{oroc} ~\cite{Dellacasa:2000bm}.  Charge is amplified by avalanches on the anode wires, and induced charge on the nearby readout pads provides the charge detection.  The pad response functions are taken from Ref.~\cite{Dellacasa:2000bm}.
 
 The response of the calorimeter and the muon systems are parameterized versions of the energy deposit information, localized to the detector cells in which the energy is deposited.
 
-\subsection{ProtoDUNE Simulation Experience\hideme{Yang - draft}}
+\subsection{ProtoDUNE Simulation Experience \hideme{Yang - draft}}
 
 The detector simulation framework has already been tested successfully in \dword{protodune} and is described more fully in references \cite{DUNE:2021hwx,DUNE:2020cqd}.
 
 The \dword{pdsp} simulation includes beam particles, cosmic ray interactions and radiological backgrounds. The beam particle species and momentum distributions are from the \dword{geant4} simulation of the H4-VLE beam line at CERN, which consists of $e^{+}$, $\pi^{+}$, $p$, and $K^{+}$ particles at 0.3, 0.5, 1, 2, 3, 6, and 7\,GeV/$c$. Cosmic ray interactions are produced with the Corsika generator. Radiological backgrounds, including $^{39}$Ar, $^{42}$Ar, $^{222}$Rn, and $^{85}$Kr, are also simulated using the RadioGen module in \dword{larsoft}. The primary particles are tracked in the \dword{lar} using the \dword{geant4} package. 
 The ionization electrons are drifted towards the wire planes %anne. The  HMS agree
-The effects of recombination, attenuation and diffusion are simulated. The accumulation of positive ions in the detector modifies the trajectory of ionization electrons and the strength of the \efield, which is known as space charge effects, and is simulated using the measured distortion and \efield maps. The electronic signal is simulated by convolving the number of electrons reaching each wire plane with the field response and electronics response. The field response is modeled using the \dword{garfield}\cite{Veenhof:1998tt} package. 
+and the effects of recombination, attenuation and diffusion are simulated. The accumulation of positive ions in the detector modifies the trajectory of ionization electrons and the strength of the \efield, which is 
+known as ``space charge effects''; this is simulated using the measured distortion and \efield maps. The electronic signal is simulated by convolving the number of electrons reaching each wire plane with the field response and electronics response. The field response is modeled using the \dword{garfield}\cite{Veenhof:1998tt} package. 
 %done\todo{anne: I added the dword; add the definition please } 
 The electronics response uses the parameterization from a \dword{spice} simulation with the average gain and shaping time measured in the \dword{protodune} charge injection system. 
 %\hideme{cite the papers for protoDUNE}
@@ -352,7 +354,9 @@ The electronics response uses the parameterization from a \dword{spice} simulati
 An efficient method for accurately simulating backgrounds in high rate environments is to overlay the simulated interaction information on real data.  For example, the environment in \dword{protodune} or the near detector includes multiple beam and rock muon interactions in the same readout as %anne (made plural) an ok
 the interactions of interest.  Libraries of properly formatted raw data can be combined with simulated hits from a simulated event to yield a realistic simulation of an interaction in the real detector. This requires a library of such interactions and careful matching of the running conditions of the external raw events to the desired simulated events. 
 
-{\it Challenges: We have not yet integrated overlays into the experiment framework. To do this we will need to distribute large volumes of overlay data to remote sites while maintaining randomness. Other experiments such as MicroBooNE and MINERvA have done this successfully. }
+{\it Challenges: %We have 
+DUNE has not yet integrated overlays into the experiment framework. %anne To do this we will need to 
+It will require distribution of large volumes of overlay data to remote sites while maintaining randomness. Other experiments such as MicroBooNE and MINERvA have done this successfully. }
 
 \subsection{Reweighting}
 If intermediate simulation steps  are stored they can be used to reweight interactions to reflect new knowledge about the underlying cross sections, neutrino flux, detector materials or detector properties. Examples include the \dword{ppfx} beamline simulation reweighting system and the implementation of different cross section and final-state interaction models in event generators. 
@@ -360,13 +364,16 @@ If intermediate simulation steps  are stored they can be used to reweight intera
 {\it This is not a major challenge, several reweighting packages have been developed for NuMI/DUNE \cite{Aliaga:2015wva, Calcutt:2021zck}.}
 
 \subsection{Outputs from Simulation}
-At this point we should have simulated data that is equivalent to the raw data coming from the detector. The next step is calibration and reconstruction. In all cases descriptive metadata needs to be produced that would allow reproduction of the simulation. 
+%anne At this point we should have simulated data 
+Once simulated data exists
+that is equivalent to the raw data coming from the detector, %. The 
+the next steps are calibration and reconstruction. In all cases, descriptive metadata needs to be produced that would allow reproduction of the simulation. 
 
 {\it Possible challenge:  How many and which intermediate steps need to be stored permanently in order to optimize storage vs CPU utilization?}
 
 
 
-\section{Reconstruction\hideme{Junk, Muether and Schellman-draft}}
+\section{Reconstruction \hideme{Junk, Muether and Schellman-draft}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -400,14 +407,14 @@ At this point we should have simulated data that is equivalent to the raw data c
 \begin{dunefigure}
 [Data flow diagram for standard ProtoDUNE reconstruction]
 {fig:ch:use:pdii}
-{Data flow diagram for standard ProtoDUNE data reconstruction. The central boxes show the processing steps while the right side shows the large scale data flow  and the left side shows the auxiliary information needed for processing. Thicker lines indicate particularly large data volumes.}
+{Data flow diagram for standard \dword{protodune} data reconstruction. The central boxes show the processing steps, the right side shows the large-scale data flow,  and the left side shows the auxiliary information needed for processing. Thicker lines indicate particularly large data volumes.}
 \includegraphics[width=0.8\textwidth]{graphics/IntroFigures/Data_processing_FD_v3.png}
 \end{dunefigure}
 
 \subsection{ProtoDUNE and Far Detector Reconstruction\hideme{Schellman-draft}}\label{sec:use:pdii}
 
-A detailed description of the ProtoDUNE-SP and Far Detector reconstruction algorithms is given in Ref.~\cite{DUNE:2020ypp}.  This section outlines those aspects of the reconstruction processing that are directly related to software and computing issues.
-Figure~\ref{fig:ch:use:pdii} shows the data flow for regular reconstruction in \dword{proto}.  %anne There are in principle multiple stages in reconstruction that 
+A detailed description of the \dword{pdsp} and Far Detector reconstruction algorithms is given in Ref.~\cite{DUNE:2020ypp}.  This section outlines those aspects of the reconstruction processing that are directly related to software and computing issues.
+Figure~\ref{fig:ch:use:pdii} shows the data flow for regular reconstruction in \dword{protodune}.  
 There are, in principle,  multiple stages in reconstruction that are each well suited to different computer architectures.  We expect the full \dword{fd} data processing to follow a similar path to that used by \dword{protodune}.  
 
 Figure \ref{fig:ch:use:fdagg} illustrates  readout structures for full DUNE \dword{fd} modules.  A readout consists of a large number (up to 150) of   30\,MB \dword{apa} readouts and a number of smaller readout fragments.  These need to be processed and  recombined into a single readout record. 
@@ -420,7 +427,7 @@ Figure \ref{fig:ch:use:fdagg} illustrates  readout structures for full DUNE \dwo
 \end{dunefigure}
 %\pagebreak
 
-\subsubsection{Signal processing \hideme{Schellman-draft}}
+\subsubsection{Signal Processing \hideme{Schellman-draft}}
 
 Reconstructing events in a \dword{lartpc} is challenging.  Each trigger record contains a large number of waveforms, one for each readout channel.  In \dword{pdsp}, the waveforms typically were 6000 time ticks long, with one \dword{adc} sample per time tick.  A detailed description of the reconstruction procedures, starting with these waveforms, is given in~\cite{Abi:2020mwi}, and summarized briefly here.
 
@@ -442,7 +449,7 @@ per \dword{apa} is of order 30\,MB per plane. This phase of data processing is w
 
 \subsubsection{Hit Finding and Pattern Recognition}
 
-The calibrated, filtered, deconvolved waveforms are then used as input to a hit-finding algorithm, which identifies peaks in the waveforms and fits Gaussians to each proposed peak.  These hits are then used as inputs to general reconstruction algorithms, such as the SpacePointSolver~\cite{DUNE:2020ypp} Pandora~\cite{Marshall:2015rfa}, TrajCluster~\cite{ref:trajcluster}, and \dword{pma}~\cite{ref:PMA}, which identify clusters, tracks and showers in \threed by associating objects in the three \twod views.  The calorimetry modules sum up and calibrate the charge deposits for use in energy reconstruction and \dword{pid}.  The parameters of the clusters, tracks and showers are stored in \dword{root} trees that end users can analyze rapidly and repeatedly.
+The calibrated, filtered, deconvolved waveforms are then used as input to a hit-finding algorithm, which identifies peaks in the waveforms and fits Gaussians to each proposed peak.  These hits are then used as inputs to general reconstruction algorithms, such as the SpacePointSolver~\cite{DUNE:2020ypp} \dword{pandora}~\cite{Marshall:2015rfa}, TrajCluster~\cite{ref:trajcluster}, and \dword{pma}~\cite{ref:PMA}, which identify clusters, tracks and showers in \threed by associating objects in the three \twod views.  The calorimetry modules sum up and calibrate the charge deposits for use in energy reconstruction and \dword{pid}.  The parameters of the clusters, tracks and showers are stored in \dword{root} trees that end users can analyze rapidly and repeatedly.
 
 Additional modules find hits in the \dword{pd} waveforms and group them into clusters called flashes.  The \dword{crt} data are analyzed in dedicated modules that produce associations between hits in the upstream and downstream \dword{crt} modules for use in analyses.
 
@@ -521,7 +528,9 @@ Description about general Reco organization.
 \todo{anne: is this ready for me to go over? 26 Jan.}
 \todo{Tom:  I think we need ND-LAr, TMS and SAND subsections.  And we need to explain how the CAFs are made.}
 
-The \dword{ndgar} consists of two primary detectors -- a copy of the ALICE pixel-based \dword{tpc} in a 10-bar gas consisting predominantly of argon, surrounded by a calorimeter and a superconducting magnetic coil.  A muon system is envisaged outside of the calorimeter but is not included in the simulation or the reconstruction at the time of writing.  Data are unpacked and hits are found on the per-readout-pad waveforms, similarly to how the initial stages of reconstruction for a \dword{lartpc} are followed.  Hits are then clustered into TPC clusters, which reduces the memory and CPU usage of subsequent steps, and also increases the spatial resolution of individual clusters.  Vector hits are found by grouping TPC clusters into short line segments, and the vector hits themselves are grouped into track candidates by a pattern recognition module.  A track fit based on a Kalman filter then finds the best estimates of the track parameters.  Vertices are then found using tracks with nearby endpoints.  Because there is a cathode in the middle of the drift volume in the nominal design, a cathode stitch module is then run to associate track segments on either side of the cathode, bring them together by solving for the best interaction time that lines the segments up, and also moves the associated tracks and vertices.  Vees ($K^0_s$ and
+The \dword{ndgar} consists of two primary detectors -- a copy of the ALICE pixel-based \dword{tpc} in a 10-bar gas consisting predominantly of argon, surrounded by a calorimeter and a superconducting magnetic coil.  A muon system is envisaged outside of the calorimeter but is not included in the simulation or the reconstruction at the time of writing.  Data are unpacked and hits are found on the per-readout-pad waveforms, similarly to how the initial stages of reconstruction for a \dword{lartpc} are followed.  Hits are then clustered into TPC clusters, which reduces the memory and CPU usage of subsequent steps, and also increases the spatial resolution of individual clusters.  Vector hits are found by grouping TPC clusters into short line segments, and the vector hits themselves are grouped into track candidates by a pattern recognition module.  A track fit based on a Kalman filter then finds the best estimates of the track parameters.  Vertices are then found using tracks with nearby endpoints.  Because there is a cathode in the middle of the drift volume in the nominal design, 
+\fixme{(anne) nominal or \dword{sphd}?}
+a cathode stitch module is then run to associate track segments on either side of the cathode, bring them together by solving for the best interaction time that lines the segments up, and also moves the associated tracks and vertices.  Vees ($K^0_s$ and
 $\Lambda^0$ candidates) are found by pairing nearby tracks together, optionally requiring a displacement from another vertex, and forming the invariant mass.  The calorimeter consists of a mixture of strips and pads.  Calorimeter hits are found in the \dword{sipm} waveforms provided by the calomrimeter \dword{daq}, and they are clustered together to form reconstructed three-dimensional energy deposit objects with positions, directions, and energies.  Calorimeter clusters are associated with tracks, and they must match both in position and in time.  Before association with a calorimeter cluster, a track's position along the drift direction is uncertain due to the unknown interaction time.
 The nanosecond-scale timing resolution of the calorimeter allows the updating of track positions along the drift direction.
 
@@ -576,35 +585,36 @@ Before final pattern recognition can be applied to physics events,  the processe
 
 \section{Visualization}\hideme{NEW!!!Tom Junk}
 \label{sec:visualization}
-
+%anne starting to look at this 3/2
 Both raw and reconstructed data from each of DUNE's detectors must be visualized graphically in multiple ways in order to successfully design, commission and operate the detectors, and to extract meaningful physics results.  While reconstruction is automated and hand-scanning is no longer used to extract physics results, event displays are critical for a large number of necessary steps:
 \begin{enumerate}
-    \item {\bf Design of the detectors.}   It is important to visualize interactions in the detectors in order to ascertain which among them are easy to identify and measure, and which ones are difficult.
-    \item{\bf Optimizing reconstruction algorithms}  Comparisons of true particle trajectories and energies with reconstructed versions thereof in simulated interactions provides guidance for improving reconstruction algorihtms.  Quantitative metrics such as completeness and purity can be optimized, but it is easier to do so when viewing an event display that shows which pieces of which interactions have failed to reconstruct well.
-    \item{\bf Operating prototypes and learning from them}  Data from prototypes, such as the coldboxes, the ProtoDUNEs, and ICEBERG must be analyzed quickly to ascertain what the noise level is and to search for the presence of signals.  This is part of an iterative experimental process to commission the prototypes by searching for noise sources, checking high-voltage and cryogenic performance, drift medium purity, etc.  Dead channels or other artifacts such as long-range induction effects are plainly visible on raw data displays.  Various artifacts may be addressable with software, such as correcting for front-end amplifier artifacts, correlated noise, and ADC issues.  These are all discovered first with event visiualization.
+    \item {\bf Design of the detectors}   It is important to visualize interactions in the detectors in order to ascertain which among them are easy to identify and measure, and which ones are difficult.
+    \item{\bf Optimizing reconstruction algorithms}  Comparisons of true particle trajectories and energies with reconstructed versions thereof in simulated interactions provides guidance for improving reconstruction algorithms.  Quantitative metrics such as completeness and purity can be optimized, but it is easier to do so when viewing an event display that shows which pieces of which interactions have failed to reconstruct well.
+    \item{\bf Operating prototypes and learning from them}  Data from prototypes, such as the \coldboxe{}s, the \dwords{protodune}, and \dword{iceberg} must be analyzed quickly to ascertain what the noise level is and to search for the presence of signals.  This is part of an iterative experimental process to commission the prototypes by searching for noise sources, checking \dword{hv} and cryogenic performance, drift medium purity, etc.  Dead channels or other artifacts such as long-range induction effects are plainly visible on raw data displays.  Various artifacts may be addressable with software, such as correcting for front-end amplifier artifacts, correlated noise, and \dword{adc} issues.  These are all discovered first with event visualization.
     \item{\bf Interpreting calibration data}  Laser calibrations, neutron source data and radioactive source data must be inspected first before use, as unanticipated artifacts may confound the intended calibration use.
-    \item{\bf Providing educational and public outreach materials}  Introducing new students to DUNE's physics program involves showing them what interactions look like in each of our detectors.  Materials for DUNEs public-facing web sites and press releases also reuquire high-quality data visualizations.
+    \item{\bf Providing educational and public outreach materials}  Introducing new students to DUNE's physics program involves showing them what interactions look like in each of our detectors.  Materials for DUNEs public-facing web sites and press releases also require high-quality data visualizations.
 \end{enumerate}
-Each of these uses places different requirments on the visualization software.  Furthermore, the event display programs must be responsive and easy to use, though specialist functions may require additional configuration.
+Each of these uses places different requirements on the visualization software.  Furthermore, the event display programs must be responsive and easy to use, though specialist functions may require additional configuration.
 
 \subsection{Two-Dimensional Event Displays}
 \label{sec:visualization:2d}
 
-The data from the FD-HD and FD-VD modules are inherently two dimensional, with ADC values read out per wire (or strip) for each sample time.  Inspecting the raw waveforms side by side in a grayscale or colored map for each of the three views is critical for understanding the features of the raw data.  LArSoft provides such a display, optimized for X-Window connections.  Users can zoom in on rectangular subsets of the data and clicking on the image brings up a one-dimensional waveform plot for the corresponding channel.  An example of such a display for a ProtoDUNE-SP event with cosmic rays is given in Figure~\ref{fig:vis:larsoftraw}.  An example of a two-dimensional display of reconstructed tracks, vertices and showers is given in Figure~\ref{fig:vis:larsoftreco}.  
+The data from the \dword{sphd} and \dword{spvd} modules are inherently two dimensional, with \dword{adc} values read out per wire (or strip) for each sample time.  Inspecting the raw waveforms side by side in a grayscale or colored map for each of the three views is critical for understanding the features of the raw data.  \dword{larsoft} provides such a display,
+optimized for X-Window connections.  Users can zoom in on rectangular subsets of the data and clicking on the image brings up a one-dimensional waveform plot for the corresponding channel.  An example of such a display for a \dword{pdsp} event with cosmic rays is given in Figure~\ref{fig:vis:larsoftraw}.  An example of a two-dimensional display of reconstructed tracks, vertices and showers is given in Figure~\ref{fig:vis:larsoftreco}.  
 
 \begin{dunefigure}
 [LArSoft Raw Data Display]
 {fig:vis:larsoftraw} 
-{Example raw data display produced with LArSoft.  One APA's worth of data are shown for a ProtoDUNE-SP trigger record. The top panel shows the collection-plane data, the next panel V-plane data, and the bottom colored panel shows U-plane data.  Below those three is a single channel's waveform.  The colored panels show the pedestal-subtracted ADC values for each channel on the horizontal axes with sample time on the vertical axes.  The time between samples is 500~ns.  White vertical lines in the collection plane correspond to channels that have been flagged as noisy or dead.}
+{Example raw data display produced with \dword{larsoft}.  One \dword{apa}'s worth of data are shown for a \dword{pdsp} trigger record. The top panel shows the collection-plane data, the next panel V-plane data, and the bottom colored panel shows U-plane data.  Below those three is a single channel's waveform.  The colored panels show the pedestal-subtracted \dword{adc} values for each channel on the horizontal axes with sample time on the vertical axes.  The time between samples is 500\,ns.  White vertical lines in the collection plane correspond to channels that have been flagged as noisy or dead.}
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/pdsp_larsoft_rawevent.png}
 \end{dunefigure}
 
-The raw data display provided by LArSoft is best run interactively.  The user can step through the events in a file, forwards or backwards, or skip to a desired event number.  This event display is not built for non-interactive use.  There are use cases in which large numbers of raw event displays need to be produced in a batch.  For this purpose, dedicated modules have been written in DUNE's LArSoft-based software that provide two-dimensional displays of raw data and data that have been processed through each step of data preparation.  {\color{red} TODO:  add some of these as a figure?}
+The raw data display provided by \dword{larsoft} is best run interactively.  The user can step through the events in a file, forwards or backwards, or skip to a desired event number.  This event display is not built for non-interactive use.  There are use cases in which large numbers of raw event displays need to be produced in a batch.  For this purpose, dedicated modules have been written in DUNE's \dword{larsoft}-based software that provide two-dimensional displays of raw data and data that have been processed through each step of data preparation.  {\color{red} TODO:  add some of these as a figure?}
 
 \begin{dunefigure}
 [LArSoft Reconstructed Data Display]
 {fig:vis:larsoftreco} 
-{Example reconstructed data display produced with LArSoft.  One APA's worth of data are shown for a ProtoDUNE-SP trigger record. The top panel shows the collection-plane data, the next panel V-plane data, and the bottom colored panel shows U-plane data.  Below those three is a single channel's deconvolved waveform and fitted hits.  Reconstructed vertices, tracks and showers are displayed in the top three panels, with identifying numbers attached to each.}
+{Example reconstructed data display produced with \dword{larsoft}.  One \dword{apa}'s worth of data are shown for a \dword{pdsp} trigger record. The top panel shows the collection-plane data, the next panel V-plane data, and the bottom colored panel shows U-plane data.  Below those three is a single channel's deconvolved waveform and fitted hits.  Reconstructed vertices, tracks and showers are displayed in the top three panels, with identifying numbers attached to each.}
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/larsoft_reco_example_evd.png}
 \end{dunefigure}
 
@@ -618,35 +628,35 @@ The raw data display provided by LArSoft is best run interactively.  The user ca
 \begin{dunefigure}
 [Three-dimensional LArSoft Reconstructed Data Display]
 {fig:vis:larsoft3dreco} 
-{Example three-dimensional reconstructed data display produced with LArSoft, showing data from a ProtoDUNE-SP trigger record, for all APAs.  Reconstructed space points are shown in gray while shower cones are drawn in red.  The display can be pan, zoom, and rotate under user control.  The LArSoft 3d event viewer can also produce animated gifs.}
+{Example three-dimensional reconstructed data display produced with \dword{larsoft}, showing data from a \dword{pdsp} trigger record, for all \dwords{apa}.  Reconstructed space points are shown in gray while shower cones are drawn in red.  The display can be pan, zoom, and rotate under user control.  The \dword{larsoft} \threed event viewer can also produce animated gifs.}
 \includegraphics[width=0.8 \textwidth]{graphics/EventDisplays/larsoft_reco_evd_3d.png}
 \end{dunefigure}
 
 \subsection{Web-Based Event Displays}
 \label{sec:visualization:web}
 
-In addition to the LArSoft-based event displays, DUNE has multiple web-based event displays.  One, called the Bee event display, is made for displaying ProtoDUNE-SP events in a web browser.  The server is hosted at Brookhaven National Laboratory and contains a short list of typical ProtoDUNE-SP events, one of which is shown in Figure~\ref{fig:vis:bee}. No software needs to be installed on the user's computer, and no data files need to be copied.  The user only needs a modern web browser and the experience is enhanced with a capable graphics card.
+In addition to the \dword{larsoft}-based event displays, DUNE has multiple web-based event displays.  One, called the Bee event display, is made for displaying \dword{pdsp} events in a web browser.  The server is hosted at Brookhaven National Laboratory and contains a short list of typical \dword{pdsp} events, one of which is shown in Figure~\ref{fig:vis:bee}. No software needs to be installed on the user's computer, and no data files need to be copied.  The user only needs a modern web browser and the experience is enhanced with a capable graphics card.
 
 \begin{dunefigure}
 [Three-dimensional ProtoDUNE-SP Bee Data Display]
 {fig:vis:bee} 
-{Example three-dimensional reconstructed data display for a ProtoDUNE-SP data trigger record produced with the web-based Bee event display.  Users interact with the data needing only a modern web browser on their computer.  They can pan, zoom, rotate, and change display colors, point sizes, and transparency.}
+{Example three-dimensional reconstructed data display for a \dword{pdsp} data trigger record produced with the web-based Bee event display.  Users interact with the data needing only a modern web browser on their computer.  They can pan, zoom, rotate, and change display colors, point sizes, and transparency.}
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/bee_pdsp_evd1.png}
 \end{dunefigure}
 
-Another web-based event display is called WebEVD.  It runs as a LArSoft module, and it sets up a local web server owned by the user process on an interactive computer.  The user then must ssh in to the interactive computer running the web server, with a specified port forwarded.  The user then connects to that port with a local web browser and interacts with the event display with it.  This user-owned web server which is only visible via authenticated ssh has the advantage that it provides the user with full control over which data are to be displayed, as the web server is not centrally managed.  An example display of two-dimensional deconvolved waveforms for a simulated $\nu_e$CC event in a far detector workspace geometry run is shown in Figure~\ref{fig:vis:webevd2d}.  An example three-dimensional event display from a ProtoDUNE-SP data run produce using WebEVD is shown in Figure~\ref{fig:vis:webevd3d}.
+Another web-based event display is called WebEVD.  It runs as a \dword{larsoft} module, and it sets up a local web server owned by the user process on an interactive computer.  The user then must ssh in to the interactive computer running the web server, with a specified port forwarded.  The user then connects to that port with a local web browser and interacts with the event display with it.  This user-owned web server which is only visible via authenticated ssh has the advantage that it provides the user with full control over which data are to be displayed, as the web server is not centrally managed.  An example display of two-dimensional deconvolved waveforms for a simulated $\nu_e$CC event in a \dword{fd} workspace geometry run is shown in Figure~\ref{fig:vis:webevd2d}.  An example three-dimensional event display from a \dword{pdsp} data run produce using WebEVD is shown in Figure~\ref{fig:vis:webevd3d}.
 
 \begin{dunefigure}
 [Two-dimensional WebEVD of a simulated $\nu_e$CC interaction.  ]
 {fig:vis:webevd2d} 
-{A simulated $nu_e$CC interaction in a far detector workspace geometry run. The display is of charge reconstructed on collection wires (recob::Wire). The horizontal axis is the z-axis (beam direction) in the detector. The vertical axis corresponds to drift time ($x$ position in the detector). Both axes are labeled in cm. Rendered with WebEVD. }
+{A simulated $nu_e$CC interaction in a far detector workspace geometry run. The display is of charge reconstructed on collection wires (recob::Wire). The horizontal axis is the $z$-axis (beam direction) in the detector. The vertical axis corresponds to drift time ($x$ position in the detector). Both axes are labeled in cm. Rendered with WebEVD. }
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/webevd_nuecc_sim.png}
 \end{dunefigure}
 
 \begin{dunefigure}
 [Three-dimensional WebEVD of a ProtoDUNE-SP trigger record. ]
 {fig:vis:webevd3d} 
-{ Example three-dimensional reconstructed data display for a ProtoDUNE-SP data trigger record, rendered with WebEVD. Reconstructed tracks and space points are shown in blue, and detector elements are shown in red.}
+{ Example three-dimensional reconstructed data display for a \dword{pdsp} data trigger record, rendered with WebEVD. Reconstructed tracks and space points are shown in blue, and detector elements are shown in red.}
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/webevd_pdsp3d.png}
 \end{dunefigure}
 
@@ -655,28 +665,29 @@ Another web-based event display is called WebEVD.  It runs as a LArSoft module, 
 
 TODO:  {\color{red}Add text and figure for ND-LAr.}
 
-An example of a reconstructed event in ND-GAr is shown in Figure~\ref{fig:vis:garsoftreco} rendered with the ROOT-based event display in GArSoft.  The same event is shown in Figure~\ref{fig:vis:garsoft2}, rendered with the TEve-based event display in GArSoft.
+An example of a reconstructed event in \dword{ndgar} is shown in Figure~\ref{fig:vis:garsoftreco} rendered with the \dword{root}-based event display in \dword{garsoft}.  The same event is shown in Figure~\ref{fig:vis:garsoft2}, rendered with the TEve-based event display in \dword{garsoft}.
 
 \begin{dunefigure}
 [GArSoft reconstructed data display, ROOT-based]
 {fig:vis:garsoftreco} 
-{Example reconstructed $\nu_\mu$CC event produced with GArSoft, using an ALICE-inspired detector geometry.  The reconstructed vertex is indicated with a yellow dot, and tracks are shown in green, blue, and red.  Reconstructed calorimeter clusters are shown with green tetrahedra.  The annotations giving the Monte Carlo particle identities were added by hand.}
+{Example reconstructed $\nu_\mu$CC event produced with \dword{garsoft}, using an ALICE-inspired detector geometry.  The reconstructed vertex is indicated with a yellow dot, and tracks are shown in green, blue, and red.  Reconstructed calorimeter clusters are shown with green tetrahedra.  The annotations giving the \dword{mc} particle identities were added by hand.}
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/nd_gar_evdwp2_withcaloclusters.pdf}
 \end{dunefigure}
 
 \begin{dunefigure}
 [GArSoft Reconstructed data display, TEve-based]
 {fig:vis:garsoft2} 
-{The same ND-GAr event as shown in Figure~\ref{fig:vis:garsoftreco}, rendered here with GArSoft's TEve-based event display.}
+{The same \dword{ndgar} event as shown in Figure~\ref{fig:vis:garsoftreco}, rendered here with  \dword{garsoft}'s TEve-based event display.}
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/ndgar_evd3d.png}
 \end{dunefigure}
 
-The third component of the near detector, SAND, consists of a staw-tube tracker and a calorimeter inside a solenoidal magnet.  A small cryostat containing liquid argon, called GRAIN, is to be installed upstream of the straw-tube tracker inside the ECAL.  Design and performance studies are underway.  Basic event visualization tools have been developed to aid in the development of the reconstruction algorithms.  An example display of simulated and reconstructed particles in SAND is shown in Figure~\ref{fig:vis:sandevd}.
+The third component of the near detector, \dword{sand}, consists of a staw-tube tracker and a calorimeter inside a solenoidal magnet.  A small cryostat containing liquid argon, called \dword{grain}, %anne 3/3: I added a dword; check def
+is to be installed upstream of the straw-tube tracker inside the \dword{ecal}.  Design and performance studies are underway.  Basic event visualization tools have been developed to aid in the development of the reconstruction algorithms.  An example display of simulated and reconstructed particles in \dword{sand} is shown in Figure~\ref{fig:vis:sandevd}.
 
 \begin{dunefigure}
 [SAND Event Display]
 {fig:vis:sandevd} 
-{A rendering of a simulated full spill of neutrino interactions in the SAND detector. Magenta stars indicate true neutrino interaction vertices, blue curves indicate true simulated muon tracks, and thick green curves show proton tracks  Thin red lines indicate electrons and photons.  The red circles show the outline of the electromagnetic calorimeter.  Blue dots indicate calorimeter hits.}
+{A rendering of a simulated full spill of neutrino interactions in the \dword{sand} detector. Magenta stars indicate true neutrino interaction vertices, blue curves indicate true simulated muon tracks, and thick green curves show proton tracks  Thin red lines indicate electrons and photons.  The red circles show the outline of the \dword{ecal}.  Blue dots indicate calorimeter hits.}
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/sand_detector_view_stt_17924.pdf}
 \end{dunefigure}
 
@@ -684,10 +695,10 @@ The third component of the near detector, SAND, consists of a staw-tube tracker 
 Events will need to be classified.  Much of this is now done using \dword{ml} techniques and is likely best done at the analysis tuple production phase rather than as part of the pattern recognition. 
 
 
-\section{Analysis of reduced data samples}
+\section{Analysis of Reduced Data Samples}
 %\subsection{Production of Analysis Samples\hideme{Calcutt -NEW!!2/19}}
 
-\subsection{Analysis sample production}
+\subsection{Analysis Sample Production}
 At some point in the processing, specialized datasets and streams based on trigger type, reconstructed event information, and intended use need to  be defined and produced.
 
 The interaction data, which are in the output format supplied by the full reconstruction are then reduced and reconfigured into analysis formats for use by users. 

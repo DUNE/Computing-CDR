@@ -1,6 +1,6 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Computing Organization}\label{ch:org}
+\chapter{Computing Organization - updated 3/1}\label{ch:org}
 
 The offline computing organization for DUNE has several facets. The main focus of the formal Computing Consortium (and this document) is the computing infrastructure that allows development and implementation of algorithms and data analysis techniques rather than the algorithms and analysis themselves. Algorithms and analysis are the purview of the physics groups.
 
@@ -15,13 +15,14 @@ This section describes the formal Computing Consortium that concentrates on deve
 {\includegraphics[width=0.9\textwidth]{graphics/IntroFigures/MTOrgChartFeb22.png}}
 \end{dunefigure}
 
-Figure \ref{fig:orgchart} shows the Computing Consortium organization as of February 2022.  The Consortium leadership consists of a Consortium Lead, responsible for overall coordination, two technical leads, one US-based and the other from the international collaboration and a Computing Architect.  There is an Algorithms Liaison responsible for coordinating with the Physics group and an independent Computing Contributions Board that negotiates resource contributions from global collaborators. 
+Figure \ref{fig:orgchart} shows the Computing Consortium organization as of February 2022.  The Consortium leadership consists of a Consortium Lead, responsible for overall coordination, two technical leads, one US-based and the other from the international collaboration and a Computing Architect.  There is an Algorithms Liaison responsible for coordinating with the Physics group and an independent Computing Contributions Board \ref{sec:ccb} that negotiates resource contributions from global collaborators. 
 
-The Computing Consortium is not formally part of the \dword{dune} construction project but has representation on the Executive Board.  The Computing Consortium is part of the interface document matrix with the construction consortia and interface agreements exist in the CERN EDMS system. \todo{Where the heck are they?}. The most important interfaces are 1) data-management and networking with the DAQ and calibration groups and 2) databases with the DAQ and hardware construction groups. 
+The Computing Consortium is not formally part of the \dword{dune} construction project but has representation on the Executive Board.  The Computing Consortium is part of the interface document matrix with the construction consortia and interface agreements exist in the CERN EDMS \cite{dune-edms} system and are listed in Table \ref{tab:intro:interfacedocs}. The most important interfaces are 1) data-management and networking with the DAQ and calibration groups and 2) databases with the DAQ and hardware construction groups. 
 
 \begin{dunetable}
 [Interface documents with hardware consortia]
-{l l}{tab:intro:interfacedocs}
+{l l}
+{tab:intro:interfacedocs}
 {Offline computing \dword{edms} interface documents with hardware consortia.}
 Document title&EDMS ID\\
 JT COM and SP APA Consortium Interface Document	&2145145 v.4\\
@@ -47,7 +48,8 @@ JT COM to Facility Interface	&2145167	v.1 \\
 Within the Consortium there are specific development groups responsible for particular components of the computing infrastructure.  Many of these activities are described in greater detail in separate chapters. 
 
 \begin{itemize} 
-\item ProtoDUNE Liasions - make certain that offline computing is coordinated with ProtoDUNE data taking and analysis.
+%ST fixed sp Liaisons
+\item ProtoDUNE Liaisons - make certain that offline computing is coordinated with ProtoDUNE data taking and analysis.
 
 \item Data Management - responsible for storage, cataloging and delivery of data. See Chapter \ref{ch:datamgmt}
 
@@ -70,9 +72,26 @@ Within the Consortium there are specific development groups responsible for part
 \end{itemize}
 
 \section{Funding Sources for Computing Development}
-Most personnel working on \dword{dune} computing are supported by their institutions or national funding agencies as part of general or \dword{dune} project support.  One exceptions are a US \dword{doe} funded consortium of 4 universities and 3 national labs funded specifically for \dword{dune} computing infrastructure at a level of \$1M/year, directly supporting postdocs and lab physicists summing to $\sim 6$ FTE.
+Most personnel working on \dword{dune} computing are supported by their institutions or national funding agencies as part of general or \dword{dune} project support.  One exceptions are a US \dword{doe} funded consortium of 4 universities and 3 national labs funded specifically for \dword{dune} computing infrastructure at a level of \$1M/year, directly supporting postdocs and lab physicists summing to $\sim 6$ FTE.  The UK and France also make significant contributions through the DUNE project. 
 
 
+\section{Computing Contributions Board \hideme{HMS 3/2 moved from separate chapter}}\label{sec:ccb}
+
+In addition to the formal Consortium, CPU and storage resources are contributed by sites and countries through formal pledges facilitated by the \dword{ccb}. 
+
+The \dword{ccb} has been set up to formalize the contribution of DUNE partners to the computing and storage capacity required for computing production. In order to remain scale-able, the \dword{ccb} considers a nation as the natural unit of aggregation to request and then seek pledges for resources. The \dword{ccb} does, however, recognize that whilst within some countries centralized coordination is natural, this is not true for others. Nevertheless, requests will be published at a national granularity, with the assumption that Institutes within each nation can coordinate.
+
+In order to set a fair-share request for computing capacity, the \dword{ccb} will eventually use a proxy metric for the relative proportion of each nation in DUNE. This is likely to be PhD paper authors once in the exploitation phase. This is, however, not relevant during construction as the current listing of DUNE members in the data base is a very poor proxy for this. Therefore, during construction all nations with more than a minimum number of DUNE participants or providing Tier-1 or large Tier-2 capacity to LHC experiments, are asked to provide a "reasonable" share (see below). We refer to these as compute-active-nations.
+This is very flexible and is up to each nation to decide if it wishes to be classified as a compute-active-nation.
+
+At present the \dword{ccb} is composed of a Chair, one member per compute-active-nation, one member for each of FNAL, CERN and BNL, and the Computing and Software Consortium  Management ex officio.
+
+The Computing Consortium management produces an overall requirements document that should be scrutinized by the FNAL CRSG. The \dword{ccb} receives this document, and then seek pledges to meet those requirements. As host lab, FNAL plans to provide ~25\% of the capacity, including the primary tape service.
+CERN also currently provides a substantive capacity, in particular for \dword{protodune}.
+The aim is then for the remaining capacity to come from other contributors according to the prevailing computing model. A substantial proportion of capacity is expected from outside of the USA  (~50\%). Contributions of at least 5-20\% are requested depending upon the circumstance and capability of each compute-active-nation.
+Pledges of capacity received are recorded in the CRIC information system. In due course this process could be formalized into a (non-binding) MOU.
+
+The \dword{ccb} may also receive requests and information from the Computing Consortium Management in respect of any other non-capacity matter. The \dword{ccb} may seek to help with such requests where they pertain to national contributions. This may include promotion of requests for software engineering support to be propagated within each nation.
 
 % \hideme{I propose moving the subsections here into the appropriate later chapters and using this section to describe the global compute model}
 
@@ -88,7 +107,7 @@ Most personnel working on \dword{dune} computing are supported by their institut
 % {Disk pledges in PB for 2021 and 2022 .}
 % Country/Lab	&	Name	&	2021	&	2022	\\
 % FNAL	&	FNAL	&	2.2	&	7.6	\\
-% CERN	&	CCERN	&	2.2	&	1.6	\\
+% CERN	&	CERN	&	2.2	&	1.6	\\
 % BNL	&	BNL	&	0.5	&	0.5	\\
 % UK	&	GridPP	&	4.0	&	4.0	\\
 % FR	&	CC-IN2P3	&	0.5	&	0.5	\\

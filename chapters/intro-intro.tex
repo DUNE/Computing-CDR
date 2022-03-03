@@ -47,8 +47,10 @@
 
 %\todo{Need to add a section on simulation}
 \todo{And brief subsection on solar/atmospheric/BSM physics}
+%st changed "on" to "in" and delete second "on"
+%st fixed awkward last sentence of paragraph (split infinitive and misplaced comma)
 \section{Mission Statement}
-This document describes Software and Computing for the \dword{dune} experiment. Our emphasis on this document is on the development of the computing infrastructure needed to acquire, catalog, reconstruct, simulate and analyze the data from the \dword{dune} experiment and its prototypes. In this effort, we concentrate on developing the tools and systems that facilitate the development and deployment of advanced algorithms rather than the details of the algorithms themselves. Our goal is to, rather than prescribe particular algorithms, to provide resources that are flexible and accessible enough to support creative software solutions as \dword{hep} computing evolves
+This document describes Software and Computing for the \dword{dune} experiment. Our emphasis in this document is the development of the computing infrastructure needed to acquire, catalog, reconstruct, simulate and analyze the data from the \dword{dune} experiment and its prototypes. In this effort, we concentrate on developing the tools and systems that facilitate the development and deployment of advanced algorithms rather than the details of the algorithms themselves. Rather than prescribing particular algorithms, our goal is to provide resources that are flexible and accessible enough to support creative software solutions as \dword{hep} computing evolves
 and provide computing that achieves the physics goals of the \dword{dune} experiment. %Kirby 
 
 \section{Introduction \hideme{Schellman - draft based on CHEP paper}}\label{sec:intro-introduction}
@@ -86,7 +88,7 @@ observed in multiple experiments since it was first confirmed in 1998\cite{Kajit
 
 
 DUNE,  in particular,   wishes to understand the conversion of the muon neutrinos created in Illinois%Anne Illinois 
-into electron neutrinos at the \dword{fd} in the Homestake mine in South Dakota  %HMS made the change
+ into electron neutrinos at the \dword{fd} in the Homestake mine in South Dakota  %HMS made the change
 and compare that conversion rate between neutrino and antineutrino beams. The location of the \dword{fd} and energy of the neutrino beam were chosen to maximize the oscillation effect.   A difference in the conversion rate for neutrinos and antineutrinos could be evidence for matter-antimatter asymmetry in the neutrino sector, a phenomenon called \dword{cpv}.  
 
 To make these measurements, the experiment needs to be able to distinguish %Anne we need to be able to distinguish %Kirby "we->the experiment"
@@ -120,10 +122,12 @@ The first far detector modules should go live late in this decade with commissio
 \end{dunefigure}
 
 
-\section{ProtoDUNE tests at CERN  %anne ProtoDUNE tests at CERN 
+\section{ProtoDUNE Tests at CERN  %anne ProtoDUNE tests at CERN 
 \hideme{Schellman/Pennacchio-draft}}
 
-Building an experiment of this size requires an extensive period of prototyping.   The Argoneut\cite{Acciarri:2018myr}, MicroBooNE\cite{microboone} and ICARUS\cite{icarus} collaborations have demonstrated the capabilities of \dwords{lartpc} for neutrino detection on scales between 1 and 500\,ton fiducial mass.  In preparation for the \dword{dune} experiment, a campaign for testing % anne proposed DUNE 
+Building an experiment of this size requires an extensive period of prototyping.   The Argoneut\cite{Acciarri:2018myr}, MicroBooNE\cite{microboone} and ICARUS\cite{icarus} collaborations have demonstrated the capabilities of \dwords{lartpc} for neutrino detection on scales between 1 and 500\,tons of fiducial mass.  In preparation for the \dword{dune} experiment, a campaign for testing % anne proposed DUNE 
+%st since 1-ton not hypenated inserted the correct plural tons
+\fixme{st should we have a SI reference to ton--can refer to English or metric}
 full-sized far detector components in 700\,ton-capacity cryostats %anne detectors 
 in the \dword{ehn1} hadronic test beam at the \dword{cern} was launched in 2018.  Both \dword{sp} (horizontal drift) and \dword{dp} (liquid and gas, vertical drift) prototypes, called \dword{pdsp} and \dword{pddp}, were constructed and operated. %anne tested. % Kirby - I like this suggestion so included it with slight addition.
 We have tested the full data taking chain from detector construction to full offline reconstruction and analysis of data, and the results have given considerable insight into the computing challenges for the full \dword{dune} experiment.
@@ -152,8 +156,9 @@ The \dword{pdsp} detector, immersed in 700\,tons of \dword{lar}, consists of %an
 a cathode plane in the center and sets of three \dwords{apa} mounted side-by-side on %anne each  edge 
 either side of the liquid volume, creating a horizontal \efield. %The \efield is horizontal so this technology is designated \dword{hd}.   
 The maximum drift distance is  3\,m with  a nominal voltage of 180\,kV  across that distance.  Each \dword{apa} has 2560 channels and each channel reads out a 12\,bit \dword{adc} every 0.5\,$\mu$sec. %anne  For \dword{pdsp} the readout time appropriate for a 3 m drift was set to 3 msec, 
-The appropriate readout time for this configuration was determined to be 3\,s, resulting in 6000 12\,bit samples per channel. 
-\todo{Anne: previous sentence doesn't make sense to me. 6000 per channel per readout window?}
+The appropriate readout time for this configuration was determined to be 3\,ms, resulting in 6000 12\,bit samples per channel per readout window. 
+%st fixed \todo{Anne: previous sentence doesn't make sense to me. 6000 per channel per readout window?}
+%ST changed 3 s to 3 ms on the readout time. 0.5 microseconds * 6000 = 3 milliseconds
 The total data size for six \dwords{apa} is thus 140\,MB with additional header and data from photon and external tagging systems, bringing the nominal \dword{tr} size up to about 180\,MB.  Lossless compression of the \dword{tpc} readout data was implemented in the \dword{daq}, resulting in a final compressed event size of about 75\,MB. 
 
 
@@ -304,7 +309,7 @@ An additional beam run of  \dword{pdsp} is planned for 2022-23, with a cosmic te
 %\section{ProtoDUNE Simulation} % anne discussion 
 %\hideme{Yang-needed}
 
-\section{On to full DUNE \hideme{Schellma-draft}}\label{sec:intro-fd}
+\section{On to Full DUNE \hideme{Schellma-draft}}\label{sec:intro-fd}
 
 The full DUNE \dword{fd} will begin with one \dword{sphd} module to be installed %anne at Homestake 
 starting in the middle of  this decade.  A second \dword{spvd} module will be installed and commissioned in parallel.  High-intensity neutrino and antineutrino beams should arrive after a year or so of commissioning of the detector and \dword{lbnf} beamline.  The first %anne \dword{hd} 
@@ -316,17 +321,18 @@ will be added later. For now, we assume that data volumes and rates coming from 
 the values for the \dword{sphd} or \dword{spvd}.
 
 
+%st fix the misprinted sim.. but is of order and sim redundant?
 
-The detector should be sensitive to neutrino interactions and radioactive decays above an energy threshold of order $\sim 5$\,MeV.  Unambiguous triggering may require a somewhat higher threshold  to avoid false triggers due to $^{39}$Ar decays,  but beam interactions in the 500-10,000\,MeV range should have almost perfect detection efficiency. Sophisticated triggering algorithms should also allow standalone detection of astrophysical sources, including higher-energy solar neutrinos and \dword{snb} candidates. 
+The detector should be sensitive to neutrino interactions and radioactive decays above an energy threshold of order \sim 5\,MeV.  Unambiguous triggering may require a somewhat higher threshold  to avoid false triggers due to $^{39}$Ar decays,  but beam interactions in the 500-10,000\,MeV range should have almost perfect detection efficiency. Sophisticated triggering algorithms should also allow standalone detection of astrophysical sources, including higher-energy solar neutrinos and \dword{snb} candidates. 
 
-The data rates will be dominated by 4,500 cosmic rays expected per module/day.  These events are vital for monitoring and aligning the detector. %anne aligning?
+The data rates will be dominated by 4,500 cosmic rays expected per module/day.  These events are vital for monitoring and aligning the detector. %anne aligning? ST yes we measure to be sure that the APA are in line
 The next most significant source of events will be calibration campaigns with radioactive and neutron sources and lasers.  In all cases, the goal is to gather data from the full volume of the detector with as fine a granularity as possible. 
 
 Beam interactions themselves are expected to be quite rare, occurring in only 1/2000 of beam gates ($\simeq$\,2/hr)  Extraction of oscillation parameters will require both powerful electron background rejection, discussed in the previous section,  and precise calibration of the energy scale of the experiment, hence the much larger calibration samples.
 
-Beam and cosmic ray interactions are reasonably localized in time and space, involving a small fraction of a module over a few milliseconds.  This can, in principle, allow significant reduction in data size without loss of physics information if suitable triggers are used.
+Beam, cosmic ray and solar neutrino interactions are reasonably localized in time and space, involving a small fraction of a module over a few milliseconds.  This can, in principle, allow significant reduction in data size without loss of physics information if suitable triggers are used.
 
-\subsubsection{Low energy phenomena - solar/neutron decay \hideme{???-needed}} \fixme{ Need someone to write about solar/BSM signature}
+\hideme{HMS give up on this \subsubsection{Low energy phenomena - solar/neutron decay \hideme{???-needed}} \fixme{ Need someone to write about solar/BSM signature}}
 
 \subsubsection{Supernova candidates \hideme{Schellma - draft}}\label{sec:supernova}
 
@@ -348,6 +354,14 @@ Supernova candidates pose a unique problem for data acquisition and reconstructi
 
 \dword{dune} is uniquely sensitive to $\nu_e$ through the reaction $\nu_e + Ar \rightarrow e^- + K*$ which leaves an electron trajectory that can be used to estimate the direction of the supernova.  Figure \ref{fig:SNrates} shows the expected neutrino interaction rates from supernovae as a function of their distance.
 %The number of neutrino interactions actually detected depends on the physics of the supernova burst, oscillation physics and the minimum energy threshold achievable in the DUNE \dword{tpc} in the presencen of radiological backgrounds.
+
+\hideme{HMS 3/2 added the missing figure}
+\begin{dunefigure}
+[Supernova rates in DUNE as a function of distance]
+{fig:SNrate}
+{Supernova rates in the DUNE detector  as a function of distance from the source from reference \cite{DUNE:2020zfm}.}
+{\includegraphics[width=0.9\textwidth]{graphics/IntroFigures/argon_sn.png}}
+\end{dunefigure}
 
 A classic core-collapse supernova 10\,kpc away would be expected to yield around 3,000  \dword{cc} electron neutrino interactions across four detector modules. \dword{snb} candidates will be quite different from beam interactions, having small interactions with energies in the 5-30\,MeV range spread across the full volume of the detector modules over many seconds, in contrast to the localized, coincident,  500-10,000\,MeV signature of beam neutrino interactions. These differences impose interesting requirements on the \dword{daq} and computing models for the experiment.  
 
@@ -484,7 +498,7 @@ An additional challenge in oscillation physics is the need for accurate energy c
 exploit the energy spectrum of the reconstructed neutrinos to further constrain oscillation parameters. While \dword{lar} detectors have a reputation for stability, the large volumes, complex \efield configurations, liquid motion, and potential variations in electron lifetime and drift velocity make it necessary to have large calibration data samples that span the full \dword{fd} detector volume.  Large cosmic ray and artificial calibration samples will dominate the total data volumes from the \dword{fd}. 
 
 \item{\bf Supernovae:\\}A %anne supernova 
-\dfirst{snb} candidate will generate 115\,TB of (uncompressed) data per module. This means tens of thousands of data files produced over a 100\,s period. These data must be recorded at low energy threshold due to the expected interaction energy range, but must also be analyzed quickly and coherently in order to measure the time evolution of neutrino emissions, which carries invaluable information about the supernova process itself. In addition, if \dword{dune} can quickly analyze \dword{cc} interactions, we can provide pointing information to telescopes for optical followup.  %anne Supernova 
+\dfirst{snb} candidate will generate 300\,TB of (uncompressed) data across the first two modules. This means tens of thousands of data files produced over a 100\,s period. These data must be recorded at low energy threshold due to the expected interaction energy range, but must also be analyzed quickly and coherently in order to measure the time evolution of neutrino emissions, which carries invaluable information about the supernova process itself. In addition, if \dword{dune} can quickly analyze \dword{cc} interactions, we can provide pointing information to telescopes for optical followup.  %anne Supernova 
 \dword{snb} physics drives the need for fast data transmission from the \dword{fd} to computing facilities and for robust tracking of data movement so that a full picture of the supernova interaction can be reassembled after signal processing.
 As well, the drastically different time scale of \dword{snb} physics places requirements on the software framework. %Kirby
 
@@ -495,7 +509,8 @@ modules produce large data volumes, the detectors themselves are reasonably simp
 The \dword{nd} use case is similar to other fixed target experiments such as \dword{sbnd} at \dword{fnal} and \dword{compass} at \dword{cern}.  The main computing challenge for the \dword{nd} will be integration of a large number of disparate detector technologies into a coherent whole. Here careful attention to simulation, detector geometry and configuration, and code management will be the major challenges. 
 
 \item{\bf Analysis and parameter extraction:\\}
-\dword{dune} has over one thousand collaborators spread across four continents. Those collaborators will want to analyze our data over several decades. Fortunately, once reconstruction has been done, neutrino interaction samples are generally simpler than event records at colliders and should %anne be analyzable locally. 
+%ST changed four continents to five since we now have collaborators in Africa also
+\dword{dune} has over one thousand collaborators spread across five continents. Those collaborators will want to analyze our data over several decades. Fortunately, once reconstruction has been done, neutrino interaction samples are generally simpler than event records at colliders and should %anne be analyzable locally. 
 allow researchers to analyze them at their local institutions. However, final parameter extraction  using large numbers of nuisance parameters remains a computationally intense problem and will require significant resources
 and efficient utilization of \dword{hpc} to quickly achieve final results. 
 

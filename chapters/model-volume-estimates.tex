@@ -4,8 +4,10 @@
 \chapter{Data and Processing Volume Estimates \hideme{Schellman, Junk, Muether - started numbers and figures need updating}}
 \label{ch:est}
 \fixme{Heidi: moved tables of numbers from intro to here.  Still needs better organization}
-%anne In this chapter we will 
-This chapter describes the assumptions that go into a bottoms-up estimate of data volumes and describe possible methods of reducing the total volumes while retaining physics capabilities. 
+ 
+In this chapter, we describe the assumptions that go into a bottoms-up estimate of data volumes and describe possible methods of reducing the total volumes while retaining physics capabilities. 
+
+\fixme{Doug: Can the sentence above be put into the introduction with additional verbage}
 
 \section{Introduction \hideme{Schellman - need a paragraph}}
 
@@ -15,7 +17,7 @@ This chapter describes the assumptions that go into a bottoms-up estimate of dat
 
 \subsection{Raw Data Assumptions \hideme{Schellman - draft}}
 DUNE's detectors will produce information from a variety of technologies.  We anticipate that raw data volumes will be dominated by the digitized waveforms from \dword{lar} detectors, and to a lesser extent \dwords{pd}, in the prototype runs at the \dword{cern}, the \dword{fd}, and the \dword{nd}.  
-%anneThese raw data volumes can be reduced by the \dword{daq} system by several means.
+
 The \dword{daq} system can reduce these raw data volumes by several means, i.e.,
 \begin{itemize} 
 \item triggered readout of particular time slices,
@@ -26,6 +28,8 @@ The \dword{daq} system can reduce these raw data volumes by several means, i.e.,
 \end{itemize}
 
 Overall, we assume that the above methods can reduce data volumes from the hundreds of exabytes that would be produced by continuous readout to a manageable 30\,PB/year. 
+
+\fixme{Doug: need text for the subsection that ties in the first table}
 
 \subsection{Derived Data Assumptions \hideme{Schellman - draft}}
 
@@ -151,7 +155,7 @@ Process & Rate/module & \qquad event size  &\qquad  size/module/year\\
 \hline
 Beam event & 41/day & 8 GB& 63 TB/year\\
 Cosmic rays &4,500/day&  8 GB& 12.5 PB/year\\
-Supernova trigger& 1/month& 130 TB& 2 PB/year\\
+Supernova trigger& 1/month& 180 TB& 2 PB/year\\
 Calibrations&2/year& & 1.5 PB/year\\
 \hline 
 Total& & &16 PB/year\\
@@ -213,6 +217,7 @@ Type&time/event\\ \toprowrule
 
 \section{Summary \hideme{Schellman - needs update}}
 \label{sec:est:volumes}
+\fixme{Doug: All figures need the x axis fix for 2020-2040}
 
 Given the above estimates we can  estimate total disk and CPU needs every year.  The September 2021 version of these numbers is documented in~\cite{bib:docdb23419}
 
@@ -221,7 +226,7 @@ Figure~\ref{fig:est:events} shows the assumed number of events/year for each det
 \begin{dunefigure}
 [Event estimates]
 {fig:est:events}
-{Number of events per year used in data volume estimates. Left is through 2030, right is the same through 2040.  }
+{Number of events per year used in data volume estimates. Left is through 2025, right is the same through 2040.  }
 \includegraphics[width=0.49\textwidth]{graphics/IntroFigures/soon/Events.png}
 \includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Events.png}
 \end{dunefigure}
@@ -240,7 +245,7 @@ Figures~\ref{fig:est:disk}, \ref{fig:est:tape}, and~\ref{fig:est:cores} illustra
 \begin{dunefigure}
 [Disk estimates]
 {fig:est:disk}
-{Estimated size of various samples in PB. This estimate includes retention policies and multiple copies.}
+{Estimated size of various samples in PB. This estimate includes retention policies and multiple copies. Left is through 2025, right is the same through 2040.}
 \includegraphics[width=0.49\textwidth]{graphics/IntroFigures/soon/Cumulative-Disk.png}
 \includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Cumulative-Disk.png}
 \end{dunefigure}
@@ -248,7 +253,7 @@ Figures~\ref{fig:est:disk}, \ref{fig:est:tape}, and~\ref{fig:est:cores} illustra
 \begin{dunefigure}
 [Tape estimates]
 {fig:est:tape}
-{Estimated size of various samples in PB. This estimate includes retention policies and multiple copies.}
+{Estimated size of various samples in PB. This estimate includes retention policies and multiple copies. Left is through 2025, right is the same through 2040.}
 \includegraphics[width=0.49\textwidth]{graphics/IntroFigures/soon/Cumulative-Tape.png}
 \includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Cumulative-Tape.png}
 
@@ -257,7 +262,7 @@ Figures~\ref{fig:est:disk}, \ref{fig:est:tape}, and~\ref{fig:est:cores} illustra
 \begin{dunefigure}
 [Tape estimates]
 {fig:est:cores}
-{Estimated CPU needs for  various samples.  The units are present day cores assuming 70\% efficiency.}
+{Estimated CPU needs for  various samples.  The units are present day cores  (2020 Vintage CPU's) assuming 70\% efficiency. Left is through 2025, right is the same through 2040.}
 \includegraphics[width=0.49\textwidth]{graphics/IntroFigures/soon/Cores.png}
 \includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Cores.png}
 \end{dunefigure}
