@@ -141,7 +141,7 @@ from NumberUtils import DrawType
 
 # get parameters into config
 
-configfile = "Parameters_2022-02-24-2040.json"
+configfile = "Parameters_2022-03-04-2040.json"
 
 if os.path.exists(configfile):
   with open(configfile,'r') as f:
@@ -171,11 +171,16 @@ json_formatted_str = commentjson.dumps(config, indent=2)
 # set up shortcuts for parameters
 
 MaxYears = config["MaxYears"]
+
 MinYears = config["MinYears"]
 Detectors = config["Detectors"]
 Years = np.array(config["Years"][0:MaxYears])
+shortname = configfile.replace(".json","")
+shortname = shortname.replace("2040","%d"%Years[MaxYears-1])
+texname = shortname+".tex"
 print (Years, len(Years))
 size = len(Years)
+interpretation = config["Interpretation"]
 
 Units = config["Units"]
 
@@ -229,9 +234,9 @@ for f in SplitsEarly:
 
 PerYear = config["PerYear"]
 print (TapeLifetimes)
-table = open(configfile.replace("json","txt"),'w')
+table = open(shortname+".txt",'w')
 
-tex = open(configfile.replace("json","tex"),'w')
+tex = open(texname,'w')
 s = "\\documentclass[12pt]{article}\n\\usepackage{graphicx}\n"
 s += "\\usepackage{hyperref}\n"
 s += "\\parindent=0pt\n\\setlength{\\textwidth=7in}\n"
@@ -408,13 +413,13 @@ for dtype in Inputs["ND"].keys():
 # In[14]:
 
 
-DrawDet("Events",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
-DrawDet("CPU",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
-DrawDet("Raw",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
-DrawDet("Test",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
-DrawDet("Sim Events",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
-DrawDet("Sim",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
-DrawDet("Reco",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
+DrawDet(shortname,"Events",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
+DrawDet(shortname,"CPU",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
+DrawDet(shortname,"Raw",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
+DrawDet(shortname,"Test",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
+DrawDet(shortname,"Sim Events",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
+DrawDet(shortname,"Sim",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
+DrawDet(shortname,"Reco",Years,Data,Inputs.keys(),Units,DetColors,DetLines)
 
 
 # Combine the protoDUNEs into one and replace them in Data
@@ -675,26 +680,27 @@ print(s)
 table.write(s)
 
 
-DrawDet("Total-CPU",Years,Data,Types,Units,DetColors,DetLines,cpuactual)
-DrawDet("Cores",Years,Data,Types,Units,DetColors,DetLines,coreactual)
+DrawDet(shortname,"Total-CPU",Years,Data,Types,Units,DetColors,DetLines,cpuactual)
+DrawDet(shortname,"Cores",Years,Data,Types,Units,DetColors,DetLines,coreactual)
 
-DrawType("Cumulative Tape",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,tapepoints,None)
-DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,diskpoints,None)
+DrawType(shortname,"Cumulative Tape",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,tapepoints,None)
+DrawType(shortname,"Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,diskpoints,None)
 #DrawType("Disk",Years,Data,StorageTypes,Units,TypeColors,TypeLines)
 # draw twice to fool print
-DrawType("Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,diskpoints,None)
+DrawType(shortname,"Cumulative Disk",Years,Data,StorageTypes+["Total"],Units,TypeColors,TypeLines,diskpoints,None)
 
 
-# In[23]:
 
 
 table.close()
 tex.write("\\pagebreak")
-tex.write(DrawTex("Total-CPU.png","CPU time in Wall Hours/year. Squares are measured values for 2021.","TotalCPU"))
-tex.write(DrawTex("Cores.png","Cores needed, including efficiency loss. Squares are measured values for 2021.","Cores"))
-tex.write(DrawTex("Cumulative-Tape.png","Projected  tape needs, PB, all types are cumulative over tape lifetime. Open circles are model calculation based on actual data volumes in 2021. Closed squares are actual numbers by site. Offsets of square points are for clarity.","CumulativeTape"))
-tex.write(DrawTex("Cumulative-Disk","Disk needs, PB.  Raw, Reco and Sim are cumulative over disk lifetime.  Test has sub-year lifetime.  Open circles are model calculation based on actual disk volumes in 2021. Closed squares are actual numbers from rucio as of 1/22/2022. Offsets of square points are for clarity.","CumulativeDisk"))
-tex.write("\\vskip 3 in\\pagebreak \n {\\bf Change log:}\\\\\n")
+tex.write(DrawTex(shortname+"-Total-CPU.png","CPU time in Wall Hours/year. Squares are measured values for 2021.","TotalCPU"))
+tex.write(DrawTex(shortname+"-Cores.png","Cores needed, including efficiency loss. Squares are measured values for 2021.  Measured values are lower due to there being no reconstruction of detector data in 2021.","Cores"))
+tex.write(DrawTex(shortname+"-Cumulative-Tape.png","Projected  tape needs, PB, all types are cumulative over tape lifetime. Open circles are based on actual data volumes in 2021.","CumulativeTape"))
+tex.write(DrawTex(shortname+"-Cumulative-Disk","Disk needs, PB.  Raw, Reco and Sim are cumulative over disk lifetime.  Test has sub-year lifetime. Closed squares are actual numbers from rucio as of 1/22/2022.  Disk use was lower than predicted by the model largely because of delays in distributing the second copy to remote sites.","CumulativeDisk"))
+tex.write("\\pagebreak")
+tex.write("\\section*{Interpretation}"+interpretation+"\\\\\n")
+tex.write("\\\\ {\\section*{Change log:}}\\\\\n")
 for c in config["Changes"]:
     tex.write("%s\\\\"%c)
     print ("%s\n"%c)
@@ -702,49 +708,8 @@ tex.write("\end{document}")
 tex.close()
 o.close()
 
-texname = configfile.replace("json","tex")
+
+
 cmd='pdflatex %s'%texname
-get_ipython().system('{cmd}')
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
+#get_ipython().system('{cmd}')
 

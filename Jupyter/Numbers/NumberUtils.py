@@ -37,7 +37,7 @@ def dump(det,datatype,a,Units):
 # Utility function: DrawDet(Value,Years,Data,Types,Units,detcolors,detlines)
 
 # for detector values
-def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines,points=None):
+def DrawDet(Name,Value,Years,Data,Types,Units,detcolors,detlines,points=None):
     
     maxyears = Years[-1]
 
@@ -59,7 +59,7 @@ def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines,points=None):
     ax.set_xlabel("Year")
     ax.set_ylabel(Value + ", " + Units[Value])
     plt.grid()
-    plt.savefig(Value.replace(" ","-")+".png",transparent=True)
+    plt.savefig(Name+"-"+Value.replace(" ","-")+".png",transparent=True)
     #plt.savefig(Value+"_w.jpg",transparent=False)
    
     plt.show()
@@ -69,7 +69,7 @@ def DrawDet(Value,Years,Data,Types,Units,detcolors,detlines,points=None):
 
 # draw by data type (transpose of the detectors)
 
-def DrawType(Value,Years,Data,Types,Units,typecolors,typelines,points=None,contributions=None):
+def DrawType(Name,Value,Years,Data,Types,Units,typecolors,typelines,points=None,contributions=None):
     fig=plt.figure()
     ax = fig.add_axes([0.2,0.2,0.7,0.7])
     maxyears = Years[-1]
@@ -81,24 +81,24 @@ def DrawType(Value,Years,Data,Types,Units,typecolors,typelines,points=None,contr
     if points != None:
         for y in points:
             for t in points[y]:
-                ax.plot(y,points[y][t],color=typecolors[t],marker="o",label="model "+t,markerfacecolor='none')
+                ax.plot(y,points[y][t],color=typecolors[t],marker="o",label="actual "+t,markerfacecolor='none')
     
     if contributions != None:
         for y in contributions:
             for t in contributions[y]:
-                ax.plot(y+.2,contributions[y][t],color=typecolors[t],marker="s",label="actual  "+t)
+                ax.plot(y,contributions[y][t],color=typecolors[t],marker="s",label="actual  "+t)
     ax.legend(frameon=False)
     ax.set_xlabel("Year")
     ax.set_ylabel(Value + ", " + Units[Value])
     ax.set_title(Value)
     plt.grid()
-    plt.savefig(Value.replace(" ","-")+".png",transparent=True)
+    plt.savefig(Name + "-"+Value.replace(" ","-")+".png",transparent=True)
     #plt.savefig(Value+"_w.jpg",transparent=False)
     
     plt.show()
 
 def DrawTex(figure,caption,label):
-    s = "\\begin{figure}\n\\centering"
+    s = "\\begin{figure}[h]\n\\centering"
     s += "\\includegraphics[height=0.4\\textwidth]{%s}"%figure
     s += "\\label{%s}\n"%label
     s += "\\caption{%s}\n"%caption
