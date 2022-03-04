@@ -11,10 +11,10 @@ DUNE computing is dependent on a number of services that are not operated by DUN
 Some of these are provided by the host lab, others are provided by the various remote sites where
 computing is done, and still others are operated by commercial companies and hosted in the cloud.
 
-% trj: added SharePoint -- March 2
+% trj: added SharePoint -- March 2, 2022
 %ST complete rewrite based on %trj comments, split up into sections, added a lot more services.
 \section{Host Lab Provided Services}
-DUNE relies on the host lab \duneword{fnal} to provide a wide variety of services.  These include web, database, computing, and storage services.  The networking services are described in \ref{ch:netw}.  We summarize the other services briefly.
+DUNE relies on the host lab \dword{fnal} to provide a wide variety of services.  These include web, database, computing, and storage services.  The networking services are described in \ref{ch:netw}.  We summarize the other services briefly.
 
 \subsection{Web Services}
 The conference scheduling service (currently Indico), Sharepoint, the DUNE Document Database, and the DUNE Wiki, as well as the main dunescience.org web page, are all hosted at Fermilab.  There are also authentication and authorization facilities such as VOMS.  Fermilab manages the business relationship with CILogon.org to provide X.509 certificates and WLCG JWT tokens for batch authentication as well.  Fermilab provides an electronic logbook service.  It also hosts the web sites for a number of monitoring services. 
@@ -24,11 +24,13 @@ Fermilab maintains the Collaboration Database which tracks the membership of the
 database which tracks compute permissions for DUNE collaborators.  It hosts the underlying databases for the data management
 services Rucio and MetaCat, as well as the legacy SAM workflow management. It also hosts, or will host, the various conditions databases and beam conditions databases which are part of the DUNE Database activity.
 
+% trj: added sentences about Redmine March 4, 2022
+
 \subsection{Compute Services}
 Fermilab provides the Jobsub service for batch job submission, the POMS workflow service to submit campaigns, and the GlideinWMS
 and HEPCloud services to access remote sites including high performance computing and commercial clouds. It provides system administration and hardware maintenance of the various interactive and batch clusters (FermiGrid).  It also provides
-continuous integration facilities (Jenkins), build service machines.  There are code distribution services, namely CVMFS and its associated Rapid Code Distribution Facility for user code.  Also the Open Science Data Federation (until recently known as 
-Stashcache) for streaming of large auxiliary data files. 
+continuous integration facilities (Jenkins), and build service machines.  Fermilab hosts a code repository system called Redmine which provides support for git, svn and cvs repositories, as well as wikis and issue tracking.  It mainly is used for legacy software and documentation for DUNE software efforts, as many have migrated to GitHub.  Fermilab provides instances of code distribution services, namely CVMFS and its associated Rapid Code Distribution Facility for user code.  Streaming of large auxiliary data files is accomplished using the Open Science Data Federation (until recently known as 
+Stashcache), which also uses the CVMFS user interface. 
 The recently-established containerized Elastic Analysis Facility at Fermilab is available to DUNE.  The host lab also maintains
 the monitoring and log retrieval services for the batch and storage systems, collectively known as FIFEMON.  The host lab is assisting DUNE and other experiments to transition to the Spack code packaging system.  Significant effort is also provided on managing the LArSoft project.
 

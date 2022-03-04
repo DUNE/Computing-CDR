@@ -23,7 +23,7 @@
 % "2" will show chapter/section/subsection
 % "3" will additionally include subsubsection
 % note, this also governs the depth of the PDF "Index"
-\setcounter{tocdepth}{2} 
+\setcounter{tocdepth}{3} 
 % set depth to which numbering is applied.  
 % "3" will number chapter/section/subsection/subsubsection
 % "4" will additionally number subsubsubsection 

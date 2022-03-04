@@ -35,9 +35,10 @@
 % Workflow Examples (Wrkflw)
 
 
-\chapter{Introduction \hideme{Schellman/Muether/Junk/Pennacchio needs numbers and figures update - SN added 2/19} }
+\chapter{Introduction \hideme{Schellman/Muether/Junk/Pennacchio - SN added 2/19} }
 \label{ch:intro}
 
+\hideme{HMS 3/3 changed the supernova to 140+180 -> 320}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\section{xyz}
 %\label{sec:intro:xyz}  %% fix label according to section
@@ -50,15 +51,16 @@
 %st changed "on" to "in" and delete second "on"
 %st fixed awkward last sentence of paragraph (split infinitive and misplaced comma)
 \section{Mission Statement}
-This document describes Software and Computing for the \dword{dune} experiment. Our emphasis in this document is the development of the computing infrastructure needed to acquire, catalog, reconstruct, simulate and analyze the data from the \dword{dune} experiment and its prototypes. In this effort, we concentrate on developing the tools and systems that facilitate the development and deployment of advanced algorithms rather than the details of the algorithms themselves. Rather than prescribing particular algorithms, our goal is to provide resources that are flexible and accessible enough to support creative software solutions as \dword{hep} computing evolves
-and provide computing that achieves the physics goals of the \dword{dune} experiment. %Kirby 
+\fixme{(anne) This isn't really a 'mission statement' - I'd skip this section header and just leave the pgraph}
+This document describes Software and Computing for the \dword{dune} experiment, in particular, the conceptual design of the offline computing needed to accomplish its physics goals. Our emphasis in this document is the development of the computing infrastructure needed to acquire, catalog, reconstruct, simulate and analyze the data from the \dword{dune} experiment and its prototypes. In this effort, we concentrate on developing the tools and systems that facilitate the development and deployment of advanced algorithms rather than the details of the algorithms themselves. Rather than prescribing particular algorithms, our goal is to provide resources that are flexible and accessible enough to support creative software solutions as \dword{hep} computing evolves
+and provide computing that achieves the physics goals of the \dword{dune} experiment. %Kirby  
 
 \section{Introduction \hideme{Schellman - draft based on CHEP paper}}\label{sec:intro-introduction}
 
 %Anne The \dword{dune}  will begin running in the late 2020's. The goals of the experiment include 1) studying neutrino oscillations using a beam of neutrinos from Fermilab in Illinois to the the \dword{surf} in Lead, South Dakota, 2) studying  astrophysical neutrino sources and rare processes and 3) understanding  the physics of neutrino interactions in matter.
 % from Anne: this is more standard:
 The international \dword{dune} experiment, hosted by the U.S. Department of Energy's \dword{fnal}{},  will begin running in the late 2020's. It will consist of a \dword{fd} located about \SI{1.5}{km} underground at the \dword{surf} in South Dakota, USA, \SI{1300}{\km} from \dword{fnal}{}, and a \dword{nd} located on site at \dword{fnal} in Illinois. The \dword{dune} detectors will be exposed to the world's most intense neutrino beam originating at \dword{fnal}{}. A high-precision near detector, \SI{574}{m} from the neutrino source on the \dword{fnal} site, will be used to characterize the intensity and energy spectrum of this wide-band beam. The overriding physics goals of the \dword{dune} experiment are the search for leptonic \dword{cp} violation, the search for nucleon decay as a signature of a Grand Unified Theory underlying the Standard Model, and the observation of  \dwords{snb} from supernovae.
-This document is intended to describe the conceptual design of the offline computing needed to accomplish these physics goals. %Kirby
+%anne moved above -- This document is intended to describe the conceptual design of the offline computing needed to accomplish these physics goals. %Kirby
 
 \todo{How do I do this?}
  % I will concentrate on the neutrino oscillation and supernova capabilities of the experiment and the ways that they drive computing. 
@@ -298,10 +300,10 @@ The \dword{spvd}  prototype components have undergone testing starting in 2021 w
 
 
 
-\subsection{Conclusions from prototype tests \hideme{Schellman draft}}
+\subsection{Conclusions from Prototype Tests \hideme{Schellman draft}}
 
 \dword{protodune} %anne prototype 
-runs are ongoing and will continue through beam tests in 2022-23 at \dword{cern}.  Data cataloguing, movement and storage techniques were tested before the start of the \dword{pdhd} and \dword{pdvd}  runs and were able to handle the full rate of the experiments.   Reconstruction algorithms were also in place on time and %anne were able to 
+runs are ongoing and will continue through beam tests in 2022-23 at \dword{cern}.  Data cataloging, movement and storage techniques were tested before the start of the \dword{pdhd} and \dword{pdvd}  runs and were able to handle the full rate of the experiments.   Reconstruction algorithms were also in place on time and %anne were able to 
 produced early results that led to increased understanding of the detector and improved calibrations for a second iteration.  These tests also identified some deficiencies in our infrastructure, including incomplete schemes for the transmission of configuration and conditions information between hardware operations and  offline computing.  The test beam runs have been extremely valuable in allowing us to determine which variables are important to transmit and in designing improved systems for gathering and storing that information. 
 
 An additional beam run of  \dword{pdsp} is planned for 2022-23, with a cosmic test of the \dword{spvd} design to follow in 2023-24, allowing further development and testing of our computing infrastructure before the full detector comes online in the late 2020s. 
@@ -309,7 +311,9 @@ An additional beam run of  \dword{pdsp} is planned for 2022-23, with a cosmic te
 %\section{ProtoDUNE Simulation} % anne discussion 
 %\hideme{Yang-needed}
 
-\section{On to Full DUNE \hideme{Schellma-draft}}\label{sec:intro-fd}
+\section{Far Detector %On to Full DUNE 
+\hideme{Schellma-draft}}
+\label{sec:intro-fd}
 
 The full DUNE \dword{fd} will begin with one \dword{sphd} module to be installed %anne at Homestake 
 starting in the middle of  this decade.  A second \dword{spvd} module will be installed and commissioned in parallel.  High-intensity neutrino and antineutrino beams should arrive after a year or so of commissioning of the detector and \dword{lbnf} beamline.  The first %anne \dword{hd} 
@@ -323,7 +327,7 @@ the values for the \dword{sphd} or \dword{spvd}.
 
 %st fix the misprinted sim.. but is of order and sim redundant?
 
-The detector should be sensitive to neutrino interactions and radioactive decays above an energy threshold of order \sim 5\,MeV.  Unambiguous triggering may require a somewhat higher threshold  to avoid false triggers due to $^{39}$Ar decays,  but beam interactions in the 500-10,000\,MeV range should have almost perfect detection efficiency. Sophisticated triggering algorithms should also allow standalone detection of astrophysical sources, including higher-energy solar neutrinos and \dword{snb} candidates. 
+The detector should be sensitive to neutrino interactions and radioactive decays above an energy threshold of order $\sim 5$\,MeV.  Unambiguous triggering may require a somewhat higher threshold  to avoid false triggers due to $^{39}$Ar decays,  but beam interactions in the 500-10,000\,MeV range should have almost perfect detection efficiency. Sophisticated triggering algorithms should also allow standalone detection of astrophysical sources, including higher-energy solar neutrinos and \dword{snb} candidates. 
 
 The data rates will be dominated by 4,500 cosmic rays expected per module/day.  These events are vital for monitoring and aligning the detector. %anne aligning? ST yes we measure to be sure that the APA are in line
 The next most significant source of events will be calibration campaigns with radioactive and neutron sources and lasers.  In all cases, the goal is to gather data from the full volume of the detector with as fine a granularity as possible. 
@@ -383,13 +387,13 @@ The \dword{tpc} and \dword{pd} detectors produce several signals of increasing p
 
 In reference \cite{DUNE:2020zfm} the performance and efficiency of fast triggering on scintillation light and \dword{tpc} hits are investigated.  Radiological and noise backgrounds are required to produce less than 1 false trigger/month. Both \dword{pd} and \dword{tpc} based triggers are sensitive relatively low numbers of interactions ($\sim10-25$) at acceptable background rates, yielding expected sensitivities out to the Large Magellanic cloud.
 
-Once the trigger system has identified a potential \dword{snb} signal  the \dword{daq} then records information for 100 s, yielding 130 TB of uncompressed information for a \dword{hd} module and 170 TB for a \dword{vd} module.  These data must then be transferred offsite for processing with the full algorithms. 
+Once the trigger system has identified a potential \dword{snb} signal  the \dword{daq} then records information for 100 s, yielding 140 TB of uncompressed information for a \dword{hd} module and 180 TB for a \dword{vd} module.  These data must then be transferred offsite for processing with the full algorithms. 
 
 %Information from \dword{dune} comes at three levels.  First,  fast identification of a supernova candidate, based on raw \dwprd{toc} and \dword{pd}  information, second, first-pass pattern recognition on a subset of the data which could provide pointing information on a time scale of seconds to hours and finally, full reconstruction of all information available down to the detector threshold in the few MeV range to exact maximal physics information from these extremely rare events. %Optimal use of this information requires 
 
 
 
-Moving  300 TB (assuming the first 2 modules) of uncompressed data   from \dword{surf} to processing centers will require, at minimum, 6-7 hours with the planned 100Gbs network link.  This can be accelerated by implementing onboard data compression and may require upgrades to the network when the projected third and fourth modules come online.  The need to store up to 300 TB of data from a supernova candidate while also continuing normal data taking drives the size of local disk buffers at \dword{surf} and presumably required similar reserved or rapidly-preemptable space at the centers where the data would be processed. Our \dword{protodune} experience indicates that reconstruction of \dword{lartpc} data takes between 1 and 3 sec/MB of raw data on present day computing resources.  It will thus take of order 12,000-40,000 cores to perform a preliminary reconstruction the data as fast as it comes in. In principle, a significant fraction of the neutrino data could be processed  in the 2-4 hours before a supernova becomes visible at optical frequencies.
+Moving  320 TB (assuming the first 2 modules) of uncompressed data   from \dword{surf} to processing centers will require, at minimum, 6-7 hours with the planned 100Gbs network link.  This can be accelerated by implementing onboard data compression and may require upgrades to the network when the projected third and fourth modules come online.  The need to store up to 320 TB of data from a supernova candidate while also continuing normal data taking drives the size of local disk buffers at \dword{surf} and presumably required similar reserved or rapidly-preemptable space at the centers where the data would be processed. Our \dword{protodune} experience indicates that reconstruction of \dword{lartpc} data takes between 1 and 3 sec/MB of raw data on present day computing resources.  It will thus take of order 12,000-40,000 cores to perform a preliminary reconstruction the data as fast as it comes in. In principle, a significant fraction of the neutrino data could be processed  in the 2-4 hours before a supernova becomes visible at optical frequencies.
 
 Other neutrino detectors worldwide will also be able to provide fast information but the \dword{dune} information will be unique in its sensitivity to electron neutrinos. 
 
@@ -402,16 +406,16 @@ Other neutrino detectors worldwide will also be able to provide fast information
 
 \section{Near Detector \hideme{Junk/Muether - needs update}}
 
-High-precision oscillation physics requires a \dword{nd} system to allow measurement of the original neutrino flux and %anne improved understanding of neutrino interaction physics. 
+High-precision oscillation physics requires a \dword{nd} system to allow measurement of the unoscillated neutrino flux and %anne improved understanding of neutrino interaction physics. 
 to provide improved understanding of neutrino interaction physics. 
 The DUNE  collaboration is proposing a suite of near detectors optimized for these two goals. 
  
  The \dword{nd}  will be located in an enclosure on the \dword{fnal} site 574\,meters from the target %anne and will be exposed to the DUNE 
  in the path of the neutrino beam.    Interaction rates per spill (at 0.83\,Hz) are expected to be very large, with 40-60 interactions per spill, including muons originating from interactions in material upstream of the fiducial volumes. Figure~\ref{beamline} shows the beamline and location of the \dword{nd} on the \dword{fnal} site. There are three major subdetectors:
  A pixel readout %anne liquid argon detector
- \dword{lartpc}, \dword{ndlar}, is  the most upstream of the three subdetectors shown in Figure~\ref{nd}, where the beam propagates  from right to left. Immediately downstream of \dword{ndlar} is the gaseous liquid argon detector, \dword{ndgar}, which serves %anne \dword{ndlar} 
- as  a muon spectrometer and allows more detailed study of neutrino interactions. %anne that occur within its gas volume. 
- Beyond \dword{ndgar}, is the \dword{sand} component of the \dword{nd} that acts as a beam monitor. %Figure \ref{nd} shows the three \dword{nd} subdetectors in the near enclosure. 
+ \dword{lartpc}, \dword{ndlar}, is  the most upstream of the three subdetectors shown in Figure~\ref{nd}, where the beam propagates  from right to left. Immediately downstream of \dword{ndlar} is a detector for characterizing muons exiting the \dword{ndlar}. This will initially be a magnetized steel range stack detector (TMS). A gaseous liquid argon detector, \dword{ndgar}, which serves %anne \dword{ndlar} 
+ as  a muon spectrometer and allows more detailed study of neutrino interactions is planned for future operation when better control of neutrino interaction uncertainties is required. %anne that occur within its gas volume. 
+ Beyond TMS/\dword{ndgar}, is the \dword{sand} component of the \dword{nd} that acts as a beam monitor. %Figure \ref{nd} shows the three \dword{nd} subdetectors in the near enclosure. 
 Note that while the \dword{nd} will have the same DAQ timing window flexibility as the \dword{fd}, it is not foreseen that \dword{nd} physics goals will required the utilization of varied time windows for trigger records as compared with the \dword{fd}. %Kirby
 
 
@@ -446,15 +450,6 @@ Note that while the \dword{nd} will have the same DAQ timing window flexibility 
 
 % The TPC-only out-of-spill and calibration numbers have been scaled by 8/3 to account for photon detector data, assuming full waveform readout in these samples, yielding the same ratio as in-spill data and the same compression. 
 
-\subsection{Near Detector \dshort{gartpc} \hideme{Muether - draft}}
-\label{sec:comp-dataestimates-mpd}
-
-The \dword{ndgar} is a magnetized detector system consisting of a high-pressure \dword{gartpc} surrounded by an \dword{ecal} and a muon system. The \dword{ndgar} measures the momentum and sign of charged particles exiting the \dword{ndlar}. In addition, for neutrino interactions occurring in the \dword{ndgar} itself, higher resolution and lower momentum thresholds can be achieved for charged particle tracks, leading to improved neutrino interaction models. This capability enables further constraints of systematic uncertainties for long-baseline neutrino  oscillation analyses.
-
-The \dword{ndgar} is composed of 678,136 readout pads in the \dword{tpc}, and approximately 3~million channels in the \dword{ecal}.  Approximately one in five spills will generate an interaction in the \dword{gartpc}, but particles entering the gas from interactions in the \dword{ecal} will provide the bulk of the data volume.  The readout strategy will be similar to the \dword{lartpc}, with only time and integral recorded. A  data volume of 2\,MB of uncompressed data per spill is expected from the \dword{tpc}.  The calorimeter is expected to contribute approximately 1\,MB per spill of uncompressed data.
-
-% For calibrations, 300 runs per year generating 10~GB of data per run are assumed for the TPC, and a similarly-sized set of calibration runs are assumed for the \dword{ecal}.  Cosmic rays are expected to be collected between spills and when the beam is off.
-
 \subsection{Near Detector Day One Muon Spectrometer (TMS) \hideme{Muether - draft}}
 \label{sec:comp-dataestimates-mpd}
 
@@ -464,6 +459,14 @@ The TMS consist of 200 total layers of alternating steel and scintillator. The f
 
 The TMS is placed 8.2 m downstream from the ND-LAr (center to center) and centered 2.51 m below the origin in $y$. 
 
+\subsection{Near Detector \dshort{gartpc} \hideme{Muether - draft}}
+\label{sec:comp-dataestimates-mpd}
+
+The \dword{ndgar} is a magnetized detector system consisting of a high-pressure \dword{gartpc} surrounded by an \dword{ecal} and a muon system. The \dword{ndgar} measures the momentum and sign of charged particles exiting the \dword{ndlar}. In addition, for neutrino interactions occurring in the \dword{ndgar} itself, higher resolution and lower momentum thresholds can be achieved for charged particle tracks, leading to improved neutrino interaction models. This capability enables further constraints of systematic uncertainties for long-baseline neutrino  oscillation analyses.
+
+The \dword{ndgar} is composed of 678,136 readout pads in the \dword{tpc}, and approximately 3~million channels in the \dword{ecal}.  Approximately one in five spills will generate an interaction in the \dword{gartpc}, but particles entering the gas from interactions in the \dword{ecal} will provide the bulk of the data volume.  The readout strategy will be similar to the \dword{lartpc}, with only time and integral recorded. A  data volume of 2\,MB of uncompressed data per spill is expected from the \dword{tpc}.  The calorimeter is expected to contribute approximately 1\,MB per spill of uncompressed data.
+
+% For calibrations, 300 runs per year generating 10~GB of data per run are assumed for the TPC, and a similarly-sized set of calibration runs are assumed for the \dword{ecal}.  Cosmic rays are expected to be collected between spills and when the beam is off.
 
 \subsection{SAND \hideme{Muether - draft}}
 \label{sec:comp-dataestimates-sand}
@@ -498,7 +501,7 @@ An additional challenge in oscillation physics is the need for accurate energy c
 exploit the energy spectrum of the reconstructed neutrinos to further constrain oscillation parameters. While \dword{lar} detectors have a reputation for stability, the large volumes, complex \efield configurations, liquid motion, and potential variations in electron lifetime and drift velocity make it necessary to have large calibration data samples that span the full \dword{fd} detector volume.  Large cosmic ray and artificial calibration samples will dominate the total data volumes from the \dword{fd}. 
 
 \item{\bf Supernovae:\\}A %anne supernova 
-\dfirst{snb} candidate will generate 300\,TB of (uncompressed) data across the first two modules. This means tens of thousands of data files produced over a 100\,s period. These data must be recorded at low energy threshold due to the expected interaction energy range, but must also be analyzed quickly and coherently in order to measure the time evolution of neutrino emissions, which carries invaluable information about the supernova process itself. In addition, if \dword{dune} can quickly analyze \dword{cc} interactions, we can provide pointing information to telescopes for optical followup.  %anne Supernova 
+\dfirst{snb} candidate will generate 320\,TB of (uncompressed) data across the first two modules. This means tens of thousands of data files produced over a 100\,s period. These data must be recorded at low energy threshold due to the expected interaction energy range, but must also be analyzed quickly and coherently in order to measure the time evolution of neutrino emissions, which carries invaluable information about the supernova process itself. In addition, if \dword{dune} can quickly analyze \dword{cc} interactions, we can provide pointing information to telescopes for optical followup.  %anne Supernova 
 \dword{snb} physics drives the need for fast data transmission from the \dword{fd} to computing facilities and for robust tracking of data movement so that a full picture of the supernova interaction can be reassembled after signal processing.
 As well, the drastically different time scale of \dword{snb} physics places requirements on the software framework. %Kirby
 
