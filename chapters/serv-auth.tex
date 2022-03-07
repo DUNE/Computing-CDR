@@ -11,61 +11,87 @@
 \label{sec:auth:access}
 %ST reworked this whole paragraph
 Collaborators on DUNE must first be added to the DUNE Collaboration Database by the procedures of joining the collaboration.
-Once this is done, they may apply for access to computing at Fermilab, and the DUNE secretariat verifies that they
-are members of DUNE.  There is a central repository called FERRY which is used to populate the user list of
-Fermilab interactive login machines and who can obtain Grid X.509 credentials.
- When the Fermilab ID of the collaborator is expired, or the person leaves the DUNE collaboration, the access to computing is automatically removed.
+Once this is done, they may apply for access to computing at \dword{fnal}, and the DUNE secretariat verifies that they
+are members of DUNE.  There is a central repository called FERRY that is used to populate the user list of
+\dword{fnal} interactive login machines and \fixme{to determine?} who can obtain Grid X.509 credentials.
+ When a collaborator's \dword{fnal} ID expires, or they leave the DUNE collaboration, their access to computing is automatically removed.
  
- During the time when the ProtoDUNE experiments NP02 and NP04 are running at the CERN Neutrino Platform, DUNE collaborators who are members of those activities may also apply to CERN for interactive computer access at CERN.
+ During the time when the \dword{protodune} experiments NP02 and NP04 are running at the \dword{cern} %CERN Neutrino Platform, DUNE 
+ collaborators %who are members of 
+ working on those activities may also apply %to CERN 
+ for interactive computer access at \dword{cern}.
 
 \section{Current State of Authentication and Authorization}
 %ST
-Interactive login to Fermilab is strongly authenticated via Kerberos 5 credentials.  Only currently registered DUNE
-users have accounts at Fermilab.
+Interactive login to \dword{fnal} is strongly authenticated via Kerberos 5 credentials.  %Only currently registered DUNE users 
+DUNE collaborators must be currently registered to have accounts at \dword{fnal}.
 
 Authentication for batch submission and access to storage is currenlty done via X.509 certificates and proxies
-on the grids of which we are members, namely the Open Science Grid (OSG) in the USA and the Worldwide LHC 
-Computing Grid (WLCG) elsewhere in the world.  There are automated means at Fermilab which dynamically generate 
+on the %grids of which we are members, namely the Open Science Grid (OSG) 
+\dword{osg} in the US and \dword{wlhc} % the Worldwide LHC 
+Computing Grid (\dword{wlcg}) elsewhere in the world.  %There are a
+Automated processes %means 
+at \dword{fnal} %which 
+dynamically generate 
 X.509 certificates on behalf of the user at the time of batch submission, from the CILogon-Silver 
-certificate authority. This authentication is used to submit batch jobs both to the local
-Fermilab clusters known as FermiGrid and to the rest of the distributed computing sites.  The proxies are
-also used to access files on storage on the global storage elements around the world.  
+certificate authority\footnote{\url{https://www.cilogon.org/news/cilogonsilverenablesfederatedaccesstoopensciencegrid}}. This authentication is used to submit batch jobs both to the local
+\dword{fnal} clusters known as FermiGrid and to the rest of the distributed computing sites.  The proxies are
+also used to access files %on storage 
+stored on the global storage elements around the world.  
 X.509 certificates are issued by members of the International Global Trust Federation (IGTF).  They are then verified 
-by the DUNE VOMS server.  Certificates issued by other IGTF authorities can be associated with a user by request.
+by the DUNE \dword{voms} server.  Certificates issued by other IGTF authorities can be associated with a user by request.
 
-Access to DUNE web sites hosted at Fermilab is controlled by the Fermilab Single Sign-on facility.  Some sites (https://wiki.dunescience.org) require a Fermilab "Services" credential. Some sites including the DUNE DocDB (https://docs.dunescience.org) will allow the user to present a CERN credential  or an X.509 certificate in addition to the Fermilab "Services" login.
+Access to DUNE web sites hosted at \dword{fnal} is controlled by the \dword{fnal} Single Sign-on (SSO) facility.  Some sites (e.g., the DUNE wiki) %https://wiki.dunescience.org) 
+require a \dword{fnal} SSO.
+%a Fermilab "Services" credential
+. Some sites, e.g., % including the DUNE DocDB 
+document database (DocDB), require either a \dword{fnal} or \dword{cern} SSO or  %(https://docs.dunescience.org) will allow the user to present a CERN credential  or 
+an X.509 certificate. % in addition to the Fermilab "Services" login.
+Both of these applications also currently allow access via a group username and password.
 
 
 \section{Planned Changes to Authentication Currently Under Way}
 
-The OSG and WLCG are both in the process of changing over to JSON Web Tokens for authentication of
-batch jobs and storage. This is an authentication protocol which has significant adoption in industry. A common schema has been agreed on between the various organizations that will be issuing these tokens.  T
-Fermilab has set up a token-issuing service to issue these tokens on behalf of DUNE and early tests have been 
-done to successfully access storage elements with these tokens. There have also been successful tests of batch job submission. The token issuer is populated with information 
-from the FERRY server mentioned above. The tokens include a unique identifier to 
-know which user is doing it, and a list of capabilities that the user is allowed to have, including which 
-areas in the storage element the user is allowed to write.  The basic token infrastructure is available now but we expect a phased transition beginning in 2022, in parallel with the X.509 
-based authentication infrastructure for some number of years.
+The \dword{osg} and \dword{wlcg} are both in the process of changing over to \dwords{jwt} %JSON Web Tokens 
+for authentication of batch jobs and storage. This %is an 
+authentication protocol %which 
+has significant adoption in industry. A common schema has been agreed on between the various issuing organizations. % that will be issuing these tokens.  
+\dword{fnal} has set up a %token-issuing 
+service to issue these tokens on behalf of DUNE and early tests have %been done to 
+successfully demonstrated access to storage elements and batch job submission with these tokens. %There have also been successful tests of batch job submission. 
+The token issuer is populated with information from the FERRY server. % mentioned above. 
+The tokens include a unique user identifier %to know which user is doing it, 
+and a list of capabilities that the user is allowed to have, including which 
+areas in the storage element the user is allowed to write.  The basic token infrastructure is available now but we expect a phased transition beginning in 2022, during which %in parallel with 
+the X.509 
+based authentication infrastructure will continue to be available for some number of years.
 
-Interactively-based web sites will continue to use Fermilab Single Sign-on (but allowing more Identity Providers)
-for the foreseeable future.  It is likely that JWT tokens will be used to access various non-interactive web
+%Interactively-based 
+Interactive web sites will continue to use %Fermilab Single Sign-on 
+\dword{fnal} SSO (but allowing more Identity Providers)
+for the foreseeable future.  It is likely that \dword{jwt} tokens will be used to access various non-interactive web
 services besides the compute and storage. 
  
 
-\section{Requirements for Authentication/Authorization Going Forward}
+\section{Requirements for Authentication and Authorization Going Forward}
 
-DUNE Computing Management has expressed to Fermilab the following requirements:
-We need a way for DUNE collaborators who may not yet have Fermilab credentials to see and edit internal DUNE 
-web pages.  We also need a way for computing staff who work at institutions where we have access to the 
-which are not themselves DUNE collaborators to have access to the computing documentation if needed.
-There are a number of technical solutions for federated web identity including the Edugain federation
-of identity providers.  
+DUNE supports the statement of computing and data access voted by the International Union of Pure and Applied Physics:
 
-This request has begun to be implemented, with the allowed access of CERN credentials to DocDB being the first instance.
+\textit{Physics increasingly involves international collaborations that share in the planning, construction and operation of common apparatus and in the analysis of the resulting data. Such collaboration is most successful when all collaborating scientists have unimpeded access to both physical facilities and to the data that results from their common efforts.  We observe a disturbing international trend of restriction of access to facilities,  shared data and methods of communication.  While nations have legitimate needs to protect their critical facilities  and computing systems, they also have a responsibility to find ways to maintain and facilitate access for all international scientific collaborators.}
 
-DUNE also supports the statement of computing and data access voted by the International Union of Pure and Applied Physics
+To this end DUNE Computing Management has expressed to \dword{fnal} the following requirements:
+%We need a way for DUNE collaborators who may not yet have Fermilab credentials to see and edit internal DUNE web pages.  We also need a way for computing staff who work at institutions where we have access to the which are not themselves DUNE collaborators to have access to the computing documentation if needed.There are a number of technical solutions for federated web identity including the Edugain federationof identity providers.  
 
-Physics increasingly involves international collaborations that share in the planning, construction and operation of common apparatus and in the analysis of the resulting data. Such collaboration is most successful when all collaborating scientists have unimpeded access to both physical facilities and to the data that results from their common efforts.  We observe a disturbing international trend of restriction of access to facilities,  shared data and methods of communication.  While nations have legitimate needs to protect their critical facilities  and computing systems, they also have a responsibility to find ways to maintain and facilitate access for all international scientific collaborators.
+\begin{itemize}
+    \item DUNE collaborators without a \dword{fnal} SSO must be able to see and edit internal DUNE web pages.  
+\item Computing staff who work at collaborating institutions but who are not themselves DUNE collaborators must be allowed access to the computing documentation.
+ 
+\end{itemize}
+There are a number of technical solutions for federated web identity, including the Edugain federation of identity providers. 
+
+%This request has begun to be implemented, with the allowed access of CERN credentials to DocDB being the first instance.
+\dword{fnal} is responding, and as of this writing, users with \dword{cern} credentials can now use them to access the DUNE DocDB. \dword{fnal} is in the process of federating its SharePoint instances with \dword{cern}, and the DUNE wiki and Indico sites are next in line.
+
 
 \end{document}
 

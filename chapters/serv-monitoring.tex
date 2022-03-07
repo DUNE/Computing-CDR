@@ -10,9 +10,13 @@
 \FPset{MonEtfDevPeople}{1.0} % FTE
 \FPadd\MonEtfTotalPeople\MonEtfOpsPeople\MonEtfDevPeople %FTE
 
-This section concerns the monitoring of services and resources on the grid. The actual monitoring of the jobs that are submitted by DUNE (WMS monitoring) is covered elsewhere. As the workflows are broadly similar to current LHC experiment workflows, DUNE plans to reuse the relevant monitoring tools (ETF, perfSonar) developed for this by WLCG which we cover in this section.
+This section %anne concerns 
+describes the monitoring of services and resources on the grid. % anne The actual monitoring of the jobs that are submitted by DUNE 
+Monitoring of DUNE jobs (WMS monitoring) is covered elsewhere. \fixme{(anne) find and reference} As the workflows are broadly similar to current \dword{lhc} experiment workflows, DUNE plans to reuse the relevant monitoring tools (\dword{etf}, \dword{perfsonar}) developed for this purpose by the \dword{wlcg}. %anne, which we cover in this section.
+These tools are described here. 
 
-Going forward, DUNE plans to be agile and keep up with upcoming developments in this field. If there is a paradigm change in the resources made available, there may be a need to develop new tools to keep on top of the available resources and display them in a transparent manner. An example can be the widespread deployment of ipv6\cite{bib:ipv6TaskForce} networking requiring possible re-evaluation of various tools for computing. The ETF and perfSonar tools are already ipv6 compatible and can be deployed to test resources offering ipv6 connectivity in either pure or dual-stack mode.
+%Going forward, DUNE plans to be agile and keep up with upcoming developments in this field. If there is a paradigm change in the resources made available, there may be a need to develop new tools to keep on top of the available resources and display them in a transparent manner. An example can be the widespread deployment of ipv6\cite{bib:ipv6TaskForce} networking requiring possible re-evaluation of various tools for computing. The ETF and perfSonar tools are already ipv6 compatible and can be deployed to test resources offering ipv6 connectivity in either pure or dual-stack mode.
+Going forward, DUNE plans to be agile, keep up with upcoming developments in this field, and develop new tools as needed. For example, the widespread deployment of \dword{ipv6}~\cite{bib:ipv6TaskForce} networking may require re-evaluation of some of our computing tools.  The \dword{etf} and \dword{perfsonar} tools are already \dword{ipv6} compatible and can be deployed to test resources offering \dword{ipv6} connectivity in either pure or dual-stack mode.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Tools}
@@ -24,43 +28,62 @@ Going forward, DUNE plans to be agile and keep up with upcoming developments in 
 % Parameter&Value&Comment\\
 % ETF personnel&\etfPeople&no comment\\
 % \end{dunetable}
-\label{sec:mon:xyz}  %% fix label according to section
+\label{sec:mon:xyz}  %% fixhttps://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2 label according to section
 \subsection{ETF}
 
-DUNE jobs run on all sites on the grid. Checking on the status of these jobs is a one way of keeping an eye on whether a given site / resource is functioning normally. Given that any issues can and usually do have multiple sources, it is essential to have an independent resource monitoring system to keep an eye on what is happening to help catch issues quickly. The framework that is being successfully used for this already in the WLCG is the ETF system.
+DUNE jobs run on all sites on the grid. Checking the status of these jobs is one way of keeping an eye on whether a given site or resource is functioning normally. Given that issues can and usually do have multiple sources, it is essential to have an independent resource monitoring system to %anne keep an eye on what is happening to help 
+catch issues quickly. The framework that is being successfully used for this is \dword{etf}. %, is already in the \dword{wlcg}. % WLCG is the ETF system.
+\dword{etf} is the \dword{wlcg} % WLCG is the ETF system.
+ Experiments Tests Framework\cite{bib:ETFDoc},\cite{bib:ETFStatus}. It  has been known by different names, but the underlying framework remains the same. \dword{cern} plans to support this framework for as long as \dword{lhc} experiments require availability and reliability metrics from an independent source.
+ 
+\dword{etf} is a system of tools that regularly test all the available resources for different experiments (\dwords{vo}). It has been developed and run on behalf of the \dword{wlcg} %anne experiments (VOs) 
+ \dwords{vo} for well over a decade. % now. 
+% This framework supports each \dword{vo} running tests customized to the application and systems required by the VOs to enable a true picture (availability, reliability) of the resources available for the VO. The ETF tests run hourly and feed into the MONIT framework which keeps history information and the most recent test logs for enabling debugging and metric measurement.
+This framework runs tests customized to the \dword{vo}'s application and systems to provide a true picture of the  available resources and their reliability. The \dword{etf} tests run hourly and feed into the \dword{monit} \fixme{add dword def}
+framework, which keeps history information and the most recent test logs to enable debugging and metric measurement.
 
-ETF is the WLCG Experiments Tests Framework\cite{bib:ETFDoc},\cite{bib:ETFStatus}. This is a system of tools which regularly test all the available resources for different VOs. This has been developed and run on behalf of the WLCG experiments (VOs) for well over a decade now. This framework supports each VO running tests customized to the application and systems required by the VOs to enable a true picture (availability, reliability) of the resources available for the VO. The ETF tests run hourly and feed into the MONIT framework which keeps history information and the most recent test logs for enabling debugging and metric measurement.
-
-The ETF framework currently involves 
+The \dword{etf} framework currently involves 
 \begin{enumerate}
-\item High-level functional testing of about 90 hosts defined in the glide-in WMS configuraton.
+\item High-level functional testing of about 90 hosts defined in the \dword{glideinwms} configuraton.
 \item Dashboard (checkmk) to show results.
-\item Plugins conforming to Nagios standard.
+\item Plugins conforming to Nagios\footnote{Nagios\textregistered, \url{https://www.nagios.com/}} standard. 
 \end{enumerate}
 
-The framework has been named differently over the years keeping the underlying framework the same. With WLCG based at CERN as it is aimed for the LHC VOs, CERN currently plans to support this framework for as long as LHC exists as there will always be a need for availability and reliability metrics from an independent source.
+%anne moved up and edited. The framework has been named differently over the years keeping the underlying framework the same. With WLCG based at CERN as it is aimed for the LHC VOs, CERN currently plans to support this framework for as long as LHC exists as there will always be a need for availability and reliability metrics from an independent source.
 
-Some customization of the tests has been done with further changes being planned among which are :
+\begin{comment} see below (anne)
+Some customization of the tests has been done, and  further changes being planned, which are :
 \begin{enumerate}
     \item Minimal simulation to test that a simulation works on the worker nodes (Done)
     \item Checking if a given worker node has ipv6 networking (Done)
     \item Lightweight test of access to rucio servers from the worker node (ongoing)
 \end{enumerate}
+\end{comment}
 
-Beyond this, DUNE specific development will be required from time to time in keeping with updates to the framework both from the ETF / MONIT and from the DUNE software ends. Depending on the requirements we estimate  with 1 FTE staff effort will be needed.
+Customized tests are in place to verify that a minimal simulation works on the worker nodes and to check that a given worker node has \dword{ipv6} networking. A customization to perform a lightweight test of access to  \dword{rucio} servers from the worker node is in progress.
 
-It is expected X virtual machines with minimum spec Y will be required to run the service, which can be located at any site (eg CERN).
+Beyond this, DUNE-specific development will be required from time to time %in keeping 
+to synchronize with updates to the framework both from the \dword{etf} / \dword{monit} and the DUNE software ends. %Depending on the requirements we estimate  with 1 
+We estimate that this effort will require for one FTE staff. %will be needed.
 
-It is expected another 3 FTE will be required to monitor the ETF results, probably as part of more general computing shifts. This will involve looking at the test results, following failing tests and opening tickets for failing resources. Site administrators can also use ETF tests to understand the performance of their sites and it can be used (as it is for the LHC VOs) to provide a measure of site performance (availability, reliability).
+It is expected that \fixme{X} virtual machines with minimum spec \fixme{X} will be required to run the service, \fixme{to run ETF?} which can be located at any site (e.g., \dword{cern}).
 
-See table X for a summary... 
+It is expected another three FTE will be required to monitor the \dword{etf} results, probably as part of more general computing shifts. This will involve looking at the test results, following up on failing tests and opening tickets for failing resources. Site administrators can also use \dword{etf} tests to understand the performance of their sites. %anne: seems like it says the same thing -- and it can be used (as it is for the LHC VOs) to provide a measure of site performance (availability, reliability).
+
+See Table~\ref{} \fixme{X} for a summary... 
 
 \subsection{PerfSonar}
 
-The core part of DUNE (as with LHC experiments) is to distribute the data taken at the detectors to the different resource centres for analysis. This depends on high-performance networking between the sites providing storage. From experience, identifying and solving issues needs detailed debugging tools. The WLCG solution for this is to develop and deploy a pervasive network monitoring infrastructure to identify and debug issues when they occur.
+%The core part of DUNE (as with LHC experiments) is to distribute the data taken at the detectors to the different resource centers for analysis. This depends on high-performance networking between the sites providing storage. From experience, identifying and solving issues needs detailed debugging tools. The WLCG solution for this is to develop and deploy a pervasive network monitoring infrastructure to identify and debug issues when they occur.
+It is critical to distribute the detector data to the different sites for analysis and storage. This requires both high-performance networking between the sites and sophisticated debugging tools to identify and solve problems that arise. The \dword{wlcg} network monitoring and debugging infrastructure that DUNE will adopt and deploy is \dword{perfsonar}.
 
-The perfSonar toolkit is an open source toolkit which has been collaboratively developed by multiple groups in Europe and the Americas. This toolkit is installed on dedicated hardware (perfSonar boxes) at all the sites providing resources to avoid contamination of network metrics with other issues. The data from these perfSonar boxes is aggregated to see the connectivity in various (kibana, grafana, checkmk, ...) ways, enumerated below.
-
+\dword{perfsonar} is an open source toolkit collaboratively developed by %multiple 
+groups in Europe and the Americas that keeps a clean separation between network-related and other metrics. %This toolkit 
+It is installed on dedicated hardware (\dword{perfsonar} boxes) at %all the sites providing resources to avoid contamination of network metrics with other issues.
+each site that provides resources. The data from these \dword{perfsonar} boxes %is 
+can be aggregated by a variety of tools and algorithms to %see 
+visualize the connectivity in different ways, as described in the following web pages: %anne  in various (kibana, grafana, checkmk, ...) ways, enumerated below.
+\fixme{ideally we'd make these each references and cite them. (anne)}
 \begin{enumerate}
     \item \url{https://psetf.opensciencegrid.org/etf/check_mk/index.py}
     \item \url{https://toolkitinfo.opensciencegrid.org/}
@@ -70,9 +93,14 @@ The perfSonar toolkit is an open source toolkit which has been collaboratively d
     \item \url{https://sand-ci.org}
 \end{enumerate}
 
-These tools are currently well supported within WLCG with wide expertise being shared between administrators in various regular meetings and conferences. Given the expectation that networking is a core need for WLCG, it is anticipated that perfSonar as a network monitoring and debugging tool will continue to be supported into the future.
+These tools are currently well supported within \dword{wlcg} with %wide expertise being shared between administrators in various regular meetings and conferences. 
+expertise shared widely and regularly among administrators.
+Given %the expectation 
+that networking is a core need for \dword{wlcg} as it is for DUNE, it is anticipated that \dword{perfsonar} %as a network monitoring and debugging tool 
+will continue to be supported %into the future.
+as long as DUNE requires it.
 
-See table X for a summary... 
+See Table~\ref{} \fixme{X} for a summary... 
 
 % \section{Summary of Assumptions and Resources}
 % \subsection{Assumptions}
@@ -105,20 +133,20 @@ See table X for a summary...
 [Monitoring Assumptions]%{}
 {llrlll}
 {tab:mon:assumptions}
-{Assumptions for Monitoring}
+{Assumptions for monitoring}
 System&Parameter&Value&Units&Comment\\
 FD & Cosmic rate & 5000 & per day&\\
 %ETF personnel&\etfOpsPeople&no comment\\
 \end{dunetable}
-
+\fixme{(anne) keep the above table? fill it in?}
 
 
 
 \begin{dunetable}
-[Resource Requirements for Monitoring]
+[Resource requirements for monitoring]
 {llrlll}
 {mon:ops:needs}
-{Resource Requirements for Monitoring}
+{Resource requirements for monitoring}
   System & Resource & Value & Units & Timeline&  Comment\\ \toprowrule   
   ETF Operations & Personnel &\MonEtfOpsPeople  & FTE & 2027-2040&\\ %\colhline % mon-ops-ETF
  ETF Development  & Personnel &\MonEtfDevPeople  & FTE & 2021-2025& \\ %\colhline % mon-dev-ETF
@@ -128,4 +156,5 @@ FD & Cosmic rate & 5000 & per day&\\
   PerfSonar & Operations &0.1 & FTE &\\ \colhline % mon-ops-PerSonar
   Row 3 & \daqsamplerate & \\ 
 \end{dunetable}
+\fixme{fix last row of table}
 \end{document}
