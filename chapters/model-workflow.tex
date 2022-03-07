@@ -4,12 +4,18 @@
 \label{ch:wkflow}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Introduction \hideme{McNab - draft}}
+\section{Introduction}
 \label{sec:flow:intro} 
 
 The Workflow subsystem includes all aspects of orchestrating the execution of DUNE code to generate simulated data and to process real or simulated data at computing sites around the world. 
 
-To make the most efficient use of the finite computing, network and storage resources available to the experiment, the workflow system's choices are driven by the location and availability of data to be processed and its proximity to computing capacity as it becomes available to DUNE. The Workflow subsystem caches information provided by the Data Management and Information subsystems and uses it to make its decisions.
+To make the most efficient use of the finite computing, network and storage resources available to the experiment, the workflow system's choices are driven by the location and availability of data to be processed and its proximity to computing capacity as it becomes available to DUNE. 
+
+This chapter describes the existing production system which is being used to process data from protoDUNE, and then explains the requirements for the future system and the prototype which has been produced of it.
+
+% The Workflow subsystem caches information provided by the Data 
+% Management and Information subsystems and uses it to make its
+% decisions.
 
 
 \section{Existing production submission infrastructure \hideme{Herner - draft}}
@@ -62,18 +68,33 @@ will follow a similar approach, especially at places without external connectivi
 
 As well as the data management functionality of SAM described earlier, it will be necessary to provide a replacement for SAM's role in assigning work to jobs and keeping track of what work has been done. We propose to take this opportunity to extend the SAM model further, by allowing the replacement system to determine which requests for work should be processed at a particular place and time, as well as determining which file to process next.
 
-This is motivated by AN EXPLANATON ABOUT DATA LOCALITY.
+% this next paragraph should be founded on stuff in the computing
+% model chapters' description of what kinds of resources there are
+Discussions with partner projects reveal a variety of constraints imposed by the circumstances of different sites. Some sites have 
+abundant network capacity and can readily support jobs that stream input data from elsewhere. Others have relatively limited networking
+compared to the volume of computing power they make available and
+expect experiments to send jobs which will process the data they
+store on site. A third class of sites have access to metropolitan or 
+regional networks which can accommodate streaming from nearby sites
+but not from elsewhere.
 
-\section{Request lifecycle \hideme{McNab - draft}}
+This landscape has led us to look at models where jobs can be matched to sites where their input data is present, to deal with the most constrained class of sites, but which allows us to be progressively more relaxed about data access for jobs running at other sites depending on their situation and on how heavily that type of job uses input data.
+
+A further constraint is the need to evolve the large user code base and ways of working which are currently based on SAM. The existing applications assume SAM will supply the name and location of the next file to be processed when queried by jobs which are tied to a particular SAM project and its dataset. 
+
+To accommodate both sets of constraints, we have designed and prototyped a generalisation of the SAM model: generic jobs arrive at grid worker nodes and ask a central Workflow Allocator what they are to work on and which file to process within that activity. This matching is based on the physical characteristics of the worker node job slot (such as memory, processors, and lifetime) and what data is unprocessed and suitable to be accessed from that execution site. 
+
+
+\section{Request lifecycle}
 \label{sec:flow:lifecycle}
 
 The central concept of the proposed workflow system is a request, which describes how some data processing activity is to be carried out. Requests are submitted by users (which may include members of a central production team) to the Workflow Database described below. Each request can be in one of several states, which it progresses through. For example, draft > submitted > approved > running > paused > running > checking > completed > archived. Human intervention is needed for some transitions: for example, from submitted to approved. Requests also have types and priorities. For example, simulation or user analysis; high or low.
 
 As part of its definition, a request may include one or more stages which can apply a sequence of processing steps to the files the request uses or generates. Each stage specifies a bootstrap script used by generic jobs to run the relevant applications, requirements on the worker nodes eligible to run that stage (for example memory), and the maximum number of input files to be issued to a generic job executing that stage.
 
-The definition of a request will include an MQL query which can be submitted to MetaCat to generate a list of files to be processed in the first stage. This list of files is cached in the central Workflow Database, associated with the first stage of that request. All these files are set to the unallocated state. 
+The definition of a request will include an MetaCat MQL query which can be submitted to MetaCat to generate a list of files to be processed in the first stage. This list of files is cached in the central Workflow Database, associated with the first stage of that request. All these files are set to the unallocated state. 
 
-The request definition is an input to the Data Management placement agent which transfers replicas of files to suitable sites, based on the description of the request and knowledge of site features. The location of the replicas of the files is also included in the database, cached from RUCIO. 
+The request definition is an input to the Data Management placement agent which transfers replicas of files to suitable sites if necessary, based on the description of the request and knowledge of site features. The location of the replicas of the files is also included in the database, cached from RUCIO. 
 
 Once the various agents have finished building the request, it can move to the running state and the bootstrap script associated with the first stage will begin to be executed at sites to process files.
 
@@ -83,7 +104,7 @@ Once the various agents have finished building the request, it can move to the r
 {fig:workflow} 
 {Workflow and data management architecture diagram.}
 \includegraphics[height=8cm]{graphics/Workflow/wfs.png}
-\end{dunefigure}\todo{Get better figure}
+\end{dunefigure}
 
 \section{Grid workload systems}
 \label{sec:flow:grid}
@@ -92,14 +113,14 @@ The workflow system makes use of the existing global grid infrastructures to del
 
 FNAL operates a global HTCondor pool for DUNE which makes use of the existing OSG Pilot Factory service and HEPCloud to provision execution slots at sites. By using these existing systems we are able to use computing capacity presented with ARC CE or HTCondor CE grid interfaces, or on cloud and High Throughput Computing services supported by HEPCloud.
 
-\section{Generic job factory \hideme{McNab - draft}}
+\section{Generic job factory}
 \label{sec:flow:factory}
 
-The Generic Job Factory agent creates and submits HTCondor jobs which are each assigned to a single execution site. It will use a mixture of matching successes, site limits from DUNE CRIC, and prioritization of sites to determine how many generic jobs to submit and have waiting at each site. It may also use inspection of the central workflow database to estimate whether more generic jobs should be submitted for a particular site. For ordinary jobs, the job factory must be able to prioritise use of pledged academic and lab sites over commercial cloud sites and specialised sites like NERSC, which are managed by HEPCloud, to allow those services to be used for specialised workflows. Inspection of files waiting to be allocated in the database may be more appropriate for HEPCloud managed sites, so that work requiring their features may be satisfied.
+The Generic Job Factory agent creates and submits HTCondor jobs which are each assigned to a specific execution site. It will use a mixture of matching successes, site limits from DUNE CRIC, and prioritization of sites to determine how many generic jobs to submit and have waiting at each site. It may also use inspection of the central workflow database to estimate whether more generic jobs should be submitted for a particular site. For ordinary jobs, the job factory must be able to prioritise use of pledged academic and lab sites over commercial cloud sites and specialised sites like NERSC, which are managed by HEPCloud, to allow those services to be used for specialised workflows. Inspection of files waiting to be allocated in the database may be more appropriate for HEPCloud managed sites, so that work requiring their features may be satisfied.
 
 Once a generic job lands on a worker node, it contacts the Workflow Allocator described later which determines which unallocated files from one stage best match that worker node.
 
-\section{Workflow Database \hideme{McNab - draft}}
+\section{Workflow Database}
 \label{sec:flow:wfdb}
 
 The central Workflow Database stores definitions of requests and their stages, and cached information about files, replicas, sites, and storage services. Together all this information is used by queries to determine what work to carry out where. It is implemented as an SQL relational database.
@@ -107,28 +128,28 @@ The central Workflow Database stores definitions of requests and their stages, a
 \section{Information Collector}
 \label{sec:flow:collector}
 
-The Information Collector agent will run periodically to obtain a list of eligible sites and storage services from CRIC and other information sources, including any downtime notifications. 
+The Information Collector agent runs periodically to obtain a list of eligible sites and storage services from CRIC and other information sources, including any downtime notifications. This information includes a table recording whether data access from a particular site to a particular storage is classed as being at the same site, a ``nearby'' site, or is merely elsewhere on the grid but not blocked by firewalls or policies (for example at an HPC site with no off site access.) The concept of ``nearby'' is defined as being accessible with an acceptable level of inefficiency.
 
 \section{Request Builder}
 \label{sec:flow:builder}
 
-The Request Builder agent will use the input dataset definition in a request to construct a list of input files for the first stage of that request. Typically this involves making queries to MetaCat to obtain a list of files in the given dataset. This list is cached within the Workflow Database so it can be used as part of the SQL queries. As the files are identified, the location of their replicas are also obtained and cached from RUCIO. Again, this allows the proximity of replicas of unprocessed files to be used in deciding what work a job should do.
+The Request Builder agent uses the input dataset definition in a request to construct a list of input files for the first stage of that request. Typically this involves making queries to MetaCat to obtain a list of files in the given dataset. This list is cached within the Workflow Database so it can be used as part of SQL queries. As the files are identified, the location of their replicas are also obtained and cached from RUCIO. Again, this allows the proximity of replicas of unprocessed files to be used in deciding what work a job should do.
 
 \section{Archiver}
 \label{sec:flow:archiver}
 
-The Archiver agent will have responsibility for removing information about requests, stage, files, and replicas once they are no longer needed, archiving whatever is needed for future reference to long term storage. It is intended that important information about how and where files were processed will be stored in the MetaCat database by the generic jobs themselves, but some higher level information about the operation of the workflow system and the processing of requests will be saved by the Archiver.
+The Archiver agent has responsibility for removing information about requests, stage, files, and replicas once they are no longer needed, archiving whatever is needed for future reference to long term storage. It is intended that important information about how and where files were processed will be stored in the MetaCat database by the generic jobs themselves, but some higher level information about the operation of the workflow system and the processing of requests will be saved by the Archiver.
 
 \section{Workflow Allocator}
 \label{sec:flow:allocator}
 
-Once a generic job arrives at a worker node, it contacts the Workflow Allocator service which determines which unallocated file from one stage best matches that worker node. This matching includes the characteristics of the worker node job slot (memory, time limit etc), and whether the site is eligible to access a replica of that data file. Replicas are prioritised based on whether the worker node and replica are at the same site, ``nearby'', or elsewhere but still eligible. 
+Once a generic job arrives at a worker node, it contacts the Workflow Allocator service which determines which unallocated file from one stage best matches that worker node. This matching includes the characteristics of the worker node job slot (memory, time limit etc), and whether the site is eligible to access a replica of that data file. The matching takes into account that some stage definitions allow access to remote input files anywhere on the grid, and others require files to be at a ``nearby'' site. Replicas are prioritised based on whether the worker node and replica are at the same site, ``nearby'', or elsewhere but still eligible. 
 
-A list of suitable input files from the same, matching stage is returned to the generic job, along with the bootstrap script to run. Each input file successfully processed by the application is reported to the Workflow Allocator so that the input file’s status can be updated from Allocated to Processed. Unprocessed input files are returned to the unallocated state for processing in another job. 
+The bootstrap script to run and details of the request and stage are returned to the generic job. The script can use these details to request a series of files to process with the application it invokes. Each input file successfully processed by the application is reported to the Workflow Allocator so that the input file’s status can be updated from Allocated to Processed. Unprocessed input files are returned to the unallocated state for processing in another job. 
 
 If the stage is not the final stage for that request, each output data file is also inserted into the list of files associated with the next stage for that request, in the unallocated state. 
 
-\section{User commands \hideme{McNab - draft}}
+\section{User commands}
 \label{sec:flow:commands}
 
 Command line tools are provided to operators and users to allow queries of Workflow Database contents and the creation of requests. These tools are envisaged to be of most use during testing of new workflows and for short workflows during analysis. 
@@ -136,9 +157,22 @@ Command line tools are provided to operators and users to allow queries of Workf
 \section{Workflow Dashboard}
 \label{sec:flow:dashboard}
 
-The same functionality as the command line tools outlined above will be provided by a Workflow Dashboard web interface. This will allow more sophisticated searches in the Workflow Database to monitor the progress of running requests, and allow members of the operations team to examine the state of the system at the level of individual files and replicas which are due to be processed, or have recently been processed to enable debugging of problems with sites or workflow definitions.
+The same functionality as the command line tools outlined above is provided by a Workflow Dashboard web interface. This will allow more sophisticated searches in the Workflow Database to monitor the progress of running requests, and allow members of the operations team to examine the state of the system at the level of individual files and replicas which are due to be processed, or have recently been processed to enable debugging of problems with sites or workflow definitions.
 
-The Workflow Dashboard is also intended to be used for all large scale productions, and will allow submitters to draft request definitions, circulate their proposal with colleagues for checking, before submitting them to any formal approval and checking procedure. The lifecycle of a workflow request accommodates manual approval and prioritization of large requests while smaller requests can be approved automatically according to a pre set limits. A library of bootstrap script templates and requests will be provided as part of the dashboard to help users make sensible choices for common types of workflow.
+The Workflow Dashboard is also intended to be used for all large scale productions, and will allow submitters to draft request definitions, circulate their proposal with colleagues for checking, before submitting them to any formal approval and checking procedure. The lifecycle of a workflow request accommodates manual approval and prioritization of large requests while smaller requests can be approved automatically according to a preset limits. A library of bootstrap script templates and requests will be provided as part of the dashboard to help users make sensible choices for common types of workflow.
+
+\section{Workflow System prototype}
+\label{sec:flow:prototype}
+
+A prototype implementation has been produced, which includes the Workflow Database, Workflow Allocator service, command line tool, generic job script, and the monitoring aspects of the Workflow Dashboard. Tasks to be carried out asychronously by the various agents are currently done with ad-hoc scripts, which are gradually being replaced by agents.
+
+Using this prototype, we have created requests based on existing productions, populated them with lists of files and replicas held by RUCIO, and then processed the files within generic jobs executing the bootstrap script included in the stage definitions, as sites, using matching perfomed by the Workflow Allocator.
 
 \section{Implementation Plan \hideme{McNab/Timm/Herner needed}}
+\label{sec:flow:implementation}
+
+During 2022, We plan to continue increasing the number of components of the design implemented in the prototype until it becomes a viable system which can be used for production processing of protoDUNE data. This will allow further comparisons between the functionality requirements of the production team and users, and the Workflow System design.
+
+% How much more to say about this?
+
 \end{document}

@@ -222,7 +222,7 @@ The \threed points are obtained using the Space~Point~Solver reconstruction algo
 \includegraphics[height=0.65\textwidth]{graphics/IntroFigures/Fig_8.pdf}
 \end{dunefigure}
 
-\subsection{ProtoDUNE Dual-Phase\hideme{Pennacchio - draft}}
+\subsection{ProtoDUNE Dual-Phase and its evolution to the Vertical Drift design \hideme{Pennacchio - draft}}
 
 %The \dword{pddp} detector began taking data using cosmic rays in August 2019.  Thanks to preceding data challenges, those data have been successfully integrated into the full data cataloging and reconstruction chains and are now being reconstructed as they arrive.   The \dword{pddp} technology locates the readout systems above a thin layer of argon gas above the liquid argon surface.  This gas layer allows an external electric field to accelerate the electrons and produce gas amplification.  The result is a substantial increase in signal-to-noise in the resulting signals, at the cost of longer electron drifts from the bottom of the liquid volume.  Figure \ref{dpevent} illustrates early data from \dword{pddp}. 
 
@@ -255,7 +255,7 @@ The \dword{pddp} detector   consists of a 700\,ton volume of \dword{lar}, with  
 
 
 The \dword{pddp} detector began taking cosmic ray data in August 2019. Thanks to preceding data challenges, these data have been successfully integrated into the full data cataloguing and reconstruction chain and were   reconstructed as they become available.
-A total of 1.45M \dwords{tr} were collected; the size of the raw data files (run sequence files) was 2.3\,GB, each file containing 10 \dwords{tr}. Cosmic ray data are displayed in Figure~\ref{dpevent}: on
+A total of 1.45M \dwords{tr} were collected; the size of the raw data files (run sequence files) was 3.2 \,GB, each file containing 30 \dwords{tr}. Cosmic ray data are displayed in Figure~\ref{dpevent}: on
 the left a horizontal muon track is shown with the corresponding waveform on a channel, giving an
 idea of the low noise conditions. A \dword{tr} including an electromagnetic shower and two muon decays
 and a \dword{tr} with an example of multiple hadronic interactions in a shower are shown on the right.
@@ -295,9 +295,15 @@ that are immersed in the \dword{lar}
  Figure \ref{fig:vd_principle} illustrates the \dword{pcb}-based charge readout concept. The electron drift direction is vertical.
 Two separate drift volumes of 6.5\,m are defined by a cathode plane at roughly mid-height in the
 detector volume. Ionization electrons above the cathode will drift upwards; ionization electrons in the liquid below the cathode will drift downwards.
-The \dword{spvd}  prototype components have undergone testing starting in 2021 with a small \coldbox.  A full prototype, known as \dword{mod0}, is expected to be completed and  installed 
+The \dword{spvd}  prototype components have undergone testing starting in 2021 with a small \coldbox; some examples of cosmics tracks are shown in figure \ref{fig:VD_coldbox_trks}. A full prototype, known as \dword{mod0}, is expected to be completed and  installed 
  inside the \dword{np02} cryostat in 2022 and 2023. Long-term operation and full characterization with a charged particle beam will follow. 
 
+\begin{dunefigure}
+[cosmic tracks collected during Vertical drift cold box data taking]
+{fig:VD_coldbox_trks}
+{Examples of cosmic tracks in the Vertical Drift cold box}
+\includegraphics[width=0.85\textwidth]{graphics/IntroFigures/Fig_14_VD_coldbox.png}
+\end{dunefigure}
 
 
 \subsection{Conclusions from Prototype Tests \hideme{Schellman draft}}
