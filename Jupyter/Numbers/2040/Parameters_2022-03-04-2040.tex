@@ -8,7 +8,7 @@
 \setlength{\textheight=9.5 in}
 \begin{document}
 \centerline{\bf{DUNE Resource Needs for 2022}}\vskip 1 in \par Configuration: Parameters\_2022-03-04-2040.json\\
-  Date: 2022-03-04 17:13TZ\\
+  Date: 2022-03-08 15:27TZ\\
    \\
   \input intro.tex
  Fiscal year starts: April 1\\ 
@@ -113,14 +113,14 @@ Years&(Mhrs)&kSPEC06&kSPEC06&cores& Total(PB)&F/C/Collab & Total(PB) &F/C/Collab
 2030&	  66&	 118&	  29/  88&	 10690&	    222.9&	 111.5/  0.0/111.5&	     53.5&	  33.5/  0.0/ 19.9\\
 2031&	  78&	 139&	  35/ 104&	 12663&	    284.2&	 142.1/  0.0/142.1&	     65.5&	  36.6/  0.0/ 29.0\\
 2032&	  92&	 165&	  41/ 124&	 15044&	    347.2&	 173.6/  0.0/173.6&	     69.9&	  37.8/  0.0/ 32.0\\
-2033&	 119&	 213&	  53/ 160&	 19398&	    462.8&	 231.4/  0.0/231.4&	    102.4&	  65.3/  0.0/ 37.0\\
-2034&	 146&	 261&	  65/ 196&	 23752&	    578.1&	 289.0/  0.0/289.0&	    110.5&	  67.4/  0.0/ 43.1\\
-2035&	 172&	 309&	  77/ 232&	 28107&	    694.6&	 347.3/  0.0/347.3&	    118.7&	  69.4/  0.0/ 49.3\\
-2036&	 199&	 357&	  89/ 268&	 32461&	    810.2&	 405.1/  0.0/405.1&	    126.8&	  71.5/  0.0/ 55.4\\
-2037&	 226&	 405&	 101/ 304&	 36815&	    921.1&	 460.5/  0.0/460.5&	    132.5&	  72.2/  0.0/ 60.2\\
-2038&	 252&	 453&	 113/ 340&	 41169&	   1038.7&	 519.3/  0.0/519.3&	    140.6&	  74.3/  0.0/ 66.4\\
-2039&	 279&	 501&	 125/ 376&	 45523&	   1157.5&	 578.7/  0.0/578.7&	    148.8&	  76.3/  0.0/ 72.5\\
-2040&	 306&	 549&	 137/ 411&	 49878&	   1278.5&	 639.2/  0.0/639.2&	    157.0&	  78.4/  0.0/ 78.6\\
+2033&	 119&	 213&	  53/ 160&	 19398&	    419.4&	 209.7/  0.0/209.7&	     80.7&	  43.6/  0.0/ 37.0\\
+2034&	 146&	 261&	  65/ 196&	 23752&	    491.3&	 245.6/  0.0/245.6&	     88.8&	  45.7/  0.0/ 43.1\\
+2035&	 172&	 309&	  77/ 232&	 28107&	    564.4&	 282.2/  0.0/282.2&	     97.0&	  47.7/  0.0/ 49.3\\
+2036&	 199&	 357&	  89/ 268&	 32461&	    636.6&	 318.3/  0.0/318.3&	    105.1&	  49.8/  0.0/ 55.4\\
+2037&	 226&	 405&	 101/ 304&	 36815&	    704.1&	 352.0/  0.0/352.0&	    110.8&	  50.5/  0.0/ 60.2\\
+2038&	 252&	 453&	 113/ 340&	 41169&	    778.3&	 389.1/  0.0/389.1&	    119.0&	  52.6/  0.0/ 66.4\\
+2039&	 279&	 501&	 125/ 376&	 45523&	    853.7&	 426.8/  0.0/426.8&	    127.1&	  54.6/  0.0/ 72.5\\
+2040&	 306&	 549&	 137/ 411&	 49878&	    931.3&	 465.6/  0.0/465.6&	    135.3&	  56.7/  0.0/ 78.6\\
 \end{tabular}
 \caption{Assume present core is   11 SPEC06. CPU number is real CPU. Cores and SPEC06 are Walltime with CPU/Walltime =  0.70.  F means FNAL, C means CERN. Assume CERN storage is only  for ProtoDUNE. CPU should be divided 25\% FNAL, 75\% Collab}\normalsize
  \end{table}
@@ -154,4 +154,4 @@ Years&(Mhrs)&kSPEC06&kSPEC06&cores& Total(PB)&F/C/Collab & Total(PB) &F/C/Collab
 \end{figure}
 \pagebreak\section*{Interpretation} Real numbers from 2021 are shown. Disk usage was lower than the model predicts as rucio duplication was not fully implemented until late in the year so most  reconstructed data and simulation  had 1 instead of the desired 2 copies. CPU usage was lower as the detector data were not fully reprocessed in 2021. \\The long term model for ProtoDUNE II and the Far detector has evolved to reflect 14-bit digitization and the channel count for the vertical drift detector.\pagebreak \\
 \\ {\section*{Change log:}}\\
-2022-02-21 add in new numbers for PD2, reflect daq document\\2022-01-22 add actual numbers's\\2022-01-14 updates for VD channels and new drift times.\\2021-07-25 see effects of PD 2 delay\\2021-04-27 change HSPEC06 to 11 from 15 per CMS numbers from Kirby\\2021-04-21 clarify CERN vs Collab for first 10 years\\2021-03-26 clearer plots, go to v3 of the code to preserve the RRB code in v2\\2021-03-24 try with CERN/FNAL combined for raw and test.\\2021-03-22 add Collab vs FNAL shares, restore sim disk lifetime to 2.\\\end{document}
+2022-03-08 put in 30 PB/year limit\\2022-02-21 add in new numbers for PD2, reflect daq document\\2022-01-22 add actual numbers's\\2022-01-14 updates for VD channels and new drift times.\\2021-07-25 see effects of PD 2 delay\\2021-04-27 change HSPEC06 to 11 from 15 per CMS numbers from Kirby\\2021-04-21 clarify CERN vs Collab for first 10 years\\2021-03-26 clearer plots, go to v3 of the code to preserve the RRB code in v2\\2021-03-24 try with CERN/FNAL combined for raw and test.\\2021-03-22 add Collab vs FNAL shares, restore sim disk lifetime to 2.\\\end{document}

@@ -173,6 +173,7 @@ json_formatted_str = commentjson.dumps(config, indent=2)
 MaxYears = config["MaxYears"]
 
 MinYears = config["MinYears"]
+MaxRaw = config["MaxRaw"]
 Detectors = config["Detectors"]
 Years = np.array(config["Years"][0:MaxYears])
 shortname = configfile.replace(".json","")
@@ -334,6 +335,7 @@ for det in Detectors:
   Inputs[det]={}
   for type in dofirst:
     Inputs[det][type] = np.array(config[det][type])
+    
     Inputs[det][type].resize(MaxYears)
      
     #print ("size", det,type, Inputs[det][type].size)
@@ -360,6 +362,12 @@ for det in Detectors:
             
       else:
             Inputs[det][key]=Inputs[det]["Events"]*config[det][key]
+            # need to cap raw data at 30 PB/year
+            if key == "Raw" and det in MaxRaw:
+                for i in range(0,MaxYears):
+                    if Inputs[det][key][i] > MaxRaw[det]:
+                        print ("fix max",det,key,Inputs[det][key][i],MaxRaw)
+                        Inputs[det][key][i] = MaxRaw[det]
     else:
       Inputs[det][key]=Inputs[det]["Sim Events"]*config[det][key]
       
