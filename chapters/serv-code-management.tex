@@ -3,13 +3,16 @@
 \chapter{Code Management \hideme{Tom Junk, Mathew Muether, David Adams - draft}}
 \label{ch:codemgmt}
 
-\fixme{Doug: ND-LAr TMS and ND-GAr code management sections need to be written, references for CVMFS and Spack need to be found}
+\fixme{Doug: ND-LAr TMS and ND-GAr code management sections need to be written, references for CVMFS and Spack need to be found (anne 3/8: dword for cvmfs, spack footnote in prev chap)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Liquid Argon TPC Code Management \hideme{Junk/Calcutt - needs update}}
 \label{sec:codemgmt:dunetpc}  %% fix label according to section
 
-Software for simulation, data read-in, and reconstruction shares significant commonality across the liquid-argon time projection chamber detectors planned to be deployed by DUNE and also prototypes.  These comprise the horizontal- and vertical-drift far detector modules, the 35-ton prototype, ProtoDUNE-SP, ProtoDUNE-DP, ProtoDUNE-2, ProtoDUNE-VD, ICEBERG, the pixel near detector and its prototypes.  The same software stack handles the wire readout, the photon detectors, and the cosmic-ray taggers used in some of the prototypes.  The interfaces to event generators, GEANT4, {\it art} and the data handling systems require effort to build and maintain.  Data products need to be thought out carefully.  To reduce the development burden and expand the pool of expertise, DUNE has chosen to use the LArSoft toolkit, which is built on NuTools and {\it art}.  
+Software for simulation, data read-in, and reconstruction shares significant commonality across the %anne liquid-argon time projection chamber detectors 
+DUNE \dwords{lartpc}. %anne planned to be deployed by DUNE and also  prototypes.  
+These comprise the %anne horizontal- and vertical-drift far detector modules, the 35-ton prototype, ProtoDUNE-SP, ProtoDUNE-DP, ProtoDUNE-2, ProtoDUNE-VD, ICEBERG, 
+the \dword{sphd} and \dword{spvd} \dwords{detmodule}, the \dword{35t}, \dword{pdsp}, \dword{pddp}, \dword{protodune2},  the pixel \dword{nd} and its prototypes.  The same software stack handles the wire readout, the photon detectors, and the cosmic-ray taggers used in some of the prototypes.  The interfaces to event generators, GEANT4, {\it art} and the data handling systems require effort to build and maintain.  Data products need to be thought out carefully.  To reduce the development burden and expand the pool of expertise, DUNE has chosen to use the LArSoft toolkit, which is built on NuTools and {\it art}.  
 
 LArSoft itself is split up into several repositories, such as larcore, larsim, larevt, lardata, and variations that have been split from them over time, such as lardataobj.  LArSoft is supported by Fermilab's Scientific Computing Division and is shared among several other experiments, such as ArgoNeuT, MicroBooNE, ICARUS and SBND.  The pool of developers is quite large, and the rate at which new code is added is quite significant.  New releases of LArSoft are made weekly.  
 

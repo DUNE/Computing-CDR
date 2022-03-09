@@ -1,7 +1,8 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
 
-\chapter{Data and Processing Volume Estimates \hideme{3/4 HMS numbers updated}}
+\chapter{Data and Processing Volume Estimates \hideme{3/8 HMS numbers updated}}
+
 \label{ch:est}
 %\fixme{Heidi: moved tables of numbers from intro to here.  Still needs better organization}
  
@@ -25,7 +26,7 @@ The \dword{daq} system can reduce these raw data volumes by several means, i.e.,
 \item short readout windows tailored to one drift time,
 \item triggered readout of particular time slices,
 \item triggered readout of particular geographic regions,
-\item lossless zero suppression,
+\item lossless zero suppression, \todo{trj: does this mean to say lossless compression?  ZS sounds lossy}
 \item lossy zero suppression, and
 \item hardware pattern recognition.
 \end{itemize}
@@ -82,7 +83,7 @@ Memory footprint/APA&0.5-1GB&ProtoDUNE experience\\
 
  
 
-For example, uncompressed \dword{sp} data from \dword{pdsp} were observed to be around 178\,MB in size, which is the amount expected for the number  of \dword{tpc} channels read + a 20\% overhead for other detectors and headers.  Compressed \dword{sp} data averages 75\,MB, consistent with compression by a factor of 2.5.  
+For example, the uncompressed \dword{sp} data for a single \dword{pdsp} trigger record were observed to be around 178\,MB in size, which is the amount expected for the number  of \dword{tpc} channels read + a 20\% overhead for other detectors and headers.  Compressed \dword{sp} data averages 75\,MB, consistent with compression by a factor of 2.5.  
 
 %anne Dual phase data 
 \subsection{ProtoDUNE Dual Phase Experience}
@@ -108,7 +109,7 @@ For \dword{hd} \dword{fd} data volumes, we use our \dword{pdsp} experience and a
  \begin{dunetable}[Useful quantities for computing \dshort{hd} data volume
 estimates]{lrr}{tab:est:usefulfd}
 {Useful quantities for computing estimates for \dword{hd}
-readout based on the \dword{daq} requirements document of January 2022.  CPU times are scaled from ProtoDUNE assuming all detectors are used in hit finding but interactions are confined to a subsection of the detector not much larger than ProtoDUNE.}%\rowtitlestyle
+readout based on the \dword{daq} requirements document of January 2022.  CPU times are scaled from \dword{pdsp} assuming all detectors are used in hit finding but interactions are confined to a subsection of the detector not much larger than \dword{pdsp}.}%\rowtitlestyle
 Quantity&Value&Explanation\\
 \toprowrule
 {\bf Far Detector Horizontal Drift}\\ \colhline
@@ -143,7 +144,7 @@ Supernova Trigger rate&1  per month&(assumption)\\
  \begin{dunetable}[Useful quantities for computing \dshort{vd} data volume
 estimates]{lrr}{tab:est:usefulfd}
 {Useful quantities for computing estimates for \dword{vd}
-readout based on the \dword{daq} requirements document of January 2022.  CPU times are scaled from ProtoDUNE assuming all detectors are used in hit finding but interactions are confined to a subsection of the detector not much larger than ProtoDUNE.}%\rowtitlestyle
+readout based on the \dword{daq} requirements document of January 2022.  CPU times are scaled from \dword{pdsp} assuming all detectors are used in hit finding but interactions are confined to a subsection of the detector not much larger than \dword{pdsp}.}%\rowtitlestyle
 Quantity&Value&Explanation\\
 \toprowrule
 {\bf Far Detector Vertical Drift}\\ \colhline

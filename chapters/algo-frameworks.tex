@@ -251,6 +251,7 @@ Configuration is distinct from initialization of the framework objects; configur
 %3 - HSF really didn't like this requirement
 --REQ NEEDS UPDATING TO REMOVE TURING - the framework should provide a Turing complete configuration language as a foundational component so that it can ensure coherence of its configuration.
 
+\todo{May be better to move/duplicate the mention of input file(s) into the I/O section. Workflow Allocator will supply the next file to process on request, as a transfer URL, which the framework needs to be able to open, whether POSIX file path or an xroot URL. Like with SAM, the framework should be able to do the next file request - it's just a REST API, using a JSON document supplied by Workflow to the job.}
 The WMS needs to be able to supply framework configuration parameters such as input file(s) or random number seeds to each framework application instance, which it should do using the framework’s configuration language.  To minimize errors, these parameters should be self-describing and validatable, and so:
 
 %4
@@ -283,6 +284,7 @@ This generates a further requirement that
 
 In addition to the Trigger Record data, data processing requires access to other data from various sources, for example slow controls, detector status, beam component status.  Such data is referred to generically as “conditions data” and also includes e.g. detector calibrations and any data external to the Trigger Record.  The time granularity or “interval of validity” of this data varies by source and is typically of much coarser granularity than individual Trigger Records, e.g. calibrations may be valid for months of data taking.  Meanwhile there are often several versions of conditions data and correlations between conditions data is not uncommon, making the coherent management of conditions data a challenge in itself.  For this reason, conditions data management should be external to the framework.
 
+\todo{justify why this can't be done with cvmfs?}
 Access to the external conditions data should preferably proceed via REST interfaces that support loose coupling of the framework and the external conditions management system.  As conditions data may need to be transformed from its persistent format into a format required by an algorithm, and as multi-threading makes the cache validity of conditions data complicated: 
 
 %18
