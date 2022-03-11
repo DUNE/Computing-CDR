@@ -14,7 +14,7 @@
 
 
 
-The current \dshort{dune} global computing model is an organic extension of the Fermilab \dword{fife} computing model, used for smaller Intensity Frontier experiments, to the full global collaboration.  This effort  has relied heavily on global infrastructure such as \dword{osg} and the \dword{wlcg} and was successful for the first small-scale \dword{protodune} tests. However, it needs substantial enhancement to cope with the anticipated data and processing volumes.  This chapter describes the current situation and proposals for future improvements. 
+The current \dshort{dune} global computing model is an organic extension of the Fermilab \dword{fife} computing model, used for smaller Intensity Frontier experiments, to the full global DUNE collaboration.  This effort  has relied heavily on global infrastructure such as \dword{osg} and the \dword{wlcg} and was successful for the first small-scale \dword{protodune} tests. However, it needs substantial enhancement to cope with the anticipated data and processing volumes.  This chapter describes the current situation and proposals for future improvements. 
 
 \subsection{Global Resources}
 
@@ -30,14 +30,14 @@ sites. Table~\ref{tab:coop:disk} shows the distribution of disk space pledges fo
 %This model builds on the highly successful tools developed by the WLCG and OSG for LHC computing.  As DUNE's needs are substantially smaller that those of the large LHC experiments we can be confident that the existing infrastructure can be incrementally augmented to meet DUNE's requirements. 
 
 %\section{Current Global Computing Model}
-\todo{Must update pledges}
+%\todo{HMS done  Must update pledges}
 
 \begin{dunetable}
 [National disk pledges]{llrr}{tab:coop:disk}
 {Disk pledges in PB for 2021 and 2022.}
 Country/Lab	&	Name	&	2021	&	2022	\\
 \dword{fnal}	&	\dword{fnal}	&	2.2	&	7.6	\\
-\dword{cern}	&	\dword{cern}	&	2.2	&	1.6	\\
+\dword{cern}	&	\dword{cern}	&	2.2	&	3.0	\\
 \dword{bnl}	&	\dword{bnl}	&	0.5	&	0.5	\\
 United Kingdom	&	GridPP	&	4.0	&	4.0	\\
 France	&	CC-IN2P3	&	0.5	&	0.5	\\
@@ -49,6 +49,7 @@ India	&	TIFR	&	0.75&	0.75\\
 Russian Federation	&	JINR	&	-	&	0.5	\\
 \hline
 Total pledge	&		&	12.85	&	18.97	\\
+Total request & & 20.4 & 27.3 \\
 \end{dunetable}
 
 
@@ -117,11 +118,16 @@ US\_UCSD	&	UCSDT2	&	\\
 US\_Wisconsin	&	GLOW	&	\\
 US\_WSU	&	WSU - GRID\_ce2	&	\\
 \end{dunetable}
+
+
+\section{Site characteristics}
+
+\todo{add a section which describes the various site types - HPS, normal, analysis, commercial services - I think this is already done in section 6.4 - Kirby}
 %\todo{Add diagrams}
 
 \section{Current Performance\label{ch:model:perf} \hideme{Schellman/Herner - draft}}. 
 
-\dshort{dune} has performed multiple simulation and reconstruction passes on the \dword{pdsp} data and is running significant simulation campaigns for the \dword{fd} and \dword{nd} design and physics studies. The \dword{poms} and \dword{sam} described in Chapters~\ref{ch:datamgmt} and~\ref{ch:flow}, are highly instrumented and allow assessments of the performance of the global computing system in near-real time.  There are four major data/CPU access patterns:
+\dshort{dune} has performed multiple simulation and reconstruction passes on the \dword{pdsp} data and is running significant simulation campaigns for the \dword{fd} and \dword{nd} design and physics studies. The \dword{poms} and \dword{sam} described in Chapters~\ref{ch:datamgmt} and~\ref{ch:wkflow}, are highly instrumented and allow assessments of the performance of the global computing system in near-real time.  There are four major data/CPU access patterns:
 \begin{itemize}
     \item Simulation requires little input (mainly beam flux files and photon libraries),  has a large memory footprint, uses significant CPU resources and writes back a few large files.
     \item Data reconstruction reads in large files, has an intermediate memory footprint and uses $\sim$10\,sec/MB of input data.  
@@ -129,9 +135,7 @@ US\_WSU	&	WSU - GRID\_ce2	&	\\
     \item Data analysis consists of repeated access to smaller tuple outputs for calibration and parameter estimation.
 \end{itemize}
 
-Each of these use cases is best suited for a different combination of data/CPU resources and the global compute model should be able to allocate resources appropriately.  
-
-We have used the \dword{sam} instrumentation to measure the \dword{xrootd} streaming performance for disk/CPU location combinations. 
+Each of these use cases is best suited for a different combination of data/CPU resources and the global compute model should be able to allocate resources appropriately.  Currently the default configuration for all HTC jobs is for data delivery to be through xrootd streaming. To understand the impact of this choice on effciency, we have used the \dword{sam} instrumentation to measure the \dword{xrootd} streaming performance for disk/CPU location combinations. 
 
 \begin{dunefigure}
 [Streaming speeds for reconstruction]
@@ -165,9 +169,7 @@ We have used the \dword{sam} instrumentation to measure the \dword{xrootd} strea
 
 \subsection{Implications for Data and Processing Placement}
 
-The current study indicates that for CPU-dominated applications, notably reconstruction of raw data and simulation, the relative location of CPU resources is not critical. Wall time/MB   is similar regardless of location. 
-
-For IO-dominated applications, proximity to the data is important.  Here there is a trade-off between the availability of resources and the efficiency with which they can be used. Intra-US processing, especially for locations near the national laboratories, is highly efficient, as is processing within the UK.  However, efficiency falls off as the CPU and disks become more separated.  
+The current study indicates that for CPU-dominated applications, notably reconstruction of raw data and simulation, the relative location of CPU resources is not critical. Wall time/MB   is similar regardless of location. For IO-dominated applications, proximity to the data is important.  Here there is a trade-off between the availability of resources and the efficiency with which they can be used. Intra-US processing, especially for locations near the national laboratories, is highly efficient, as is processing within the UK.  However, efficiency falls off as the CPU and disks become more separated.  
 
 We have the monitoring tools to provide a workflow management system with the information it needs to do optimal placement of data and jobs to maximize efficiency. However our existing data management and workflow tools are not able to take full advantage of this information.  This motivates development of an improved workflow model described below and in Chapter~\ref{ch:wkflow}.
 
@@ -178,35 +180,30 @@ We have the monitoring tools to provide a workflow management system with the in
 % References to APIs and specific technologies
 % perhaps even the definitions types of center and site too
 
-The large \dword{lhc} experiments have historically relied on a tiered structure, with national Tier-1 centers serving regional Tier-2 and Tier-3 centers.  The DUNE model builds on the emergence of faster networks to move to  a service-oriented model, where sites provide services, disk, CPU, real memory/core and archival tape, and projects are  distributed to them based on their capabilities and available networking.  For example, a site with large CPU and memory/core but slower networking would be ideal for simulation while small memory/core and fast access to large local disk stores would be ideal for high-level data analysis.  This model will require a high-level view of data locations and job placement with continual monitoring for bottlenecks, but allows new sites to contribute in an optimal way. 
+The large \dword{lhc} experiments have historically relied on a tiered structure, with national Tier-1 centers serving regional Tier-2 and Tier-3 centers.  The DUNE model builds on the emergence of faster networks to move to  a service-oriented model, where sites provide services, disk, CPU, real memory/core and archival tape, and projects are  distributed to them based on their capabilities and available networking.  For example, a site with large CPU and memory/core but slower networking would be ideal for simulation while small memory/core and fast access to large local disk stores would be ideal for high-level data analysis.  This model will require a high-level view of data locations and job placement with continual monitoring for bottlenecks, but allows new sites to contribute in an optimal way. The intent is to lower the bar for contributions without overburdening the core computing operations of the experiment.
 
 This section sets out our ``Sites and Services'' model for using sites for DUNE computing tasks, including sites that participate in \dword{osg} or \dword{wlcg} more generally. Since our requirements are not the same as the \dword{lhc} experiments, this necessitates a distinct naming scheme to \dword{wlcg} and ways of mapping our scheme onto the \dword{wlcg} tier model.
 
-At this stage, DUNE has chosen to express its requirements in terms of services provided by sites. Each site provides networking plus one or more approved DUNE services, which satisfy DUNE's minimum requirements for the service in terms of capacity, quality, and interfaces.
-
-This model allows us to avoid making assumptions about how sites and federations of sites will be organized in the future, as the community evolves away from the strict \dword{wlcg} tiers model towards \dword{doma} and concepts like data lakes.
+At this stage, DUNE has chosen to express its requirements in terms of services provided by sites. Each site provides networking plus one or more approved DUNE services, which satisfy DUNE's minimum requirements for the service in terms of capacity, quality, and interfaces. This model allows us to avoid making assumptions about how sites and federations of sites will be organized in the future, as the community evolves away from the strict \dword{wlcg} tiers model towards \dword{doma} and concepts like a \dword{datalake}.
 \todo{define data lakes please. Maybe add to glossary-comp-cdr. } %anne (already said) instead we express our requirements in terms of the services we interact with.
 
-DUNE expects to be able to access services using broadly the same set of APIs as \dword{wlcg} (e.g., HTCondor-CE and xroot) and by using common cloud APIs (e.g., \dword{openstack} and \dword{s3}. 
-\todo{(anne) Should xroot be xrootd? I added the others to glossary-comp-cdr; please fill in the definitions}
-For this reason, sites may be operated using conventional grid technologies, on-premises cloud systems, or commercial cloud services.
-
-Nevertheless, sites do appear in the DUNE computing model, as the atomic unit for operations activity. 
-\todo{(anne) This feels like a nonsequitur (and see ??? below)}
+DUNE expects to be able to access services using broadly the same set of APIs as \dword{wlcg} (e.g., HTCondor-CE and xrootd) and by using common cloud APIs (e.g., \dword{openstack} and \dword{s3}). 
+%kirby - updated Mar 11 \todo{(anne) Should xroot be xrootd? I added the others to glossary-comp-cdr; please fill in the definitions}
+For this reason, sites may be operated using conventional grid technologies, on-premises cloud systems, or commercial cloud services. Nevertheless, sites do appear in the DUNE computing model, as the atomic unit for operations activity. %Kirby - fixed Mar 11, 2022 \todo{(anne) This feels like a nonsequitur (and see ??? below)}
 For example, staff at a site can receive and process tickets, %may  
-and may be allowed or required to have??? a representative at an operations meeting with the technical knowledge to comment on issues as they arise.
+and may be required to have a representative at an operations meeting with the technical knowledge to comment on issues as they arise.
 
-In terms of workflows and data management, DUNE does not impose or require any hierarchy or grouping of sites, and assumes that, in general, data may flow between services at any two sites. That said, DUNE expects to use network proximity and bandwidth information to guide the efficient transfers of data between services. 
+In terms of workflows and data management, DUNE does not impose or require any hierarchy or grouping of sites, and assumes that, in general, data may flow between services at any two sites. That said, DUNE expects to use network proximity and bandwidth information to guide the efficient transfers of data between services. The details of the different services within the DUNE Computing Model are described in detail in Section \ref{sec:cm:types_of_service}.
 
 \section{Sites, Federations, and Countries\hideme{McNab - draft}}
 \label{sec:cm:federations}
 
 As well as sites, there are two more administrative concepts: federations and countries.
-
-Federations are borrowed from \dword{wlcg} and represent one or more sites that together pledge a particular amount of capacity to DUNE and enter their pledges into a system like \dword{cric}. \todo{add def to gloss} Sites may choose to organize themselves this way as it allows more flexibility in how pledges are met against a background of planned upgrades at sites, unplanned outages, etc. 
+Federations are borrowed from \dword{wlcg} and represent one or more sites that together pledge a particular amount of capacity to DUNE and enter their pledges into a system like \dword{cric}. %Kirby commented it out since someone did this. \todo{add def to gloss}
+Sites may choose to organize themselves this way as it allows more flexibility in how pledges are met against a background of planned upgrades at sites, unplanned outages, etc. 
 
 Countries are represented directly or indirectly at the DUNE Computing Contributions Board, and consist of one or more federations. Broadly, countries map to funding bodies and %are 
-provide the basis of comparison between level of contribution to computing capacity and number of DUNE members. \todo{(anne) please clarify what's being compared, I don't get it. Where do you get number of members?} 
+provide the entity reviewed when comparing the level of contribution to computing capacity versus the number of DUNE members. %Kirby - Mar 11, 2020 \todo{(anne) please clarify what's being compared, I don't get it. Where do you get number of members?} 
 
 
 
@@ -227,7 +224,7 @@ We envisage five classes of service, on which we will put requirements and reque
 \subsection{Network\hideme{McNab - draft}}
 \label{sec:cm:network}
 
-Networking is needed at all sites, with basic requirements including IPv4 and IPv6. \todo{please add to gloss, also NREN below}
+Networking is needed at all sites, with basic requirements including IPv4 and IPv6. %Kirby someone did this \todo{please add to gloss, also NREN below}
 All sites should be connected to the wide area network, typically via their NREN, with sufficient capacity to handle the data IO commensurate with their fraction of the workload. In practice this means at least 40\,Gbit/s for major sites with large amounts of storage (with 100\,Gbit/s becoming the normal expectation for a shared site such as a \dword{wlcg} Tier-1) and at least 20\,Gbit/s for smaller CPU-only sites (but with 40-100\,Gbit/s becoming the norm in shared sites).
 Other DUNE-approved services may impose further requirements in terms of network capacity. %anne which they require,
 
@@ -266,8 +263,9 @@ The data cache, not managed by DUNE systems, requires:
 
 %Suitable networking. Sufficient nearby DUNE Compute Element capacity to be useful. Not managed by DUNE systems. ``Transparent''. Data loss is equivalent to jobs dying, so a transient which DUNE systems will recover from.
 
-%\subsection{DUNE Storage Element\hideme{McNab - draft}}
-%\label{sec:cm:dse}
+%Kirby put this section back in because I think storage element is a first class service.
+\subsection{DUNE Storage Element\hideme{McNab - draft}}
+\label{sec:cm:dse}
 
 The concept of a DUNE Storage Element mirrors that of a DUNE Compute Element. It must be of sufficient capacity, measured in hundreds of TB or in PB, for the operational overheard to be worthwhile. It must have a suitable support level. %defined above, in terms of whether tickets will be acted 24/7 or only during working hours. 
 There must be enough inbound and outbound networking capacity for global data placement operations, and for jobs to write data there or to consume the data already present. In particular, there must be %anne a minimum amount of 
@@ -275,12 +273,12 @@ enough DUNE Compute Element capacity available nearby %, on which DUNE jobs can 
 that DUNE jobs can access the storage service % an unacceptably low CPU efficiency. 
 while retaining sufficent CPU efficiency.
 
-This formulation allows conventional grid sites with CPU and disk storage mixed together in adjacent racks, and also novel regional architectures such as data lakes \todo{will be a gloss term!} %in which there is 
+This formulation allows conventional grid sites with CPU and disk storage mixed together in adjacent racks, and also novel regional architectures such as data lakes %Kirby - done \todo{will be a gloss term!} %in which there is 
 with sufficient network capacity to link CPU and storage at different locations. At this stage of the project, DUNE does not want to prejudge what will be available at the start of data taking, and does not want to discourage the exploration of new and more efficient ways of providing resources.
 
 %\subsection{DUNE Data Archive\hideme{McNab - needs work}}
 
-Networking. Cache? Support level? Tape without saying only tape forever. \todo{Anne ignored this!}
+%Kirby - just not really need this sentence. Networking. Cache? Support level? Tape without saying only tape forever. \todo{Anne ignored this!}
 
 %The host laboratory is the most important center and during DUNE data %taking will be FNAL. During protoDUNE data taking, both FNAL and CERN %have host laboratory roles. A host laboratory runs central services %for DUNE, makes the largest single contribution in disk and CPU, and %acts as an archive center and user center. This broadly corresponds %to the WLCG Tier-0 concept. 
 %

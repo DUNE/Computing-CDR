@@ -7,24 +7,27 @@
 %\section{xyz}
 %\label{sec:pres:xyz} 
 \section{Data Management and Preservation}
-\dword{dune} has a formal data management plan which is described in DUNE Docdb entry 5759 \cite{bib:docdb5759} and forms the basis of the data management plans for institutions and sites within the collaboration.
+\dword{dune} has a formal data management plan which is described in %DUNE Docdb entry 5759 
+Reference~\cite{bib:docdb5759} and forms the basis of the data management plans for institutions and sites within the collaboration.
 
-The main points in the plan are:
+The main %points 
+topics covered in the plan are:
 
-\begin{itemize} \item Preservation of raw data (aside from commissioning and testing data) for the lifetime of the experiment.
-\item  Preservation of the metadata needed to understand the raw data including configuration and calibration information as well as descriptive metadata for the lifetime of the experiment.
-\item Preservation of the documentation for the reconstruction chain.  This may be problematic as we largely rely on wiki pages rather than formal written documentation and wiki's evolve quickly. 
-\item Preservation of the code bases used to process those raw data for the lifetime of the experiment.
-\item Simulation and reconstructed samples that may be reproduced given the raw data and preserved code are kept for shorter lifetimes. 
+\begin{itemize} \item Preservation of raw data (aside from commissioning and testing data) for the lifetime of the experiment;
+\item  Preservation of the metadata needed to understand the raw data, including configuration and calibration information, as well as descriptive metadata for the lifetime of the experiment;
+\item Preservation of the documentation for the reconstruction chain.  This may be problematic as we largely rely on wiki pages rather than formal written documentation and wikis evolve quickly; 
+\item Preservation of the code bases used to process those raw data for the lifetime of the experiment; and
+\item Simulation and reconstruction samples that may be reproduced, given that the raw data and preserved code are kept for shorter lifetimes. 
 \end{itemize}
+\fixme{(anne) first bullet sounds like raw is kept for lifetime; last bullet sounds like it's not; pls clarify. Last bullet was not unambiguously clear to me}
 
-Table \ref{tab:est:retention} in Chapter \ref{ch:est} describes the current retention policies, with simulated and reconstructed data samples retained on tape for 10 years. 
+Table~\ref{tab:est:retention} in Chapter~\ref{ch:est} describes the current retention policies, with simulated and reconstructed data samples retained on tape for 10 years. 
 
-One of the major concerns for long term preservation of data is the evolution of storage,  operating systems and data formats. Long lifetime binary data may need to be migrated between storage technologies multiple times.   Our current experience is that data written in the root format is readable for at least a decade.   
+One of the major concerns for long-term preservation of data is the evolution of storage,  operating systems and data formats. Long-lifetime binary data may need to be migrated between storage technologies multiple times.   Our current experience is that data written in the \dword{root} format is readable for at least a decade.   
 
-As operating systems and compilers evolve, old code may cease to work or give the same answer. We will not have the resources to perform continuous integration tests on all code versions so it is likely that reviving old codes will require substantial effort. The priority will be ensuring that the raw data remain accessible. 
+As operating systems and compilers evolve, old code may cease to work or give the same answer. \fixme{'give the same answer'? as what? (anne)} We will not have the resources to perform continuous integration tests on all code versions, so it is likely that reviving old codes will require substantial effort. The priority will be ensuring that the raw data remain accessible. 
 
-Long term, we anticipate that the smaller reduced samples, not the PB of reconstructed raw data or simulation, will form the legacy samples from the experiment.  Those formats have not yet stabilized but will need to be carefully documented and duplicated for use past the formal end of the experiment.
+Long term, we anticipate that the smaller reduced samples, not the PB of reconstructed raw data or simulation, will form the legacy samples from the experiment.  Those formats have not yet stabilized, but will need to be carefully documented and duplicated for use past the formal end of the experiment.
 
 
 

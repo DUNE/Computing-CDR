@@ -549,7 +549,7 @@ The \dword{nd} Reconstruction primary exists as separate reconstructions for eac
 [ND Reconstruction Flow Chart Example]
 \label{fig:nd:reco}
 {An example ND Reconstruction WorkFlow is shown for simulation with TMS and LAr (MLReco) data producing track matching information and stored in CAF.}
-\includegraphics[width=0.8\textwidth]{graphics/ND/ND Reco workflow.png}
+\includegraphics[width=0.8\textwidth]{graphics/ND/ND-Reco-workflow.png}
 \end{dunefigure}
 
 \subsubsection{LAR}
@@ -884,8 +884,8 @@ Individual extractions are run interactively or on the grid for fake data tests 
 % \includegraphics[width=4 in]{graphics/Algo/SurveyRepo.png}
 % \end{dunefigure}
 
-\subsection{Machine Learning Training} \hideme{HMS moved up here from below - may need more text}
-Many reconstruction and simulation algorithms use \dword{ml} algorithms.  While these algorithms may run quickly, they   require significant resources to train.  
+\subsection{Machine Learning Training and Implementation} \hideme{HMS Updated to cite the Wang/Yang AWS paper}
+Many reconstruction and simulation algorithms can profitably use \dword{ml} algorithms.  While these algorithms may run quickly, they   require significant resources to train, and in some cases, run much more efficiently on specialized hardware.  Although \dword{ml} algorithms are not currently a major part of the \dword{dune} workflow, multiple groups are working on implementing \dword{dune} algorithms on \dwords{gpu}.  A notable example is reference \ref{Wang2021} in which \dword{protodune} reconstruction workflows on simulated far detector neutrino interactions are implemented via the \dword{sonic} framework developed at Fermilab. This hybrid framework enables the use of remote \dwords{gpu} as call-outs within the normal workflow.  In particular, the electromagnetic shower algorithm, {\it EmTrackMichelId}, which appears as the slowest algorithm in Table \ref{tab:protodune_cpu_reco_by_module} was implemented on commercial (Google Cloud) remote \dwords{gpu}. Patches of detector data were sent to the remote processors and inference results were returned.  In the initial test, event processing, which is dominated by that step, was sped up by a factor of 17. Similar approaches are very promising for the future.  
 
 
 \subsection{Parameter Estimation}
@@ -925,7 +925,7 @@ Parameter estimation	&		&		&		&		&		&			\\
 \end{dunetable}
 
 %\hideme{HMS eliminate this section and incorporate where relevant\section{Additional Activities}}% - \hideme{needs checking for completeness}}
-
+\end{document}
 % \subsection{Database design and access}
 % DUNE will need databases for a wide range of activities, from tracking detector construction to detailed calibration.  Chapter~\ref{ch:db} describes the database planning in detail.  Major considerations are the ability to  receive inputs from a wide variety of sources, some of which may have proprietary interfaces, and then to distribute information to a broad range of processing sites.   Use of open-source solutions is highly encouraged but may require additional effort.
 

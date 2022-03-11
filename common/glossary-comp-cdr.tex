@@ -55,6 +55,8 @@ COMPASS is a multipurpose experiment at CERN’s Super Proton Synchrotron (SPS).
 
 \newduneabbrev{ml}{ML}{Machine Learning}{Machine Learning}
 
+\newduneword{datalake}{data lake}{data lake}{The concept of a storage service with multiple levels of quality of service where the end user does not have to be aware of where the data is being served from in order to access the data. Data lakes are not a reality yet.}
+
 \newduneabbrev{proto}{ProtoDUNE}{ProtoDUNE}{The protoDUNE detectors at CERN, includes the single phase, dual phase and vertical drift prototypes.} %Anne - not needed; already have {protodune}
 
 \newduneabbrev{metacat}{MetaCat}{MetaCat}{Metadata Catalog, a modern replacement for the file description portion of the sam metadata catalog.}
@@ -74,13 +76,14 @@ COMPASS is a multipurpose experiment at CERN’s Super Proton Synchrotron (SPS).
 
 \newduneword{samparameter}{parameter}{A user or experiment described quantity describing a file in the \dword{sam} data catalog.}
 
-\newduneword{samproject}{project}{A server process running centrally that maintains a predefined list of files and delivers information about  their locations when asked by distributed processes. The project tracks success and failure of file processing.}
+\newduneword{samproject}{SAM-project}{A server process running centrally that maintains a predefined list of files and delivers information about  their locations when asked by distributed processes. The project tracks success and failure of file processing.}
 
 \newduneword{samconsumer}{consumer}{A client process that requests information about file locations from a \dword{samproject}, process the file and reports success or failure.}
 
-\newduneword{samdataset}{dataset}{ A dynamic collection of files defined by queries to the \dword{sam} data catalog.}
+\newduneword{samdataset}{SAM-dataset}{ A dynamic collection of files defined by queries to the \dword{sam} data catalog.}
+\newduneword{metacatdataset}{MetaCat-dataset}{ A fixed but mutable collection of files defined by queries to the \dword{metacat} data catalog.}
 
-\newduneword{samsnapshot}{snapshot}{A fixed collection of files corresponding to a \dword{sam} \dword{samdataset} at a particular point in time.}
+\newduneword{samsnapshot}{SAM-snapshot}{A fixed collection of files corresponding to a \dword{sam} \dword{samdataset} at a particular point in time.}
 
 \newduneabbrev{mql}{MQL}{\dword{metacat} Queryl Language} {A query language which supports queries of the \dword{metacat} data catalog, including parentage and logical functions such as union, join and subtraction.}
 
@@ -98,7 +101,7 @@ COMPASS is a multipurpose experiment at CERN’s Super Proton Synchrotron (SPS).
 
 \newduneabbrev{vm}{VM}{Virtual Machine}{Emulator of a physical computer that allows multiple users to configure different operating systems  while sharing physical hardware. }
 
-\newduneword{enstore}{enstore}{Enstore is a mass storage system developed by Fermilab that provides distributed access and management of data stored on tapes \cite{Litvintsev:2012dw}.}
+\newduneword{enstore}{Enstore}{Enstore is a mass storage system developed by Fermilab that provides distributed access and management of data stored on tapes \cite{Litvintsev:2012dw}.}
 
 %\newduneabbrev{nas}{NAS}{Network Attached Storage}{High performance disk available on interactive nodes.}
 
@@ -132,11 +135,11 @@ storage, communication, and manipulation of scientific parameter sets}  %anne ad
 
 \newduneword{singlecube}{SingleCube}{add def}  %anne added
 
-\newduneword{s3}{S3}{add def}  %anne added
+\newduneword{s3}{S3}{The Amazon cloud-based commercial storage service.}  %anne added
 
-\newduneword{openstack}{OpenStack}{add def}  %anne added
+\newduneword{openstack}{OpenStack}{An open source cloud software used to deploy instances of containers.}  %anne added
 
-\newduneword{cric}{CRIC}{add def}  %anne added
+\newduneword{cric}{CRIC}{The Computing Resource Information System (CRIC) is a framework providing a centralized (and flexible) way to describe which resources DUNE using and also how DUNE uses them. }  %anne added
 
 
 \newduneword{htcondorce}{HTCondor-CE}{add def}  %anne added
@@ -173,3 +176,24 @@ storage, communication, and manipulation of scientific parameter sets}  %anne ad
 \newduneword{ipv6}{IPv6}{the most recent version of the Internet communications protocol that provides an identification and location system for computers on networks and routes traffic across the Internet}
 
 \newduneword{monit}{MONIT}{\hideme{add def}}
+
+\newduneword{garana}{GArAna}{provides a facility for making an analysis ntuple from information stored in \gls{garsoft} data products}
+
+\newduneword{ci}{CI}{continuous integration}
+
+\newduneword{datadis}{Data Dispatcher}{The Data Dispatcher communicates between running processing jobs and the data delivery systems.  It provides file location information and basic book-keeping on file access and transfers.}
+
+\newduneabbrev{castor}{CASTOR}{CERN Advanced STORage manager}{CASTOR is a hierarchical storage system with tape and disk developed at CERN. It is being replaced by CTA.}
+
+\newduneword{cta}{CTA}{CERN Tape Archive}{CTA is a hierarchical storage system with tape and disk developed at CERN. It is replacing CASTOR.}
+
+\newduneabbrev{sonic}{SONIC}{Services for Optimized
+Network Inference on Coprocessors}{Framework for implementing machine learning algorithms on coprocessors developed by Fermilab.}
+
+\newduneword{jobsub}{JobSub}{JobSub\cite{box2014fife} is the Fermilab Intensity Frontier job submissions client that supports user submission of complex workflows to HT-Condor.}
+
+\newduneword{hepcloud}{HEPCloud}{HEPCloud routes jobs to local or remote computing resources based on the policy for a particular experiment, workflow requirements, cost and efficiency of accessing the various resources. It expands the resources available to include \gls{hpc} centers and commercial cloud resources}
+
+\newduneword{jobsub}{Jobsub}{a batch submission system to quickly get jobs running on the \gls{osg}}
+
+\newduneword{wmsmon}{WMS monitoring}{add def}

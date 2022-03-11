@@ -146,7 +146,7 @@ An example of a metadata blob~\footnote{This metadata is taken from \dword{icebe
 
 \subsection{Conditions Database for DUNE}
 
-For \dword{dune}, the interface between the conditions database and the software framework will become particularly important.  The consensus among several \dword{hep} experiments was reported in an \dword{hsf} whitepaper \cite{Laycock:2019ynk}. Here, a lightweight relational database schema allows a single point of entry, a "global tag", to configure conditions data access for the framework.  Evolving the \dword{protodune} solution to benefit from that experience is foreseen by the database group.
+For \dword{dune}, the interface between the conditions database and the software framework will become particularly important.  The consensus among several \dword{hep} experiments was reported in an \dword{hsf} whitepaper \cite{Laycock:2019ynk}. Here, a lightweight relational database schema allows a single point of entry, a "global tag", to configure conditions data access for the framework.  Evolving the \dword{protodune} solution to benefit from that experience is foreseen by the database group. Further details on the development plan can be found in section \ref{sec:db:conddbdev}.
 
 %An unstructured conditional database was used for the \dword{protodune} experiment. Collections of metadata corresponding to \dword{protodune} runs were stored as text-based ``blobs'' in key-value pairs. For the first \dword{protodune} run the blobs contained \dword{fhicl}-formatted information and Run II blobs will be in \dword{json} format. The \dword{ucondb} format enables the capture of a comprehensive set of metadata without the need for a strict schema to be determined in advance of operating the database. Postgres provides the ability to utilize folders in the database structure, which can be used for versioning should the metadata coming from any source change over time. Folders can also keep metadata keyed by run number separate from that keyed by time. Tools can be used to match either up to any \dword{iov2}-based query. Further details of the use of the \dword{ucondb} for \dword{protodune} can be found in Section~\ref{sec:runconfigPD} 
 
@@ -316,14 +316,66 @@ Monitoring will be achieved using automated web-based tools \todo{[ref needed]|}
 There are a number of database-related projects where R\&D is needed or underway, utilizing effort \todo{how to credit the FOA funding???}
 and expertise from both \dword{doe} labs and universities.  Coordination is provided by the Database group and attempts to balance the short-term needs of \dword{protodune} with the longer term needs of \dword{dune}.
 
-\subsection{Slow Control Database}
+\subsection{Conditions Database Development}
+\label{sec:db:conddbdev}
 
-The \dword{scada}  system chosen for Run I and II of the \dword{protodune} experiment was WinCC with Oracle as the back-end \dword{db}. This system is well tested and it is relatively trivial to transfer information from the Oracle \dword{db} to a \dword{postgres} \dword{db} located at Fermilab. Given the fact that Oracle-based \dwords{db} are not guaranteed to be supported for the life of DUNE it would be beneficial to use a solution that enables a \dword{postgres} back-end.  We are investigating potential solutions. 
+The Conditions Database is the primary interface to conditions metadata for all \dword{dune} distributed computing resources and this task includes designing and developing caching strategies.  The \dword{dune} Database group will collaborate with the \dword{hsf} to benefit from the experience of other \dword{hep} experiments, as well as the experience gained from \dword{protodune}, to develop a robust system while optimizing development effort.
 
-\subsection{Database Access for High-Performance Computing Facilities}
+\subsubsection{Conditions Database Core Design}
+
+The \dword{hsf} Conditions Databases group identifies the following points as key features of a good Conditions Database design:
+
+\begin{itemize}
+    \item    Loose coupling between client and server using RESTful interfaces
+    \item    The ability to cache queries as well as payloads
+    \item    Separation of payload queries from metadata queries
+\end{itemize}
+
+These guiding design principles are likely to remain valid throughout the lifetime of \dword{dune}, while implementation will need to evolve with technology.
+
+\subsubsection{Conditions Database and Software Framework}
+
+The interface between the Conditions Database and the Software Framework is defined by the Application Programming Interface (API) % let's see if we reuse this and it motivates a dword!
+of the Conditions Database.  The \dword{hsf} Conditions Database group is in the process of defining a generic API, again using the experience of existing \dword{hep} experiments to understand best practice for supporting all read and write use cases.  \dword{dune} will collaborate with the \dword{hsf} on this API definition and share experience on implementations.  It is noted that, in line with the \dword{hsf}, given the heterogeneity of compute hardware that \dword{dune} needs to use, a common implementation is considered to be less important than a common API and sharing experience.
+
+\subsubsection{Conditions Database Service Robustness and Distributed Computing}
+
+In addition to the cache-friendly design of the central Conditions Database service itself, a major issue for a critical (for offline) service like the Conditions Database is resilience such that a robust and reliable service can be provided.  Here, \dword{dune} plans to take advantage of synergies with other \dword{doe} labs, particularly at \dword{bnl} which hosts Conditions Database services for Belle II and other experiments.  The backend database technology (Postgres) is common between \dword{fnal} and \dword{bnl}, and generally Conditions Database services, under the umbrella of the \dword{hsf}, are expected to evolve to look more and more similar.  \dword{dune} will investigate the potential for having a first class backup service (that would support writing as well as reading functionality), in addition to having redundancy of read functionality via intelligent use of caches at sites.
+
+
+\subsubsection{Database Access for High-Performance Computing Facilities}
 
 As DUNE will utilize \dword{hpc}   facilities for some analysis tasks it is important that \dword{db} access is manageable when tens, or hundreds, of thousands of processes are distributed across an \dword{hpc}   cluster. Studies on how scaling on such systems can be handled without overwhelming the conditions \dword{db} with an enormous number of simultaneous queries are required. %anne need to be undertaken. 
 Here again, \dword{dune} plans to leverage the experience of other \dword{hep} experiments with experience of using \dword{hpc}'s at scale.
+
+\subsection{Payload Serialization}
+
+Similarly to the discussion in chapter \ref{ch:format}, the data format of conditions metadata deserves careful attention to avoid problems including technology lock-in.  The need to interact with many different groups, essentially all providers of conditions (and other persistent) metadata, is the main driver of the amount of effort required for this task.
+
+\subsection{Slow Control Database Development}
+
+The \dword{scada}  system chosen for Run I and II of the \dword{protodune} experiment was WinCC with Oracle as the back-end \dword{db}. This system is well tested and it is relatively trivial to transfer information from the Oracle \dword{db} to a \dword{postgres} \dword{db} located at \dword{fnal}. Given the fact that Oracle-based \dwords{db} are not guaranteed to be supported for the life of DUNE it would be beneficial to use a solution that enables a \dword{postgres} back-end.  The \dword{scada} system for \dword{dune} may also bring new challenges and the Database group are investigating potential solutions in collaboration with Slow Controls experts. 
+
+
+\subsection{Hardware Database Development}
+
+The core functionality of the Hardware Database is described in section \ref{sec:db:hwdb} and the first version is expected to be complete in FY22.  Experience gained as the consortia use the database are expected to motivate feature requests, many of which will require urgent attention to support the construction phase of \dword{dune}.  Looking further ahead, some attention will be needed to ensure the maintenance of this crucial database for the long lifetime of the collaboration.  Some information in the Hardware Database will correspond to Conditions Metadata (calibrations), thus requiring the transfer of data while retaining provenance.
+
+
+\subsection{Run Configuration Database Development}
+
+Transfer of Run Configuration information for offline use was a major problem for \dword{protodune} Run I, and significant effort will be used to improve the situation for Run II.  The evolution of both the \dword{dune} Conditions Database and \dword{daq} system could imply a similar amount of effort moving to \dword{dune}.
+
+
+\subsection{Other Database Development}
+
+The \dword{dune} Calibration system is expected to generate very large datasets that will be processed to create Conditions Metadata that needs to be transferred to the Conditions Database.  Meanwhile the Beam Conditions Database stores far more data than needed for the data processing Conditions Metadata, and effort will be needed to find efficient solutions for data reduction.  Finally, the Data Quality Monitoring Database is under the control of the \dword{dqm} group, with some amount of data needing to be transferred to the Conditions Database.  All of these connections could imply additional development work which, if arising from offline-only constraints, would should be supported by Database group effort.
+
+
+\subsection{Database Access Tool Development and Documentation}
+
+As more use cases and workflows are discovered, all of the \dword{dune} Databases will likely need to have tools to allow efficient and easy access to them. Perhaps even more important will be documentation, including training materials, that will need to be updated as development work proceeds.  Here the number of use cases, databases and groups involved drive the significant amount of effort required here.
+
 
 \subsection{Person Power Estimates}
 
@@ -334,18 +386,25 @@ Estimates of the personnel needs over the next three years are given in Table~\r
 
 \begin{dunetable}
 [Person-power estimates for database development]
-{l l l l l}
+{l l l l l l l l}
 {table:dbneeds}
-{Database group person-power needs over next three years.}
+{Database group R\&D person-power needs (FTE) from FY22 to FY27.}
 % \begin{table}[h!]
 % \centering
 %  \begin{tabular}{l l l l l} 
  
- Database & FY21 & FY22 & FY23 & Total \\ \toprowrule
+ % Assume we will mainly need to justify out to 2027 when there is a ramp down
+ Task & FY22 & FY23 & FY24 & FY25 & FY26 & FY27 \\ \toprowrule
  
-Conditions \dword{db} &  0.7 FTE & 0.5 FTE & 0.5 FTE & 1.7 FTE$\cdot$yr \\ \colhline
-Slow control \dword{db} &  0.5 FTE & 0.3 FTE & 0.3 FTE & 1.1 FTE$\cdot$yr \\ \colhline
-Run Configuration \dword{db} &  0.5 FTE & 0.3 FTE & 0.3 FTE & 1.1 FTE$\cdot$yr \\ 
+Conditions \dword{db}             & 0.7 & 0.7 & 0.7 & 0.7 & 1.0 & 1.0 \\ \colhline
+Payload Serialization             & 0.3 & 0.3 & 0.6 & 0.5 & 0.2 & 0.2 \\ \colhline
+Slow control \dword{db}           & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\ \colhline
+Hardware \dword{db}               & 0.5 & 0.5 & 0.4 & 0.3 & 0.3 & 0.1 \\ \colhline
+Run Configuration \dword{db}      & 0.3 & 0.3 & 0.1 & 0.3 & 0.3 & 0.1 \\ \colhline
+Calibration \dword{db}            & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\ \colhline
+Tools and Documentation           & 0.6 & 0.6 & 0.6 & 0.6 & 0.6 & 1.0 \\ \colhline
+\colhline
+Total effort \dword{db}           & 3.0 & 3.0 & 3.0 & 3.0 & 3.0 & 3.0 \\ 
 %%\end{tabular}
 %\caption{Database group person power needs over next 3 years.}
 %\label{table:dbneeds}

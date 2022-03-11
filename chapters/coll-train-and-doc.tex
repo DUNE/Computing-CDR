@@ -5,24 +5,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\section{xyz}
 %\label{sec:train:xyz}  %% fix label according to section
-The DUNE collaboration has grown rapidly since its inception, and it currently has members from almost 200 institutions.  Even if the size of the collaboration were to remain constant, new members will always be joining while others move on to other positions and projects.  The scale of the experiment demands a harmonized documentation effort, coupled with consistent training for both newcomers and existing users. Although treated separately in this section, the tasks of documentation and training are highly correlated. Both are crucial for the long term success of DUNE. 
+The DUNE collaboration has grown rapidly since its inception, and it currently has members from almost 200 institutions.  Even if the size of the collaboration were to remain constant, new members will always be joining while others move on to other positions and projects.  The scale of the experiment demands a harmonized documentation effort, coupled with consistent training for both newcomers and existing users. Although treated separately in this section, the tasks of documentation and training are highly correlated. Both are crucial for the long-term success of DUNE. 
 
 \section{Documentation}
 The documentation related to the DUNE’s computing aspects will be accessible on a variety of platforms, each with specific goals and access policies.
 
 \subsection{Wikis}
-The existing DUNE wiki acts as the landing page and starting point for ``DUNE Computing." It acts as a portal gathering information and links about the DUNE Computing consortium groups, its activities and related resources. The template has been revamped in early 2021 with a ‘block’ design for a more visual and compact layout. As with the rest of the DUNE wiki, its access is restricted; users need a FNAL Single Sign-On (SSO) service domain since the wiki contains information about computing access, node names, and other sensitive information.
+The existing DUNE wiki acts as the landing page and starting point for ``DUNE Computing." It acts as a portal gathering information and links about the DUNE Computing consortium groups, %its 
+their activities, and related resources. The template %has been 
+was revamped in early 2021 with a ``block'' design for a more visual and compact layout. As with the rest of the DUNE wiki, its access is restricted; users need a \dword{fnal} Single Sign-On (SSO) service domain since the wiki contains information about computing access, node names, and other sensitive information. \fixme{note that wiki is on the list for federation with CERN SSOs}
 
-A separate publicly accessible wiki for DUNE Computing is in preparation. The motivations for a dedicated public page are to make the information available for associated collaborations (e.g. OSG, WLCG, HSF), have a point of contact for newcomers not yet registered, and show the DUNE Computing activities to the outside world in general. This public portal has six main blocks: management, operation, getting started, user area, developer area, documentation. The management block informs about the consortium, the calendar of meetings, and list the associated collaborations. The operation block redirects to monitoring pages essential during data taking and/or production (FIFEmon tools). The block ‘getting started’ will have pointers on the tutorials, training sessions and how-tos. The block 'user area' collects links about analysis tools, framework, and helpdesk. The DUNE Computing working groups are listed on the developer area, and conveners of each working group will maintain their page. Last but not least, the documentation block gathers links about data policies and preservation, information protection, and the documents in progress.
+A separate publicly accessible wiki for DUNE Computing is in preparation. The motivations for a dedicated public page are to make the information available for associated collaborations (e.g., \dword{osg}, \dword{wlcg}, \dword{hsf}), have a point of contact for newcomers not yet registered, and show the DUNE Computing activities to the outside world, in general. This public portal has six main blocks: management, operation, getting started, user area, developer area, and documentation. The management block informs about the consortium, the calendar of meetings, and lists the associated collaborations. The operation block redirects to monitoring pages that are essential during data taking and/or production (e.g., FIFEmon tools). The block ``getting started'' will have pointers to the tutorials, training sessions, and how-tos. The block ``user area'' collects links about analysis tools, framework, and %anne helpdesk
+the \dword{fnal} service desk. The DUNE Computing working groups are listed on the developer area, and conveners of each working group will maintain their page. Last but not least, the ``documentation'' block gathers links about data policies and preservation, information protection, and the documents in progress.
 
 \todo{trj: Do we really need to hide login commands and node names?}
-Critical information such as login commands or computer node names will not be visible on the public wiki. Instead, the public wiki will provide links pointing to an access-restricted page on DUNE’s main wiki where details can be safely provided. Only users with approved DUNE credentials will be able to access them. The public wiki will not duplicate the information but rather offer a summary to the outside world, benefiting visitors from founding agencies and future DUNE’s newcomers, not to mention the potential to foster collaborations with scientists from other experiments.
+Critical information such as login commands or computer node names will not be visible on the public wiki. Instead, the public wiki will provide links pointing to an access-restricted page on DUNE’s main wiki where details can be safely provided. Only users with approved DUNE credentials will be able to access them. The public wiki will not duplicate the information but rather offer a summary to the outside world, benefiting visitors from funding agencies and future DUNE’s %newcomers
+collaborators, not to mention the potential to foster collaborations with scientists from other experiments.
 
 % trj update March 3, 2022  -- the transition for code to GitHub is already done.  Wiki pages not yet.
 
 \subsection{Redmine}
 
-Fermilab's Redmine service was historically used to host DUNE Far Detector and ProtoDUNE software, wikis, and issue tracking.  Prior to 2021, read access to Redmine was open to the public, but write access required authentication.  Starting in the summer of 2021, all access to Redmine requires authentication.  As of January 2022, the DUNE far detector and ProtoDUNE software repositories have been migrated to GitHub, to take advantage of its better performance, the better feature set compared with Redmine, and the openness it provides. Work is planned to migrate the contents of the associated wiki pages to the access-restricted DUNE wiki discussed previously, while the issue tracking will be transitioned to Github.
+Fermilab's Redmine service was historically used to host DUNE \dword{fd} and \dword{protodune} software, wikis, and issue tracking.  Prior to 2021, read access to Redmine was open to the public, but write access required authentication.  Starting in the summer of 2021, all access to Redmine requires authentication.  As of January 2022, the DUNE \dword{fd} and \dword{protodune} software repositories have been migrated to GitHub, to take advantage of its better performance, the better feature set %compared with
+relative to Redmine, and the openness it provides. Work is planned to migrate the contents of the associated wiki pages to the access-restricted DUNE wiki discussed previously, while the issue tracking will be transitioned to Github.
 
 \subsection{Code Documentation}
 One of the challenges for any large experiment is documentation of the algorithms and software. Following the lead of the Belle2 experiment, DUNE plans to explore the implementation of the Sphynx\footnote{https://www.sphinx-doc.org/en/master/} package for the automatic generation of code documentation. The generation of in-code comments and dedicated text files utilized by Sphynx will be the responsibility of code librarians and contributors of each sub-repository within the dunetpc code stack.
@@ -30,7 +35,7 @@ One of the challenges for any large experiment is documentation of the algorithm
 % trj: update to say we have migrated.  though the wikis and tickets have not yet.
 
 \subsection{GitHub}
-DUNE software repositories have migrated to the version-controlled platform GitHub.  GitHub offers a ticketing system facilitating debugging, revisions and updates from the community of users, though DUNE does not yet use GitHub's wikis or ticketing system extensively.  The {\it art} and LArSoft teams have transitions to using GitHub's ticketing system from the Redmine system.  The work to make this transition for DUNE is underway and is following the guidance of the HSF community. Issues of access, privacy, and de-authorization of accounts are currently under investigation and it has not yet been determined what the future policy shall be.
+DUNE software repositories have migrated to the version-controlled platform GitHub.  GitHub offers a ticketing system to facilitate debugging, revisions and updates from the community of users, though DUNE does not yet use GitHub's wikis or ticketing system extensively.  The \dword{art} and \dword{larsoft} teams have transitioned from the Redmine system to using GitHub's ticketing system .  The work to make this transition for DUNE is underway and follows the guidance of the \dword{hsf} community. Issues of access, privacy, and de-authorization of accounts are currently under investigation, and the future policy has not yet been determined. % what  shall be.
 
 \todo{trj:  Are the issues of access and privacy related to code or documentation?  We want our code to be publicly readable, although we have not settled on a final write policy. Currently we let anyone write, but LArSoft locks that down to a set of managers, for example.  But this is a chapter on documentation, not code.}
 
@@ -39,37 +44,77 @@ DUNE software repositories have migrated to the version-controlled platform GitH
 % trj: add clause about how tools evolve over time
 
 \subsection{Goals of DUNE Training}
-DUNE’s training aims at serving both newcomers and existing users, offering a smooth start for the former and continuous support for the latter. DUNE recognizes that the computing environment and tools utilized within a HEP experiment are unique and evolve over time, and thus they require specialized training. The goals are to teach the basics of the environment and software used for analysis, as well as best practices in programming and data management. The training is offered through various formats and platforms, as well as tools and collaborations, all discussed below. 
+DUNE’s training aims to serve both newcomers and existing users, offering a smooth start for the former and continuous support for the latter. DUNE recognizes that the computing environment and tools used within a HEP experiment are unique and evolve over time, and thus they require specialized training. The goals are to teach the basics of the environment and software used for analysis, as well as best practices in programming and data management. The training is offered through various formats, tools and platforms, as well as partnering with other collaborations, all discussed below. 
+
 
 % trj: tweak the "several" clause to have fewer hyphens March 2
 
 \subsection{Training sessions}
-The primary training for new DUNE members is done twice a year during  dedicated sessions that extend over several days. These sessions are coordinated with the collaboration week, occurring alternatively before or after. Such timing secures a good attendance for both newcomers and lecturing experts.
-The format of the training is an alternation of lectures and hands-on sessions. Introductory instructions and homework exercises are sent to participants before the tutorials to ensure the trainees arrive with access to computing resources, one of the primary hurdles to learning about and using new computing environments.
+The primary training for new DUNE members is done twice a year during  dedicated sessions that extend over several days. These sessions are coordinated with the collaboration meeting weeks, occurring alternatively before or after. Such timing secures a good attendance for both new collaborators and lecturing experts.
+The format of the training is an alternation of lectures and hands-on sessions. Introductory instructions and homework exercises are sent to participants before the tutorials to ensure the trainees arrive with access to computing resources and are prepared for the material. %anne (I replaced this part of the sentence), one of the primary hurdles to learning about and using new computing environments.
 
 %trj: improved sentence about retaining old tutorial material
 
-General topics such as DUNE computing basics and grid job submission are covered each year. However, due to the vast suite of software used by the DUNE collaboration for the various analysis steps and sub-detectors, each event will highlight a particular software package or analysis toolkit.  All materials and documentation from past tutorials are retained and prominently linked on the DUNE wiki to serve as self-education material, providing an asynchronous training for newcomers having missed a previous session.
+General topics such as DUNE computing basics and grid job submission are covered each %year
+session. However, due to the vast suite of software used by the DUNE collaboration for the various analysis steps and sub-detectors, each %event will 
+session highlights a particular software package or analysis toolkit.  All materials and documentation from past tutorials are retained and prominently linked on the DUNE wiki to serve as a library of self-education material. %anne (not needed), providing an asynchronous training for newcomers having missed a previous session.
 
-\subsection{Training tools}
-The past sessions have used the wiki as main support for the training material. The lectures proceed through a dedicated wiki page containing informative sections, sets of commands to run and numerous links pointing to further reading.
+\subsection{Training Tools}
+The past sessions have used the wiki as main %support 
+platform for the training material. The lectures proceed through a dedicated wiki page containing informative sections, sets of commands to run, and numerous links pointing to further reading.
 
-The DUNE Computing training group plans to create a dedicated FAQ platform. It would be similar to Askbot\footnote{https://askbot.org}, an open source, web-based application offering user support with a question database whose answers are rated by relevance and popularity (inspired by the source-based websites Reddit and Stackoverflow). This choice is motivated by the positive feedback of the training organized in January 2021. Askbot is no longer available, so for now live documents (hosted on GoogleDoc) were shared to welcome questions from the participants. The anonymity is a key feature. Participants could ask anonymously, a key feature as many young members are usually not daring to ask. Experts then provide written answers. The numerous questions with their answers are later added to the tutorial wiki pages. Following this success, a dedicated FAQ instance would be an efficient, crowd-based, and self-maintained platform to eventually collect the most frequently asked questions, while offering the most relevant answers or solutions.
+The DUNE Computing training group plans to create a dedicated FAQ to provide an efficient, crowd-based, and self-maintained platform for support. It would be similar to Askbot\footnote{https://askbot.org}, an open source, web-based application offering user support with a question database whose answers are rated by relevance and popularity (inspired by the source-based websites Reddit and Stackoverflow). This choice is motivated by the positive feedback on the use of Askbot from the January 2021 training session. \fixme{correct?} Askbot is no longer available, so for now, GoogleDocs is used %live documents (hosted on GoogleDoc) were shared 
+to welcome questions from the participants. For the future FAQ, anonymity is a key feature to encourage participation. %Participants could ask anonymously, a key feature as many young members are usually not daring to ask. 
+Experts %then 
+would provide written answers to the questions, and the FAQ would be available from %. The numerous questions with their answers are later added to 
+the tutorial wiki pages. % anne - this doesn't add anything: Following this success, a dedicated FAQ instance would be an efficient, crowd-based, and self-maintained platform to eventually collect the most frequently asked questions, while offering the most relevant answers or solutions.
 
-In the future, DUNE has the goal that training events will utilize Jupyter notebooks, and therefore provide an interactive environment for the trainees to run the examples, do exercises, and tweak portions of code to deepen their understanding of the analysis software. These notebooks will be accessible through a JupyterHub server provided by FNAL and CERN, as well as other hosting institutions equipped with computing resources and analysis facility tools. The notebooks will be archived and referenced on the wiki as self-training modules for newcomers as well as inspiration material for young lecturers.
+In the future, DUNE %has the goal that training events will utilize 
+plans to use Jupyter notebooks, %and therefore 
+which provide an interactive environment for the trainees to run the examples, complete the exercises, and tweak portions of code. %anne to deepen their understanding of the analysis software. 
+These notebooks will be accessible through %a 
+JupyterHub servers provided by \dword{fnal} and the \dword{cern}, as well as by other hosting institutions equipped with computing resources and analysis facility tools. The notebooks will be archived and referenced on the wiki as self-training modules for newcomers as well as %inspiration 
+reference material for %young 
+lecturers.
 
-Lectures will be recorded and the recordings will be uploaded to YouTube or a similar service.  Links of the video recordings will be posted on the wiki or a dedicated platform. The training sessions will thus be available at any time.  This model has already been used for the May 2021 training.
+Lectures will be recorded and the recordings will be uploaded to YouTube or a similar service to be available at any time.  Links of the video recordings will be posted on the wiki or a dedicated platform. %The training sessions will thus be available at any time.  
+This %model has already been used 
+was done for the May 2021 training.
 
-\subsection{Partnering with other collaborations}
-The HEP Software Foundation (HSF) has started a continuous effort of harmonizing their tutorials under a common template called “training module.” The HSF aims at creating an introductory curriculum giving HEP newcomers the basic set of software needed while instilling good programming practices right at the start. Several of their modules for beginners are offered by the Software Carpentry Foundation\footnote{https://software-carpentry.org }. The growing list of modules can be found on the HSF website “Towards a HEP Software Training curriculum"~\footnote{https://hepsoftwarefoundation.org/training/curriculum.html}.
+\subsection{Partnering with other Collaborations}
+The \dword{hsf} has started a continuous effort of harmonizing their tutorials under a common template called ``training module'' %The \dword{hsf} aims at creating 
+to create an introductory curriculum %giving HEP newcomers 
+with the basic set of software needed %while instilling 
+and to instill good programming practices right at the start. Several of their modules for beginners are offered by the Software Carpentry Foundation\footnote{https://software-carpentry.org}. The growing list of modules can be found on the \dword{hsf} website ``Towards a HEP Software Training Curriculum''~\footnote{https://hepsoftwarefoundation.org/training/curriculum.html}.
 
-The DUNE Computing training group is working in collaboration with the HSF. The DUNE training is pointing newcomers to HSF's curriculum page so that they can learn on the prerequisites before attending an official DUNE training. This will give the HSF an audience to their self-serve training centre, which in return provides valuable feedback and thus the opportunity to improve and fine-tune their HSF tutorials. In the middle term, the neutrino specifics will be introduced for HSF and bring a diversity in their curriculum.
+The DUNE Computing training group is working in collaboration with the \dword{hsf}. The DUNE training %is pointing newcomers 
+points to \dword{hsf}'s curriculum page so that %they 
+newcomers can learn the prerequisites before attending a %n official 
+DUNE training. This %will give 
+in turn provides an audience for the \dword{hsf} material, %to their self-serve training centre, which in return 
+providing that organization valuable feedback. % and thus the opportunity to improve and fine-tune their HSF tutorials. In the middle term, the neutrino specifics will be introduced for HSF and bring a diversity in their curriculum.
+It will also introduce specifics on neutrino physics to their curriculum.
 
-\subsection{From trainee to mentor, user to lecturer}
-A key aspect of the success of the HSF workshops resides in its mentoring system. Participants are split in small groups with one mentor to assist the students. The mentors are young researchers and alumni of the previous training session. This facilitates communication as newcomers are less reluctant to ask questions. After a couple of training sessions, the mentors can be trained by experts to become lecturers, acquiring new skills with their favorite software. The DUNE Computing consortium plans to reproduce the HSF mentoring and training scheme with frequent calls for mentors within the collaboration.
+\subsection{From Trainee to Mentor, User and Lecturer}
+A key aspect of the success of the \dword{hsf} workshops %resides in 
+is its mentoring system. Participants are split into small groups with one mentor to assist the students. The mentors are %young researchers and 
+alumni of %the previous 
+one of the recent training sessions, typically young, easy-to-approach researchers. %This facilitates communication as newcomers are less reluctant to ask questions. 
+After a couple of training sessions, the mentors can be trained by experts to become lecturers, acquiring new skills with their favorite software. The DUNE Computing consortium plans to reproduce the \dword{hsf} mentoring and training scheme %with 
+by issuing frequent calls for mentors within the collaboration.
 
-\subsection{Future formats}
-The DUNE Computing training group is also committed in surveying the needs and various demands for particular aspects and skills the members would like to learn. Recent surveys have shown that LArSoft and Pandora are popular topics, that there is a general interest to know the ‘best practices’ for building analysis code, not to mention learning about machine learning techniques, such as Keras, Tensorflow and GPU libraries. The breadth of the tutorial wish-list is too large to efficiently cover during one bi-annual DUNE training, but continued input from tutorial attendees allow the planning of future topic specific lectures and tutorials. Moreover, incoming students are each working on a specific aspect of the DUNE project. A project-based approach such as a hackathon would be an ideal format for the training, where students would team up on an aspect directly linked with their analysis. They ``go back home'' with a program directly needed for their research. The presence of an expert to give them early guidance would be greatly beneficial as it would instill good practices while building the students' confidence as future analyzers. An experimental hackathon training organized in 2021 tested this format for the coming years.
+\subsection{Future Formats}
+The DUNE Computing training group is also committed to surveying the needs and %various 
+demands for particular %aspects and 
+skills the members would like to learn. Recent surveys have shown that \dword{larsoft} and \dword{pandora} are popular topics, as are %that there is a general interest to know the `
+best practices for building analysis code, %not to mention learning about 
+and machine learning techniques, such as Keras, Tensorflow and GPU libraries. %anne The breadth of the tutorial wish-list is too large to efficiently cover during one bi-annual DUNE training, but continued input from tutorial attendees allow the planning of future topic specific lectures and tutorials. Moreover, incoming students are each working 
+It is impossible to cover the wish-list topics during any given bi-annual session, %Typically, students each work on a specific aspect of the DUNE project. A 
+so a project-based approach such as a hackathon would be an ideal format for some of these topics. Since  students typically each work on a specific aspect of the DUNE project, this would allow students to team up on %an aspect 
+a topic directly linked with their analysis, guided by an expert. %anne They ``go back home'' with a program directly needed for their research. 
+%The presence of an expert to give them early guidance would be greatly beneficial as it would instill good practices while building the students' confidence as future analyzers. 
+An experimental hackathon training organized in 2021 tested this format. % for the coming years.
+\fixme{with good results? (anne)}
 
 
 
