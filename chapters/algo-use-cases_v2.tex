@@ -104,14 +104,14 @@ In \dword{pdsp} lossless compression was performed as part of the \dword{daq}. F
 \subsection{Outputs from DAQ and Monitoring}
 
 %\fixme{Doug: this sentence does not make sense.when it is compiled in LaTeX. HMS 3/3 I clarified it - just trying to say what the outputs should be. }
-The end result of data acquisition includes the transfer of the data themselves and of the%anne we assume 
+The end result of data acquisition includes the transfer of the data themselves and of the %anne we assume 
 metadata and configuration/calibration/beam information needed for offline processing. 
 
 
 \section{Simulation Chain \hideme{Junk and Schellman - draft}}
 
 % 
-The simulation chain involves multiple steps.
+The \dword{dune} simulation chain involves a large number of steps including beam simulation, event simulation, simulation of energy deposition and simulation of detector and electronics response. \dword{fd} and \dword{protodune} share a common simulation framework, based on \dword{art} and \dword{larsoft}, with other Fermilab \dword{lartpc} experiments while the \dword{nd} simulation framework is still under development. 
 
 %anne \subsection{MARS} - moved to under next section
 
@@ -119,11 +119,11 @@ The simulation chain involves multiple steps.
 \subsection{Beam Simulations}
 The \dword{mars}\cite{abs1} simulation is used in the design of the beamline and near detector systems and  for safety and environmental calculations.  It is a significant user of CPU time. 
 
-{\it Unique challenge: the \dword{mars}\ codes are not available outside of \dword{fnal}.}
+{\it Unique challenge: the \dword{mars}\ codes are not available outside of US.}
 
-The \dword{lbnf} 
-beamline is simulated using the \dword{g4lbnf} framework.  The \dword{proto} beamlines were designed and simulated using the \dword{madx} framework used at \dword{cern}\cite{PhysRevAccelBeams.20.111001}.
-Inputs include random number seeds and the beamline and target region geometry and materials.  Outputs are flux files containing simulated neutrino trajectories.  The flux files contain sufficient information to allow reweighting based on interaction cross sections.  These flux files must be catalogued and made available to offline simulation jobs.
+Neutrino production in the \dword{lbnf} 
+beamline  is simulated using the \dword{g4lbnf} framework.  The \dword{proto} beamlines were designed and simulated using the \dword{madx} framework used at \dword{cern}\cite{PhysRevAccelBeams.20.111001}.
+Inputs include random number seeds and the beamline and target region geometry and materials.  Outputs are flux files containing simulated particle  trajectories.  The flux files contain sufficient information to allow reweighting based on interaction cross sections.  These flux files must be cataloged and made available to offline simulation jobs.
 
 {\it Minor challenge:  Distribution of flux files to remote sites requires use of \dword{stashcache} and careful record keeping.}
 
@@ -132,12 +132,14 @@ Inputs include random number seeds and the beamline and target region geometry a
 
 Offline event generation, simulation, reconstruction and visualization tasks require descriptions of the geometries of the relevant detectors.  In contrast to a colliding-beam experiment in which most physics processes of interest take place at a collision point in an evacuated beam pipe, a neutrino experiment's detector is the interaction target.  Therefore, the event generator must be aware of the spatial distribution of significant amounts of material, listed separately for each element's contribution, and the local densities.  Neutrino cross sections on some elements are poorly known and do not form the primary constituents of the detector materials, and a simplified geometry for use in the event generation is often useful.
 
-\dword{geant4}~\cite{geant4} requires a representation of the spatial locations of materials in order to simulate interactions of all particles except neutrinos.  As for the generator, a very detailed geometry with a cylinder of CuBe for each wire in a horizontal-drift \dword{apa}, uses a large amount of memory and CPU for a very small amount of non-fiducial interaction modeling, therefore %and so 
+Once the primary interaction has been simulated, \dword{geant4}~\cite{geant4} requires a representation of the spatial locations of materials in order to simulate interactions of all particles except neutrinos.  As for the generator, a very detailed geometry with a cylinder of CuBe for each wire in a horizontal-drift \dword{apa}, uses a large amount of memory and CPU for a very small amount of non-fiducial interaction modeling, therefore %and so 
 simplified geometry descriptions are needed.
 
 The common language used in DUNE for geometry description is Geometry Description Markup Language (\dword{gdml})~\cite{gdml}.  It is stored in human-readable text files.  Versions of each detector's geometry are saved alongside software source code in the code repository.  When a release is built, these \dword{gdml} files are copied into directories that are visible to running jobs.  At the time of writing, \dword{cvmfs} is the chosen distribution method for pre-compiled code and small auxiliary files like \dword{gdml} files.   Both \dword{geant4} and \dword{root} have functionality for reading \dword{gdml} files.
 
-One notable difference with respect to code versioning is that all supported versions of the \dword{gdml} files for a detector must be available in each release.  If a geometry description is updated for a release of the software, the older versions must be kept, with the old \dword{gdml} filenames, in order to ensure backwards compatibility, as data files are stored on disk and tape, assuming the old geometry.  DUNE thus uses a simple additional versioning system by adding a version number to each detector's \dword{gdml} filename.  \dword{larsoft} and  \dword{garsoft} jobs allow for \dword{fhicl} configuration of the detector geometry \dword{gdml} file.  A \dword{larsoft}  job, if run as input with data from an earlier LArSoft job, will check the compatibility of the requested \dword{gdml} file and that used for the input.  By default, if there is a mismatch, an exception is thrown and the job stops.  Sometimes, however, it is desired to simulate and reconstruct \dword{mc} samples with different geometries, in order to simulate misalignments, for example.  In order to accommodate these cases, the geometry consistency check can be disabled by setting an appropriate \dword{fhicl} parameter.
+One notable 
+requirement %difference 
+fort code versioning is that all supported versions of the \dword{gdml} files for a detector must be available in each release.  If a geometry description is updated for a release of the software, the older versions must be kept, with the old \dword{gdml} filenames, in order to ensure backwards compatibility, as data files are stored on disk and tape, assuming the old geometry.  DUNE thus uses a simple additional versioning system by adding a version number to each detector's \dword{gdml} filename.  \dword{larsoft} and  \dword{garsoft} jobs allow for \dword{fhicl} configuration of the detector geometry \dword{gdml} file.  A \dword{larsoft}  job, if run as input with data from an earlier LArSoft job, will check the compatibility of the requested \dword{gdml} file and that used for the input.  By default, if there is a mismatch, an exception is thrown and the job stops.  Sometimes, however, it is desired to simulate and reconstruct \dword{mc} samples with different geometries, in order to simulate misalignments, for example.  In order to accommodate these cases, the geometry consistency check can be disabled by setting an appropriate \dword{fhicl} parameter.
 
 \dword{gdml}  files contain many similar blocks in them for detectors with repeated, similar structures.  The \dword{gdml}  files for the %Horizontal and Vertical Drift 
 \dword{sphd} and \dword{spvd} far detector modules and the \dwords{protodune} are made with Perl scripts and a number of small shell scripts to make final adjustments.  Some of the inputs are not repetitive, such as material mixture definitions, and these fragments are hand-edited.  \dword{gdml}  files for the near detectors are made with DUNENDGGD~\cite{ref:ggd}.  DUNENDGGD takes as input Python classes called ``builders'' 
@@ -1109,4 +1111,4 @@ Parameter estimation	&		&		&		&		&		&			\\
 
 
 
-\end{document} % if using subfiles
+%\end{document} % if using subfiles
