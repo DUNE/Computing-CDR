@@ -1,6 +1,6 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Computing Organization - updated 3/1}\label{ch:org}
+\chapter{Computing Organization\hideme{Ready 3/13}}\label{ch:org}
 
 The offline computing organization for DUNE has several facets. The main focus of the formal Computing Consortium (and this document) is the computing infrastructure that allows development and implementation of algorithms and data analysis techniques rather than the algorithms and analysis themselves. Algorithms and analysis are the purview of the physics groups.
 
@@ -15,7 +15,7 @@ This section describes the formal Computing Consortium that concentrates on deve
 {\includegraphics[width=0.9\textwidth]{graphics/IntroFigures/MTOrgChartFeb22.png}}
 \end{dunefigure}
 
-Figure \ref{fig:orgchart} shows the Computing Consortium organization as of February 2022.  The Consortium leadership consists of a Consortium Lead, responsible for overall coordination, two technical leads, one US-based and the other from the international collaboration and a Computing Architect.  There is an Algorithms Liaison responsible for coordinating with the Physics group and an independent Computing Contributions Board \ref{sec:ccb} that negotiates resource contributions from global collaborators. 
+Figure \ref{fig:orgchart} shows the Computing Consortium organization as of February 2022.  The Consortium leadership consists of a Consortium Lead, responsible for overall coordination, two technical leads, one US-based and the other from the international collaboration and a Computing Architect.  There is an Algorithms Liaison responsible for coordinating with the Physics group and an independent Computing Contributions Board described in Section \ref{sec:ccb} that negotiates resource contributions from global collaborators. 
 
 The Computing Consortium is not formally part of the \dword{dune} construction project but has representation on the Executive Board.  The Computing Consortium is part of the interface document matrix with the construction consortia and interface agreements exist in the CERN EDMS \cite{dune-edms} system and are listed in Table \ref{tab:intro:interfacedocs}. The most important interfaces are 1) data-management and networking with the DAQ and calibration groups and 2) databases with the DAQ and hardware construction groups. 
 
@@ -68,15 +68,15 @@ Within the Consortium there are specific development groups responsible for part
 
 \item{Training, Document and User support} - Responsible for development of training materials, infrastructure for and review of documentation and for directing users to experts and documentation where needed. See Chapter \ref{ch:train}.
 
-\item Near Detector Software - responsible for coordination of the unique \dword{nd} software and integration with the main \dword{dune} infrastructure.
+\item Near Detector Software - responsible for coordination of the unique \dword{nd} software and integration with the main \dword{dune} infrastructure. See Section \ref{ch:use:nd}. 
 
 \end{itemize}
 
 \section{Funding Sources for Computing Development}
-Most personnel working on \dword{dune} computing are supported by their institutions or national funding agencies as part of general or \dword{dune} project support.  One exceptions are a US \dword{doe} funded consortium of 4 universities and 3 national labs funded specifically for \dword{dune} computing infrastructure at a level of \$1M/year, directly supporting postdocs and lab physicists summing to $\sim 6$ FTE.  The UK and France also make significant contributions through the DUNE project. 
+Most personnel working on \dword{dune} computing are supported by their institutions or national funding agencies as part of general or \dword{dune} project support.  One exceptions are a US \dword{doe} funded consortium of 4 universities and 3 national labs funded specifically for \dword{dune} computing infrastructure at a level of \$1M/year, directly supporting postdocs and lab physicists summing to $\sim 6$ FTE.  The UK,  France and CERN also make significant contributions to software development through the DUNE project while many nations contribute substantial hardware capabilities. 
 
 
-\section{Computing Contributions Board \hideme{HMS 3/2 moved from separate chapter}}\label{sec:ccb}
+\section{Computing Contributions Board }\label{sec:ccb}
 
 In addition to the formal Consortium, CPU and storage resources are contributed by sites and countries through formal pledges facilitated by the \dword{ccb}. 
 
@@ -92,7 +92,9 @@ CERN also currently provides a substantive capacity, in particular for \dword{pr
 The aim is then for the remaining capacity to come from other contributors according to the prevailing computing model. A substantial proportion of capacity is expected from outside of the USA  (~50\%). Contributions of at least 5-20\% are requested depending upon the circumstance and capability of each compute-active-nation.
 Pledges of capacity received are recorded in the CRIC information system. In due course this process could be formalized into a (non-binding) MOU.
 
-The \dword{ccb} may also receive requests and information from the Computing Consortium Management in respect of any other non-capacity matter. The \dword{ccb} may seek to help with such requests where they pertain to national contributions. This may include promotion of requests for software engineering support to be propagated within each nation.
+The \dword{ccb} may also receive requests and information from the Computing Consortium Management in respect of any other non-capacity matter. The \dword{ccb} may seek to help with such requests where they pertain to national contributions. This may include promotion of requests for software engineering support to be propagated within each nation.  
+
+Chapter \ref{ch:cm:intro} describes the impact of  collaboration contributions in more detail. 
 
 % \hideme{I propose moving the subsections here into the appropriate later chapters and using this section to describe the global compute model}
 

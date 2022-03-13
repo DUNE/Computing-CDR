@@ -1,6 +1,6 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Data Placement \hideme{Steve, Kirby and Heidi } }
+\chapter{Data Placement \hideme{draft 3/10 moved from end to right after data placement } }
 \label{ch:place}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -101,8 +101,8 @@ system, including a full copy of the \dword{protodune} raw data in \dword{castor
     
 \end{description}
 
-As described in the data volumes section \ref{ch:est}, raw data is kept in multiple tape copies but only kept on disk for the short period before calibration and reconstruction are complete.  If reprocessing is needed, the raw data must be prestaged to cache and work on optimizing this process is underway. Recent reconstructed data and simulation copies for users are kept on \dword{rucio}/\dword{sam} controlled disk, with one copy in the US and one in Europe if possible. Smaller final analysis samples are kept on user or group controlled persistent dcache or \dword{nas} areas. aAl datasets will have a well-defined data lifetime within the Rucio system and replication and distribution of raw data and production datasets will be implemented and performed by Rucio.
-
+As described in the data volumes section \ref{ch:est}, raw data is kept in multiple tape copies but only kept on disk for the short period before calibration and reconstruction are complete.  If reprocessing is needed, the raw data must be prestaged to cache and work on optimizing this process is underway. Recent reconstructed data and simulation copies for users are kept on \dword{rucio}/\dword{sam} controlled disk, with one copy in the US and one in Europe if possible. Smaller final analysis samples are kept on user or group controlled persistent dcache or \dword{nas} areas. Rucio will perform replication and distribution of raw data and production datasets. 
+ All datasets will have a well-defined data lifetime within the Rucio system. 
 %\todo{Overlay policy - how does it work for MicroBooNE and NOvA}
 \end{document}
 

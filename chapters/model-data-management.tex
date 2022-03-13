@@ -18,16 +18,25 @@ system, to replace the legacy \dword{sam}~\cite{Illingworth:2014mba} system, whi
 and file delivery.  Those functions are being separated with well defined interfaces.  The goal is to have the new systems in place before beam running begins on \dword{pdsp2} %HMS - is this ok now? anne ProtoDUNE-II (single-phase 
 (horizontal drift).  
 
-\todo{Put a figure showing current and future architectures here}
-% \begin{dunefigure}
-% [Data management architecture diagram]
-% {fig:datamanagement} 
-% {Data management architecture diagram}
-% \includegraphics[height=8cm]{graphics/DataManagement/data_mgmt_diagram.pdf}
-% \end{dunefigure}
-% \todo{Get better figure}
+Figures \ref{fig:datamanagement_old} and \ref{fig:datamanagement} illustrate the old and proposed data management architectures with the legacy \dword{sam} system replaced by a new catalog and the \dword{rucio} storage management systems. 
 
-\todo{Need to insert basic data management architecture here}
+%\todo{Put a figure showing current and future architectures here}
+\begin{dunefigure}
+[SAM Data management architecture diagram]
+{fig:datamanagement_old} 
+{Legacy \dword{sam} data management architecture.  The \dword{sam} system provides both catalog and data location information to processing nodes.}
+\includegraphics[height=8cm]{graphics/DataManagement/data_mgmt_figures_old.png}
+\end{dunefigure}
+
+\begin{dunefigure}
+[New Data management architecture diagram]
+{fig:datamanagement} 
+{Proposed data management architecture diagram.  The \dword{sam} functions are divided between the \dword{metacat} catalog, the \dword{rucio} data movement system and a \dword{datadis} that interfaces to processing and monitoring systems.  }
+\includegraphics[height=8cm]{graphics/DataManagement/data_mgmt_figures.png}
+\end{dunefigure}
+%\todo{Get better figure}
+
+%\todo{Need to insert basic data management architecture here}
 
 %\label{ch:sam:catalog}
 

@@ -35,10 +35,10 @@
 % Workflow Examples (Wrkflw)
 
 
-\chapter{Introduction \hideme{Schellman/Muether/Junk/Pennacchio - SN added 2/19} }
+\chapter{Introduction \hideme{ready 3/13?} }
 \label{ch:intro}
 
-\hideme{HMS 3/3 changed the supernova to 140+180 -> 320}
+%\hideme{HMS 3/3 changed the supernova to 140+180 -> 320}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\section{xyz}
 %\label{sec:intro:xyz}  %% fix label according to section
@@ -47,11 +47,11 @@
 %\todo{Need to add discussion of physics requirements that drive computing}
 
 %\todo{Need to add a section on simulation}
-\todo{And brief subsection on solar/atmospheric/BSM physics}
+%\todo{And brief subsection on solar/atmospheric/BSM physics}
 %st changed "on" to "in" and delete second "on"
 %st fixed awkward last sentence of paragraph (split infinitive and misplaced comma)
-\section{Mission Statement}
-\fixme{(anne) This isn't really a 'mission statement' - I'd skip this section header and just leave the pgraph}
+%\section{Mission Statement}
+%HMS 3/12 \fixme{(anne) This isn't really a 'mission statement' - I'd skip this section header and just leave the pgraph}
 This document describes Software and Computing for the \dword{dune} experiment, in particular, the conceptual design of the offline computing needed to accomplish its physics goals. Our emphasis in this document is the development of the computing infrastructure needed to acquire, catalog, reconstruct, simulate and analyze the data from the \dword{dune} experiment and its prototypes. In this effort, we concentrate on developing the tools and systems that facilitate the development and deployment of advanced algorithms rather than the details of the algorithms themselves. Rather than prescribing particular algorithms, our goal is to provide resources that are flexible and accessible enough to support creative software solutions as \dword{hep} computing evolves
 and provide computing that achieves the physics goals of the \dword{dune} experiment. %Kirby  
 
@@ -59,11 +59,15 @@ and provide computing that achieves the physics goals of the \dword{dune} experi
 
 %Anne The \dword{dune}  will begin running in the late 2020's. The goals of the experiment include 1) studying neutrino oscillations using a beam of neutrinos from Fermilab in Illinois to the the \dword{surf} in Lead, South Dakota, 2) studying  astrophysical neutrino sources and rare processes and 3) understanding  the physics of neutrino interactions in matter.
 % from Anne: this is more standard:
-The international \dword{dune} experiment, hosted by the U.S. Department of Energy's \dword{fnal}{},  will begin running in the late 2020's. It will consist of a \dword{fd} located about \SI{1.5}{km} underground at the \dword{surf} in South Dakota, USA, \SI{1300}{\km} from \dword{fnal}{}, and a \dword{nd} located on site at \dword{fnal} in Illinois. The \dword{dune} detectors will be exposed to the world's most intense neutrino beam originating at \dword{fnal}{}. A high-precision near detector, \SI{574}{m} from the neutrino source on the \dword{fnal} site, will be used to characterize the intensity and energy spectrum of this wide-band beam. The overriding physics goals of the \dword{dune} experiment are the search for leptonic \dword{cp} violation, the search for nucleon decay as a signature of a Grand Unified Theory underlying the Standard Model, and the observation of  \dwords{snb} from supernovae.
+The international \dword{dune} experiment, hosted by the U.S. Department of Energy's \dword{fnal},  will begin running in the late 2020's. It will consist of a \dword{fd} located about \SI{1.5}{km} underground at the \dword{surf} in South Dakota, USA, \SI{1300}{\km} from \dword{fnal}{}, and a \dword{nd} located on site at \dword{fnal} in Illinois. The \dword{dune} detectors will be exposed to the world's most intense neutrino beam originating at \dword{fnal}{}. A high-precision near detector, \SI{574}{m} from the neutrino source on the \dword{fnal} site, will be used to characterize the intensity and energy spectrum of this wide-band beam. The overriding physics goals of the \dword{dune} experiment are the search for leptonic \dword{cp} violation, the search for nucleon decay as a signature of a Grand Unified Theory underlying the Standard Model,  the observation of  \dwords{snb} from supernovae in our galaxy, and studies of solar neutrinos.  %anne from supernovae.
 %anne moved above -- This document is intended to describe the conceptual design of the offline computing needed to accomplish these physics goals. %Kirby
 
-\todo{How do I do this?}
- % I will concentrate on the neutrino oscillation and supernova capabilities of the experiment and the ways that they drive computing. 
+
+%\todo{How do I do this? - HMS do what? }
+This document  concentrates on the neutrino oscillation and supernova capabilities of the experiment as their needs for high data volumes and high precision measurements at low interaction energies drive the computing needs for the experiment. 
+
+%\section{Neutrino Oscillation Physics}
+
 
 When produced, the neutrino beam from \dword{fnal} will consist almost entirely of muon-type neutrinos. %Anne when produced. %HMS done 
 Neutrinos are known to come in (at least) three flavors that can be distinguished by their interactions -- electron %Anne type 
@@ -89,35 +93,40 @@ observed in multiple experiments since it was first confirmed in 1998\cite{Kajit
 \end{dunefigure}
 
 
-DUNE,  in particular,   wishes to understand the conversion of the muon neutrinos created in Illinois%Anne Illinois 
- into electron neutrinos at the \dword{fd} in the Homestake mine in South Dakota  %HMS made the change
+DUNE,  in particular,   wishes to understand the conversion of the muon neutrinos created in Illinois %Anne Illinois 
+ into electron neutrinos at the \dword{fd} %in the Homestake mine 
+ in South Dakota  %HMS made the change
 and compare that conversion rate between neutrino and antineutrino beams. The location of the \dword{fd} and energy of the neutrino beam were chosen to maximize the oscillation effect.   A difference in the conversion rate for neutrinos and antineutrinos could be evidence for matter-antimatter asymmetry in the neutrino sector, a phenomenon called \dword{cpv}.  
 
-To make these measurements, the experiment needs to be able to distinguish %Anne we need to be able to distinguish %Kirby "we->the experiment"
+To make these measurements, the experiment must be able to distinguish %Anne we need to be able to distinguish %Kirby "we->the experiment"
 electron neutrino interactions  from the dominant muon neutrino interactions one would expect in the absence of oscillations.  %Anne Doing t
-Doing this requires a very large detector, as neutrino interactions are intrinsically rare, but an extremely  fine-grained one, as well.  Noble liquid  time projection detectors, %HSM doesn't \dword{tpc} do that? 
-which read out large transparent volumes of liquid by drifting electrons from interactions to charge-sensitive detectors through strong electric fields (\efield{s}), have the needed capabilities of extremely large scale and fine-grained resolution. The proposed DUNE far detector will instrument four  $14\times12 \times58$ meter volumes of \dword{lar} with readout granularity of $\sim$0.5\,cm.  The detector modules will be located 4850\,ft below the earth's surface to lower the rate of cosmic rays traversing the detector by orders of magnitude and thus allow sensitivity to very low-energy solar and astrophysical neutrinos, as well as the higher-energy neutrinos produced in the beam at Fermilab.  %Anne at Fermilab.
+Doing this requires a very large detector, as neutrino interactions are intrinsically rare, but an extremely  fine-grained one, as well.  Noble liquid  \dwords{tpc}, %time projection detectors, %HSM doesn't \dword{tpc} do that? 
+which read out large transparent volumes of liquid by drifting electrons from interactions to charge-sensitive detectors through strong electric fields (\efield{s}), have the needed capabilities of extremely large scale and fine-grained resolution. The proposed DUNE far detector will instrument four \SI{14x12x58}{m} % $14\times12 \times58$ meter 
+volumes of \dword{lar} with readout granularity of $\sim$0.5\,cm.  The detector modules will be located 4850\,ft below the earth's surface to lower the rate of cosmic rays traversing the detector by orders of magnitude and thus allow sensitivity to very low-energy solar and astrophysical neutrinos, as well as the higher-energy neutrinos produced in the beam at Fermilab.  %Anne at Fermilab.
 %Anne - I would reference the FD TDR Vol 1 where there is an excellent discussion of how LArTPC satisfy physics requirements.
-Additionally, physics programs focused on nucleon decay, the detection of supernova burst, and other \dword{bsm} signatures take advantage of the large size of the detector and flexible readout window of the \dword{daq} and \dword{lartpc}. %Kirby
+
+Additionally, physics programs focused on nucleon decay, the detection of a \dword{snb}, and other \dword{bsm} signatures take advantage of the large size of the detector and flexible readout window of the \dword{daq} and \dword{lartpc}. %Kirby
 
 
 The neutrino beam from \dword{fnal} will be pulsed approximately once per second, 24 hours per day during running periods, % anne with 
-yielding of order 15 million pulses per year.  Because neutrinos interact  extremely rarely, we expect to detect of order 7,000 neutrino interactions/year in each of the four 10\,kt detector modules%Anne located at the \dword{fd} site in South Dakota. 
+yielding of order 15 million pulses per year.  Because neutrinos interact  extremely rarely, we expect to detect of order 7,000 neutrino interactions/year in each of the four planned 10\,kt detector modules%Anne located at the \dword{fd} site in South Dakota. 
 \footnote{This is based on the beam repetition rate of 0.83 Hz and an estimated uptime for the accelerator complex of 56\% \cite{Abi:2020evt}.}.
 
 
 %Anne - I would leave this out Construction of the detector halls and infrastructure for the large 10\,kt fiducial volume \dword{fd} modules is starting now, as are design and construction of detector readout modules.  
 A full \dword{tdr} for the first far detector module, a horizontal-drift \dword{lartpc},
-% Anne program has recently been completed and 
-is available in references% anne in references 
-\cite{DUNE:2020lwj, Abi:2020evt, Abi:2020oxb, Abi:2020loh}.
+% Anne program
+has recently been completed and 
+is available in References~\cite{DUNE:2020lwj, Abi:2020evt, Abi:2020oxb, Abi:2020loh}.  A  design report for a second detector, using \dword{vd} technology and planned to come online soon after the first \dword{hd} module is being finalized and is included in the computing planning reported here. 
 %The  \dword{dune} neutrino oscillation experiment will receive beam late in this decade with commissioning of the \dword{daq} %anne data acquisition 
-The first far detector modules should go live late in this decade with commissioning of the data acquisition systems for the first far detector modules expected to start in 2027. % anne-28.  
+The first two far detector modules should go live late in this decade with commissioning of the \dword{daq} %data acquisition 
+systems for the first far detector modules expected to start in 2027. % anne-28.  We assume the DAQ starts firing up a year early. 
 
+%\todo{CHeck working about the VD I just put in the above paragraph - HMS 3/12}
 
 \begin{dunefigure}
 [A far detector cryostat and the horizontal drift \dshort{tpc} structure]
-{fig:DUNESchematic} % Anne: label should have fig:
+{fig:DUNESchematic} %  HMS doneAnne: label should have fig:
 {(Left) A far detector cryostat that houses a 10\,kt \dword{fd} module with horizontal drift technology. The figure of a person indicates the scale.  (Right) A 10\,kt  \dword{dune} \dword{fd} \dword{spmod}, showing the alternating 58\,m long (into the page), 12\,m high anode (A) and cathode (C) planes, as well as the field cage that surrounds the drift regions between the anode and cathode planes. The modular anode and cathode planes are constructed of units called \dwords{apa} and \dwords{cpa}; the blank area on the left side was added to show the profile of a single \dword{apa}.}
 \includegraphics[height=0.35\textwidth]{graphics/IntroFigures/Fig_03a_cryostat-scale.png}
 \includegraphics[height=0.35\textwidth]{graphics/IntroFigures/Fig_03b_DUNESchematic.pdf}
@@ -127,37 +136,38 @@ The first far detector modules should go live late in this decade with commissio
 \section{ProtoDUNE Tests at CERN  %anne ProtoDUNE tests at CERN 
 \hideme{Schellman/Pennacchio-draft}}
 
-Building an experiment of this size requires an extensive period of prototyping.   The Argoneut\cite{Acciarri:2018myr}, MicroBooNE\cite{microboone} and ICARUS\cite{icarus} collaborations have demonstrated the capabilities of \dwords{lartpc} for neutrino detection on scales between 1 and 500\,tons of fiducial mass.  In preparation for the \dword{dune} experiment, a campaign for testing % anne proposed DUNE 
+Building an experiment of this size requires an extensive period of prototyping.   The Argoneut\cite{Acciarri:2018myr}, MicroBooNE\cite{microboone} and ICARUS\cite{icarus} collaborations have demonstrated the capabilities of \dwords{lartpc} for neutrino detection on scales between 1 and 500 metric tons (tonne, t) of fiducial mass.  In preparation for the \dword{dune} experiment, a campaign for testing % anne proposed DUNE 
 %st since 1-ton not hypenated inserted the correct plural tons
-\fixme{st should we have a SI reference to ton--can refer to English or metric}
-full-sized far detector components in 700\,ton-capacity cryostats %anne detectors 
+%HMS - I think this ok now\fixme{st should we have a SI reference to ton--can refer to English or metric (anne) we just use t and kt; I added 'metric' above for clarity}
+full-sized far detector components in 700\,tonne-capacity cryostats %anne detectors 
 in the \dword{ehn1} hadronic test beam at the \dword{cern} was launched in 2018.  Both \dword{sp} (horizontal drift) and \dword{dp} (liquid and gas, vertical drift) prototypes, called \dword{pdsp} and \dword{pddp}, were constructed and operated. %anne tested. % Kirby - I like this suggestion so included it with slight addition.
-We have tested the full data taking chain from detector construction to full offline reconstruction and analysis of data, and the results have given considerable insight into the computing challenges for the full \dword{dune} experiment.
+We have tested the full data taking chain from detector construction to full offline reconstruction and analysis of data, and the results have yielded considerable insight into the computing challenges for the full \dword{dune} experiment.
 
 \subsection{\dshort{pdsp}} %anne ProtoDUNE Single Phase}
 The \dword{pdsp} experiment began taking data at \dword{cern} in late 2018.  \dword{pdsp} %anne uses single-phase technology where 
 collects ionization electrons %anne are collected 
-directly from the liquid argon. The readout system consists of  %anne Anode Plane Assemblies (
-\dwords{apa}.
+directly from the \dword{lar}. The readout system consists of  %anne Anode Plane Assemblies (
+\dwords{apa} (APAs).
 %anne , which each have 3 layers of wires arranged in different directions. Each layer contains 800-1200  wires spaced 0.5 cm apart. Electrons drift from the original interaction in the Argon, through a strong electric field, to the wire planes and induce signals.  The location in the plane of hit wires gives one coordinate, the time the signal takes to drift to the wire from the original interaction measures a second coordinate.  The third coordinate is derived by combining information from overlaps of signals in the 3 different wire layers.  Signals are amplified electronically and then digitized.  
 % anne: From the TDR:
-Each \dword{apa} consists of an alumninum frame with three layers of active wires, strung at angles chosen to reduce ambiguities in event reconstruction, that form a grid on each side of the \dword{apa}. The relative voltage between the layers is chosen to ensure transparency to the drifting electrons of the first two layers ($U$ and $V$). These layers produce bipolar induction signals as the electrons pass through them. The final layer ($X$) collects the drifting electrons, resulting in a unipolar signal. The pattern of ionization collected on the grid of anode wires provides the reconstruction in the remaining two coordinates perpendicular to the drift direction 
-Figure \ref{tpcconcept} illustrates the principle of operation. %anne of a generic \dword{lartpc}.
+Each \dword{apa} consists of an aluminum frame with three layers of active wires, strung at angles chosen to reduce ambiguities in event reconstruction, that form a grid on each side of the \dword{apa}. The relative voltage between the layers is chosen to ensure transparency to the drifting electrons of the first two layers ($U$ and $V$). These layers produce bipolar induction signals as the electrons pass through them. The final layer ($X$) collects the drifting electrons, resulting in a unipolar signal. The pattern of ionization collected on the grid of anode wires provides the reconstruction in the remaining two coordinates perpendicular to the drift direction 
+Figure \ref{fig:tpcconcept} illustrates the principle of operation. %anne of a generic \dword{lartpc}.
 
 Horizontal drift \dword{sp} technology with \dword{apa} readout, similar to those used in \dword{pdsp}  will be used for the first of the four \dword{fd} modules. 
 
 
 \begin{dunefigure}
 [Signal formation in a LArTPC with three wire planes]
-{tpcconcept} % Anne: label should have fig:
+{fig:tpcconcept} % Anne: label should have fig:
 {Diagram  from  \protect{\cite{ Acciarri:2017sde}}  illustrating the signal formation in a \dword{lartpc} with three wire planes~\cite{Acciarri:2016smi}. For simplicity, the signal in the first (U) induction plane is omitted in the illustration. }
 \includegraphics[trim={0cm 0.6cm 2.5cm 0.7cm},clip,height=8cm]{graphics/IntroFigures/Fig_04_LArTPC_Concept.png}
 \end{dunefigure}
 
-The \dword{pdsp} detector, immersed in 700\,tons of \dword{lar}, consists of %anne a 700 ton volume of liquid argon with 
+The \dword{pdsp} detector, immersed in 700\,t of \dword{lar}, consists of %anne a 700 ton volume of liquid argon with 
 a cathode plane in the center and sets of three \dwords{apa} mounted side-by-side on %anne each  edge 
-either side of the liquid volume, creating a horizontal \efield. %The \efield is horizontal so this technology is designated \dword{hd}.   
-The maximum drift distance is  3\,m with  a nominal voltage of 180\,kV  across that distance.  Each \dword{apa} has 2560 channels and each channel reads out a 12\,bit \dword{adc} every 0.5\,$\mu$sec. %anne  For \dword{pdsp} the readout time appropriate for a 3 m drift was set to 3 msec, 
+either side of the liquid volume, creating %a 
+equal and opposite horizontal \efield{}s on the two sides. %The \efield is horizontal so this technology is designated \dword{hd}.   
+The maximum drift distance is  3\,m with a nominal voltage of 180\,kV  across that distance.  Each \dword{apa} has 2560 channels and each channel reads out a 12\,bit \dword{adc} every 0.512\,$\mu$sec. %anne  For \dword{pdsp} the readout time appropriate for a 3 m drift was set to 3 msec, 
 The appropriate readout time for this configuration was determined to be 3\,ms, resulting in 6000 12\,bit samples per channel per readout window. 
 %st fixed \todo{Anne: previous sentence doesn't make sense to me. 6000 per channel per readout window?}
 %ST changed 3 s to 3 ms on the readout time. 0.5 microseconds * 6000 = 3 milliseconds
@@ -166,21 +176,21 @@ The total data size for six \dwords{apa} is thus 140\,MB with additional header 
 
 %\subsubsection{Trigger Records \hideme{draft}}
 
-Neutrino experiments, and in particular \dword{tpc} based experiments, may or may not have internal triggers but they are generally read out over a fixed time window.  For \dword{protodune}, \dword{microboone}, \dword{minerva} and the \dword{minos} and \dword{nova} near detectors, a readout generally corresponds to either the 10\,$\mu$sec beam spill or a multi-msec \dword{tpc} drift time.  Within that time span, multiple beam, cosmic ray or rock muon interactions may occur within the active detector volume.  Thus the unit of detector readout, the \dword{tr}, does not correspond directly to a single interesting interaction, but to a group of interactions. The processing frameworks that we use have grown out of collider experiments and are based on the concept of an ``event,'' generally a beam crossing, that is processed as a unit.  DUNE prefers to use the term ``trigger record'' rather than ``event'' for the unit of processing, as it avoids confusion between an interaction ``event'' and a readout ``event.''  
+Neutrino experiments, and in particular \dword{tpc}-based experiments, may or may not have internal triggers but they are generally read out over a fixed time window.  For \dword{protodune}, \dword{microboone}, \dword{minerva} and the \dword{minos} and \dword{nova} near detectors, a readout generally corresponds to either the 10\,$\mu$sec beam spill or a multi-msec \dword{tpc} drift time.  Within that time span, multiple beam, cosmic ray or rock muon interactions may occur within the active detector volume.  Thus the unit of detector readout, the \dword{tr}, does not correspond directly to a single interesting interaction, but to a group of interactions. The processing frameworks that we use have grown out of collider experiments and are based on the concept of an ``event,'' generally a beam crossing, that is processed as a unit.  DUNE prefers to use the term ``trigger record'' rather than ``event'' for the unit of processing, as it avoids confusion between an interaction ``event'' and a readout ``event.''  
 
 
-The test beam ran at rates of up to 25\,Hz over a period of six weeks at beam momenta between 0.5 and 7\,GeV/c.  Time-of-flight and Cherenkov counters in the beamline provided beam flavor tagging.  Around 8M total ``physics'' records were written, with around 3M having beam tag information.  In total  850\,TB of raw test beam data were written, along with one PB of commissioning and cosmic data. These data were successfully catalogued and written to storage at both \dword{cern} and \dword{fnal} at rates of up to 2\,GB/sec.   
+The test beam ran at rates of up to 25\,Hz over a period of six weeks at beam momenta between 0.5 and 7\,GeV/c.  Time-of-flight and Cherenkov counters in the beamline provided beam flavor tagging.  Around 8M total ``physics'' records were written, with around 3M having beam tag information.  In total  850\,TB of raw test beam data were written, along with one PB of commissioning and cosmic data. These data were successfully cataloged and written to storage at both \dword{cern} and \dword{fnal} at rates of up to 2\,GB/sec.   
 
 Thanks to significant prior effort in the \dword{lartpc} %Kirby fixed \todo{Anne:is it really \dword{lartpc}?}
-computing and algorithms community, reconstruction software was ready to go. The first reconstruction pass began soon after data taking started and was complete within two weeks of the end of data taking.  These results were extremely useful in demonstrating the capabilities of the detector; they summarized in Volume II of the \dword{sphd} \dword{tdr}\cite{Abi:2020evt}.  A second pass, with improved treatment of instrumental effects ranging from stuck bits, to \twod deconvolution, to correction for space charge effects, was completed in late 2019. Another pass with major improvements to the electrostatic modeling and reconstruction algorithms was launched in 2021. 
+computing and algorithms community, reconstruction software was ready to go. The first reconstruction pass began soon after data taking started and was complete within two weeks of the end of data taking.  These results were extremely useful in demonstrating the capabilities of the detector; they are summarized in Volume II of the \dword{sphd} \dword{tdr}~\cite{Abi:2020evt}.  A second pass, with improved treatment of instrumental effects ranging from stuck bits, to \twod deconvolution, to correction for space charge effects, was completed in late 2019. Another pass with major improvements to the electrostatic modeling and reconstruction algorithms was launched in 2021. 
 
 %\dword{pdsp} Reconstruction - from raw data to beam interactions and cosmics full reconstructed with 80-90\% efficiency - has been performed twice over the 8M interactions recorded during the test-beam runs. 
-Figure~\ref{deconvolution} illustrates the signal processing stage of reconstruction, where raw \dword{adc} signals have noise and stuck bits removed and are then deconvoluted to yield Gaussian hit candidates. An important aspect of the reconstruction of APA based \dword{lartpc}s is the need for a 2D signal processing and deconvolution to include extending the time domain beyond the interaction timing window to account for FFT edge effects. The impacts the reconstruction algorithms and framework processing. Figures~\ref{wire-cell-bee} and~\ref{pandora} illustrate full pattern recognition and event reconstruction. 
+Figure~\ref{deconvolution} illustrates the signal processing stage of reconstruction, where raw \dword{adc} signals have noise and stuck bits removed and are then deconvoluted to yield Gaussian hit candidates. An important aspect of the reconstruction of APA-based \dword{lartpc}s is the need for a 2D signal processing and deconvolution to include extending the time domain beyond the interaction timing window to account for FFT edge effects. The impacts the reconstruction algorithms and framework processing. Figures~\ref{wire-cell-bee} and~\ref{pandora} illustrate full pattern recognition and event reconstruction. 
 
-While \dwords{lartpc} benefit from fine granularity and a uniform detector medium, it is possible for diffusion, argon purity \todo{variation?}, fluid flow and the build up of space charge in the active medium %anne can all 
+While \dwords{lartpc} benefit from fine granularity and a uniform detector medium, it is possible for diffusion, argon purity variations, fluid flow and the build up of space charge in the active medium %anne can all 
 to introduce distortions into the detector response.  These effects have all been simulated and tested in the \dword{pdsp} data. 
 
-Compressed raw input trigger records were of order 75\,MB in size and took 500-600 seconds to reconstruct, of which around 180\,s was signal processing and the remainder high-level reconstruction dominated by 40-60 cosmic rays per readout.  Memory footprints for data processing ranged between 2.5 and 4\,GB.  Output   record sizes were reduced to 22\,MB by dropping the raw waveforms after hit finding.   Data reconstruction campaigns took of order 4-6 weeks (similar to the original data taking) and utilized up to 15,000 cores on \dword{osg} and \dword{wlcg} resources.  Job submission was done through the \dword{poms}\cite{poms} job management system developed at \dword{fnal}. \dword{poms} supports submissions to \dword{fnal}-dedicated resources and selected \dword{osg} and \dword{wlcg} sites.  Figure \ref{sites} shows the distribution of wall hours used for reconstruction in 2019.
+Compressed raw input trigger records were of order 75\,MB in size and took 500-600 seconds to reconstruct, of which around 180\,s was signal processing and the remainder high-level reconstruction dominated by 40-60 cosmic rays per readout.  Memory footprints for data processing ranged between 2.5 and 4\,GB.  Output   record sizes were reduced to 35\,MB by dropping the raw waveforms after hit finding.   Data reconstruction campaigns took of order 4-6 weeks (similar to the original data taking) and utilized up to 15,000 cores on \dword{osg} and \dword{wlcg} resources.  Job submission was done through the \dword{poms}\cite{poms} job management system developed at \dword{fnal}. \dword{poms} supports submissions to \dword{fnal}-dedicated resources and selected \dword{osg} and \dword{wlcg} sites.  Figure \ref{sites} shows the distribution of wall hours used for reconstruction in 2019.
 These metrics have influenced the ideas regarding memory utilization, event data model, and workload/workflow management in this document.
 
 For reconstruction, data were streamed via {\tt xrootd}\cite{Behrmann:2011zz} from \dword{dcache} storage at \dword{fnal} to the remote sites. Despite individual processing jobs taking 15-30 hours to complete, network interruptions rarely caused job failures. 
@@ -222,7 +232,8 @@ The \threed points are obtained using the Space~Point~Solver reconstruction algo
 \includegraphics[height=0.65\textwidth]{graphics/IntroFigures/Fig_8.pdf}
 \end{dunefigure}
 
-\subsection{ProtoDUNE Dual-Phase and its evolution to the Vertical Drift design \hideme{Pennacchio - draft}}
+\subsection{ProtoDUNE Dual-Phase and its Evolution to the Vertical Drift Design \hideme{Pennacchio - draft}}
+%anne to start here monday
 
 %The \dword{pddp} detector began taking data using cosmic rays in August 2019.  Thanks to preceding data challenges, those data have been successfully integrated into the full data cataloging and reconstruction chains and are now being reconstructed as they arrive.   The \dword{pddp} technology locates the readout systems above a thin layer of argon gas above the liquid argon surface.  This gas layer allows an external electric field to accelerate the electrons and produce gas amplification.  The result is a substantial increase in signal-to-noise in the resulting signals, at the cost of longer electron drifts from the bottom of the liquid volume.  Figure \ref{dpevent} illustrates early data from \dword{pddp}. 
 
@@ -251,7 +262,7 @@ indicated for a drift field of 0.5\,kV/cm in LAr.}
 The readout area surface is \SI{6x6}{m}, subdivided into four $3\times3$ m$^2$  \dwords{crp}. Each \dword{crp} is an independent detector element %anne insuring 
 that performs electron extraction, amplification, and collection. 
 The 7680 readout channels are read by   12\,bit \dwords{adc} every 0.4\,$\mu$sec. 
-The \dword{pddp} detector   consists of a 700\,ton volume of \dword{lar}, with  a vertical drift length of 6\,m, corresponding to a full drift window of 4\,ms (10,000 samples).
+The \dword{pddp} detector   consists of a 700\,t volume of \dword{lar}, with  a vertical drift length of 6\,m, corresponding to a full drift window of 4\,ms (10,000 samples).
 
 
 The \dword{pddp} detector began taking cosmic ray data in August 2019. Thanks to preceding data challenges, these data have been successfully integrated into the full data cataloguing and reconstruction chain and were   reconstructed as they become available.
@@ -276,13 +287,13 @@ and a \dword{tr} with an example of multiple hadronic interactions in a shower a
 
 All data ($\sim$\,330\,TB) taken during different campaigns   have been copied to \dword{fnal}. A subsample is composed of data sets taken during detector transient conditions, motivated by various specific testing needs;  all cosmic ray data taken in well defined and stable detector conditions in 2019 and 2020 ($\approx$\,377K events) have been processed with \dword{larsoft} by performing the reconstruction of hits and \twod tracks. A second pass, including \dword{pandora} reconstruction algorithms, started in spring 2021. 
 The memory footprint is between 1.9 and 2.5\,GB
-As for \dword{pdsp}, job submission was done through \dword{poms}.
+Data management and job submission was successfully done through the same systems as \dword{pdsp}.
 
 In the fall 2020 the \dword{dp} design evolved to the \dword{spvd} concept. The \dword{spvd} incorporates many of the design aspects developed for the \dword{dp}, such as the \dwords{crp};   the  main  difference  with  respect  to  the  \dword{dp}  design  is   the  removal  of  the  extraction  stage  to  the  gas  phase  and  the  subsequent  charge  amplification  stage.  %anne  This  change eliminates the grid immersed in the liquid and biased at high voltage in order to define the field needed to transfer the electrons from the liquid to the gas phase and the \dwords{lem} used to amplify the signal.
 This eliminates the grid biased at high voltage (to transfer the electrons from the liquid to the gas) and the \dwords{lem} used to amplify the signal in the gas. The \dword{spvd} \dwords{crp} %anne keeps the concept of charge readout performed 
 perform charge readout using %anne with  strips implemented on segmented 
 perforated \dword{pcb} anodes with finely segmented strip electrodes %anne while replacing the \dword{lem} micro-pattern detectors, which operated in the argon gas phase and coupled to the anode printed circuit boards with charge collection strips, with perforated anodes 
-that are immersed in the \dword{lar}
+that are immersed in the \dword{lar}.
  
 
 \begin{dunefigure}
@@ -292,7 +303,7 @@ that are immersed in the \dword{lar}
 \includegraphics[width=0.85\textwidth]{graphics/IntroFigures/Fig_13_VD_solution.png}
 \end{dunefigure}
 
- Figure \ref{fig:vd_principle} illustrates the \dword{pcb}-based charge readout concept. The electron drift direction is vertical.
+ Figure \ref{fig:vd_principle} illustrates the \dword{pcb}-based charge readout concept for the \dword{fdvd}. The electron drift direction is vertical.
 Two separate drift volumes of 6.5\,m are defined by a cathode plane at roughly mid-height in the
 detector volume. Ionization electrons above the cathode will drift upwards; ionization electrons in the liquid below the cathode will drift downwards.
 The \dword{spvd}  prototype components have undergone testing starting in 2021 with a small \coldbox; some examples of cosmics tracks are shown in figure \ref{fig:VD_coldbox_trks}. A full prototype, known as \dword{mod0}, is expected to be completed and  installed 
@@ -321,8 +332,8 @@ An additional beam run of  \dword{pdsp} is planned for 2022-23, with a cosmic te
 \hideme{Schellma-draft}}
 \label{sec:intro-fd}
 
-The full DUNE \dword{fd} will begin with one \dword{sphd} module to be installed %anne at Homestake 
-starting in the middle of  this decade.  A second \dword{spvd} module will be installed and commissioned in parallel.  High-intensity neutrino and antineutrino beams should arrive after a year or so of commissioning of the detector and \dword{lbnf} beamline.  The first %anne \dword{hd} 
+The full DUNE \dword{fd} will begin with one \dword{sphd} module to be installed  at \dword{surf} %anne at Homestake 
+starting near the end of  this decade.  A second \dword{spvd} module will be installed and commissioned in parallel.  High-intensity neutrino and antineutrino beams should arrive after a year or so of commissioning of the detector and \dword{lbnf} beamline.  The first %anne \dword{hd} 
 module will %anne largely resemble 
 be a scaled up version of \dword{pdsp} with 150 \dwords{apa} distributed 2-deep %anne 2-deep? at 
 the length of the cryostat, down the center and along the long walls. %\anne edges of the cryostat.   
@@ -342,33 +353,33 @@ Beam interactions themselves are expected to be quite rare, occurring in only 1/
 
 Beam, cosmic ray and solar neutrino interactions are reasonably localized in time and space, involving a small fraction of a module over a few milliseconds.  This can, in principle, allow significant reduction in data size without loss of physics information if suitable triggers are used.
 
-\hideme{HMS give up on this \subsubsection{Low energy phenomena - solar/neutron decay \hideme{???-needed}} \fixme{ Need someone to write about solar/BSM signature}}
 
-\subsubsection{Supernova candidates \hideme{Schellma - draft}}\label{sec:supernova}
+
+\subsubsection{Supernova candidates \hideme{Schellma -updated early march }}\label{sec:supernova}
 
 
 
 \begin{dunefigure}
 [Supernova interactions in the FD]
-{SNe} % Anne: label should have fig:
+{fig:SNe} % Anne: label should have fig:
 {
  Simulated $\nu_e$
- CC event with a 20.25$~sim$ MeV neutrino), showing an electron track and blips from Compton-scattered gammas. The vertical dimension indicates time and the horizontal dimension indicates wire number. Color represents charge. The top panel shows the collection plane and the bottom panels show induction planes. The boxes represent reconstructed hits. }
+ CC event with a 20.25$~sim$ MeV neutrino), showing an electron track and ``blips" from Compton-scattered gammas. The vertical dimension indicates time and the horizontal dimension indicates wire number. Color represents charge. The top panel shows the collection plane and the bottom panels show induction planes. The boxes represent reconstructed hits. }
 \includegraphics[width=\textwidth]{graphics/IntroFigures/nueCC_20-25MeV_event25_2.png} %\hskip 1 in
 %\includegraphics[height=0.5\textwidth]{graphics/IntroFigures/Fig_10b_Picture4.png}
 \end{dunefigure}
 
 
 
-Supernova candidates pose a unique problem for data acquisition and reconstruction.  \dword{snb} physics in DUNE is discussed in some detail in the far detector \dword{tdr}\cite{ Abi:2020evt}, reference \cite{Cuesta:2020dy} and a dedicated paper \cite{DUNE:2020zfm} and only summarized here. 
+Supernova candidates pose a unique problem for data acquisition and reconstruction.  \dword{snb} physics in DUNE is discussed in some detail in the far detector \dword{tdr}\cite{ Abi:2020evt}, reference \cite{Cuesta:2020dyj} and a dedicated paper \cite{DUNE:2020zfm} and only summarized here. 
 
-\dword{dune} is uniquely sensitive to $\nu_e$ through the reaction $\nu_e + Ar \rightarrow e^- + K*$ which leaves an electron trajectory that can be used to estimate the direction of the supernova.  Figure \ref{fig:SNrates} shows the expected neutrino interaction rates from supernovae as a function of their distance.
+\dword{dune} is uniquely sensitive to $\nu_e$ through the reaction $\nu_e + \hbox{Ar} \rightarrow e^- + \hbox{K}^*$ which leaves an electron trajectory that can be used to estimate the direction of the supernova.  Figure \ref{fig:SNrates} shows the expected neutrino interaction rates from supernovae as a function of their distance.
 %The number of neutrino interactions actually detected depends on the physics of the supernova burst, oscillation physics and the minimum energy threshold achievable in the DUNE \dword{tpc} in the presencen of radiological backgrounds.
 
 \hideme{HMS 3/2 added the missing figure}
 \begin{dunefigure}
 [Supernova rates in DUNE as a function of distance]
-{fig:SNrate}
+{fig:SNrates}
 {Supernova rates in the DUNE detector  as a function of distance from the source from reference \cite{DUNE:2020zfm}.}
 {\includegraphics[width=0.9\textwidth]{graphics/IntroFigures/argon_sn.png}}
 \end{dunefigure}
@@ -404,7 +415,10 @@ Moving  320 TB (assuming the first 2 modules) of uncompressed data   from \dword
 Other neutrino detectors worldwide will also be able to provide fast information but the \dword{dune} information will be unique in its sensitivity to electron neutrinos. 
 
 
-
+% \hideme{HMS give up on this 
+\subsubsection{Other phenomena -- Solar Neutrinos and Beyond-the-Standard-Model Processes} %\hideme{???-needed}}
+There are multiple other measurements that can be made in  massive low background detectors such as the \dwords{fd}.  These are described in a recent White Paper \cite{Caratelli:2022llt}. These include detection of solar neutrinos and searches for \dword{bsm} processes such as neutron-anti-neutron oscillations.  Detection of these rare processes will require low radiological backgrounds and trigger systems capable of reading out the detector at rates low enough to remain well below a 30 Pb/year limit on data logging.  They will require recording the full waveforms, perhaps over a limited geographical region, to perform optimal signal extraction. In this document we concentrate on the oscillation, calibration and \dword{snb} scenarios as they are likely to dominate data rates in the near term.  
+%\fixme{ Need someone to write about solar/BSM signature}}
 
 %\todo{more test on the network and processing challenges}
 
@@ -414,7 +428,7 @@ Other neutrino detectors worldwide will also be able to provide fast information
 
 High-precision oscillation physics requires a \dword{nd} system to allow measurement of the unoscillated neutrino flux and %anne improved understanding of neutrino interaction physics. 
 to provide improved understanding of neutrino interaction physics. 
-The DUNE  collaboration is proposing a suite of near detectors optimized for these two goals. 
+The DUNE  collaboration is proposing a suite of near detectors optimized for these two goals. The proposed detectors are described in more detail in the Near Detector Conceptual Design Report \cite{DUNE:2021tad}.
  
  The \dword{nd}  will be located in an enclosure on the \dword{fnal} site 574\,meters from the target %anne and will be exposed to the DUNE 
  in the path of the neutrino beam.    Interaction rates per spill (at 0.83\,Hz) are expected to be very large, with 40-60 interactions per spill, including muons originating from interactions in material upstream of the fiducial volumes. Figure~\ref{beamline} shows the beamline and location of the \dword{nd} on the \dword{fnal} site. There are three major subdetectors:
@@ -427,7 +441,7 @@ Note that while the \dword{nd} will have the same DAQ timing window flexibility 
 
  \begin{dunefigure}
 [The neutrino beamline on the Fermilab site]
-{beamline} % Anne: label should have fig:
+{fig:beamline} % Anne: label should have fig:
 {The neutrino beamline on the \dword{fnal} site. The near detectors will be situated 574\,m from the target and 62\,m below grade.}
 \includegraphics[height=0.3\textwidth]{graphics/IntroFigures/beamline-sideview.png}
 \end{dunefigure}
@@ -435,7 +449,7 @@ Note that while the \dword{nd} will have the same DAQ timing window flexibility 
  
  \begin{dunefigure}
 [The ND systems in an on-axis configuration]
-{nd}
+{fig:nd}
 {The \dword{nd} systems in an on-axis configuration.  The beam enters from the lower right in this view. The \dword{sand} scintillating beam monitor remains at beam center while the pixel %anne ND-LAr TPC detector 
 \dword{ndlar} and gaseous \dword{ndgar} \dword{tpc} detectors can be moved off-axis to make detailed studies of the neutrino flux at multiple angles.}
 \includegraphics[height=0.5\textwidth]{graphics/IntroFigures/All3Detectors.pdf}
@@ -461,12 +475,12 @@ Note that while the \dword{nd} will have the same DAQ timing window flexibility 
 
 The TMS, a low-cost low-risk detector, will operate for the early part of the DUNE running when beam intensities are at their lowest and DUNE is not systematics limited. The TMS is a magnetized steel range stack (similar to MINOS \cite{minosNIM}) between ND-LAr and SAND.  The purpose of the TMS is to measure the momentum of 1 - 5 GeV muons that exit ND-LAr by range with a momentum precision comparable to the Far Detector (taken to be 4\%). The steel will be magnetized to identify the charge of muons it detects with better than 98\% accuracy. These metrics are designed to ensure the DUNE physics program will function for the first 2-3 years of TMS operations with no degradation to physics output.
 
-The TMS consist of 200 total layers of alternating steel and scintillator. The first 40 layers of steel are 1.5 cm thick. The rear 60 layers of steel are 4 cm thick. There is a 4 cm gap between each steel layer. The steel plates are magnetized in the geometry. The thin (thick) central steel is given a vertically oriented downward pointing field of 1.25 T (0.9 T), while the outer steel thin (thick) steel plates have their field pointing upwards with a strength of 1.5 T (1.0 T). The scintillator is implemented as a collection of 3.5~cm wide by 3~m tall by 1~cm thick vertical bars arranged into modules of 1.68 m wide. Four modules are placed side by side into a layer. These scintillator layers are replicated in the gap between steel layers.  
+The TMS is placed 8.2 m downstream from the ND-LAr (center to center) and centered 2.51 m below the origin in $y$. The TMS consist of 200 total layers of alternating layers made up of magnetized steel plates and scintillator bars. The first 40 layers of steel are 1.5 cm thick. The rear 60 layers of steel are 4 cm thick. There is a 4 cm gap between each steel layer.  The thin (thick) central steel is given a vertically oriented downward pointing field of 1.25 T (0.9 T), while the outer steel thin (thick) steel plates have their field pointing upwards with a strength of 1.5 T (1.0 T). The scintillator is implemented as a collection of 3.5~cm wide by 3~m tall by 1~cm thick vertical bars arranged into modules of 1.68 m wide. Four modules are placed side by side into a layer. These scintillator layers are replicated in the gap between steel layers.  
 
-The TMS is placed 8.2 m downstream from the ND-LAr (center to center) and centered 2.51 m below the origin in $y$. 
+ 
 
 \subsection{Near Detector \dshort{gartpc} \hideme{Muether - draft}}
-\label{sec:comp-dataestimates-mpd}
+\label{sec:comp-dataestimates-gartpc}
 
 The \dword{ndgar} is a magnetized detector system consisting of a high-pressure \dword{gartpc} surrounded by an \dword{ecal} and a muon system. The \dword{ndgar} measures the momentum and sign of charged particles exiting the \dword{ndlar}. In addition, for neutrino interactions occurring in the \dword{ndgar} itself, higher resolution and lower momentum thresholds can be achieved for charged particle tracks, leading to improved neutrino interaction models. This capability enables further constraints of systematic uncertainties for long-baseline neutrino  oscillation analyses.
 
@@ -494,8 +508,8 @@ The DUNE physics program drives several detector characteristics that pose novel
 
 \begin{description}
 \item{\bf Fine segmentation needed for electron-photon discrimination: \\}   The primary goal of the DUNE long baseline experiment is measurement of $\nu_\mu\rightarrow\nu_e$ and $\nubar_\mu\rightarrow\nubar_e$
-oscillation probabilities for GeV scale accelerator neutrinos.   These oscillation probabilities are intrinsically low and sensitive to backgrounds where the neutral current process  $\nu_\mu+A\rightarrow\nu_\mu+\gamma+X$
-produces a photon that %anne fakes 
+oscillation probabilities for GeV scale accelerator neutrinos.   These oscillation probabilities are intrinsically low and sensitive to backgrounds where the neutral current process  $\nu_\mu+A\rightarrow\nu_\mu+\gamma/\pi^0+X$
+produces a photon or $\pi^0$ meson that %anne fakes 
 mimics an oscillation signal.  Fine detector segmentation is necessary to distinguish between these scenarios. Figure~\ref{fig:Argoneut} illustrates this capability. The need for sub-cm-level segmentation drives the technology choice of \dwords{lartpc} and %anne hence 
 the number of channels.   
 \item{\bf Low-energy thresholds for astrophysical neutrinos: \\}
@@ -543,7 +557,7 @@ DUNE offline computing faces four major challenges, some of which are unique to 
 A large suite of activities, %anne that are 
 while not necessarily novel, %anne but 
 still need to be done over the full lifetime of the experiment.  These include database design and operations, security updates, code management, documentation, training and user support.   For example, the \dword{nd} presents few novel computing challenges in memory or CPU use but is highly complex in terms of the number of detector systems that must be integrated. Another example is the continuing evolution of operating systems and security requirements.  These require constant modifications to working systems to maintain operations.  A third activity is database design and maintenance. Here the problem is largely sociological, getting the attention of busy people to do database design and then %anne population and use. 
-populate and use the databases. This requires continual engagement with reluctant stakeholders. These issues are discussed throughout this document with special reference to databases, Chapter~\ref{ch:db}, authentication Chapter~\ref{ch:auth}, code management Chapter~\ref{ch:codemgmt} and training and documentation Chapter~\ref{ch:train}
+populate and use the official collaboration databases. This requires continual engagement with reluctant stakeholders. These issues are discussed throughout this document with special reference to databases, Chapter~\ref{ch:db}, authentication Chapter~\ref{ch:auth}, code management Chapter~\ref{ch:codemgmt} and training and documentation Chapter~\ref{ch:train}
 \end{description}
 A broad suite of use cases is discussed in Chapter~\ref{ch:use}.
 
