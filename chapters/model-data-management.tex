@@ -8,15 +8,12 @@
 \label{sec:datamgmt:xyz}  %% fix label according to section
 
 The Data Management subsystem brings data from the detectors to the archival storage facility 
-and then distributes it to storage elements around the world.  The components include a data ingest manager, a
-replica manager that knows the location of files and manages the transfers between a storage element, a metadata 
-catalog that keeps track of the types and provenance of data, and an interface to deliver the appropriate files 
-to the workflow management system and interactive users.
+and then distributes it to storage elements around the world.  The components include a data ingest manager, a replica manager that knows the location of files and manages the transfers between storage elements, a metadata catalog that keeps track of the types and provenance of data, and an interface to deliver the appropriate files to the workflow management system and interactive users.
 
 The DUNE Data Management group is currently designing and deploying several new components in the Data Management
 system, to replace the legacy \dword{sam}~\cite{Illingworth:2014mba} system, which combined the functions of replica manager, metadata server, 
-and file delivery.  Those functions are being separated with well defined interfaces.  The goal is to have the new systems in place before beam running begins on \dword{pdsp2} %HMS - is this ok now? anne ProtoDUNE-II (single-phase 
-(horizontal drift).  
+and file delivery.  Those functions are being separated with well defined interfaces.  The goal is to have the new systems in place before beam running begins on \dword{pdhd}.
+%Kirby changed \dword{pdsp2} %HMS - is this ok now? anne ProtoDUNE-II (single-phase ) (horizontal drift).  
 
 Figures \ref{fig:datamanagement_old} and \ref{fig:datamanagement} illustrate the old and proposed data management architectures with the legacy \dword{sam} system replaced by a new catalog and the \dword{rucio} storage management systems. 
 
@@ -65,7 +62,7 @@ system has seen us through the first \dword{protodune} runs but going forward, a
 
 % Collections could be long trigger records, data from different detectors over a particular time period, …
 
- The replacement for \dword{sam} should support use of run or trigger record level information, in additional to file information,  as appropriate. 
+ The replacement for \dword{sam} should support use of run or trigger record level information, in addition to file information,  as appropriate. 
 For example,  DUNE trigger records may span multiple files. The new model needs to generalize from ``events'' and files to data objects and collections across multiple scales. 
 
 %Here we list the existing 
@@ -78,7 +75,7 @@ relate to content and characteristics while the last four relate to data storage
 
 \item	Create and document data collections ``datasets'' to allow later retrieval based on data characteristics.
 
- \item	Track object and collection parentage and describe processing transformations to document the full provenance of any data object and ensure accurate normalization
+ \item	Track object and collection parentage and describe processing transformations to document the full provenance of any data object and ensure accurate normalization.
 
  %\item	Group  objects and collection into larger “datasets” based on their characteristics
 
@@ -97,7 +94,7 @@ relate to content and characteristics while the last four relate to data storage
 \item{\bf \dshort{metacat}}  The catalog function will be replaced by a combination of a file metadata catalog \dword{metacat} and a run configuration database that stores run level information.
 \item{\bf \dshort{rucio}}  The file location function is replaced by \dword{rucio}~\cite{Barisits:2019fyl}, the file tracking system originally developed by the ATLAS collaboration. \dword{rucio} provides a location catalog for files and rule-based transfers between sites. 
 %\todo{(anne) Can we adjust the dword def of samproject to include SAM? Just 'project' is too general. HMS done for project but other consepts remain in new version os can't just say sam.}
-\item{\item Data Dispatcher} The existing \dword{sam} system supports a station and \dword{samproject} ecosystem where \dwords{samdataset} are submitted for processing as \dwords{samproject}.  The \dword{samproject} is a server process that contains a list of files based on a \dword{samdataset} description  and, when asked, delivers location information for the next file in the list.  Request, delivery and processing are tracked and recorded. This allows resubmission on failure. A website allows users to see the details of file delivery. 
+\item{\bf Data Dispatcher} The existing \dword{sam} system supports a station and \dword{samproject} ecosystem where \dwords{samdataset} are submitted for processing as \dwords{samproject}.  The \dword{samproject} is a server process that contains a list of files based on a \dword{samdataset} description  and, when asked, delivers location information for the next file in the list.  Request, delivery and processing are tracked and recorded. This allows resubmission on failure. A website allows users to see the details of file delivery. 
 %\item{\bf \dshort{fts}} \todo{(anne) missing content - HMS 3/9 decide to move elsewhere as this woudl be describibg an existing service parallel to but not part of sam}
 
 
@@ -127,19 +124,16 @@ relate to content and characteristics while the last four relate to data storage
 
 % The D0 experiment required that all official processing going into \dword{sam} be done with tagged releases and fixed parameter sets to increase reproducibility and the tags for that information were included in the metadata. Calibration databases were harder to timestamp so some variability was still possible if calibrations were updated.
 
-in the following subsections we describe the existing features in more detail with the replacement technologies in following sections. 
+In the following, subsections we describe the existing features in more detail with the proposed replacement technologies in following sections. 
 
 \subsection{Existing SAM  Features}
 
 \subsubsection{Data Description Values and Parameters}
 
- \dword{sam} supports several types of data description fields:
-
+ \dword{sam} supports several types of data description fields.
 % Values are common across all implementations and optimized for fast retrieval.  High level concepts such as data tier and detector type are example. 
-
 % Parameters are defined by the experiment and are extensible.
-
-\dword{sam}  Generic ``values'' such as data\_tier, run\_type and file\_size  are common to almost all  HEP experiments and are optimized for efficient queries.  \dword{sam} also allows definition of free-form ``parameters'' as they are needed.  This allows the schema to be modified easily as needs arise.  \dword{metacat} extends these concepts to make them easier to search and maintain. 
+\dword{sam}  Generic ``values'' such as data\_tier, run\_type and file\_size  are common to almost all  HEP experiments and are optimized for efficient queries.  \dword{sam} also allows definition of free-form ``parameters'' as they are needed within each experiment's instance.  This allows the schema to be modified easily as needs arise.  \dword{metacat} extends these concepts to make them easier to search and maintain. 
 
 % a.	We need optimized types for those most frequently used
 
@@ -151,7 +145,7 @@ in the following subsections we describe the existing features in more detail wi
 
 % 8.  Metadata can also contain “spill” or luminosity block information that allows a file to point to specific data taking periods with smaller granularity than a run or subrun. When files are merged, this spill information is also merged.
 
-In the following example file metadata from DUNE, generic \dword{sam} values are listed first followed by experiment specific parameters. The items starting with beam.momentum and containing ``.'' in their names are parameters. Many of the parameter entries are specific to the run configuration, not the individual file and will move in the new design. 
+In the following example file metadata from DUNE, generic \dword{sam} values are listed first followed by experiment specific parameters. The items starting with beam.momentum or containing ``.'' in their names are parameters. Many of the parameter entries are specific to the run configuration, not the individual file and will move in the new design. 
 
 \begin{verbatim}
 
@@ -214,7 +208,7 @@ In the following example file metadata from DUNE, generic \dword{sam} values are
 
 
 \subsubsection{Event Catalog - Absence of}
-\dword{sam} currently does not contain a means of easily determining which file a given event is in.  If a \dword{daq} system is writing multiple streams, an event from a given subrun could be in any stream.   Existing neutrino experiments are low enough rate that this has not been an issue but \dword{protodune} already needs this feature.
+\dword{sam} currently does not contain a means of easily determining which file(s) contains a given event.  If a \dword{daq} system is writing multiple streams, an event from a given subrun could be in any stream.   Existing neutrino experiments are low enough rate that this has not been an issue but \dword{protodune} already needs this feature.
 The \dword{sam} replacement will require the development of a true a two-way map between objects (events) and collections. 
 
  
@@ -227,12 +221,10 @@ The \dword{sam} replacement will require the development of a true a two-way map
 
 In addition to the files themselves, \dword{sam} allows %anne you to define
 definition of \dwords{samdataset}.
-
-\todo{(anne) Can we adjust the dword defs of samdataset and samsnapshot (and others that might pop up) to include SAM?}
-
-A \dword{sam} \dword{samdataset} is not a fixed list of files but a query against the \dword{sam} database. An example would be ``data\_tier reconstructed and run\_number 2001 and version v10'' which would be all files from run 2001 that are reconstructed data produced by version v10. This \dword{samdataset} is dynamic. If one finds a missing file from run 2001 
-\todo{(anne) if one finds that a file that should be there is not there? Or if one finds a file that had been missing (and is now found)? Pls clarify}
-and reconstructs it with v10, the \dword{samdataset} will grow. There are also \dword{samdataset} ``\dwords{samsnapshot}'' that are derived from \dwords{samdataset} and capture the exact files in the \dword{samdataset} when the \dword{samsnapshot} was made.
+%I think that somebody did this. I suspect Heidi? \todo{(anne) Can we adjust the dword defs of samdataset and samsnapshot (and others that might pop up) to include SAM?}
+A \dword{sam} \dword{samdataset} is not a fixed list of files but a query against the \dword{sam} database. An example would be ``data\_tier reconstructed and run\_number 2001 and version v10'' which would be all files from run 2001 that are reconstructed data produced by version v10. This \dword{samdataset} is dynamic. If after processing run 2001, an additional file from run 2001 is found
+%Kirby - tried to clarify Mar 14, 2022 \todo{(anne) if one finds that a file that should be there is not there? Or if one finds a file that had been missing (and is now found)? Pls clarify}
+and this additional file is reconstructed with v10, the \dword{samdataset} will grow. There are also \dword{samdataset} ``\dwords{samsnapshot}'' that are derived from \dwords{samdataset} and capture the exact files in the \dword{samdataset} when the \dword{samsnapshot} was made.
 %Note: most other data catalogs assume a “\dword{dataset}” is a fixed list of files.  This is a “snapshot” in sam. 
 
 %Do we need to keep the mutable query or stick to defined versioned collections? 
@@ -251,10 +243,7 @@ and reconstructs it with v10, the \dword{samdataset} will grow. There are also \
 A \dword{samproject} is effectively a processing campaign across a \dword{samdataset} that is owned by the \dword{sam} system. At launch, a snapshot is generated after which the files in the snapshot are delivered to a set of \dwords{samconsumer}.  The \dword{samproject} maintains an internal record of the status of the files and \dwords{samconsumer}. Compute processes instantiate \dwords{samconsumer} attached to the \dword{samproject}.  Those \dwords{samconsumer} then request ``files'' from the \dword{samproject} and, when done processing, tell the \dword{samproject} of their status.  
 
 The original \dword{sam} implementation actually delivered the files to local hard drives.  Modern \dword{sam} delivers the location information and expects the \dword{samconsumer} to find the optimal delivery method. This is a pull model, where the consuming process requests the next file rather than having the file assigned to it.  This makes the system more robust on distributed systems. 
-
 There is also a web interface\footnote{\href{http://samweb.fnal.gov:8480/station_monitor/dune/stations/dune/projects}{http://samweb.fnal.gov:8480/station\_monitor/dune/stations/dune/projects}} that allows users to view the status of running \dwords{samproject}. 
-
-
 We need to reproduce the functionalities listed above in the new system.
 
 
@@ -305,10 +294,10 @@ We need to reproduce the functionalities listed above in the new system.
 We propose to replace the \dword{sam} system with a set of components. 
 
 \begin{itemize}
-\item A Metadata Catalog  which stores file characteristics but not locations.    
-    \item A Data Ingest Manager which takes in data from detector sites, declares it to the catalog and transfers to the managed storage system.
-    \item A Rucio-based Replica Manager which stores the physical location of files and provides tools to move them between storage elements. 
-    \item A Data Dispatcher which interacts with user and production processing systems.  It provides file location information and can track file processing. 
+\item Metadata Catalog: stores file characteristics but not locations.    
+    \item Data Ingest Manager: takes in data from detector sites, declares it to the catalog and transfers to the managed storage system.
+    \item Rucio-based Replica Manager: stores the physical location of files and provides tools to move them between storage elements. 
+    \item Data Dispatcher: interacts with user and production processing systems.  It provides file location information from the Replica Manager to clients and can track file processing. 
 \end{itemize}
 
 The \dword{rucio} system is already being used for file movement.  We are testing use of \dword{metacat}/\dword{rucio} in hopes of putting them into production for \dword{pdsp2} runs late in 2022. 
@@ -317,7 +306,7 @@ The \dword{rucio} system is already being used for file movement.  We are testin
 \section{Metadata Catalog \hideme{updated 3/9 may still be too long}}
 
 The current \dword{sam} data catalog combines file description with location and delivery.  The new \dword{metacat} catalog will provide the permanent file description information, with location and delivery handled by \dword{rucio} and a data dispatch system. 
-A prototype version of the \dword{metacat} has been produced and described in reference~\cite{Mandrichenko:2021spd}. 
+A prototype version of \dword{metacat} has been produced and described in reference~\cite{Mandrichenko:2021spd}. 
 
 DUNE file metadata includes mandatory and optional fields and can be represented to the API by a Python dictionary or \dword{json} file. 
 As with \dword{sam} the metadata includes a description of the file itself and data about how it was created, including enough information to follow the full processing chain.   
@@ -384,7 +373,7 @@ Although the main target user of the project is \dword{protodune}/DUNE, \dword{m
 The Metadata representation must be powerful, flexible and abstract enough to accommodate a wide range of metadata data types and possibly complex metadata structures. 
 
 \item
-It needs to scale to 100 million objects and beyond. \todo{(anne) 100M OR beyond? How far beyond? This is ambiguous}
+It needs to scale to at least 100 million objects and likely into the 10s of billion objects. %Kirby - rough guess based on NOvA and MicroBooNE experience and 20 years of DUNE operations \todo{(anne) 100M OR beyond? How far beyond? This is ambiguous}
 
 \item
 The unit of operation of the catalog should be an abstract ``file'' or ``object'' with a  minimal but sufficient set of predefined   attributes and the ability to add user-defined   attributes in a flexible and convenient way. 
@@ -454,7 +443,7 @@ A \dword{metacat} user  is identified  by a unique username. A user can be a mem
 that means it is automatically owned by all role members. 
 The namespace owner automatically owns all the datasets and files in that namespace (either directly or via the role membership). Ownership does not automatically propagate along the dataset parent/child or file provenance relationships. 
 Only the owner of the dataset and file %anne owner 
-can add or remove files from the dataset. Only the owner of the the dataset or file can change their metadata attributes. \todo{(anne) the `and' and 'or' are significant here?}
+can add or remove files from the dataset. Only the owner of the dataset can change their metadata attributes. The same is true for files in that only the owner of a file can change their metadata attricutes. %Kirby - clarified. Hopefully it's correct. \todo{(anne) the `and' and 'or' are significant here?}
 
 \subsection{Queries} 
 One of the most important parts of the \dword{metacat} functionality is the ability to query the database for ``interesting'' files. Essentially, the query is a logical expression in terms of file and/or dataset metadata attributes, file provenance relationship, and dataset parent/child relationship. There are two types of queries in \dword{metacat}-file queries and dataset queries. File queries return a set of files (a list of file IDs) whereas dataset queries return a list of datasets. The file and dataset lists are not guaranteed to have a consistent order, so they are in fact ``sets'' rather than ``lists.'' 
@@ -473,7 +462,7 @@ In \dword{metacat}  the query is written in a specialized query language, \dword
 
 \subsection{Architecture and Interfaces}
 \dword{metacat} is a typical web services database application. The underlying database is not exposed to end users. It can be accessed via a Python API, but the primary method of interacting with the system is through a web service or web GUI. Use of this REST-based web service 
-\todo{(anne) what's REST?}
+%Kirby - standard type of API interface. \todo{(anne) what's REST?}
 improves the scalability and cacheability of the system and completely unties the server side from the client implementation. Any standard HTTP/HTTPS client can interact with the system either directly or through a standard HTTP proxy or cache. 
 
 
@@ -499,14 +488,15 @@ Command line interface with a basic set of commands to enter (modify) data into 
 \section{Data Ingest Manager \hideme{HMS moved here 3/9}}
 
 The Data Ingest Manager will run at detector sites.  It consists of two components:  the Ingest Daemon and the Declaration Daemon.  The Ingest Daemon will 
-run at the detector location, at CERN EHN1, SURF surface and Fermilab. 
+run at each detector location, at CERN EHN1, SURF surface and Fermilab. Each instance will
 %\todo{HMS (anne) pls clarify how this interacts with the portion of the DAQ that is situated right outside the detector. And is this ND or FD? And if FD, right outside each module? }
 detect new files in the data store, extract the metadata and add new metadata fields
 if necessary, calculate the checksum of the files, initiate and monitor the transfers to the first managed 
 storage element, and send a signal back to the \dword{daq} when the file has been transferred and can be deleted from the data store.
-Files will be transferred to a drop box on the nearest managed storage element, using FTS3 \todo{add a note about FTS3 to the glossary} as the transport mechanism.  
+Files will be transferred to a drop box on the nearest managed storage element, using \dword{fts3} %Kirby - done. \todo{add a note about FTS3 to the glossary}
+as the transport mechanism.  
 
-The Declaration Daemon will run on or near a storage element that is managed by the replica manager. \todo{Is it safe to declare after transfer? this means transfer failures can't be tracked using the \dword{metacat} }
+The Declaration Daemon will run on or near a storage element that is managed by the replica manager. %Kirby - yes, I think that transfer failures should stay within the Ingest Daemon and FTS3. \todo{Is it safe to declare after transfer? this means transfer failures can't be tracked using the \dword{metacat} }
 It will detect new files that have been added to the drop box, and declare them to the metadata catalog and the replica manager.  It will then instruct the replica manager to send these files to permanent tape-backed storage and monitor the transfer to be sure that this has been done, and then send a signal to remove them from the temporary drop box.
 
 These daemons will be performing most of the functions that the current data transport system does, they only 
@@ -523,7 +513,7 @@ are moved from point to point as needed. The choice  that we have made
 for this functionality is the \dword{rucio} data
 management system~\cite{Baritsis:2019csbs}.  This system was originally developed by the ATLAS experiment and has now been deployed to 
 a number of other HEP and astronomy experiments.  DUNE has had a \dword{rucio} server since 2019.  All raw data that was
-taken in the fall 2018 \dword{pdsp} (\dword{np04}) run and since that time, as well as all raw data taken by the \dword{pddp} (\dword{np02}) run, is tracked by \dword{rucio}.  All output of \dword{mc} simulation and reconstruction also is tracked by \dword{rucio}. 
+taken in the fall 2018 \dword{pdsp} (\dword{np04}) run and since that time, as well as all raw data taken by the \dword{pddp} (\dword{np02}) run, is tracked by \dword{rucio}.  All output of \dword{mc} simulation and reconstruction also is tracked by \dword{rucio}. \dword{dune} plans to take full advantage of the data lifetime features of \dword{rucio}.
 
 \dword{rucio} is a rule-based system.  Files are sent to remote servers via a system of rules
 that are created by the experiment data managers. \dword{rucio} provides tools to implement those rules.   Data can be accessed interactively or in batch jobs and
@@ -536,7 +526,8 @@ DUNE has contributed several features to the \dword{rucio} base software.  These
 
 We also have added a hook that requires any new files declared to \dword{rucio} to be also declared to the \dword{metacat} system.  We have modularized the \dword{vo} customization code, and we have made the command line client lighter-weight with fewer external dependencies and fewer conflicts with other Python software. 
 
-\dword{rucio} has a internal metadata functionality but our evaluation indicates that it doesn't provide the full functionality currently provided by the \dword{sam} catalog, and thus DUNE has proceeded to develop its own metadata catalog. 
+\dword{rucio} has a internal metadata functionality but our evaluation indicates that it doesn't provide the full functionality required by DUNE physics and offline processing,%currently provided by the \dword{sam} catalog,
+and thus DUNE has proceeded to develop its own metadata catalog. 
 
 \section{Data Dispatcher \hideme{HMS 3/9 updated}}
 
