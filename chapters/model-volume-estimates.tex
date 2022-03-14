@@ -10,25 +10,26 @@
 %HMS done 3/4 \fixme{Doug: Can the sentence above be put into the introduction with additional verbage}
 
 \section{Introduction \hideme{Schellman}}% - need a paragraph}}
-As a starting point to understand the resources needed for DUNE Computing and development needed to utilize those resources, we start with an estimate of the data volumes and CPU needs from bottoms-up estimates. 
+As a starting point to understand the resources needed for DUNE Computing and the development needed to utilize those resources, we start with an estimate of the data volumes and CPU needs from bottoms-up estimates. 
 In this chapter, we begin by describing the assumptions that go into the estimates of data volumes and describe possible methods of reducing the total volumes while retaining physics capabilities. 
-These assumptions have been coded into a python-based model and are updated frequently based upon changes to the \dwords{fd}, \dwords{nd} designs, and physics requirements.
+These assumptions have been coded into a python-based model and are updated frequently based upon changes to the \dword{fd} and \dword{nd} designs, and the physics requirements.
 
 
 %\section{Assumptions \hideme{Schellman - draft}}
 %\label{sec:est:assume}  %% fix label according to section
 
 %\section{Raw Data Characteristics \hideme{Schellman - draft}}\label{sec:est:assume} 
-DUNE's detectors will produce information from a variety of technologies.  We anticipate that raw data volumes will be dominated by the digitized waveforms from \dword{lar} detectors, and to a lesser extent \dwords{pd}. \dword{lar} TPCs read out over long time windows while the \dword{pd} detectors read out only above threshold, and we find that the \dword{lar} information dominates at the raw data level and drives the overall data volumes. % in the prototype runs at the \dword{cern}, the \dword{fd}, and the \dword{nd}.  
+%anne 3/13DUNE's detectors will produce information from a variety of technologies.  We anticipate that raw data volumes will be dominated by the digitized waveforms from the \dword{lar} detectors, and to a lesser extent from the \dwords{pd}. \dwords{lartpc} read out over long time windows while the \dword{pd} detectors read out only above threshold, and we find that the \dword{lar} information dominates at the raw data level and drives the overall data volumes.
+DUNE's detectors will produce information from a variety of technologies.  We anticipate that raw data volumes will be dominated by the digitized waveforms from the \dword{lar} detectors, which are read out over long time windows. Since the \dword{pd} detectors are read out only above threshold, the \dword{lar} information dominates at the raw data level and drives the overall data volumes.% in the prototype runs at the \dword{cern}, the \dword{fd}, and the \dword{nd}.  
 
 The \dword{daq} system can reduce these raw data volumes by several means, i.e.,
 \begin{itemize} 
-\item short readout windows tailored to one drift time
-\item triggered readout of particular time slices
-\item triggered readout of particular geographic regions
-\item lossless compression %Kirby\todo{trj: does this mean to say lossless compression?  ZS sounds lossy}
-\item lossy zero suppression
-\item hardware pattern recognition
+\item short readout windows tailored to one drift time;
+\item triggered readout of particular time slices;
+\item triggered readout of particular geographic regions;
+\item lossless compression; %Kirby\todo{trj: does this mean to say lossless compression?  ZS sounds lossy}
+\item lossy zero suppression; and/or
+\item hardware pattern recognition.
 \end{itemize}
 
 
@@ -50,14 +51,17 @@ Overall, we assume that the above methods can reduce data volumes from the hundr
 \section{ProtoDUNE Experience\hideme{Schellman - draft}}
 \label{sec:est:ProtoDUNE}  
 
-Our estimates  are largely based on our experience with the  
-\dword{sp} and \dword{dp} prototype detectors that ran at the \dword{cern} in 2018 (\dword{sp}) and 2019(\dword{dp}). 
+Our estimates  are largely based on our experience with the  %\dword{sp} and \dword{dp} prototype detectors 
+\dwords{protodune} that ran at the \dword{cern} in 2018 (\dword{pdsp}) and 2019 (\dword{pddp}). 
 
-The \dword{pdsp} detector used \dword{hd} \dword{tpc} technology, read out by six \dwords{apa} and a mix of \dwords{pd}. The corresponding first \dword{fd} module will have 150 \dwords{apa} and \dwords{pd} based on the \dword{arapuca} technology. The second \dword{fd} module will have \dword{sp} vertical drift readout but will share technology with  
-\dword{pddp}. Data rates and parameters for \dword{protodune} have been documented in \todo{move doc to publicly-accessible place then add to bib \href{docdb:24732}{https://docs.dunescience.org/cgi-bin/sso/ShowDocument?docid=24732}. } Table~\ref{tab:est:usefulpd} and this information from the \dword{pdsp} experience has been used to determine the parameters used in the prediction of data volumes for \dword{dune}. 
+%anne The \dword{pdsp} detector used \dword{hd} \dword{lartpc} technology, read out by six \dwords{apa} and a mix of \dwords{pd}. The corresponding first \dword{fd} module will have 150 \dwords{apa} and \dwords{pd} based on the \dword{arapuca} technology. The second \dword{fd} module will have \dword{sp} vertical drift readout but will share technology with  \dword{pddp}. Data rates and parameters for \dword{protodune} have been documented in \todo{move doc to publicly-accessible place then add to bib \href{docdb:24732}{https://docs.dunescience.org/cgi-bin/sso/ShowDocument?docid=24732}. } Table~\ref{tab:est:usefulpd} and this information from the \dword{pdsp} experience has been used to determine the parameters used in the prediction of data volumes for \dword{dune}. 
+The \dword{hd} \dword{pdsp} detector was read out by six \dwords{apa} and a mix of \dwords{pd}. The corresponding first \dword{fd} module will have 150 \dwords{apa} and will use  \dwords{pd} based on the \dword{arapuca} technology. The second \dword{fd} module will use \dword{spvd} but will share some technology with  \dword{pddp}. Data rates and parameters for \dword{protodune} have been documented in \fixme{move doc to publicly accessible place then add to bib \href{docdb:24732}{https://docs.dunescience.org/cgi-bin/sso/ShowDocument?docid=24732}. } Table~\ref{tab:est:usefulpd}; the information from\dword{pdsp} has been used to determine the parameters used in the prediction of data volumes for \dword{dune}.
 
 \subsection{ProtoDUNE Single Phase Experience}
-The \dword{pdsp} data have been processed through three reconstruction campaigns with the first done in keepup mode during data taking.  There has also been several \dword{pdsp} simulation campaigns after data taking was complete.  This work has resulted in both publications \cite{DUNE:2021hwx,DUNE:2020fgq,DUNE:2020cqd,DUNE:2020vmp}, and in robust estimates of the computational characteristics of the data and processing. The characteristics of the \dword{pdsp} data are summarized in Table \ref{tab:est:usefulpd}.
+
+The \dword{pdsp} data have been processed through three reconstruction campaigns with the first done in keepup mode 
+\fixme{(anne) a known term?}
+during data taking.  There have also been several \dword{pdsp} simulation campaigns after data taking was complete.  This work has resulted in both publications \cite{DUNE:2021hwx,DUNE:2020fgq,DUNE:2020cqd,DUNE:2020vmp}, and robust estimates of the computational characteristics of the data and processing. The characteristics of the \dword{pdsp} data are summarized in Table~\ref{tab:est:usefulpd}.
 
  \begin{dunetable}[Useful quantities from the ProtoDUNE experience]{lrr}{tab:est:usefulpd}
 {Useful quantities for computing estimates for \dword{hd}
@@ -65,7 +69,7 @@ readout based on \dword{pdsp} experience. These numbers assume 12-bit readout.  
 Quantity&Value&Explanation\\
 \toprowrule
 %{\bf Far Detector Beam:}\\ \colhline
-Number of APA's&6\\
+Number of APAs&6\\
 Number of channels/APA&2,560&\\
 Readout time & 3 ms&\\
 \# of time slices & 6000&\\
@@ -87,9 +91,11 @@ For example, the uncompressed \dword{sp} raw data for a single \dword{pdsp} trig
 
 %anne Dual phase data 
 \subsection{ProtoDUNE Dual Phase Experience}
-\dword{pddp} recorded signals using two \dword{crp} units during the 2019 run.  Observed data size without compression  was 110\,MB.  %Numbers for 2018 and 2019 have been 
 
-In fall 2021, single-phase vertical drift readout was tested in a smaller \dword{coldbox} and successfuly reconstructed. Full \dword{protodune} tests of both \dword{hd} and \dword{vd} technology with beam and cosmic rays are slated for 2022-24. The data volume estimates in section \ref{sec:est:volumes} include data and simulation for this second prototype test campaign. 
+\dword{pddp} recorded signals using two \dwords{crp} during the 2019 run.  Observed data size without compression  was 110\,MB.  %Numbers for 2018 and 2019 have been 
+
+In fall 2021, %annesingle-phase vertical drift
+\dword{spvd} readout was tested in a smaller \coldbox and successfuly reconstructed. Full \dword{protodune} tests of both \dword{hd} and \dword{vd} technologies with beam and cosmic rays are slated for 2022-24. The data volume estimates in Section~\ref{sec:est:volumes} include data and simulation for this second prototype test campaign. 
 
 % For the far detector with APA's we assume 
 
