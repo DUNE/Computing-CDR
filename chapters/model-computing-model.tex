@@ -171,7 +171,11 @@ Each of these use cases is best suited for a different combination of data/CPU r
 
 The current study indicates that for CPU-dominated applications, notably reconstruction of raw data and simulation, the relative location of CPU resources is not critical. Wall time/MB   is similar regardless of location. For IO-dominated applications, proximity to the data is important.  Here there is a trade-off between the availability of resources and the efficiency with which they can be used. Intra-US processing, especially for locations near the national laboratories, is highly efficient, as is processing within the UK.  However, efficiency falls off as the CPU and disks become more separated.  
 
-We have the monitoring tools to provide a workflow management system with the information it needs to do optimal placement of data and jobs to maximize efficiency. However our existing data management and workflow tools are not able to take full advantage of this information.  This motivates development of an improved workflow model described below and in Chapter~\ref{ch:wkflow}.
+There are additional constraints imposed on our use of each site at scales greater than that of a single job. Due to local networking limitations, the number of jobs of a particular type we can run may need to be limited to avoid saturating the site's inbound or outbound capacity. 
+
+We have the site information and monitoring tools to provide a workflow management system with the inputs it needs to do optimal placement of data and jobs to maximize efficiency. However our existing data management and workflow tools are not able to take full advantage of this information.  This motivates development of an improved workflow model described below and in Chapter~\ref{ch:wkflow}.
+
+
 
 \section{Sites and Services \hideme{McNab - draft}}
 \label{sec:cm:sites_and_services}  %% fix label according to section

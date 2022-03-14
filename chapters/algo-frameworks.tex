@@ -434,7 +434,15 @@ For oscillation analysis, it will be important to work with both Near and Far de
 
 \section{Timeline}
 
-Near term vs long-term plans.  As the production use case can be taken care of by a traditional software framework, the focus in the near term should be to continue as we are and thereby learn more about the physics use cases and ultimately the needs of DUNE.  The long-term plan should not be saddled with supporting short-term needs for ProtoDUNE.  Fermilab has recently approved a Lab Directors Research and Development project to start the process of designing an improved framework capable of satisfying many of these requirements. 
+As the production use case for \dword{protodune} can be taken care of by the existing software framework, the development timeline is dictated by the needs of \dword{dune}.  Given that technology is rapidly evolving then the strategy is to address most of the development needs as late as possible. As the algorithmic code will be extant and developed against \dword{protodune} data, this late surge development effort will consist of 6 FTE years of core framework development effort, and 10 FTE years of effort to migrate the algorithmic code.  We assume the algorithmic migration effort will come from the wider collaboration, with a modest amount of support from core framework experts.
+% Can we cite CMS here?
+Assuming a small team of two core framework developers
+%avoid single point of failure!
+and a one year period for the migration, framework development effort should ideally start 4 years before the framework is needed for commissioning.
+\todo{PJL 3/13 How much time and effort do we need?}
+
+The exception to the above development strategy is the R\&D effort needed to accommodate the dynamic time window needs of the full \dword{dune} physics program.  Given that this as-yet unknown solution is both central and critical to the success of the framework, development effort is needed now in order to minimize risk.
+Fermilab has recently approved a Lab Directors Research and Development project to start the process of designing an improved framework capable of satisfying many of these requirements. 
 
 \todo{HMS 3/13 Check what I said about LDRD}
 

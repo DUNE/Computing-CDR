@@ -101,7 +101,7 @@ Further, the system will need to evolve the large user code base and ways of wor
 existing applications assume that, when queried by jobs that are tied to a particular \dword{sam} project and its dataset, \dword{sam} will supply the name and location of the next file to be processed. 
 
 To accommodate %anne both sets of 
-these constraints, we have designed and prototyped a generalization of the \dword{sam} model: generic jobs arrive at grid worker nodes on a Computing Service and ask a central Workflow Allocator what they are to work on and which file to process within that activity. This matching is based on the physical characteristics of the worker node job slot (such as memory, processors, and lifetime) and what data are unprocessed and suitable to be accessed from that execution site. This amounts to matching of 
+these constraints, we have designed and prototyped a generalization of the \dword{sam} model. Using our Sites and Services model described in Section~\ref{sec:cm:sites_and_services}, generic jobs arrive at grid worker nodes on a Computing Element at a site and ask a central Workflow Allocator what they are to work on and which file to process within that activity. This matching is based on the physical characteristics of the worker node job slot (such as memory, processors, and lifetime) and what data are unprocessed and suitable to be accessed from local or remote Storage Elements. 
 
 
 \section{Request Lifecycle}
