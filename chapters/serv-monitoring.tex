@@ -1,6 +1,6 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Monitoring \hideme{ Steve Timm, Raja Nandakumar, Jon Hays - in progress}}
+\chapter{Information Systems and Monitoring \hideme{ Steve Timm, Raja Nandakumar, Jon Hays - in progress}}
 \label{ch:mon}
 
 % Create Parameter Values - most #'s will need to be handled this way
@@ -29,6 +29,13 @@ Going forward, DUNE plans to be agile, keep up with upcoming developments in thi
 % ETF personnel&\etfPeople&no comment\\
 % \end{dunetable}
 \label{sec:mon:xyz}  %% fixhttps://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2 label according to section
+\subsection{\dword{cric}} % moved here from IF
+
+DUNE intends to use \dword{cric} \fixme{dword needs def} as a central source of information about sites and their compute and storage services. \dword{cric} is routinely used by ATLAS and CMS with \dword{osg} and other \dword{wlcg} resources, and is also familiar to site administrators. 
+
+An evaluation of \dword{cric} is being done, with information about sites obtained from the configurations of the \dword{osg} pilot factories. This is browsable via the \dword{cric} web dashboard, and also used to generate XML files in the \dword{vo} Feed format required by the \dword{etf} testing framework used for monitoring.
+% ref to chapter for this
+
 \subsection{Experiment Test Framework (ETF)}
 
 DUNE jobs \fixme{may?} run on all sites on the grid. Checking the status of these jobs is one way of keeping an eye on whether a given site or resource is functioning normally. Given that issues can and usually do have multiple sources, it is essential to have an independent resource monitoring system to %anne keep an eye on what is happening to help 
@@ -65,14 +72,16 @@ a minimal simulation functionality on the worker nodes and to check that a given
 
 Beyond this, DUNE-specific development will be required from time to time %in keeping 
 to synchronize with updates to the framework both from the \dword{etf} / \dword{monit} and the DUNE software ends. %Depending on the requirements we estimate  with 1 
-We estimate that this effort will require  one FTE staff. %will be needed.
+%Doug Benjamin - comment out resource 14-March-22: We estimate that this effort will require  one FTE staff. %will be needed.
 
-It is expected that \fixme{X} virtual machines with minimum spec \fixme{X} will be required to run the \dword{etf} service, which can be located at any site (e.g., \dword{cern}).
+%Doug Benjamin - comment out resource estimate 14-March-22: It is expected that \fixme{X} virtual machines with minimum spec \fixme{X} will be required to run the \dword{etf} service, which can be located at any site (e.g., \dword{cern}).
 
 %anne It is expected a
-Another three FTE will likely be required to monitor the \dword{etf} results, probably as part of more general computing shifts. This will involve looking at the test results, following up on failing tests and opening tickets for failing resources. Site administrators can also use \dword{etf} tests to understand the performance of their sites. %anne: seems like it says the same thing -- and it can be used (as it is for the LHC VOs) to provide a measure of site performance (availability, reliability).
+% Commented ETF labor estimate paragraph - 14-Mar-22 Doug Benjamin
+%Another three FTE will likely be required to monitor the \dword{etf} results, probably as part of more general computing shifts. This will involve looking at the test results, following up on failing tests and opening tickets for failing resources. Site administrators can also use \dword{etf} tests to understand the performance of their sites. %anne: seems like it says the same thing -- and it can be used (as it is for the LHC VOs) to provide a measure of site performance (availability, reliability).
 
-See Table~\ref{tab:mon:assumptions} for a summary. 
+%Table commendted out 14-Mar-22 Doug Benjamin
+%See Table~\ref{tab:mon:assumptions} for a summary. 
 
 \subsection{PerfSonar}
 
@@ -103,7 +112,12 @@ that networking is a core need for \dword{wlcg} as it is for DUNE, it is anticip
 will continue to be supported %into the future.
 as long as DUNE requires it.
 
-See Table~\ref{mon:ops:needs} for a summary.
+\section{FIFEMON}\label{is:fifemon}
+
+\todo{add discussion of fifemon and use of elasticsearch and grafana at FNAl}
+
+
+%See Table~\ref{mon:ops:needs} for a summary.
 
 % \section{Summary of Assumptions and Resources}
 % \subsection{Assumptions}
@@ -124,40 +138,41 @@ See Table~\ref{mon:ops:needs} for a summary.
 
 
 
-\section{Summary of Assumptions and Resource Requirements}
+%\section{Summary of Assumptions and Resource Requirements}
 
 % This section needs summary tables at the end which will be rolled up for the full document
 % Please replace #'s in the text with defined parameters and use those in the table (and teXt)
 % Place your parameters at the top of the section. 
 %
 
+% Commented out table - 14-Mar-22 Doug Benjamin
+%\begin{dunetable}
+%[Monitoring Assumptions]%{}
+%{llrlll}
+%{tab:mon:assumptions}
+%{Assumptions for monitoring}
+%System&Parameter&Value&Units&Comment\\
+%FD & Cosmic rate & 5000 & per day&\\
+%%ETF personnel&\etfOpsPeople&no comment\\
+%\end{dunetable}
+%\fixme{(anne) fill in the above table? }
 
-\begin{dunetable}
-[Monitoring Assumptions]%{}
-{llrlll}
-{tab:mon:assumptions}
-{Assumptions for monitoring}
-System&Parameter&Value&Units&Comment\\
-FD & Cosmic rate & 5000 & per day&\\
-%ETF personnel&\etfOpsPeople&no comment\\
-\end{dunetable}
-\fixme{(anne) fill in the above table? }
 
 
-
-\begin{dunetable}
-[Resource requirements for monitoring]
-{llrlll}
-{mon:ops:needs}
-{Resource requirements for monitoring}
-  System & Resource & Value & Units & Timeline&  Comment\\ \toprowrule   
-  ETF Operations & Personnel &\MonEtfOpsPeople  & FTE & 2027-2040&\\ %\colhline % mon-ops-ETF
- ETF Development  & Personnel &\MonEtfDevPeople  & FTE & 2021-2025& \\ %\colhline % mon-dev-ETF
- ETF Total  & Personnel &\num[round-mode=places,round-precision=1]{\MonEtfTotalPeople}  & FTE & 2021-2025& \\ %\colhline % mon-tot-ETF
-      & Storage  &3  & GB&2021-2040& \\ 
-      \colhline % Start new section
-  PerfSonar & Operations &0.1 & FTE &\\ \colhline % mon-ops-PerSonar
-  Row 3 & \daqsamplerate & \\ 
-\end{dunetable}
-\fixme{fix last row of table}
+% Commented out table - 14-Mar-22 Doug Benjamin
+%\begin{dunetable}
+%[Resource requirements for monitoring]
+%{llrlll}
+%{mon:ops:needs}
+%{Resource requirements for monitoring}
+%  System & Resource & Value & Units & Timeline&  Comment\\ \toprowrule   
+%  ETF Operations & Personnel &\MonEtfOpsPeople  & FTE & 2027-2040&\\ %\colhline % mon-ops-ETF
+% ETF Development  & Personnel &\MonEtfDevPeople  & FTE & 2021-2025& \\ %\colhline % mon-dev-ETF
+% ETF Total  & Personnel &\num[round-mode=places,round-precision=1]{\MonEtfTotalPeople}  & FTE & 2021-2025& \\ %\colhline % mon-tot-ETF
+%      & Storage  &3  & GB&2021-2040& \\ 
+%      \colhline % Start new section
+%  PerfSonar & Operations &0.1 & FTE &\\ \colhline % mon-ops-PerSonar
+%  Row 3 & \daqsamplerate & \\ 
+%\end{dunetable}
+%\fixme{fix last row of table}
 \end{document}
