@@ -330,8 +330,27 @@ Each detector maintains it's own detector response simulation.
 Current detector response is handled with general hit smearing. A full detector response simulation is in progress. 
 
 \subsection{SAND Detector Simulation}
-The SAND simulation software was developed to provide neutrino interaction samples in the SAND detector geometry, based on  GENIE+GEANT4 or FLUKA.The geometry includes a detailed description of the magnet, the yoke and the electromagnetic calorimeter and either the Straw Tube Tracker (STT) or 3D projection scintillator tracker plus (Time Projection Chambers 3DST+TPC) inner tracker. The calorimeter response is modeled  with energy and timing resolution based on results published by KLOE collaboration,
-which had an excellent agreement between simulation and data.
+\label{sec:usecases_sanddetesim}
+
+\subsubsection{SAND Detector Design}
+\label{sec:usecases_sanddetdesign}
+
+The SAND detector comprises an active LAr target exploiting light read-out (GRAIN) placed upstream of a low-density tracker based on straw tube technology (STT). Both are surrounded by $4\pi$-hermeticity electromagnetic calorimeter (ECAL) and immersed in a 0.6 T magnetic field provided by a solenoidal magnet.
+The ECAL is read-out by 4880 photosensors, with an estimated 5500 total hits per spill or 33 kB of packed data per spill. The STT in the current design foresees 218,000 channels and a mean number of hits per spill of about 12,500 corresponding to 75.6 kB of packed data per spill. In the current design, GRAIN will be instrumented with up to 76 (32x32) SiPM matrices. The mean number of hits per spill is about 120,000 corresponding to 1.44 MB of packed data per spill. With these assumptions the data volume from SAND comes to about 40 TB/year. The amount of data from out-of-spill cosmic rays is estimated to be 20% of that of the in-spill data, or approximately 8 TB.
+
+\subsubsection{SAND Detector Dimulation}
+The SAND detector response simulation is performed by several tools developed in C++ and Python. The digits are built starting from the energy deposits provided by edep-sim, after the simulation of the detector response.
+ 
+ \begin{itemize}
+\item{ECAL:} The energy deposits in the scintillating fibers are converted into the number of generated photons randomly extracted by a Poisson distribution with mean 25 E/MeV, where E is the energy deposited in MeV. The number of photo-electrons is obtained taking into account the attenuation according to the fiber length travelled by the photons. The arrival time to the photo-sensors is assigned to each photo-electron taking into account the scintillation decay time, the propagation time along the fiber and a random jitter. The amplitude of the signal of the photo-sensor is proportional to the number of photo-electrons collected in a certain time window and the time of the signal is obtained simulating a 15\% constant fraction discriminator.
+ 
+\item{STT:} For each energy deposit in a tube, the electronic signal arrival time at the read-out is evaluated considering the electron drift time towards to wire, the electric signal propagation along the wire and a random jitter. The timing of the signal is given by the earliest electric signal reaching the tube read-out. The amplitude of the signal is proportional to the sum of the energy deposit in a certain time window.
+ 
+\item{GRAIN:} Argon scintillation in GRAIN is simulated using the Geant4 toolkit. For each energy deposit, a random number is extracted from a Gaussian distribution, with the mean value determined by the argon light yield and the fraction of the energy deposit that ends up producing photons (already calculated by edep-sim), and a dispersion given by the square root of this number. If the mean is less than 20, a Poisson distribution is used instead. For each photon, a random momentum, polarization, position along the step, time of emission, and energy are determined. The properties of argon are included: singlet to triplet ratio, fast and slow, Rayleigh scattering, and absorption length.
+The photons are then collected by cameras. A camera is composed by an optical system (either mask or lens) and a (32x32) SiPM matrix as photo-sensor. The simulation includes the geometry of the cameras, whether being lens-based or mask-based. The number of photons collected in each channel in a given time window and the time of the first photon impinging in each channel is stored for producing a 2D image for each camera. 
+The photo-sensor response is simulated with a custom software written in Python and OpenCL for GPU accelerated computing. The SiPM matrix response waveform is computed with a heuristic function from the timing of impinging photons on the matrix surface. The SiPM characteristics such as PDE, crosstalk, afterpulses, and dark count rate are included in the simulation. A small quantity of white and rf noise is added as well. The waveform is then quantized and the and integrated over a fixed time window to simulate a DAQ composed by an ADC and a TDC for timing over a fixed threshold.
+\end{itemize}
+
 
 \subsection{ND-GAr Detector Simulation}
 \label{sec:usecases_ndgardetsim}

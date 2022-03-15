@@ -36,7 +36,7 @@ Alignment constants are an example of conditions metadata that will likely be va
 The DUNE conditions database will have APIs that provide easy and transparent access to all conditions metadata independently of technical details.
 %be indexed in a fashion that makes access by users transparent, or APIs will provided to serve the same purpose.
 
-Time-indexed metadata will, in some cases, be sampled at a rate higher than typically needed by offline users. In these instances the metadata will be filtered down or interpolated to a lower rate for inclusion in the conditions database. In general, metadata falls into two categories, interpolated and non-interpolated, where an example of the latter would be run-indexed values pertaining to run configuration. Interpolated metadata, e.g., values read back from the slow control system, can be interpolated through a rolling average or updated on changes to the values. The method used will depend on the natural variation of the value being recorded and the physics use case. 
+Time-indexed metadata will, in some cases, be sampled at a rate higher than typically needed by offline users. In these instances the metadata will be filtered down, or interpolated, to a lower rate for inclusion in the conditions database. In general, metadata falls into two categories, interpolated and non-interpolated, where an example of the latter would be run-indexed values pertaining to run configuration. Interpolated metadata, e.g., values read back from the slow control system, can be interpolated through a rolling average or updated on changes to the values. The method used will depend on the natural variation of the value being recorded and the physics use case. 
 %I removed the user defining this, to stress that it should be a physics motivation
 The database group will provide interpolated values to match the physics requirements of the experiment.  
 
@@ -100,23 +100,22 @@ As the granularity and content of the conditions database should be well-matched
 The design of the interface between the data processing software framework (see chapter \ref{ch:fworks}) and the conditions database plays an important role if all of the access patterns needed by \dword{dune} are to be well supported.
 Experience from other \dword{hep} experiments with distributed computing resources show that careful design of this interface is crucial to the success of the computing model
 \footnote{Overlays (see section \ref{sec:usecases_overlays} are an example of a workflow that can cause issues for conditions database access if this interface is not well designed.}.
-Figure~\ref{fig:dbmap} shows the relationship between the conditions \dword{db} and the other \dword{dune} databases. For \dword{protodune} the "Master Metadata Store" is a necessary intermediate database that allows for potentially heavy data interpolation tasks to run without creating extra load on the other, often critical, database services.  It provides a useful separation between the online and offline worlds at the cost of data duplication. The final database system design for \dword{dune} will benefit from experience with this design.
+Figure~\ref{fig:dbmap} shows the relationship between the conditions \dword{db} and the other \dword{dune} databases. For \dword{protodune} the "Master Metadata Store" is an intermediate database that allows for potentially heavy data interpolation tasks to run without creating extra load on the other, often critical, database services.  It provides separation between the online and offline worlds at the cost of partial data duplication. The final database system design for \dword{dune} will benefit from experience with this design.
 
 
 \begin{dunefigure}
 [Map of DUNE databases]
 {fig:dbmap} 
-{Map of DUNE databases showing conditions database along with some interfaces (arrows). (placeholder until we have better figure)}
+{Map of DUNE databases showing conditions database (combination of Master Store and Run Conditions DB). The arrows illustrate the flow of metadata. Offline access to conditions metadata is made through the Run Conditions DB, which is a relational DB containing a small subset of the metadata from the Master Store DB. }
 \includegraphics[width=.9\columnwidth]{graphics/Databases/DBSystem-cartoon.png}
 \end{dunefigure}
 
-
-The conditions database will contain interpolated (e.g., slow controls) and non-interpolated (e.g., run configurations) information. Interpolated information may more naturally be keyed by time-stamps, while configurations are more naturally keyed by run number. Tools will need to be developed to handle these two %anne cases 
+The conditions database will contain interpolated (e.g., slow controls) and non-interpolated (e.g., run configurations) information. Interpolated information may more naturally be keyed by time-stamps, while configurations are more naturally keyed by run number. Tools will need to be developed to handle these two  
 types of database content. 
 
 \subsection{Conditions Database for \dword{protodune}}
 
-In order to provide a balance between the availability of the largest set of metadata possible  and allowing schema evolution,  the \dword{protodune} conditions database will employ an unstructured approach utilizing an unstructured No-SQL database \dword{ucondb}~\cite{bib:ucondb}. The \dword{ucondb} where metadata from several specific databases and sources, like the \dword{daq} system, will be stored in ``blobs'' corresponding to temporal periods (run, time blocks, or \dwords{iov2}). Each blob will contain a \dword{json}-formatted record of metadata. Folders will be used to hold metadata corresponding to time and run keys. Tools will be provided to correlate between the two. 
+In order to provide a balance between the availability of the largest set of metadata possible  and allowing schema evolution,  the \dword{protodune} conditions database will employ an unstructured approach utilizing a No-SQL database \dword{ucondb}~\cite{bib:ucondb}. The \dword{ucondb} where metadata from several specific databases and sources, like the \dword{daq} system, will be stored in ``blobs'' corresponding to temporal periods (run, time blocks, or \dwords{iov2}). Each blob will contain a \dword{json}-formatted record of metadata. Folders will be used to hold metadata corresponding to time and run keys. Tools will be provided to correlate between the two. 
 
 An example of a metadata blob~\footnote{This metadata is taken from \dword{iceberg}, a small DUNE-related experiment. \dword{protodune}, and DUNE, conditions metadata will be significantly larger, O(10~MB).}
 
@@ -374,7 +373,13 @@ The \dword{dune} Calibration system is expected to generate very large datasets 
 
 \subsection{Database Access Tool Development and Documentation}
 
-As more use cases and workflows are discovered, all of the \dword{dune} Databases will likely need to have tools to allow efficient and easy access to them. Perhaps even more important will be documentation, including training materials, that will need to be updated as development work proceeds.  Here the number of use cases, databases and groups involved drive the significant amount of effort required here.
+Guided by use cases, tools will be developed for all of the \dword{dune} Databases to enable to access of metadata for inclusion in the conditions database as well as direct access for studies\footnote{Most offline DB access will be made via the Conditions DB but there will be cases where expert users will need direct access to the various databases.}. An interface within the ART framework is already part of the DUNE software stack and has been used to access the IFBeam beam instrumentation database. This ART database service has been used, and is currently used, by the NOvA experiment. This interface will be the baseline for any other interfaces used by users interacting with the DUNE databases, including with the Conditions DB.
+
+Additionally, APIs will be developed to provide the interfaces between the various databases and the Master Store DB, as well as between the Master Store and the Run Condition database. These will likely be light-weight Python-based applications. 
+
+%As more use cases and workflows are discovered, all of the \dword{dune} Databases will likely need to have tools to allow efficient and easy access to them. 
+
+Documentation is another critical aspect of the database system. This includes descriptions of the DB system components and training materials, that will need to be updated as development work proceeds. The number of use cases, databases and groups involved drive the significant amount of effort required here.
 
 
 \subsection{Person Power Estimates}
