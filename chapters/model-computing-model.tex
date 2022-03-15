@@ -14,7 +14,7 @@
 
 
 
-The current \dshort{dune} global computing model is an organic extension of the Fermilab \dword{fife} computing model, used for smaller Intensity Frontier experiments, to the full global DUNE collaboration.  This effort  has relied heavily on global infrastructure such as \dword{osg} and the \dword{wlcg} and was successful for the first small-scale \dword{protodune} tests. However, it needs substantial enhancement to cope with the anticipated data and processing volumes.  This chapter describes the current situation and proposals for future improvements. 
+The current DUNE global computing model is an organic extension of the \dword{fnal} \dword{fife} computing model, used for smaller Intensity Frontier experiments, to the full global DUNE collaboration.  This effort  has relied heavily on global infrastructure such as \dword{osg} and the \dword{wlcg} and was successful for the first small-scale \dword{protodune} tests. However, it needs substantial enhancement to cope with the anticipated data and processing volumes.  This chapter describes the current situation and proposals for future improvements. 
 
 \subsection{Global Resources}
 
@@ -120,9 +120,9 @@ US\_WSU	&	WSU - GRID\_ce2	&	\\
 \end{dunetable}
 
 
-\section{Site characteristics}
+%anne 3/15 \section{Site characteristics}
 
-\todo{add a section which describes the various site types - HPS, normal, analysis, commercial services - I think this is already done in section 6.4 - Kirby}
+\fixme{add a section which describes the various site types - HPS, normal, analysis, commercial services - I think this is already done in section 6.4 - Kirby (anne removed section header)}
 %\todo{Add diagrams}
 
 \section{Current Performance\label{ch:model:perf} \hideme{Schellman/Herner - draft}}. 
@@ -135,7 +135,7 @@ US\_WSU	&	WSU - GRID\_ce2	&	\\
     \item Data analysis consists of repeated access to smaller tuple outputs for calibration and parameter estimation.
 \end{itemize}
 
-Each of these use cases is best suited for a different combination of data/CPU resources and the global compute model should be able to allocate resources appropriately.  Currently the default configuration for all HTC jobs is for data delivery to be through xrootd streaming. To understand the impact of this choice on effciency, we have used the \dword{sam} instrumentation to measure the \dword{xrootd} streaming performance for disk/CPU location combinations. 
+Each of these use cases is best suited for a different combination of data/CPU resources and the global compute model should be able to allocate resources appropriately.  Currently the default configuration for all \dword{htc} jobs is for data delivery to be through \dword{xrootd} streaming. To understand the impact of this choice on effciency, we have used the \dword{sam} instrumentation to measure the \dword{xrootd} streaming performance for disk/CPU location combinations. 
 
 \begin{dunefigure}
 [Streaming speeds for reconstruction]
@@ -187,18 +187,21 @@ We have the site information and monitoring tools to provide a workflow manageme
 The large \dword{lhc} experiments have historically relied on a tiered structure, with national Tier-1 centers % AM: serving -> and
 and regional Tier-2 and Tier-3 centers.  The DUNE model builds on the emergence of faster networks to move to  a service-oriented model, where sites provide services, disk, CPU, real memory/core and archival tape, and projects are  distributed to them based on their capabilities and available networking.  For example, a site with large CPU and memory/core but slower networking would be ideal for simulation while small memory/core and fast access to large local disk stores would be ideal for high-level data analysis.  This model will require a high-level view of data locations and job placement with continual monitoring for bottlenecks, but allows new sites to contribute in an optimal way. The intent is to lower the bar for contributions without overburdening the core computing operations of the experiment.
 
-This section sets out our ``Sites and Services'' model for using sites for DUNE computing tasks, including sites that participate in \dword{osg} or \dword{wlcg} more generally. Since our requirements are not the same as the \dword{lhc} experiments, this necessitates a distinct naming scheme to \dword{wlcg} and ways of mapping our scheme onto the \dword{wlcg} tier model.
+This section sets out our ``Sites and Services'' model for using sites for DUNE computing tasks, including sites that participate in \dword{osg} or \dword{wlcg} more generally. Since our requirements are not the same as the \dword{lhc} experiments, this %necessitates a distinct naming scheme to 
+requires implementing both a distinct naming scheme in
+\dword{wlcg} and ways of mapping our scheme onto the \dword{wlcg} tier model.
 
-At this stage, DUNE has chosen to express its requirements in terms of services provided by sites. Each site provides networking plus one or more approved DUNE services, which satisfy DUNE's minimum requirements for the service in terms of capacity, quality, and interfaces. This model allows us to avoid making assumptions about how sites and federations of sites will be organized in the future, as the community evolves away from the strict \dword{wlcg} tiers model towards \dword{doma} and concepts like a \dword{datalake}.
-\todo{define data lakes please. Maybe add to glossary-comp-cdr. } %anne (already said) instead we express our requirements in terms of the services we interact with.
+At this stage, DUNE has chosen to express its requirements in terms of services provided by sites. Each site provides networking plus one or more approved DUNE services, which satisfy DUNE's minimum requirements for the service in terms of capacity, quality, and interfaces. This model allows us to avoid making assumptions about how sites and federations of sites will be organized in the future, as the community evolves away from the strict \dword{wlcg} tiers model towards \dword{doma} and concepts like %a
+\dwords{datalake}.
+%\todo{define data lakes please. Maybe add to glossary-comp-cdr. } %anne (already said) instead we express our requirements in terms of the services we interact with.
 
-DUNE expects to be able to access services using broadly the same set of APIs as \dword{wlcg} (e.g., HTCondor-CE and xrootd) and by using common cloud APIs (e.g., \dword{openstack} and \dword{s3}). 
+DUNE expects to be able to access services using broadly the same set of APIs as \dword{wlcg} (e.g., HTCondor-CE and \dword{xrootd}) and by using common cloud APIs (e.g., \dword{openstack} and \dword{s3}). 
 %kirby - updated Mar 11 \todo{(anne) Should xroot be xrootd? I added the others to glossary-comp-cdr; please fill in the definitions}
 For this reason, sites may be operated using conventional grid technologies, on-premises cloud systems, or commercial cloud services. Nevertheless, sites do appear in the DUNE computing model, as the atomic unit for operations activity. %Kirby - fixed Mar 11, 2022 \todo{(anne) This feels like a nonsequitur (and see ??? below)}
 For example, staff at a site can receive and process tickets, %may  
 and may be required to have a representative at an operations meeting with the technical knowledge to comment on issues as they arise.
 
-In terms of workflows and data management, DUNE does not impose or require any hierarchy or grouping of sites, and assumes that, in general, data may flow between services at any two sites. That said, DUNE expects to use network proximity and bandwidth information to guide the efficient transfers of data between services. The details of the different services within the DUNE Computing Model are described in detail in Section \ref{sec:cm:types_of_service}.
+In terms of workflows and data management, DUNE does not impose or require any hierarchy or grouping of sites, and assumes that, in general, data may flow between services at any two sites. That said, DUNE expects to use network proximity and bandwidth information to guide the efficient transfers of data between services. The details of the different services within the DUNE Computing Model are described in detail in Section~\ref{sec:cm:types_of_service}.
 
 \section{Sites, Federations, and Countries\hideme{McNab - draft}}
 \label{sec:cm:federations}
@@ -216,21 +219,21 @@ provide the entity reviewed when comparing the level of contribution to computin
 \section{Types of Service\hideme{McNab - draft}}
 \label{sec:cm:types_of_service}
 
-We envisage five classes of service, on which we will put requirements and request capacity.
+We envisage five classes of service on which we will put requirements and request capacity:
 
 \begin{itemize}
-    \item Network
-    \item DUNE Computing Element
-    \item Data Cache
-    \item DUNE Storage Element
-    \item DUNE Data Archive
+    \item Network,
+    \item DUNE Computing Element,
+    \item Data Cache,
+    \item DUNE Storage Element, and
+    \item DUNE Data Archive.
 \end{itemize}
 
 \subsection{Network\hideme{McNab - draft}}
 \label{sec:cm:network}
 
-Networking is needed at all sites, with basic requirements including IPv4 and IPv6. %Kirby someone did this \todo{please add to gloss, also NREN below}
-All sites should be connected to the wide area network, typically via their NREN, with sufficient capacity to handle the data IO commensurate with their fraction of the workload. In practice this means at least 40\,Gbit/s for major sites with large amounts of storage (with 100\,Gbit/s becoming the normal expectation for a shared site such as a \dword{wlcg} Tier-1) and at least 20\,Gbit/s for smaller CPU-only sites (but with 40-100\,Gbit/s becoming the norm in shared sites).
+Networking is needed at all sites, with basic requirements including IPv4 and \dword{ipv6}. %Kirby someone did this \todo{please add to gloss, also NREN below}
+All sites should be connected to the wide area network, typically via their \dword{nren}, with sufficient capacity to handle the data IO commensurate with their fraction of the workload. In practice this means at least 40\,Gbit/s for major sites with large amounts of storage (with 100\,Gbit/s becoming the normal expectation for a shared site such as a \dword{wlcg} Tier-1) and at least 20\,Gbit/s for smaller CPU-only sites (but with 40-100\,Gbit/s becoming the norm in shared sites).
 Other DUNE-approved services may impose further requirements in terms of network capacity. %anne which they require,
 
 \subsection{DUNE Computing Element\hideme{McNab - draft}}

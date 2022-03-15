@@ -52,13 +52,17 @@ As operating systems have become more secure, some of the ways of distributing, 
 When DUNE starts running with beam, the expected \dword{nd} configuration will consist of a \dword{lartpc} with pixel readout (\dword{ndlar}), a magnetized steel muon spectrometer (\dword{tms}), and an on-axis beam monitor, \dword{sand}.  A proposed future upgrade is replacement of the \dword{tms} with a subdetector that consists of a \dword{gartpc} with pixel readout, an \dword{ecal} and a muon system (\dword{ndgar}). The software structure reflects the detector configuration.  The software %effort 
 contributions for each subdetector %has contributions 
 come from the groups that are designing and proposing to construct the subdetectors and their subsystems.  Below is a summary of the code management strategies used for each subdetector, %system, 
-and also for the shared tools.
+and also for the shared tools. In general, offical repositories are hosted in GitHub with executable binaries and the associated libraries installed in \dword{cvmfs} so that the software can easily be version controlled and run on the grid. These requirement must be met in order for software to be run at the production level and stored in group accessible areas. 
 
 \subsection{ND-LAr Code Management}
 \label{sec:codemgmt:ndlar}
 
+Currently the ND-LAr code, larnd-sim and ndlarcv, is hosted in GitHub. This code handle the standard reconstruction and detector response mock-up. The ML and Pandora based reconstruction code is currently under private development, but will be made available this spring prior to production integration.  
+
 \subsection{TMS Code Management}
 \label{sec:codemgmt:tms}
+
+Currently the TMS code, dune-tms, is hosted in GitHub. This code handle the reconstruction and detector response mock-up. 
 
 \subsection{ND-GAr Code Management}
 \label{sec:codemgmt:ndgar}
@@ -76,10 +80,12 @@ The software for simulating and reconstructing events in \dword{ndgar} is, at th
 \subsection{SAND Code Management}
 \label{sec:codemgmt:sand}
 
-\subsection{Near Detector Production Tools}
+Currently the SAND code, ND-SAND-FastReco, is hosted in GitHub. This code handle the basic reconstruction and detector response mock-up. The full reconstruction and detector response code is currently under private development, but will be made available this spring prior to production integration.  
+
+\subsection{Near Detector Common and Production Tools}
 \label{sec:codemgmt:ndproduction}
 
-A repository has been set up in GitHub to manage files that are needed for \dword{nd} production.  These include production scripts, detector geometry descriptions and flux specifications.  It is versioned and installed in \dword{cvmfs} like other DUNE repositories, so that production workflows can be reproduced at later dates.
+A repository has been set up in GitHub to manage files that are needed for \dword{nd} production.  These include production scripts, detector geometry descriptions and flux specifications.  It is versioned and installed in \dword{cvmfs} like other DUNE repositories, so that production workflows can be reproduced at later dates. Additonally, common ND geometry code is stored in GitHub, dunendggd.
 
 \section{Continuous Integration \hideme{Junk - draft}}
 \label{sec:codemgmt:ci}
@@ -87,10 +93,7 @@ A repository has been set up in GitHub to manage files that are needed for \dwor
 The stability of the performance of a large base of shared software requires attention to each change that is committed.  Software releases require validation and approval before being used in analyses intended for publication.  The rapid pace of software development early in the life cycle of the experiment, as well as increased activity as data are first collected and conferences come up, requires constant vigilance to ensure that bugs are not introduced and that software remains backwards-compatible.
 
 To meet this requirement, an automated continuous integration (\dword{ci}) system is currently in operation for the \dword{larsoft}-based code base.  Similar systems, even using the same infrastructure, will be deployed for the \dword{nd} and beam simulations system.  The \dword{ci} system consists of a set of servers that monitor %anne commits pushed to the central code repositories.  On each commit, with a suitable delay of approximately 15 minutes in order to aggregate commits. 
-each commit pushed to the central code repositories, with a suitable delay of approximately 15 minutes in order to aggregate commits. The \dword{ci} system can also be triggered by user interaction, via an authenticated request.
-
-\fixme{again, the following feels overly detailed for a CDR - just my opinion! (anne)}
-Once triggered, the \dword{ci} system  compiles the changed code as well as any dependencies that are required.  Currently, the \dword{ci} system builds \dword{larsoft} and all experiment code from the head of the develop branch in the repositories.  This is done because new commits to one repository, be it experiment-specific code or shared \dword{larsoft} code, may depend on the latest version of software in other repositories.  If shared software is the subject of the commit, then software that depends on it, such as all the experiment software stacks, are rebuilt, as a change to a header file in a shared repository can cause any source file that includes it, even indirectly, to fail to build.
+each commit pushed to the central code repositories, with a suitable delay of approximately 15 minutes in order to aggregate commits. The \dword{ci} system can also be triggered by user interaction, via an authenticated request.  Once triggered, the \dword{ci} system  compiles the changed code as well as any dependencies that are required.  Currently, the \dword{ci} system builds \dword{larsoft} and all experiment code from the head of the develop branch in the repositories. 
 
 The status of the build is stored in a logfile and summarized on a web page.  If a commit causes the build to fail, software managers and the person who committed and/or pushed the commit are notified and the commit is blocked from being merged into the head of develop.  \dword{larsoft} currently implements a pull-request model, in which experiment-appointed Level-2 managers comment on and sign off on changes to the central code, and Level-1 managers perform the actual merging.  A proposed change will not even be sent out for approval unless the \dword{ci} system can build it and validation tests are run to compare output that ought not to have been changed by the new code.
 
