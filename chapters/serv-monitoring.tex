@@ -40,7 +40,7 @@ An evaluation of \dword{cric} is being done, with information about sites obtain
 
 \subsection{Experiment Test Framework (ETF)}
 
-DUNE jobs run at number computer data centers across the grid. Checking the status of these jobs is one way of keeping an eye on whether a given site or resource is functioning normally. Given that issues can and usually do have multiple sources, it is essential to have an independent resource monitoring system to %anne keep an eye on what is happening to help 
+DUNE jobs run at a number of computer data centers across the grid. Checking the status of these jobs is one way of keeping an eye on whether a given site or resource is functioning normally. Given that issues can and usually do have multiple sources, it is essential to have an independent resource monitoring system to %anne keep an eye on what is happening to help 
 catch issues quickly. %The framework that is being successfully used for this is \dword{etf}. %, is already in the \dword{wlcg}. % WLCG is the ETF system.
 \dword{etf}, framework that is being successfully used for this, is the \dword{wlcg} % WLCG is the ETF system.
  Experiments Tests Framework\cite{bib:ETFDoc},\cite{bib:ETFStatus}. It  has been known by different names, but the underlying framework remains the same. The \dword{cern} plans to support this framework for as long as \dword{lhc} experiments require availability and reliability metrics from an independent source.
@@ -117,6 +117,15 @@ as long as DUNE requires it.
 \section{FIFEMON}\label{is:fifemon}
 
 \todo{add discussion of fifemon and use of elasticsearch and grafana at FNAl}
+DUNE relies on the FIFEMON \cite{bib:fifemon}  family of monitoring tools which have been developed at Fermilab over the past
+decade or so.  These dashboards show the CPU usage and efficiency and storage usage and traffic of
+all the experiments on a user by user basis.
+
+The dashboards are built on open-source technology, and use common ingest tools such as Apache Kafka, Logstash,
+and Prometheus to collect data, the Graphite and ElasticSearch data stores to store it, and the Grafana and Kibana 
+display utilities to display it.  Grafana is used for static displays, while Kibana has an active search function in which custom graphs can be made using a query language.  
+
+There is information on batch usage by user and aggregate of the whole experiment.  CPU efficiency and memory usage are plotted. In addition storage total usage as well as the volume of reads and writes, as well as the age of files, are visualized.  We also have custom visualizations to display data movement from data center to data center and
 
 
 %See Table~\ref{mon:ops:needs} for a summary.
