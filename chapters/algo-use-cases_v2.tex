@@ -329,6 +329,18 @@ Each detector maintains it's own detector response simulation.
 \subsubsection{TMS Detector Simulation}
 Current detector response is handled with general hit smearing. A full detector response simulation is in progress. 
 
+\subsection{ND-GAr Detector Simulation}
+\label{sec:usecases_ndgardetsim}
+
+The \dword{garsoft} suite of \dword{art}-based modules is used to simulate the \dword{ndgar} detector.  It performs similar functions to \dword{larsoft}'s \dword{geant4} and detector simulation modules.  \dword{garsoft} includes interfaces to the following event generators:  \dword{genie}, CRY, and a text-file generator.  It also contains a \dword{larsoft}-like interface to \dword{geant4}, called {\tt garg4}.  In order to be used in conjunction with the other near detectors in a full hall simulation, \dword{garsoft} also includes a module to import energy deposits from {\tt edep-sim}, and format them internally as if they had been made by {\tt garg4}.
+
+Once the energy deposits are available, a module that simulates the division between ionization and scintillation quanta is invoked.  Electron drift through the gaseous medium is parameterized, and longitudinal and transverse diffusion is modeled by sampling from Gaussian distributions of widths that grow with the square root of the drift time.  The effect of attenuation due to attachment of drifting electrons on electronegative impurities in the gas is also simulated at this time. 
+
+The anode planes are modeled as re-purposed ALICE %inner and outer readout chambers (
+\dwords{iroc} and \dwords{oroc} ~\cite{Dellacasa:2000bm}.  Charge is amplified by avalanches on the anode wires, and induced charge on the nearby readout pads provides the charge detection.  The pad response functions are taken from Ref.~\cite{Dellacasa:2000bm}.
+
+The response of the calorimeter and the muon systems are parameterized versions of the energy deposit information, localized to the detector cells in which the energy is deposited.
+
 \subsection{SAND Detector Simulation}
 \label{sec:usecases_sanddetesim}
 
@@ -351,18 +363,6 @@ The photons are then collected by cameras. A camera is composed by an optical sy
 The photo-sensor response is simulated with a custom software written in Python and OpenCL for GPU accelerated computing. The SiPM matrix response waveform is computed with a heuristic function from the timing of impinging photons on the matrix surface. The SiPM characteristics such as PDE, crosstalk, afterpulses, and dark count rate are included in the simulation. A small quantity of white and rf noise is added as well. The waveform is then quantized and the and integrated over a fixed time window to simulate a DAQ composed by an ADC and a TDC for timing over a fixed threshold.
 \end{itemize}
 
-
-\subsection{ND-GAr Detector Simulation}
-\label{sec:usecases_ndgardetsim}
-
-The \dword{garsoft} suite of \dword{art}-based modules is used to simulate the \dword{ndgar} detector.  It performs similar functions to \dword{larsoft}'s \dword{geant4} and detector simulation modules.  \dword{garsoft} includes interfaces to the following event generators:  \dword{genie}, CRY, and a text-file generator.  It also contains a \dword{larsoft}-like interface to \dword{geant4}, called {\tt garg4}.  In order to be used in conjunction with the other near detectors in a full hall simulation, \dword{garsoft} also includes a module to import energy deposits from {\tt edep-sim}, and format them internally as if they had been made by {\tt garg4}.
-
-Once the energy deposits are available, a module that simulates the division between ionization and scintillation quanta is invoked.  Electron drift through the gaseous medium is parameterized, and longitudinal and transverse diffusion is modeled by sampling from Gaussian distributions of widths that grow with the square root of the drift time.  The effect of attenuation due to attachment of drifting electrons on electronegative impurities in the gas is also simulated at this time. 
-
-The anode planes are modeled as re-purposed ALICE %inner and outer readout chambers (
-\dwords{iroc} and \dwords{oroc} ~\cite{Dellacasa:2000bm}.  Charge is amplified by avalanches on the anode wires, and induced charge on the nearby readout pads provides the charge detection.  The pad response functions are taken from Ref.~\cite{Dellacasa:2000bm}.
-
-The response of the calorimeter and the muon systems are parameterized versions of the energy deposit information, localized to the detector cells in which the energy is deposited.
 
 \subsection{Overlays}
 In order to build full beam spills simulated events on rock, detector fiducial volumes and the corresponding anti-fiducial sample are overlayed to reproduce expected beam timing and intensity. The OverlayGenie package is the current overlay tool in use but alternative which are more integrated are being developed. 
@@ -601,8 +601,12 @@ The nanosecond-scale timing resolution of the calorimeter allows the updating of
 
 \subsection{SAND}
 
-A preliminary full reconstruction of the events has been developed and includes identification of the primary charged particles and determination of the vertex position and momentum . For neutrons, identified as isolated clusters, techniques have been developed for distinguishing between primary and secondary neutrons and for primary particles the energy is reconstructed by the time of flight between the vertex and the cluster signal. Additionally, momentum and energy for neutral pions are obtained by the signal of daughter photons detected in the calorimeter or inside the tracker.
-The software is at a preliminary stage and development continues on final reconstruction of primary particles detected in different sub-detectors and for identifying external neutrino interactions and background events.
+For neutrino interactions in STT, a first rough estimation of the vertex position is based on the STT digit spread in both the XZ and YZ views, where Y is the vertical axis, Z is the projection of the beam direction on the horizontal plane and X is perpendicular to the first two in a right-hand coordinate system. The vertex position is then used to apply a conformal transformation to the coordinates of the YZ digits $(y,z \rightarrow u,v)$. The YZ tracks are then identified as clusters of digits in the v/u distribution. The particle momentum in the bending plane is estimated with a circular fit of the YZ digits. To measure the dip angle, a transformation is first applied to the coordinates of the XZ digits $(x,z \rightarrow x,\rho)$ to linearize the trajectory, followed by a linear fit. A Kalman Filter based track reconstruction for the STT in under development.
+The longitudinal position and timing of the energy deposit in an ECAL cell is obtained by comparing the measured timing in the photo-sensors on both ends of the cell. Adjacent cells are grouped into cluster and the position, timing and energy deposit of each cell is used to obtain the position, timing, total energy deposit and direction of the cluster.
+The reconstruction for GRAIN lens-based light readout takes as input the 2D images produced by the sub-set of the cameras which have observed each event. The first step of the reconstruction is aimed at identifying the track projections in the images and fitting them. The algorithm is based on the Hough transform, multi-Otsu thresholding and DBSCAN clustering to isolate, select and fit the tracks in each image. The second step combines the 2D information to obtain a 3D reconstruction of the event. Assuming the pinhole approximation, pixels associated to a reconstructed track are projected back into 3D space to find a volume compatible with their 2D projections. The final outputs are then the reconstructed tracks, an estimate of the energy deposited from each track based on the amount of the collected photon from the collected light and the 3D vertex candidate.
+The direct 3D reconstruction for GRAIN with Hadamard masks consists in a custom reconstruction algorithm that obtains a 3D map of the deposited energy. It is based on a probablitistic and combinatorial approach: each hit on the camera pixel is propagated in the detector volume through each mask hole, with an appropriate weight assigned to the segmented volume units (voxels), which measure 1 cm$^3$.  The algorithm is designed to be run on GPUs to provide the required performance.
+The event analysis in case of mask-based light readout is not so different from the lens-based case. Clustering algorithms and fit procedures are used for the 2D reconstruction of the tracks. The single-pinhole approximation is assumed to combine the signals from different masks and to get the 3D view of the event. A new algorithm to avoid wrong associations of light pixels on different masks is under study. Also, for the masks, the final results are the vertex identification looking at the most probable 3D voxels and the calorimetric measurement.
+ 
 
 \subsection{Common ND analysis files}
 
@@ -730,10 +734,10 @@ In addition to the \dword{larsoft}-based event displays, DUNE has multiple web-b
 [Three-dimensional ProtoDUNE-SP Bee Data Display]
 {fig:vis:bee} 
 {Example three-dimensional reconstructed data display for a \dword{pdsp} data trigger record produced with the web-based Bee event display.  Users interact with the data needing only a modern web browser on their computer.  They can pan, zoom, rotate, and change display colors, point sizes, and transparency.}
-\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/bee_pdsp_evd1.png}
+\includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/protodune_bee_evd_light.png}
 \end{dunefigure}
 
-\todo{Can we get a bee with a white background? } 
+%\todo{Can we get a bee with a white background? } 
 
 Another web-based event display is called WebEVD.  It runs as a \dword{larsoft} module, and it sets up a local web server owned by the user process on an interactive computer.  The user then must ssh in to the interactive computer running the web server, with a specified port forwarded.  The user then connects to that port with a local web browser and interacts with the event display with it.  This user-owned web server which is only visible via authenticated ssh has the advantage that it provides the user with full control over which data are to be displayed, as the web server is not centrally managed.  An example display of two-dimensional deconvolved waveforms for a simulated $\nu_e$CC event in a \dword{fd} workspace geometry run is shown in Figure~\ref{fig:vis:webevd2d}.  An example three-dimensional event display from a \dword{pdsp} data run produce using WebEVD is shown in Figure~\ref{fig:vis:webevd3d}.
 
