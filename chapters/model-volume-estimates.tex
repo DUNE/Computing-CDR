@@ -117,7 +117,7 @@ early 2022. This assumes that the first module will be \dword{sphd}, the second 
 For \dword{hd} \dword{fd} data volumes, we use our \dword{pdsp} experience and assume that raw data sizes and hit-finding CPU times scale with the number of \dwords{apa}, while pattern recognition and simulation times scale with the number of interactions. 
 
  \begin{dunetable}[Useful quantities for computing \dshort{hd} data volume
-estimates]{lrr}{tab:est:usefulfd}
+estimates]{lrr}{tab:est:usefulfdhd}
 {Useful quantities for computing estimates for \dword{hd}
 readout based on the \dword{daq} requirements document of January 2022.  CPU times are scaled from \dword{pdsp} assuming all detectors are used in hit finding but interactions are confined to a subsection of the detector not much larger than \dword{pdsp}.}%\rowtitlestyle
 Quantity&Value&Explanation\\
@@ -180,7 +180,7 @@ Total& & &9.4 PB/year\\
  The data volume  corresponding  to calibration events can be considered to be similar to the one assumed in Table~\ref{tab:est:hdfdrates}; a more detailed estimation is ongoing. 
 
 \begin{dunetable}[Useful quantities for computing \dshort{spvd} data volume
-estimates]{lrr}{tab:est:usefulfd}
+estimates]{lrr}{tab:est:usefulfdvd}
 {Useful quantities for computing estimates for \dword{vd}
 readout based on the \dword{daq} requirements document of January 2022.  CPU times are scaled from \dword{pdsp} assuming all detectors are used in hit finding but interactions are confined to a subsection of the detector not much larger than \dword{pdsp}.}%\rowtitlestyle
 Quantity&Value&Explanation\\

@@ -40,7 +40,7 @@ The other key feature that modern frameworks provide, is the ability to configur
 
 Another key concept that defines modern data processing frameworks, are their construction and organization as advanced state machines.  In contrast to older, linear execution techniques, this design allows for the execution of more complicated workflow topologies, parallel analysis chain topologies, and dynamic execution models.  This state machine organization and behavior also allows the frameworks to emulate better the behavior of other systems that are used throughout  \dword{hep}, such as those encountered in the data acquisition systems realm, and to adapt more readily to parallel and asynchronous data access systems where the coherence of the system's ``state'' can be monitored and maintained between framework controlled state transitions (i.e. between configuration, initialization, algorithm execution, data serialization, and finalization stages).  
 
-It should be noted that in modern framework definitions and designs, there is typically an interplay and hand off between the framework which is executing the algorithm code, and the higher level workflow management layers which are responsible for the batch scheduling and delivery of the framework ``jobs'' to compute resources at different computing sites or on different types of computing hardware.  Modern frameworks are typically designed to be aware of this macro level scheduling layer, and will often provide hooks to allow for the management layers to either transmit or receive information from the framework jobs. Information regarding framework configuration and various types of diagnostics can help both the framework and the workflow management layers more efficiently execute their missions, e.g. a framework will often provide monitoring diagnostics regarding the overall progress of the job which then allows for the management layer to stage queued work or initiate data transfers between sites.  Equally, the workflow system may provide ``late binding'' configuration information to the framework which allows it to determine at runtime sources of input data, or locations for output data which may be site specific or coordinated by the higher level management tools.
+It should be noted that in modern framework definitions and designs, there is typically an interplay and hand off between the framework which is executing the algorithm code, and the higher level \dword{wfms} layers which are responsible for the batch scheduling and delivery of the framework ``jobs'' to compute resources at different computing sites or on different types of computing hardware.  Modern frameworks are typically designed to be aware of this macro level scheduling layer, and will often provide hooks to allow for the management layers to either transmit or receive information from the framework jobs. Information regarding framework configuration and various types of diagnostics can help both the framework and the \dword{wfms} layers more efficiently execute their missions, e.g. a framework will often provide monitoring diagnostics regarding the overall progress of the job which then allows for the management layer to stage queued work or initiate data transfers between sites.  Equally, the \dword{wfms} may provide ``late binding'' configuration information to the framework which allows it to determine at runtime sources of input data, or locations for output data which may be site specific or coordinated by the higher level management tools.
 
 Lastly, modern frameworks as used by \dword{hep} today are also designed and responsible for adapting to  heterogeneous computing resources.  Modern frameworks must, due to the push towards exascale computing platforms, be able to execute their codes or bind/link their codes across not only different operating systems, but across different hardware architectures.   In the case of \dword{dune} this will be an enabling technology that allows \dword{dune} algorithms to run on platforms ranging from commodity desktop/laptop systems, to large scale grid computing centers, and across the exascale era leadership computing facilities being built by the \dword{doe} and other major national and international computing centers. These facilities' architectures will span from the classic x86 CPU architectures to advanced, many-core GPU and AI/ML tuned accelerator systems.  The framework's ability to deal with this diversity is a requirement from \dword{dune} and is discussed in detail in the following sections.
 
@@ -90,7 +90,7 @@ The complete set of use cases that was identified for \dword{dune} has been enum
 \begin{dunetable}
 [Summary of computing resources needed per trigger record]
 {l r r r r r r }
-{tab:fworks:tasks}
+{tab:fworks:taskstr}
 {Summary of resources needed per trigger readout for compute intensive tasks in \dword{protodune} and the \dword{fd}. These numbers assume that reconstruction will load individual subunits such as \dwords{apa} into memory one at a time, possibly in parallel across multiple cores. }
 Use case	&memory &	input size &	output  size 	&	CPU time 	&	input/core  	& cores/readout		\\
 units	&GB	& MB	&MB	&	sec	& MB/s	&		\\
@@ -107,7 +107,7 @@ SNB reco	&	2	&	3.2$\times10^8$	&	? 	&3-10$\times10^8$		&	0.13	&	10-30,000		\\
 One striking feature of the use cases that \dword{dune} needs to support is the diversity in scale of the data atom.  Somewhat counter-intuitively, although the raw trigger records are themselves very large, the data atom (a single \dword{apa} or \dword{crp}) is relatively small and compatible with the same high-throughput computing workflows adopted by most \dword{hep} experiments.  Meanwhile at the analysis level although the quantity of data related to a single trigger record is small, nuisance parameter extraction requires correlations across all trigger records in an analysis dataset, which is the effective data atom.  This is a very good fit to high performance computing, particularly if the analysis framework can take advantage of many \dword{hpc} nodes at the same time. Experience from the \dword{hsf} panelists encouraged \dword{dune} to separate the analysis and production use cases when considering the software framework design.
 
 
-\subsection{Unique Software Framework Requirements for \dword{dune}}
+\subsection{Unique Software Framework Requirements for DUNE}
 \label{sec:fworks:urgent}
 
 While section \ref{sec:fworks:use_cases} provides an overview of use cases, certain unique use cases drive the needs of the \dword{dune} software framework to be fully compatible with the physics missions.   We summarize these driving requirements here as a summary of the major work that needs to be executed for \dword{dune} to have a software framework capable of supporting its physics program.
@@ -182,7 +182,7 @@ Given the potential for pressure on memory resources, a requirement on the frame
 %29
 %\item The framework must manage memory of data products in the Data Store.
 
-\subsection{Modular Framework Design}
+\subsection{Modular Framework Design} \label{subsec:fworks:modular}
 
 % Preamble could come first
 For developers, highly modular code must be encouraged, allowing evolution or replacement of sub-algorithms that lend themselves to particular approaches.
@@ -237,7 +237,7 @@ Given the uncertainty in the choice of data format:
 %23
 \item The framework I/O layer needs to provide a mechanism for user-defined schema evolution of data products.
 \end{itemize}
-The DUNE data model allows for Trigger Record data to be stored in persistable representations which are generated by customized hardware or which are optimized for specific acceleration hardware or computing systems.  As a result, the data model expects that data will have custom “packed” representations that do not conform to 32-bit or 64-bit little-endian words. Furthermore, compression of the raw waveform data will be performed in the DAQ, though some data may arrive uncompressed.  Some highly compressible data products may benefit from dedicated compression algorithms scheduled to run before output. Therefore, 
+The \dword{dune} data model allows for Trigger Record data to be stored in persistable representations which are generated by customized hardware or which are optimized for specific acceleration hardware or computing systems.  As a result, the data model expects that data will have custom “packed” representations that do not conform to 32-bit or 64-bit little-endian words. Furthermore, compression of the raw waveform data will be performed in the DAQ, though some data may arrive uncompressed.  Some highly compressible data products may benefit from dedicated compression algorithms scheduled to run before output. Therefore, 
 
 \begin{itemize}
 %24
@@ -310,26 +310,26 @@ A common offline job need that goes beyond the 1->1 input to output data model i
 
 \subsection{Reproducibility and Configuration}
 
-The reproducibility of physics results and the knowledge of how physics results were obtained is essential to DUNE and to the neutrino community as a whole.  It must be possible both to replicate physics results using identical input data, or to repeat an analysis using a different set of input data with an identical sequence of identically configured algorithms. 
+The reproducibility of physics results and the knowledge of how physics results were obtained is essential to \dword{dune} and to the neutrino community as a whole.  It must be possible both to replicate physics results using identical input data, or to repeat an analysis using a different set of input data with an identical sequence of identically configured algorithms. 
 
 %\item The framework must ensure that memory is treated as a precious commodity, implying that {\bf intermediate data products cannot occupy memory beyond their useful lifetime}.  Nevertheless, reproducibility is a key requirement of any scientific tool and {\bf the framework must provide a full provenance chain} for any and all data products which must include enough information to reproduce identically every persistent data product. By definition, the chain will also need to include sufficient information to reproduce the transient data passed between algorithm modules, even though the product is not persisted in the final output.
 
- For the purpose of these requirements, we consider data to be reproducible, if:
+For the purpose of these requirements, we consider data to be reproducible, if:
 The products in a given event record are bitwise identical for integer fields
 Floating point numbers in a given event record are the same to within the floating point precision of the machine they were generated on.
 The ordering of data products within an event record are the same.
-These criteria for reproducibility are designed to allow DUNE to simulate “rare” events with well defined single event sensitivities, and to perform numeric transform operations on data values across different hardware platforms and runtime concurrency topologies.
+These criteria for reproducibility are designed to allow \dword{dune} to simulate “rare” events with well defined single event sensitivities, and to perform numeric transform operations on data values across different hardware platforms and runtime concurrency topologies.
 \begin{itemize}
 
 %\item It is also highly desirable that the framework broker access to random number generators and seeds in order to guarantee reproducibility.  Random number generation is an important aspect of code and given the additional complications of multi-threading and co-processors:
 
 %16
-\item it is highly desirable that the framework broker access to random number generators and seeds in order to guarantee reproducibility.  
+\item It is highly desirable that the framework broker access to random number generators and seeds in order to guarantee reproducibility.  
 
 %All of the preceding considerations imply that {\bf the software framework will need a very robust configuration system} capable of handling the requirements in a consistent, coherent, and systematically reproducible way.
 
 %14
-\item the framework must provide a full provenance chain for any and all data products which must include enough information to reproduce identically every persistent data product.  By definition, the chain will also need to include sufficient information to reproduce the transient data passed between algorithm modules, even though the product is not persisted in the final output.  
+\item The framework must provide a full provenance chain for any and all data products which must include enough information to reproduce identically every persistent data product.  By definition, the chain will also need to include sufficient information to reproduce the transient data passed between algorithm modules, even though the product is not persisted in the final output.  
 \end{itemize}
 
 
@@ -345,22 +345,23 @@ These criteria for reproducibility are designed to allow DUNE to simulate “rar
 %\item the framework must provide full provenance information and all of the metadata required to ensure reproducibility.  
 %\end{itemize}
 
-This will include the computing architecture, including any specialized hardware used, on which the application is run as well as the runtime environment, execution model and concurrency level that the application used.  It is likely that a full picture of the necessary metadata will also require information only known to the workflow management system.  In such a complex environment, it is highly desirable that the framework provide support to allow the effect of configuration changes and computing environments to be easily understood.
+This will include the computing architecture, including any specialized hardware used, on which the application is run as well as the runtime environment, execution model and concurrency level that the application used.  It is likely that a full picture of the necessary metadata will also require information only known to the \dword{wfms}.  In such a complex environment, it is highly desirable that the framework provide support to allow the effect of configuration changes and computing environments to be easily understood.
 
 
 %%%%%% END OF REPRODUCIBILITY STUFF
 
 \subsubsection{Configuration} \label{subsec:fworks:config}
 
-Configuration is distinct from initialization of the framework objects; configuration happens first.  Given that RAII is an important concept for multi-threaded design, it is best to have a fully configured framework instance in the initialization phase.  Given the abundance of variations that make up \dword{hep} workflows a robust and easily programmable configuration system is a foundational component of all modern frameworks.  Some use a strictly declarative language and some use a Turing complete language.  The former must be augmented with scripts that write the declarations in a Turing complete language (usually it is part of the workflow management system, WMS) because it turns out that control flow is a requirement.  Given this, there is a requirement that:
+Configuration is distinct from initialization of the framework objects; configuration happens first.  Given that \dword{raii} is an important concept for multi-threaded design, it is best to have a fully configured framework instance in the initialization phase.  Given the abundance of variations that make up \dword{hep} workflows a robust and easily programmable configuration system is a foundational component of all modern frameworks.  Some use a strictly declarative language and some use a Turing complete language.  The former must be augmented with scripts that write the declarations in a Turing complete language (usually it is part of the \dword{wfms}) because it turns out that control flow is a requirement.  Given this, there is a requirement that:
 
 \begin{itemize}
-%3 - HSF really didn't like this requirement
+%3 - removed Turing complete
 \item The framework should provide a configuration language as a foundational component so that it can ensure coherence of its configuration.
 \end{itemize}
 
-\todo{May be better to move/duplicate the mention of input file(s) into the I/O section. Workflow Allocator will supply the next file to process on request, as a transfer URL, which the framework needs to be able to open, whether POSIX file path or an xroot URL. Like with SAM, the framework should be able to do the next file request - it's just a REST API, using a JSON document supplied by Workflow to the job.}
-The WMS needs to be able to supply framework configuration parameters such as input file(s) or random number seeds to each framework application instance, which it should do using the framework’s configuration language.  To minimize errors, these parameters should be self-describing and validatable, and so:
+% This is also mentioned in the unique challenges
+%\todo{May be better to move/duplicate the mention of input file(s) into the I/O section. Workflow Allocator will supply the next file to process on request, as a transfer URL, which the framework needs to be able to open, whether POSIX file path or an xroot URL. Like with SAM, the framework should be able to do the next file request - it's just a REST API, using a JSON document supplied by Workflow to the job.}
+As discussed in section \ref{sec:fworks:urgent}, the \dword{wfms} needs to be able to supply framework configuration parameters such as input file(s) or random number seeds to each framework application instance, which it should do using the framework’s configuration language.  To minimize errors, these parameters should be self-describing and validatable, and so:
 
 \begin{itemize}
 %4
@@ -374,13 +375,17 @@ The WMS needs to be able to supply framework configuration parameters such as in
 %Further fundamental requirements related to the framework configuration to guarantee reproducibility are:
 
 %6
-\item The resulting state of the configured framework and its components should be deterministic and precisely reproducible given a set of environmental conditions which include the available hardware, operating system, input data, etc.  
+\item The resulting state of the configured framework and its components should be deterministic and reproducible given a set of environmental conditions which include the available hardware, operating system, input data, etc.  
+\end{itemize}
 
-%7
-\item the ensemble of the framework+environmental conditions must give reproducible results.  
+%7 repeats the last point
+%\item the ensemble of the framework+environmental conditions must give reproducible results.  
 
 %Following on from the discussion of supporting fast analysis R\&D:
 
+Related to the discussion on rapid turn-around in section \ref{subsec:fworks:modular}, but also important central features of the configuration system:
+
+\begin{itemize}
 %8
 \item it is desirable that it should be possible to only configure those framework components required for a particular data processing use case.  
 
@@ -392,25 +397,28 @@ The WMS needs to be able to supply framework configuration parameters such as in
  
 \subsubsection{Conditions Configuration}
 
-In addition to the Trigger Record data, data processing requires access to other data from various sources, for example slow controls, detector status, beam component status.  Such data is referred to generically as “conditions data” and also includes e.g. detector calibrations and any data external to the Trigger Record.  The time granularity or “interval of validity” of this data varies by source and is typically of much coarser granularity than individual Trigger Records, e.g. calibrations may be valid for months of data taking.  Meanwhile there are often several versions of conditions data and correlations between conditions data is not uncommon, making the coherent management of conditions data a challenge in itself.  For this reason, conditions data management should be external to the framework.
+In addition to the Trigger Record data, data processing requires access to other data from various sources, for example slow controls, detector status, and beam component status.  Such data is referred to generically as \dword{condmeta}, introduced in section \ref{subsec:db:conditions_metadata}, and also includes e.g. detector calibrations and any data external to the Trigger Record.  The time granularity or “interval of validity” of this data varies by source and is typically of much coarser granularity than individual Trigger Records, e.g. calibrations may be valid for months of data taking.  Meanwhile there are often several versions of \dword{condmeta} and correlations between \dword{condmeta} is not uncommon, making the coherent management of \dword{condmeta} a challenge in itself.  For this reason, \dword{condmeta} management should be external to the framework.
 
-\todo{justify why this can't be done with cvmfs?}
-Access to the external conditions data should preferably proceed via REST interfaces that support loose coupling of the framework and the external conditions management system.  As conditions data may need to be transformed from its persistent format into a format required by an algorithm, and as multi-threading makes the cache validity of conditions data complicated: 
+% Valid question but that discussion belongs in the Databases section.  For read cases you could indeed dump into a cvmfs directory and have the top-level folder be your configuration parameter.  For writing you want to have atomic DB transactions to support potentially complex calibration workflows.
+%\todo{justify why this can't be done with cvmfs?}
+Access to the external conditions data should preferably proceed via REST interfaces that support loose coupling of the framework and the external \dword{condmeta} management system.  As \dword{condmeta} may need to be transformed from its persistent format into a format required by an algorithm, and as multi-threading makes the cache validity of \dword{condmeta} complicated: 
 
 \begin{itemize}
 %18
-\item the framework must provide a thread-safe conditions service that is a single point of access to conditions data.  
+\item the framework must provide a thread-safe conditions service that is a single point of access to \dword{condmeta}.  
 
 %19
 \item The configuration of the framework conditions service should ideally be via one configuration parameter (a global tag). 
+\end{itemize}
 
 Developers must not hard-code conditions data in their algorithms, although 
 
+\begin{itemize}
 %20
 \item it must be possible to override a subset of global tag configured conditions for testing purposes.  
+\end{itemize}
 
 Developers usually find it convenient if such alternative conditions payloads can be provided outside of the main managed conditions system, e.g. via a local file.
-\end{itemize}
 
 \subsubsection{Concurrency} % Need to distinguish production and analysis
 %Many aspects of DUNE data processing are well suited to concurrency solutions and {\bf the framework should be able to offload work to different compute architectures efficiently}, facilitate access to co-processors for developers and {\bf schedule thread-safe and non-thread-safe work}.  {\bf It must be possible to derive the input data requirements for any algorithm in order to define the sequence of all algorithms needed for a particular use case, and it must be possible to only configure those components required for that use case.}
@@ -422,7 +430,7 @@ The arrival of concurrency and heterogeneous architectures has added a further l
 \end{itemize}
 
 
-Multi-threading presents additional, well-documented challenges, particularly given that many important libraries are not thread-safe.  Summarising briefly: algorithmic code, including sub-algorithms, should be thread-safe and must declare their compatibility to the framework.
+Multi-threading presents additional, well-documented challenges, particularly given that many important libraries are not thread-safe.  Summarizing briefly: algorithmic code, including sub-algorithms, should be thread-safe and must declare their compatibility to the framework.
 
 \begin{itemize}
 
@@ -435,9 +443,9 @@ Thread-safety implicitly includes a general requirement on developers that algor
 
 
 \subsubsection{Externals including Machine Learning}
-Machine learning is already heavily used in analysis of ProtoDUNE data and the framework should give special attention to machine learning inference in the design, both to allow simple exchanges of inference backends and to record the provenance of those backends and all necessary versioning information.  Finally, the framework should be able to work with both Near Detector and Far Detector data on an equal footing, and within the same job.
+Machine learning is already heavily used in analysis of \dword{protodune} data and the framework should give special attention to machine learning inference in the design, both to allow simple exchanges of inference backends and to record the provenance of those backends and all necessary versioning information.  Finally, the framework should be able to work with both \dword{nd} and \dword{fd} data on an equal footing, and within the same job.
 
-DUNE will use several libraries outside of the framework software stack, and it will also be necessary to record the precise versions of all of these libraries to guarantee reproducibility of the physics results.  It is noted that containers (docker et al) could potentially make provenance tracking easier in this respect.  
+\dword{dune} will use several libraries outside of the framework software stack, and it will also be necessary to record the precise versions of all of these libraries to guarantee reproducibility of the physics results.  It is noted that containerization could potentially make provenance tracking easier in this respect.  
 
 %% ANDREW Added
 %(16a) The framework must provide deterministic results when run with different levels of concurrency.
@@ -489,7 +497,7 @@ Experience shows that oscillation fits accounting for large numbers of systemati
 
 \begin{itemize}
 % adapted 39
-\item The analysis framework should easily scale from local resources such as a laptop, up to multi-node compute at an HPC.
+\item The analysis framework should easily scale from local resources such as a laptop, up to multi-node compute at an \dword{hpc}.
 \end{itemize}
 
 It is noted that MPI-enabled frameworks written in python already exist and would be a good match to the above requirements.
@@ -520,8 +528,7 @@ In addition to being able to handle multiple input data streams:
 \item The analysis framework should provide some means of cross-referencing (labelling) multiple input streams to correlate them in order to facilitate evaluation of systematic uncertainties.
 \end{itemize}
 
-For oscillation analysis, it will be important to work with both Near and Far detector data. Whether in an explicit joint fit, or where extracting constraints from the ND to apply to the FD analysis, there must be a uniformity in the treatment of various systematics. In general, experience gained with the Near Detector (where the majority of analysis work is likely to happen) should be transferable to the Far Detector.  This re-emphasises the importance of the framework making minimal assumptions about the Data Model.
-
+For oscillation analysis, it will be important to work with both \dword{nd} and \dword{fd} data. Whether in an explicit joint fit, or where extracting constraints from the \dword{nd} to apply to the \dword{fd} analysis, there must be a uniformity in the treatment of various systematics. In general, experience gained with the \dword{nd} (where the majority of analysis work is likely to happen) should be transferable to the \dword{fd}.  This re-emphasizes the importance of the framework making minimal assumptions about the Data Model.
 
 \begin{itemize}
 %43

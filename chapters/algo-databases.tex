@@ -23,7 +23,9 @@ The \dword{protodune2} experiment will provide a further testbed for the databas
 \subsection{Conditions Metadata}
 \label{subsec:db:conditions_metadata} 
 
-Conditions Metadata is defined as the information necessary to understand the context of physics data, e.g., beam data or calibrations.
+\dword{condmeta}
+%Conditions Metadata 
+is defined as the information necessary to understand the context of physics data, e.g., beam data or calibrations.
 %special run data
 Metadata can be indexed by %anne either 
 time, run, or fraction of a run (subrun). 
@@ -40,11 +42,7 @@ Time-indexed metadata will, in some cases, be sampled at a rate higher than typi
 %I removed the user defining this, to stress that it should be a physics motivation
 The database group will provide interpolated values to match the physics requirements of the experiment.  
 
-Conditions metadata will in general be stored in appropriate databases but there will be some cases where it is more reasonable to include the metadata with the raw trigger records instead. An obvious example of this is metadata that changes at the individual trigger record level, i.e., trigger bit information. 
-
-\hideme{Is this conditions metadata?  An example would be good.
-%Some metadata that is appropriate for inclusion in a database may be naturally included in the raw trigger record data due to its being generated internally within the \dword{daq} during run initialization or during a run. This metadata will be extracted from the data during the reconstruction for inclusion in the appropriate database. 
-}
+Conditions metadata will in general be stored in appropriate databases but there will be some cases where it is more reasonable to include the metadata with the raw trigger records instead. An obvious example of this is metadata that changes at the individual trigger record level, i.e., trigger bit information. This metadata will be extracted from the data during the reconstruction for inclusion in the appropriate database. 
 
 The following table contains classes of metadata: 
 
@@ -203,9 +201,9 @@ For %anne Run II of
 \section{Data Quality and Monitoring Database  \hideme{Buchanan and Laycock - draft}}
 \label{sec:db:dqm}  
 
-The \dword{dqmd} contains monitoring histograms and metadata derived from data collected during operation of the DUNE detectors. The \dword{dqmd}  is an online database and
+The \dword{dqmdb} contains monitoring histograms and metadata derived from data collected during operation of the DUNE detectors. The \dword{dqmdb}  is an online database and
 the histograms it stores to assess and monitor data quality are critical for the operations of \dword{dune}, but not relevant for offline data processing and analysis.
-The derived data quality metadata, which include boolean flags indicating the results of the online data quality assessment algorithms, are relevant for offline analysis and this small subset of \dword{dqmd} data will require an interface with the conditions database either directly or via an offline replica of the data quality database. \todo{ (anne) \dword{dqm} db?}
+The derived data quality metadata, which include boolean flags indicating the results of the online data quality assessment algorithms, are relevant for offline analysis and this small subset of \dword{dqmdb} data will require an interface with the conditions database either directly or via an offline replica of the data quality database.
 
 \section{Offline Calibration Database  \hideme{Buchanan and Laycock - draft}}
 \label{sec:db:calib} 

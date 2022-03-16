@@ -491,7 +491,7 @@ Additional modules find hits in the \dword{pd} waveforms and group them into clu
 Separating track-like energy deposits from shower-like deposits is a key part of many DUNE analyses.  This is accomplished with a \dword{cvn} called {\tt EmTrackMichelID} in Table~\ref{tab:protodune_cpu_reco_by_module}.  It is one of the most CPU-intensive operations in the \dword{pdsp} reconstruction chain, when the algorithm is run on a grid node lacking a GPU.  Recently, however, a \dword{gpuaas} technique has been developed~\cite{Wang:2020fjr}, enabling a speed-up on the order of a factor of ten, though it depends on the ratio of CPU-only nodes to GPU resources.
 
 
-\subsection{ProtoDUNE Experience\todo{Schellman/Yang, ok 3/13}}
+\subsection{ProtoDUNE Experience}
 
 \begin{longtable}
 {l r}
@@ -572,7 +572,9 @@ The \dword{nd} Reconstruction primary exists as separate reconstructions for eac
  
 \subsubsection{ND LArTPC ML Reconstruction }
 
-A full data reconstruction chain for the LArTPC at DUNE ND consists of multiple machine learning algorithms optimized for multiple reconstruction tasks. An overall software design can be found in~\cite{Drielsma:2021jdv} and details of individual algorithm can be found in~\cite{Domine:2019zhm,Domine:2020tlx,DeepLearnPhysics:2020hut,Koh:2020snv,NeutrinoUQ} including evaluations performed on a public LArTPC simulation dataset~\cite{Adams:2020vlj}. This reconstruction software is based on earlier development of applying powerful deep learning methods to LArTPC experiments~\cite{Acciarri:2016ryt,Radovic:2018dip,Adams:2018bvi}. In particular, these algorithms include deep convolutional and graph neural networks as well as analytical physics models (e.g. Multiple Coulomb Scattering for estimating momentum). The reconstruction chain takes voxelized 3D image (i.e. data recorded by the detector) as an input, and produces the output that organizes following information:
+A full data reconstruction chain for the LArTPC at DUNE ND consists of multiple machine learning algorithms optimized for multiple reconstruction tasks. An overall software design can be found in~\cite{Drielsma:2021jdv} and details of individual algorithm can be found in~\cite{Domine:2019zhm,Domine:2020tlx,DeepLearnPhysics:2020hut,Koh:2020snv},
+% HMS removed NeutrinoUQ as it is not in the bibliography.
+including evaluations performed on a public LArTPC simulation dataset~\cite{Adams:2020vlj}. This reconstruction software is based on earlier development of applying powerful deep learning methods to LArTPC experiments~\cite{Acciarri:2016ryt,Radovic:2018dip,Adams:2018bvi}. In particular, these algorithms include deep convolutional and graph neural networks as well as analytical physics models (e.g. Multiple Coulomb Scattering for estimating momentum). The reconstruction chain takes voxelized 3D image (i.e. data recorded by the detector) as an input, and produces the output that organizes following information:
 \begin{itemize}
     \item A list of neutrino interactions
     \item A list of particles in each neutrino interaction
@@ -585,7 +587,8 @@ A full data reconstruction chain for the LArTPC at DUNE ND consists of multiple 
     \end{itemize}
 \end{itemize}
 
-This reconstruction chain is end-to-end optimizable: all algorithms can be optimized by a gradient-based technique~\cite{Rumelhart1986} simultaneously in a completely automated fashion, unlike a traditional software, without requiring any human interventions. This saves weeks and months of manual tuning process required for a traditional counterpart. The software is developed on top of CUDA programming ecosystem~\cite{10.1145/1365490.1365500} and PyTorch machine learning library~\cite{NEURIPS2019_9015}, which allow to take a benefit of NVIDIA Graphics Processing Units (GPUs) to accelerate computation. Furthermore, the implementation allows multi-GPU parallelization and is also compatible to distributed computing (i.e. inter-node parallelization exploiting fast network interconnect such as infiniband to expand parallelization beyond a single server) to unlock the power of modern infrastructures including High Performance Computing (HPC) clusters. While many deep neural networks require excess amount of computing power and thus often unpractical to execute on CPUs, this this software can be run on CPUs within a reasonable time thanks to an implementation of innovative sparse matrix multiply that exploits the sparsity of LArTPC image data. In terms of computing needs, the process of optimization is typically performed on single NVIDIA A100 GPU and takes about a week starting from scratch. It takes a day or two for a typical fine-tuning of the chain when underlying detector physics modeling changes. 
+This reconstruction chain is end-to-end optimizable: all algorithms can be optimized by a gradient-based technique~\cite{Rumelhart1986} simultaneously in a completely automated fashion, unlike a traditional software, without requiring any human interventions. This saves weeks and months of manual tuning process required for a traditional counterpart. The software is developed on top of CUDA programming ecosystem~\cite{10.1145/1365490.1365500} and PyTorch machine learning library,%~\cite{NEURIPS2019_9015} HMS - removed as missing
+which allow use  of NVIDIA Graphics Processing Units (GPUs) to accelerate computation. Furthermore, the implementation allows multi-GPU parallelization and is also compatible to distributed computing (i.e. inter-node parallelization exploiting fast network interconnect such as infiniband to expand parallelization beyond a single server) to unlock the power of modern infrastructures including High Performance Computing (HPC) clusters. While many deep neural networks require excess amount of computing power and thus often unpractical to execute on CPUs, this this software can be run on CPUs within a reasonable time thanks to an implementation of innovative sparse matrix multiply that exploits the sparsity of LArTPC image data. In terms of computing needs, the process of optimization is typically performed on single NVIDIA A100 GPU and takes about a week starting from scratch. It takes a day or two for a typical fine-tuning of the chain when underlying detector physics modeling changes. 
  
  \subsubsection{Pandora based Reconstruction}
  Pandora is a multi-algorithm approach to particle reconstruction that has been used effectively for other LArTPC detectors, including the MicroBooNE detector and the ProtoDUNE detectors. As it is currently a leading reconstruction option for the DUNE Far Detector, it is thus ideal that it can also be adapted to work with the DUNE Near Detectors. Currently the effectiveness of the pre-existing 3x2D reconstruction chain when used with ND-LAr is being assessed, with the plan being to develop a native 3D approach and tailored algorithms as the next stage of work.
@@ -832,7 +835,7 @@ A typical \dword{pdsp} data or simulation pass produces  10,000--100,000 2-8\,GB
 
 \subsection{Reduced Analysis Samples}
 
-\subsubsection{General Considerations for Analysis}
+%\subsubsection{General Considerations for Analysis}
 Reduced data analysis samples  are the samples users see and analyze when they are not developing new reconstruction  or calibration algorithms. 
 
 Analysis samples should be useful and as small as possible.  Analysis codes should not need to read from the central databases but may need to access small local replicas. 
@@ -869,6 +872,15 @@ The current goal for computing infrastructure is to support a wide range of form
  {User responses to the analysis survey. Panels show the data formats used, the analysis frameworks used, the locations where the jobs are run, and the locations where code is kept.}
 \includegraphics[width=6 in]{graphics/Algo/SurveyFormat.png}
 \includegraphics[width=6 in]{graphics/Algo/SurveyCode.png}
+%\includegraphics[width=6 in]{graphics/Algo/SurveySite.png}
+%\includegraphics[width=6 in]{graphics/Algo/SurveyRepo.png}
+\end{dunefigure}
+\begin{dunefigure}
+[DUNE analysis code survey responses 2]
+{fig:ch:use:survey2}
+ {User responses to the analysis survey (continued). Panels show the data formats used, the analysis frameworks used, the locations where the jobs are run, and the locations where code is kept.}
+%\includegraphics[width=6 in]{graphics/Algo/SurveyFormat.png}
+%\includegraphics[width=6 in]{graphics/Algo/SurveyCode.png}
 \includegraphics[width=6 in]{graphics/Algo/SurveySite.png}
 \includegraphics[width=6 in]{graphics/Algo/SurveyRepo.png}
 \end{dunefigure}

@@ -361,7 +361,7 @@ Beam, cosmic ray and solar neutrino interactions are reasonably localized in tim
 
 
 
-\subsubsection{Supernova candidates \hideme{Schellma -updated early march }}\label{sec:supernova}
+\subsection{Supernova candidates \hideme{Schellma -updated early march }}\label{sec:supernova}
 
 
 
@@ -393,7 +393,7 @@ Supernova candidates pose a unique problem for data acquisition and reconstructi
 A classic core-collapse supernova 10\,kpc away would be expected to yield around 3,000  \dword{cc} electron neutrino interactions across four detector modules. \dword{snb} candidates will be quite different from beam interactions, having small interactions with energies in the 5-30\,MeV range spread across the full volume of the detector modules over many seconds, in contrast to the localized, coincident,  500-10,000\,MeV signature of beam neutrino interactions. These differences impose interesting requirements on the \dword{daq} and computing models for the experiment.  
 
 
-\dword{snb} physics and its influence on neutrino emission are not fully understood and will result in significant modulations of the event rates for different neutrino types  over the few tens of seconds of the burst.  DUNE's fine-grained tracking should allow significant pointing power with the most optimistic scenario of four modules and high electron neutrino fraction yielding pointing resolutions of less than 5 degrees.   Figure \ref{SNe} illustrates simulated signatures of \dword{snb} neutrino interactions in the far detector. The ability to produce a reasonably fast pointing signal would be extremely valuable to optical astronomers doing followup, especially if the supernova were in a region where dust masks the primary optical signal.   The need to be alert to supernovae and to quickly transfer and process the data imposes significant requirements on triggering, data transfer and reconstruction beyond those imposed by the %anne more regular 
+\dword{snb} physics and its influence on neutrino emission are not fully understood and will result in significant modulations of the event rates for different neutrino types  over the few tens of seconds of the burst.  DUNE's fine-grained tracking should allow significant pointing power with the most optimistic scenario of four modules and high electron neutrino fraction yielding pointing resolutions of less than 5 degrees.   Figure \ref{fig:SNe} illustrates simulated signatures of \dword{snb} neutrino interactions in the far detector. The ability to produce a reasonably fast pointing signal would be extremely valuable to optical astronomers doing followup, especially if the supernova were in a region where dust masks the primary optical signal.   The need to be alert to supernovae and to quickly transfer and process the data imposes significant requirements on triggering, data transfer and reconstruction beyond those imposed by the %anne more regular 
 beam-based oscillation physics. 
 %For example, a compressed \dword{snb} readout of all four modules will be of order 184\,TB in size and take a minimum of four hrs to transfer over a 100\,Gbs network,  and then take of order 130,000 CPU-hrs for signal processing at present speeds.  If processing takes the same time as transfer, a peak of 30,000 cores would be needed. 
 
@@ -422,7 +422,7 @@ Other neutrino detectors worldwide will also be able to provide fast information
 
 
 % \hideme{HMS give up on this 
-\subsubsection{Other phenomena -- Solar Neutrinos and Beyond-the-Standard-Model Processes} %\hideme{???-needed}}
+\subsection{Other phenomena -- Solar Neutrinos and Beyond-the-Standard-Model Processes} %\hideme{???-needed}}
 There are multiple other measurements that can be made in  massive low background detectors such as the \dwords{fd}.  These are described in a recent White Paper \cite{Caratelli:2022llt}. These include detection of solar neutrinos and searches for \dword{bsm} processes such as neutron-anti-neutron oscillations.  Detection of these rare processes will require low radiological backgrounds and trigger systems capable of reading out the detector at rates low enough to remain well below a 30 Pb/year limit on data logging.  They will require recording the full waveforms, perhaps over a limited geographical region, to perform optimal signal extraction. In this document we concentrate on the oscillation, calibration and \dword{snb} scenarios as they are likely to dominate data rates in the near term.  
 %\fixme{ Need someone to write about solar/BSM signature}}
 
@@ -437,9 +437,9 @@ to provide improved understanding of neutrino interaction physics.
 The DUNE  collaboration is proposing a suite of near detectors optimized for these two goals. The proposed detectors are described in more detail in the Near Detector Conceptual Design Report \cite{DUNE:2021tad}.
  
  The \dword{nd}  will be located in an enclosure on the \dword{fnal} site 574\,meters from the target %anne and will be exposed to the DUNE 
- in the path of the neutrino beam.    Interaction rates per spill (at 0.83\,Hz) are expected to be very large, with 40-60 interactions per spill, including muons originating from interactions in material upstream of the fiducial volumes. Figure~\ref{beamline} shows the beamline and location of the \dword{nd} on the \dword{fnal} site. There are three major subdetectors:
+ in the path of the neutrino beam.    Interaction rates per spill (at 0.83\,Hz) are expected to be very large, with 40-60 interactions per spill, including muons originating from interactions in material upstream of the fiducial volumes. Figure~\ref{fig:beamline} shows the beamline and location of the \dword{nd} on the \dword{fnal} site. There are three major subdetectors:
  A pixel readout %anne liquid argon detector
- \dword{lartpc}, \dword{ndlar}, is  the most upstream of the three subdetectors shown in Figure~\ref{nd}, where the beam propagates  from right to left. Immediately downstream of \dword{ndlar} is a detector for characterizing muons exiting the \dword{ndlar}. This will initially be a magnetized steel range stack detector (TMS). A gaseous liquid argon detector, \dword{ndgar}, which serves %anne \dword{ndlar} 
+ \dword{lartpc}, \dword{ndlar}, is  the most upstream of the three subdetectors shown in Figure~\ref{fig:nd}, where the beam propagates  from right to left. Immediately downstream of \dword{ndlar} is a detector for characterizing muons exiting the \dword{ndlar}. This will initially be a magnetized steel range stack detector (TMS). A gaseous liquid argon detector, \dword{ndgar}, which serves %anne \dword{ndlar} 
  as  a muon spectrometer and allows more detailed study of neutrino interactions is planned for future operation when better control of neutrino interaction uncertainties is required. %anne that occur within its gas volume. 
  Beyond TMS/\dword{ndgar}, is the \dword{sand} component of the \dword{nd} that acts as a beam monitor. %Figure \ref{nd} shows the three \dword{nd} subdetectors in the near enclosure. 
 Note that while the \dword{nd} will have the same DAQ timing window flexibility as the \dword{fd}, it is not foreseen that \dword{nd} physics goals will required the utilization of varied time windows for trigger records as compared with the \dword{fd}. %Kirby
@@ -552,12 +552,12 @@ and efficient utilization of \dword{hpc} to quickly achieve final results.
 DUNE offline computing faces four major challenges, some of which are unique to DUNE and others shared widely by \dword{hep} experiments.  
 
 \begin{description}
-\item{\bf Large memory footprints -}  DUNE events, with multiple data objects consisting of  thousands of channels with thousands of time samples   present formidable challenges for reconstruction on typical \dword{hep} processing systems. Efficient processing of DUNE data will require careful attention to data formats and, likely, substantial redesign of the processing framework to allow sequential processing of chunks of data.  Chapters~\ref{ch:appl} and~\ref{ch:fworks} describe the status of applications and frameworks. 
+\item{\bf Large memory footprints -}  DUNE events, with multiple data objects consisting of  thousands of channels with thousands of time samples   present formidable challenges for reconstruction on typical \dword{hep} processing systems. Efficient processing of DUNE data will require careful attention to data formats and, likely, substantial redesign of the processing framework to allow sequential processing of chunks of data.  Chapters~\ref{ch:use} and~\ref{ch:fworks} describe the status of applications and frameworks. 
 
 \item{\bf Storing and processing data on heterogeneous international  resources -} DUNE depends on the combined resources of the collaboration for large-scale storage and processing of data.   Tools for using shared resources ranging from small-scale clusters to dedicated \dword{hpc} systems need to be developed and maintained.   Fortunately, \dword{hep}, through the \dword{wlcg}, \dword{osg} and \dword{hsf}  has a well developed ecosystem of tools that allow reasonably transparent use of collaboration computing resources.  Chapters~\ref{ch:est}, \ref{ch:cm} and~\ref{ch:datamgmt} describe the data volumes, computing model and data management plans. 
 
 \item{
-\bf Machine learning - }  Use of machine learning techniques can greatly improve simulation, reconstruction and analysis of data. However, integration of \dword{ml} techniques into a software ecosystem of the size and complexity of a large \dword{hep} experiment requires substantial effort beyond the original demonstration.  How is the \dword{ml} trained?  What special data format or processing requirements are present? How is the algorithm versioned and preserved to ensure reproducibility?   Chapters~\ref{ch:appl} and~\ref{ch:codemgmt} discuss the applications and management.
+\bf Machine learning - }  Use of machine learning techniques can greatly improve simulation, reconstruction and analysis of data. However, integration of \dword{ml} techniques into a software ecosystem of the size and complexity of a large \dword{hep} experiment requires substantial effort beyond the original demonstration.  How is the \dword{ml} trained?  What special data format or processing requirements are present? How is the algorithm versioned and preserved to ensure reproducibility?   Chapters~\ref{ch:use} and~\ref{ch:codemgmt} discuss the applications and management.
 
 \item{\bf Keeping it all going -}  %anne There are a 
 A large suite of activities, %anne that are 
