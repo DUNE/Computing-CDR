@@ -8,12 +8,13 @@
 \dword{dune} data are stored and processed in a variety of forms and representations which facilitate and are tuned to the analysis that is perform on them.   In general organization, the data are characterized and classified by their \dword{datatier} and their data format within that tier.  The data tier corresponds to the stage of the data in its lifecycle and its progress from the original detector acquisition data and simulations, towards its final analysis.  The data format refers to the low level representation and organization of the data format that it takes on in either a persistant or transient form during the analysis workflows.  This classification of data by tier and format allows DUNE to develop, catalog, and maintain its data ecosystem in the context of the larger computing model and computing resources.
 
 
-\section{Data tiers \hideme{Schellman - add a discussion here}}
+\section{Data tiers \hideme{Schellman/Norman }}
 
-As data are processed, they evolve through a series of \dwords{datatier}.  The \dword{datatier} concept was first adopted by the D0 and CDF collaborations two decades ago and is an important component in the definition of datasets in the data catalog.   Examples of \dwords{datatier} are raw, hit-reconstructed, full-reconstructed, reco-recalibrated and root-tuple. 
-Reconstruction algorithms transform files from one \dword{datatier} to another in a defined way and files in a given data tier can be expected to contain similar detector and physics information.   
-Policies for reading and storage can be defined at the data-tier level. 
-Table \ref{table:format1} summarizes some of the more common formats and their sizes. 
+As the data from the DUNE detectors and simulation systems are processed, they evolve through a series of \dwords{datatier}.  The \dword{datatier} concept was first adopted by the D0 and CDF collaborations two decades ago and is an important component in the definition of datasets in the data catalog.   Examples of common \dwords{datatier} enumerations are ``raw'' for raw detector data, ``hit-reconstructed'' for data that has had initial reconstruction of regions interest and activity performed upon it, ``full-reconstructed'' which has more advanced reconstruction to identify higher level physics objects and interaction regions, and many others representing the information that is present and the algorithms that were used to produce it.
+
+The algorithms which are run against data, transform the datafiles from one \dword{datatier} to another in what is effectively a directed graph.  This allows deterministic workflows to be constructed in a module fashion and for dependancies in the data representation to be identified.  This also allows for different branches and paths to be taken logically in the data lifecycles and for the overall computing model to manage these transforms that advance the state of the data in much the same manner as one would expect from a simple state machine.
+
+Most importantly, this concept of data tiers allows for different information and informational representations to be present in each tier.  This allows for easier management and storage of data, (as down selects can be applied at different tiers to reduce overall size footprints) while still permitting specialized applications to be developed that require specific data products or representations be present in the data streams.  This approach also allows for both common and parallel treatments of simulation and real detector data, which is key to the neutrino analysis process. 
 
 \begin{dunetable}
 [Data Tier Summary]
@@ -30,9 +31,16 @@ root-tuple&data reductions&24 TB&1
 &2-3 years&5-10 years\\
 \end{dunetable}
 
-Within a data tier, data can have different formats.  An example is the use of \dword{root} formats for ProtoDUNE Run I raw data and \dword{hdf5} format for ProtoDUNE Run II.
+This diversity in tiers can be seen by examining the projected estimates for the DUNE data and retention policies for each tier.  Table \ref{table:format1} summarizes some of the more common formats for DUNE, along with their sizes and expected retention. 
+
+The DUNE computing model is predicated on this type of an organizational structure, and it is used throughout the data management, computing, workflow organization and data placement models that are discussed in this document.
+
+%Within a data tier, data can have different formats.  An example is the use of \dword{root} formats for ProtoDUNE Run I raw data and \dword{hdf5} format for ProtoDUNE Run II.
 
 \section{I/O formats \hideme{Schellman/Bashyal - draft}}
+
+The low level representation of the DUNE data is keyed to the data tier(s) at which they exist and are accessed.  It is common for these representations to change over the data lifecycle to reflect organizational 
+
 \dword{dune} has historically used the \dword{root} data format throughout the processing chain.  \dword{root} provides data objects and methods that have been optimized for \dword{hep} applications.  The \dword{larsoft} framework is \dword{root}-compatible and \dword{root} was used for the full processing chain for \dword{protodune} Run 1. 
 
 However, \dword{hep} increasingly uses   machine learning methods that rely on non-\dword{hep} data formats, notably the \dword{hdf5} format.  \dword{hdf5} is designed to save data as arrays of fundamental types, such as integers and floating-point numbers, along with metadata such as group names and dataset names.  \dword{root} files support a much more complex structure.  \dword{root} provides mechanisms for saving and retrieving data in C\raisebox{1pt}{++} classes, provides for automated conversion of data on reading when classes change from one version of user code to the next (schema evolution), and provides structures like trees. \dword{root} also supports integrated streaming through \dword{xrootd}. 
