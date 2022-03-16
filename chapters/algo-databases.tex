@@ -109,7 +109,7 @@ The conditions database will contain interpolated (e.g., slow controls) and non-
 
 In order to provide a balance between the availability of the largest set of metadata possible  and allowing schema evolution,  the \dword{protodune} conditions database will employ an unstructured approach utilizing a No-SQL database \dword{ucondb}~\cite{bib:ucondb}. The \dword{ucondb} where metadata from several specific databases and sources, like the \dword{daq} system, will be stored in ``blobs'' corresponding to temporal periods (run, time blocks, or \dwords{iov2}). Each blob will contain a \dword{json}-formatted record of metadata. Folders will be used to hold metadata corresponding to time and run keys. Tools will be provided to correlate between the two. 
 
-The following is an example fragment of DAQ metadata from the first run of  \dword{protodune}. A typical file from this run was on the order of 10  
+The following is an example fragment of DAQ metadata from the first run of  \dword{protodune}. A typical file from this run was on the order of 10~MB.  
 
 \begin{verbatim}
 {
