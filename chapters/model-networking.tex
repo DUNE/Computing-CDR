@@ -8,10 +8,7 @@
 %\label{sec:netw:xyz}  %% fix label accordinean to section
 
 
-\todo{{\it }Kirby to write first about US side of the network including 
-- US OSG site connectivity 
-- FNAL connection to \dword{esnet}
-Pete then hooks Europe on to this.}
+%Kirby - I believe the things in the todo are accomplised. \todo{{\it }Kirby to write first about US side of the network including - US OSG site connectivity, - FNAL connection to \dword{esnet}, Pete then hooks Europe on to this.}
 
 %anne looking at this 3/15
 
@@ -23,7 +20,7 @@ With the DUNE experiment located at two geographically distant sites and having 
 The \dword{fd} networking encompasses the local area network at \dword{surf}, the connection to the wide area network, and the network path back to storage services at \dword{fnal} in Batavia, IL. This network path between the \dword{fd} at \dword{surf} and the \dword{fnal} campus is the most important network path for the DUNE raw data. This path will be used both for transfers of raw data, and also for connectivity between \dword{surf} and operations centers at Fermilab and elsewhere. While operations traffic is expected to use this connection, it should be noted that safety systems will not rely upon the network connection.
 
 The requirements for the network connection between \dword{surf} and \dword{fnal} were explored extensively in the High Energy Physics Network Requirements Review~\cite{bib:osti_1804717} . The primary bandwidth requirement is determined from both the steady-state yearly transfers from the \dword{daq}, and by burst 
-\fixme{\dword{snb}?}
+%Kirby - it's burst transfers but not just from SNB \fixme{\dword{snb}?}
 transfer rates during extended-readout trigger records. The Consortium Interface document between the DUNE \dword{daq} Consortium and the DUNE Computing Consortium and the \dword{daq} specification~\cite{edms:dunedaq} state that no more than 30 Petabytes (PB) of data will be output from the \dword{daq} for permanent storage. This translate into 7.98 Gigabits per second (Gb/s) of steady-state data transfer from \dword{surf} to \dword{fnal}, and includes raw data from beam triggers, cosmic triggers, and calibration runs. 
 
 The most extreme burst requirement considered in the ESNet review was the handling of extended-time trigger records for %SuperNova
@@ -39,8 +36,9 @@ to \dword{fnal} at limited bandwidth of 10\,Gb/s. In order to complete this path
 
 The network uptime is defined by the capability of the \dword{fd} \dword{daq} system to stage raw data locally in case all connectivity is lost. %The FD
 This \dword{daq} is designed to have capacity to store one week of raw data from the detector on local storage at \dword{surf}. %Were connectivity to be lost for an entire week and g
-Given the nominal rate of 7.98\,Gb/s from the \dword{daq}, and assuming that the NIC
-\fixme{define NIC in glossary pls} present in the local storage have infinite bandwidth, the additional 92\,Gb/s of bandwidth available on the primary path means that 
+Given the nominal rate of 7.98\,Gb/s from the \dword{daq}, and assuming that the network interface ard (NIC)
+%Kirby - fixed locally \fixme{define NIC in glossary pls}
+present in the local storage have infinite bandwidth, the additional 92\,Gb/s of bandwidth available on the primary path means that 
 were connectivity to be lost for an entire week, 
 the backlog in raw data would be cleared within one day of reconnection. And given the presence of three geographically separate paths from \dword{surf} to \dword{fnal}, if all three networks have an uptime of > 90\%, then the expected networking live time (99.9\%) is more performant than the \dword{daq} required live time (98\%) by more than a factor of 10.
 
@@ -56,7 +54,7 @@ the backlog in raw data would be cleared within one day of reconnection. And giv
 [Networking Timeline]
 {fig:esnet_network_timeline} 
 {The current timeline for the implementation of networking connection between \dword{surf} and \dword{fnal}.}
-\includegraphics[width=0.9\columnwidth]{graphics/Networking/networking_timeline.png}
+\includegraphics[width=0.9\columnwidth]{graphics/Networking/DUNE_network_Timeline_3-14-2022.png}
 \end{dunefigure}
 
 
@@ -65,7 +63,7 @@ the backlog in raw data would be cleared within one day of reconnection. And giv
 The local area network (LAN) for the Far and Near Sites will be designed, installed, and commissioned as a collaboration between the \dword{dune} \dword{daq} %Group 
 consortium and the \dword{fnal} Core Computing Division (CCD). The \dword{daq} has provided requirements to CCD and preliminary designs of the LAN have begun. The installation of networking infrastructure at \dword{surf} will be paid for by the %\dword{dune} 
 \dword{usproj} Project 
-\fixme{is that right? or paid for by int'l DUNE?}
+%Kirby - I believe that DAQ is on project and have spoken with the DAQ group who has said they are paying for the networking hardware and installation. \fixme{is that right? or paid for by int'l DUNE?}
 and is scheduled to start in %FY26. 
 2026. Once network installation has begun, there is a joint responsibility between \dword{surf} and CCD network experts to configure and maintain the interface with external high-capacity networking for data transfers to storage at \dword{fnal}. The installation of LAN at the Near Site is planned to begin in %FY29
 2029, , and follows a similar set of responsibilities as at \dword{surf}. The \dword{daq} group will provide requirements and CCD providing design, commissioning, and operational support for the Near Site LAN.
