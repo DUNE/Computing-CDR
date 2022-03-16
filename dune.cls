@@ -171,7 +171,7 @@
 }
 \fancypagestyle{simple}{
   \fancyhf{}
-  \fancyhead[RO,LE]{\textsf{\footnotesize \thechapter--\thepage}}
+  \fancyhead[RO,LE]{\textsf{\footnotesize  \thechapter--\thepage}}
   \fancyhead[LO,RE]{\textsf{\footnotesize \leftmark}}
   \fancyfoot[CO,CE]{\textsf{\footnotesize \explong}}
 }
@@ -179,6 +179,7 @@
 % Package Fancyhdr Warning: \headheight is too small (12.0pt): 
 %  Make it at least 14.49998pt.
 \setlength{\headheight}{15pt}
+
 
 
 % Fancier tables
