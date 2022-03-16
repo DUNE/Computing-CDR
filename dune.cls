@@ -339,7 +339,8 @@
 \newcommand{\fixmehl}[1]{}
 \newcommand{\metainfo}[1]{}
 \newcommand{\forlbnc}[1]{}
-%\linenumbers  %<---- uncomment if you want ONLY linenumbers with otherwise print-ready copy
+\linenumbers  %<---- uncomment if you want ONLY linenumbers with otherwise print-ready copy
+% HMS uncommented for version 1.0, March 16, 2022
 \else
 % "draft"
 %Set default style for todonotes

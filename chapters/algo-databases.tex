@@ -109,7 +109,7 @@ The conditions database will contain interpolated (e.g., slow controls) and non-
 
 In order to provide a balance between the availability of the largest set of metadata possible  and allowing schema evolution,  the \dword{protodune} conditions database will employ an unstructured approach utilizing a No-SQL database \dword{ucondb}~\cite{bib:ucondb}. The \dword{ucondb} where metadata from several specific databases and sources, like the \dword{daq} system, will be stored in ``blobs'' corresponding to temporal periods (run, time blocks, or \dwords{iov2}). Each blob will contain a \dword{json}-formatted record of metadata. Folders will be used to hold metadata corresponding to time and run keys. Tools will be provided to correlate between the two. 
 
-The following is an example fragment of DAQ metadata from the first run of  \dword{protodune}. A typical file from this run was on the order of 10~MB.  
+The following is an example fragment of \dword{daq} metadata from the first run of  \dword{protodune}. A typical file from this run was on the order of 10~MB.  
 
 \begin{verbatim}
 {
@@ -181,8 +181,7 @@ Parameters used to configure the run will be collected and packed into \dword{js
  Following the completion of a run, the run configuration parameters corresponding to the run are read from the mongoDB and packed into a single %anne"blob" 
  blob of key-value pairs in \dword{json} format. Any additional information, such as end-of-run time, are added to the blob, which is then transferred to the \dword{ucondb} at \dword{fnal}. A typical metadata blob is on order 10\,MB in and contains more information than most users will want to use. An additional step of reducing the metadata is performed to produce a subset of metadata needed by offline users. The reduced set of metadata is stored in a single table in a relational database referred to as the ``run history database.'' An interface is provided to users, enabling them to retrieve run numbers and file locations based on queries of the history database. 
 
-For %anne Run II of 
-\dword{protodune2} the conditions \dword{db} will include metadata from multiple sources, as will be the case for DUNE. Metadata from the beam conditions database (IFBeam), the slow controls database, and data quality monitoring database (DQMDB), will be included in addition to the run configuration information. The \dword{ucondb} is able to store data keyed by either non-interpolated values (run number) or interpolated values (timestamps). Users are then able to access information using run numbers or dates and times.
+For \dword{protodune2} the conditions \dword{db} will include metadata from multiple sources, as will be the case for DUNE. Metadata from the beam conditions database (IFBeam), the slow controls database, and data quality monitoring database (\dword{dqmdb}), will be included in addition to the run configuration information. The \dword{ucondb} is able to store data keyed by either non-interpolated values (run number) or interpolated values (timestamps). Users are then able to access information using run numbers or dates and times.
 
 \begin{dunefigure}
 [Flow of metadata from \dshort{protodune} DAQ to user interface]
