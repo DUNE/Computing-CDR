@@ -94,8 +94,7 @@ A DUNE metadata task force was assembled in 2020 and a resulting report discussi
 \label{sec:db:conditions} 
 
 The conditions database is a high-level database that provides an interface to offline users and processes. The motivation for such a centralized database is to provide an easy-to-use interface for users and to reduce the number of database connections required by offline processes. This will ensure that jobs will be ``lightweight'' and processing time will not be extended due to database accesses.  The granularity and content of the conditions database will be well-matched to offline needs by design. which will allow the heavy use of caching technologies to optimize resource usage. The design of the interface between the data processing software framework (see chapter \ref{ch:fworks}) and the conditions database will play an important role if all of the access patterns needed by \dword{dune} are to be well supported. Experience from other \dword{hep} experiments with distributed computing resources show that careful design of this interface is crucial to the success of the computing model \footnote{Overlays (see section \ref{sec:usecases_overlays} are an example of a workflow that can cause issues for conditions database access if this interface is not well designed.}.
-Figure~\ref{fig:dbmap} shows the relationship between the conditions \dword{db} and the other \dword{dune} databases. For \dword{protodune} the "Master Metadata Store" is an intermediate database that allows for potentially heavy data interpolation tasks to run without creating extra load on the other, often critical, database services.  It provides separation between the online and offline worlds at the cost of partial data duplication. The final database system design for \dword{dune} will benefit from experience with this design.
-
+Figure~\ref{fig:dbmap} shows the relationship between the conditions \dword{db} and the other \dword{dune} databases. For \dword{protodune} the "Master Metadata Store" is an intermediate database that allows for potentially heavy data interpolation tasks to run without creating extra load on the other, often critical, database services.  It provides separation between the online and offline worlds at the cost of partial data duplication. A design utilizing the Master Store also allows for maximum flexibility without the need for a predetermined schema. The final database system design for \dword{dune} will benefit from experience with this design.
 
 \begin{dunefigure}
 [Map of DUNE databases]
@@ -104,34 +103,34 @@ Figure~\ref{fig:dbmap} shows the relationship between the conditions \dword{db} 
 \includegraphics[width=.9\columnwidth]{graphics/Databases/DBSystem-cartoon.png}
 \end{dunefigure}
 
-The conditions database will contain interpolated (e.g., slow controls) and non-interpolated (e.g., run configurations) information. Interpolated information may more naturally be keyed by time-stamps, while configurations are more naturally keyed by run number. Tools will need to be developed to handle these two  
-types of database content. 
+The conditions database will contain interpolated (e.g., slow controls) and non-interpolated (e.g., run configurations) information. Interpolated information may more naturally be keyed by time-stamps, while configurations are more naturally keyed by run number. Tools will need to be developed to handle these two types of database content. 
 
 \subsection{Conditions Database for \dword{protodune}}
 
 In order to provide a balance between the availability of the largest set of metadata possible  and allowing schema evolution,  the \dword{protodune} conditions database will employ an unstructured approach utilizing a No-SQL database \dword{ucondb}~\cite{bib:ucondb}. The \dword{ucondb} where metadata from several specific databases and sources, like the \dword{daq} system, will be stored in ``blobs'' corresponding to temporal periods (run, time blocks, or \dwords{iov2}). Each blob will contain a \dword{json}-formatted record of metadata. Folders will be used to hold metadata corresponding to time and run keys. Tools will be provided to correlate between the two. 
 
-An example of a metadata blob~\footnote{This metadata is taken from \dword{iceberg}, a small DUNE-related experiment. \dword{protodune}, and DUNE, conditions metadata will be significantly larger, O(10~MB).}
+The following is an example fragment of DAQ metadata from the first run of  \dword{protodune}. A typical file from this run was on the order of 10  
 
-\todo{THIS NEEDS TO BE UPDATED}
 \begin{verbatim}
 {
-    "Run Number": 648,
-    "Start Time": " 2019-03-04T22:23:40",
-    "End Time": " 2019-03-04T22:25:31",
-    "Pulser Mode": 2,
-    "Pulser DAC": 7,
-    "Gain": 2,
-    "Shaping": 2,
-    "AC Coupling": 0,
-    "Baseline High": 1,
-    "Leak High": 1,
-    "Leak 10x": 0,
-    "FE Buffer": 0,
-    "Events": 228,
-    "Filename": " iceberg_r000648_sr01_20190304T222340_1_dl1.root",
-    "isduplicate": 0,
-    "DAQ Config": "iceberg_g2s2b1_maskWIB001FEMB4_pulser7_00001"
+Start of Record
+Run Number: 5185
+Packed on Oct 11 22:19 UTC
+#####
+boot.fcl:
+#####
+DAQ_setup_script: "/nfs/sw/work_dirs/dune-artdaq_artdaq_v3_03_00_beta/setupDUNEARTDAQ" 
+PMT_host: "localhost" 
+PMT_port: 5400 
+debug_level: 1 
+partition_number: 0 
+tcp_base_port: 15000 
+request_port: 3000 
+request_address: "227.128.12.25" 
+table_update_address: "227.129.1.128" 
+routing_base_port: 10010 
+zmq_fragment_connection_out: 17437 
+...
 }
 \end{verbatim}
 
@@ -139,9 +138,7 @@ An example of a metadata blob~\footnote{This metadata is taken from \dword{icebe
 
 \subsection{Conditions Database for DUNE}
 
-For \dword{dune}, the interface between the conditions database and the software framework will become particularly important.  The consensus among several \dword{hep} experiments was reported in an \dword{hsf} whitepaper \cite{Laycock:2019ynk}. Here, a lightweight relational database schema allows a single point of entry, a "global tag", to configure conditions data access for the framework.  Evolving the \dword{protodune} solution to benefit from that experience is foreseen by the database group. Further details on the development plan can be found in section \ref{sec:db:conddbdev}.
-
-%An unstructured conditional database was used for the \dword{protodune} experiment. Collections of metadata corresponding to \dword{protodune} runs were stored as text-based ``blobs'' in key-value pairs. For the first \dword{protodune} run the blobs contained \dword{fhicl}-formatted information and Run II blobs will be in \dword{json} format. The \dword{ucondb} format enables the capture of a comprehensive set of metadata without the need for a strict schema to be determined in advance of operating the database. Postgres provides the ability to utilize folders in the database structure, which can be used for versioning should the metadata coming from any source change over time. Folders can also keep metadata keyed by run number separate from that keyed by time. Tools can be used to match either up to any \dword{iov2}-based query. Further details of the use of the \dword{ucondb} for \dword{protodune} can be found in Section~\ref{sec:runconfigPD} 
+For \dword{dune}, the interface between the conditions database and the software framework will become particularly important.  The consensus among several \dword{hep} experiments was reported in an \dword{hsf} whitepaper \cite{Laycock:2019ynk}. The use of a lightweight relational database schema allows a single point of entry, a "global tag", to configure conditions data access for the framework.  Evolving the \dword{protodune} solution to benefit from that experience is foreseen by the database group. Further details on the development plan can be found in section \ref{sec:db:conddbdev}.
 
 \section{Run Configuration Database  \hideme{Buchanan and Laycock - draft}}
 \label{sec:db:config}  
