@@ -321,7 +321,8 @@ These guiding design principles are likely to remain valid throughout the lifeti
 
 \subsubsection{Conditions Database and Software Framework}
 
-The interface between the Conditions Database and the Software Framework is defined by the \dword{api} (Application Programming Interface) of the Conditions Database.  The \dword{hsf} Conditions Database group is in the process of defining a generic \dword{api}, again using the experience of existing \dword{hep} experiments to understand best practice for supporting all read and write use cases.  \dword{dune} will collaborate with the \dword{hsf} on this API definition and share experience on implementations.  It is noted that, in line with the \dword{hsf}, given the heterogeneity of compute hardware that \dword{dune} needs to use, a common implementation is considered to be less important than a common API and sharing experience.
+The interface between the Conditions Database and the Software Framework is defined by the \dword{api} %(Application Programming Interface) HMS don't need to redefine? 
+of the Conditions Database.  The \dword{hsf} Conditions Database group is in the process of defining a generic \dword{api}, again using the experience of existing \dword{hep} experiments to understand best practice for supporting all read and write use cases.  \dword{dune} will collaborate with the \dword{hsf} on this API definition and share experience on implementations.  It is noted that, in line with the \dword{hsf}, given the heterogeneity of compute hardware that \dword{dune} needs to use, a common implementation is considered to be less important than a common API and sharing experience.
 
 \subsubsection{Conditions Database Service Robustness and Distributed Computing}
 
@@ -359,7 +360,7 @@ The \dword{dune} Calibration system is expected to generate very large datasets 
 
 Guided by use cases, tools will be developed for all of the \dword{dune} Databases to enable to access of metadata for inclusion in the conditions database as well as direct access for studies\footnote{Most offline DB access will be made via the Conditions DB but there will be cases where expert users will need direct access to the various databases.}. An interface within the ART framework is already part of the DUNE software stack and has been used to access the IFBeam beam instrumentation database. This ART database service has been used, and is currently used, by the NOvA experiment. This interface will be the baseline for any other interfaces used by users interacting with the DUNE databases, including with the Conditions DB.
 
-Additionally, \dword{API}s will be developed to provide the interfaces between the various databases and the Master Store DB, as well as between the Master Store DB and the Run Condition database. These will likely be light-weight Python-based applications. 
+Additionally, \dword{api}s will be developed to provide the interfaces between the various databases and the Master Store DB, as well as between the Master Store DB and the Run Condition database. These will likely be light-weight Python-based applications. 
 
 %As more use cases and workflows are discovered, all of the \dword{dune} Databases will likely need to have tools to allow efficient and easy access to them. 
 
