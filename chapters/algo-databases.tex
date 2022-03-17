@@ -11,8 +11,8 @@ In order to accommodate the large range of metadata that will be tracked by \dwo
 The subset of all \dword{dune} metadata that is required, in the strict sense of being absolutely necessary, for data processing and analysis needs to be carefully identified and assessed.  We refer to this subset of metadata as "conditions metadata", see section \ref{subsec:db:conditions_metadata}.
 It is critical that users be able to access conditions metadata throughout the full data processing and analysis chain with as little burden as possible. To achieve this, users will interact with a centralized high-level interface   described in Section~\ref{sec:db:conditions}.
 
-The \dword{dune} experiment is expected to operate for 20-30 years and the \dword{dune} databases need to be reliably maintained and operated for that entire period. In order to accommodate this requirement, the database system should not rely on implementation solutions that possess the risk of becoming unavailable during the operation period. Open-source, non-proprietary solutions will therefore be used. Currently the databases housed at \dword{fnal} use the open-source PostgreSQL (Postgres) relational database management system. Postgres is supported by the \dword{scd}.       
-\dword{dune} would also like to benefit from the close collaboration between \dword{doe} laboratories to improve service availability and mitigate single-point-of-failure risk by having secondary databases at other \dword{doe} labs.  \dword{bnl} is a good example of a lab that already provides database services to international experiments using the same Postgres technology.
+The \dword{dune} experiment is expected to operate for 20-30 years and the \dword{dune} databases need to be reliably maintained and operated for that entire period. In order to accommodate this requirement, the database system should not rely on implementation solutions that possess the risk of becoming unavailable during the operation period. Open-source, non-proprietary solutions will therefore be used. Currently the databases housed at \dword{fnal} use the open-source PostgreSQL (\dword{postgres}) relational database management system. Postgres is supported by the \dword{scd}.       
+\dword{dune} would also like to benefit from the close collaboration between \dword{doe} laboratories to improve service availability and mitigate single-point-of-failure risk by having secondary databases at other \dword{doe} labs.  \dword{bnl} is a good example of a lab that already provides database services to international experiments using the same \dword{postgres} technology.
 
 It is expected that there will be reconstruction and analysis jobs distributed across large numbers of traditional grid-based and high-performance computing (\dword{hpc}) systems and that database access will need to be able to scale appropriately. Additionally, it is important to ensure that users are able to work on analysis tasks when unable to access the database directly through a network connection. 
 
@@ -178,10 +178,9 @@ Parameters used to configure the run will be collected and packed into \dword{js
 \subsection{Run Configuration Database for ProtoDUNE}
 \label{sec:runconfigPD}
 
- Following the completion of a run, the run configuration parameters corresponding to the run are read from the mongoDB and packed into a single %anne"blob" 
- blob of key-value pairs in \dword{json} format. Any additional information, such as end-of-run time, are added to the blob, which is then transferred to the \dword{ucondb} at \dword{fnal}. A typical metadata blob is on order 10\,MB in and contains more information than most users will want to use. An additional step of reducing the metadata is performed to produce a subset of metadata needed by offline users. The reduced set of metadata is stored in a single table in a relational database referred to as the ``run history database.'' An interface is provided to users, enabling them to retrieve run numbers and file locations based on queries of the history database. 
+ Following the completion of a run, the run configuration parameters corresponding to the run are read from a MongoDB~\footnote{MongoDB\textcopyright, \url{https://www.mongopdb.com}} set up by the \dword{daq} group for immediate archiving of run configurations. The \dwords{daq} metadata is then packed into a single "blob" of key-value pairs in \dword{json} format. Any additional information, such as end-of-run time, are added to the blob, which is then transferred to the \dword{ucondb} at \dword{fnal}. A typical metadata blob is on order 10\,MB in and contains more information than most users will want to use. An additional step of reducing the metadata is performed to produce a subset of metadata needed by offline users. The reduced set of metadata is stored in a single table in a relational database referred to as the ``run history database.'' An interface is provided to users, enabling them to retrieve run numbers and file locations based on queries of the history database. 
 
-For \dword{protodune2} the conditions \dword{db} will include metadata from multiple sources, as will be the case for DUNE. Metadata from the beam conditions database (IFBeam), the slow controls database, and data quality monitoring database (\dword{dqmdb}), will be included in addition to the run configuration information. The \dword{ucondb} is able to store data keyed by either non-interpolated values (run number) or interpolated values (timestamps). Users are then able to access information using run numbers or dates and times.
+For \dword{protodune2} the conditions \dword{db} will include metadata from multiple sources, as will be the case for DUNE. Metadata from the beam conditions database (IFBeam), the slow controls database, and data quality monitoring database (DQMDB), will be included in addition to the run configuration information. The \dword{ucondb} is able to store data keyed by either non-interpolated values (run number) or interpolated values (timestamps). Users are then able to access information using run numbers or dates and times.
 
 \begin{dunefigure}
 [Flow of metadata from \dshort{protodune} DAQ to user interface]
@@ -193,14 +192,12 @@ For \dword{protodune2} the conditions \dword{db} will include metadata from mult
 \section{Data Quality and Monitoring Database  \hideme{Buchanan and Laycock - draft}}
 \label{sec:db:dqm}  
 
-The \dword{dqmdb} contains monitoring histograms and metadata derived from data collected during operation of the DUNE detectors. The \dword{dqmdb}  is an online database and
-the histograms it stores to assess and monitor data quality are critical for the operations of \dword{dune}, but not relevant for offline data processing and analysis.
-The derived data quality metadata, which include boolean flags indicating the results of the online data quality assessment algorithms, are relevant for offline analysis and this small subset of \dword{dqmdb} data will require an interface with the conditions database either directly or via an offline replica of the data quality database.
+The \dword{dqmdb} contains monitoring histograms and metadata derived from data collected during operation of the DUNE detectors. The \dword{dqmdb} is an online database and the histograms it stores to assess and monitor data quality are critical for the operations of \dword{dune}, but not directly relevant for offline data processing and analysis. The derived data quality metadata, which include boolean flags indicating the results of the online data quality assessment algorithms, are relevant for offline analysis and this small subset of \dword{dqmdb} data will require an interface with the conditions database either directly or via an offline replica of the data quality database.
 
 \section{Offline Calibration Database  \hideme{Buchanan and Laycock - draft}}
 \label{sec:db:calib} 
 
-The calibration database contains calibration constants determined from collected data corresponding to  \dwords{iov2}. The conditions metadata from the calibration system will result from offline calculations using data collected from the DUNE detectors.
+The calibration database contains calibration constants determined from collected data corresponding to  \dwords{iov2}. The \dword{condmeta} from the calibration system will result from offline calculations using data collected from the DUNE detectors.
 There will generally be multiple versions of calibration constants corresponding to the same \dword{iov}, and the conditions database will provide coherent access to the appropriate version of these calibrations via e.g., the global tag mechanism.
 %These versions will be contained within the database and accessible to users.  
 
@@ -256,7 +253,7 @@ Beam current & Float \\
 
 The principle purpose of the hardware database (\dword{hwdb}) is to track the lineage of hardware components and record the results of their \dword{qc} tests. In this context a component can be a sub-detector module or any of the individual parts comprising it. For example, a readout board is a component as is a mezzanine daughter board or programmable logic chip mounted on the readout board. The lowest level component tracked within the \dword{hwdb} will be unique to the corresponding hardware system. 
 
-A requirement of the \dword{hwdb} is that any component, or part, stored in the database must have a unique identification number assigned to it, coordinated by the \dword{dune} Integration group. % Jim Stewart 
+A requirement of the \dword{hwdb} is that any component, or part, stored in the database must have a unique identification number assigned to it, coordinated by the \dword{dune} Integration group. % Jim Stewart (currently)
 %A separate database, under the responsibility of the DUNE Integration group, 
 %\todo{(anne) is this a formal group, and is this the title?} will be the source of the unique part ID numbers assigned to each component. 
 The part numbers will be designated as shown in Table~\ref{table:partsid}. The project field corresponds to DUNE detectors (D), integration (I), LBNF (L), and future project (P). The project identifier is allocated by the project management team while the other identifiers are left for the various hardware consortia to assign. There are additional fields not listed as they are not relevant to the \dword{hwdb}.  More details of the parts identification number can be founds in~\cite{bib:cernedms2505353}.
@@ -296,14 +293,14 @@ Most, if not all, of the DUNE databases will operate in advance of the full DUNE
 The second run of the \dword{protodune} experiment (\dword{protodune2}) will employ a suite of databases that will be the precursors to the full database system that will be in place for DUNE. Each of these databases (run configuration, beam instrumentation, conditions, slow controls, and hardware) will require stable monitoring, maintenance, and service to address operational issues that will arise in the lead up to and during %anne the running of the \dword{protodune} II experiment. 
 \dword{protodune2} operations.
 
-Monitoring will be achieved using automated web-based tools \todo{[ref needed]|} and responses to offline database issues will be made within an 8-hour period corresponding to a typical operation or production ``shift'', i.e. 5 days a week
+% We need a reference for the web-based monitoring tools. 
+Monitoring will be achieved using automated web-based tools and responses to offline database issues will be made within an 8-hour period corresponding to a typical operation or production ``shift'', i.e. 5 days a week
 \footnote{The assumption is that offline database services will not require 7 days a week coverage.}
 . For \dword{protodune2} databases will be located at both \dword{fnal} and \dword{cern}, both of which have a long history of database support.  Moving on to \dword{dune}, the expectation is that another \dword{doe} lab like \dword{bnl} would share database operations with \dword{fnal}.
 
 \section{Development Plans  \hideme{Buchanan and Laycock - draft}}
 
-There are a number of database-related projects where R\&D is needed or underway, utilizing effort \todo{how to credit the FOA funding???}
-and expertise from both \dword{doe} labs and universities.  Coordination is provided by the Database group and attempts to balance the short-term needs of \dword{protodune} with the longer term needs of \dword{dune}.
+There are a number of database-related projects where R\&D is needed or underway, utilizing effort and expertise from both \dword{doe} labs and universities. Recent effort (about 3 postdoc FTEs for 3 years) has been added through \dword{dune} computing-focused \dword{doe} support. Coordination is provided by the Database group and attempts to balance the short-term needs of \dword{protodune} with the longer term needs of \dword{dune}.
 
 \subsection{Conditions Database Development}
 \label{sec:db:conddbdev}
@@ -324,18 +321,16 @@ These guiding design principles are likely to remain valid throughout the lifeti
 
 \subsubsection{Conditions Database and Software Framework}
 
-The interface between the Conditions Database and the Software Framework is defined by the Application Programming Interface (API) % let's see if we reuse this and it motivates a dword!
-of the Conditions Database.  The \dword{hsf} Conditions Database group is in the process of defining a generic API, again using the experience of existing \dword{hep} experiments to understand best practice for supporting all read and write use cases.  \dword{dune} will collaborate with the \dword{hsf} on this API definition and share experience on implementations.  It is noted that, in line with the \dword{hsf}, given the heterogeneity of compute hardware that \dword{dune} needs to use, a common implementation is considered to be less important than a common API and sharing experience.
+The interface between the Conditions Database and the Software Framework is defined by the \dword{api} (Application Programming Interface) of the Conditions Database.  The \dword{hsf} Conditions Database group is in the process of defining a generic \dword{api}, again using the experience of existing \dword{hep} experiments to understand best practice for supporting all read and write use cases.  \dword{dune} will collaborate with the \dword{hsf} on this API definition and share experience on implementations.  It is noted that, in line with the \dword{hsf}, given the heterogeneity of compute hardware that \dword{dune} needs to use, a common implementation is considered to be less important than a common API and sharing experience.
 
 \subsubsection{Conditions Database Service Robustness and Distributed Computing}
 
-In addition to the cache-friendly design of the central Conditions Database service itself, a major issue for a critical (for offline) service like the Conditions Database is resilience such that a robust and reliable service can be provided.  Here, \dword{dune} plans to take advantage of synergies with other \dword{doe} labs, particularly at \dword{bnl} which hosts Conditions Database services for Belle II and other experiments.  The backend database technology (Postgres) is common between \dword{fnal} and \dword{bnl}, and generally Conditions Database services, under the umbrella of the \dword{hsf}, are expected to evolve to look more and more similar.  \dword{dune} will investigate the potential for having a first class backup service (that would support writing as well as reading functionality), in addition to having redundancy of read functionality via intelligent use of caches at sites.
+In addition to the cache-friendly design of the central Conditions Database service itself, a major issue for a critical (for offline) service like the Conditions Database is resilience such that a robust and reliable service can be provided.  \dword{dune} plans to take advantage of synergies with other \dword{doe} labs, particularly at \dword{bnl} which hosts Conditions Database services for Belle II and other experiments.  The backend database technology (\dword{postgres}) is common between \dword{fnal} and \dword{bnl}, and generally Conditions Database services, under the umbrella of the \dword{hsf}, are expected to evolve to look more and more similar.  \dword{dune} will investigate the potential for having a first class backup service (that would support writing as well as reading functionality), in addition to having redundancy of read functionality via intelligent use of caches at sites.
 
 
 \subsubsection{Database Access for High-Performance Computing Facilities}
 
-As DUNE will utilize \dword{hpc}   facilities for some analysis tasks it is important that \dword{db} access is manageable when tens, or hundreds, of thousands of processes are distributed across an \dword{hpc}   cluster. Studies on how scaling on such systems can be handled without overwhelming the conditions \dword{db} with an enormous number of simultaneous queries are required. %anne need to be undertaken. 
-Here again, \dword{dune} plans to leverage the experience of other \dword{hep} experiments with experience of using \dword{hpc}'s at scale.
+As DUNE will utilize \dword{hpc} facilities for some analysis tasks it is important that \dword{db} access is manageable when tens, or hundreds, of thousands of processes are distributed across an \dword{hpc} cluster. Studies on how scaling on such systems can be handled without overwhelming the conditions \dword{db} where an enormous number of simultaneous queries are required. Again, \dword{dune} plans to leverage the experience of other \dword{hep} experiments with experience of using \dword{hpc}'s at scale.
 
 \subsection{Payload Serialization}
 
@@ -360,12 +355,11 @@ Transfer of Run Configuration information for offline use was a major problem fo
 
 The \dword{dune} Calibration system is expected to generate very large datasets that will be processed to create Conditions Metadata that needs to be transferred to the Conditions Database.  Meanwhile the Beam Conditions Database stores far more data than needed for the data processing Conditions Metadata, and effort will be needed to find efficient solutions for data reduction.  Finally, the Data Quality Monitoring Database is under the control of the \dword{dqm} group, with some amount of data needing to be transferred to the Conditions Database.  All of these connections could imply additional development work which, if arising from offline-only constraints, would should be supported by Database group effort.
 
-
 \subsection{Database Access Tool Development and Documentation}
 
 Guided by use cases, tools will be developed for all of the \dword{dune} Databases to enable to access of metadata for inclusion in the conditions database as well as direct access for studies\footnote{Most offline DB access will be made via the Conditions DB but there will be cases where expert users will need direct access to the various databases.}. An interface within the ART framework is already part of the DUNE software stack and has been used to access the IFBeam beam instrumentation database. This ART database service has been used, and is currently used, by the NOvA experiment. This interface will be the baseline for any other interfaces used by users interacting with the DUNE databases, including with the Conditions DB.
 
-Additionally, APIs will be developed to provide the interfaces between the various databases and the Master Store DB, as well as between the Master Store and the Run Condition database. These will likely be light-weight Python-based applications. 
+Additionally, \dword{API}s will be developed to provide the interfaces between the various databases and the Master Store DB, as well as between the Master Store DB and the Run Condition database. These will likely be light-weight Python-based applications. 
 
 %As more use cases and workflows are discovered, all of the \dword{dune} Databases will likely need to have tools to allow efficient and easy access to them. 
 

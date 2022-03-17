@@ -43,6 +43,11 @@ The \dword{nas} disks {\tt /dune/app} and {\tt /dune/data} are not accessible as
      \item {\tt /pnfs/dune/persistent} is a $\approx 800$ TB area for persistent storage of user files.  Files must be removed by their owner. Half of this volume is currently controlled with physics group based quotas, while the other half will soon be trainsitioned to quota-controlled usage.
       \item {\tt /pnfs/dune/tape\_backed} is a $\sim 3.2$ PB disk cache sitting in front of the \dword{enstore} tape system. Files in this area are cataloged and tracked by the \dword{sam} system and, in future, by \dword{rucio}. Users may need to prestage samples to make them rapidly accessible. 
 \end{itemize}
+
+\item{\bf Tape -} DUNE shares the Public instance (separate from a CMS instance) of the tape storage infrastructure.  The physical system is currently (March 2022) composed of two IBM TS4500 tape libraries with LTO8 drives (72 total) with over 100 PB capacity per library.  In addition there is a legacy Oracle SL8500 library being replaced with a 150 PB capacity library (vendor selection and purchase pending).  Current DUNE utilization of the tape complex is 21 PB of the total (non-CMS) active utilization of 168 PB.
+The tape storage software used is \dword{enstore}.  Fermilab is actively pursuing a transition to using the \dword{cern} \dword{cta} software, and plans a multi-year transition.
+
+
 \item{\bf Distributed caching systems - } \dword{dune} makes use of the \dword{cvmfs} caching system to distribute code, flux and shower libraries and user grid executables. \dword{cvmfs} mounts are available on DUNE grid nodes. 
 
 

@@ -10,8 +10,8 @@
 
 \newif\iffinal
 %% Switch between draft or final:
-\finalfalse
-%\finaltrue
+\finalfalse  %HMS - here is where you turn off stuff
+%\finaltrue  % turn this on to remove all but line numbers
 
 % Required values and their setters
 %\newcommand\thedoctitle{DRAFT Technical Design Report}
@@ -124,7 +124,7 @@
 
 %% fixme: this needs to be controlled by "draft"
 % \RequirePackage[color]{showkeys}
-\RequirePackage[pagewise]{lineno}
+\RequirePackage[]{lineno}
 
 
 
