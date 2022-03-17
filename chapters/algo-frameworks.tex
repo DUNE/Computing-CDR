@@ -423,24 +423,39 @@ Developers usually find it convenient if such alternative conditions payloads ca
 \subsubsection{Concurrency} % Need to distinguish production and analysis
 %Many aspects of DUNE data processing are well suited to concurrency solutions and {\bf the framework should be able to offload work to different compute architectures efficiently}, facilitate access to co-processors for developers and {\bf schedule thread-safe and non-thread-safe work}.  {\bf It must be possible to derive the input data requirements for any algorithm in order to define the sequence of all algorithms needed for a particular use case, and it must be possible to only configure those components required for that use case.}
 
-The arrival of concurrency and heterogeneous architectures has added a further level of complication for framework designers and developers alike.  Much of the existing code-base still relies heavily on serial programming for CPU architectures, meanwhile the co-processor market is evolving rapidly resulting in a diverse hardware landscape.  Both multi-threading and co-processors present challenges for both frameworks and developers.  
+
+The intrinsically parallel structure of the DUNE detector data, and the types of digital signal processing and machine learning algorithms that are being used to analyze it, benefit highly from both the multi-core CPU architectures and new hardware based accelerators such as GPUs, Tensor processor units and other many-core architectures.  However, while there is significant benefit to using these heterogeneous architectures, there is also a cost in terms of the complexity of needing to manage the concurrent operations and ensure that they are computationally safe and reproducible.
+
+In the context of DUNE, the framework, in being able to schedule module work, will need to be both thread aware and accelerator aware.  By this we mean that the framework will need to ensure that the modules it schedules and executes in parallel threads, or through offload to accelerators, preserve the coherent state of the memory, data, I/O and other resources that the framework controls and serves as a gateway to.  
+
+While the goal of the DUNE collaboration will be to write modern, high parallelized, thread and accelerator safe algorithm codes, we recognize that there will be code within the DUNE code base that will rely on serial programming techniques.  We also acknowledge that portions of the DUNE code base will leverage external libraries which may or may not be thread safe, or which may need exclusive access to accelerators.  For these reasons we impose upon our framework the following requirement: 
+
+%The arrival of concurrency and heterogeneous architectures has added a further level of complication for framework designers and developers alike.  Much of the existing code-base still relies heavily on serial programming for CPU architectures, meanwhile the co-processor market is evolving rapidly resulting in a diverse hardware landscape.  Both multi-threading and co-processors present challenges for both frameworks and developers.  
 \begin{itemize}
-%10
-\item It is therefore desirable that the framework should help facilitate the use of multi-threaded data processing and facilitate access to co-processors in an efficient manner. 
+
+%13
+\item The framework must be able to schedule thread-safe and non-thread-safe task modules, while ensuring coherence of the data, memory and I/O systems.  
 \end{itemize}
-
-
-Multi-threading presents additional, well-documented challenges, particularly given that many important libraries are not thread-safe.  Summarizing briefly: algorithmic code, including sub-algorithms, should be thread-safe and must declare their compatibility to the framework.
 
 \begin{itemize}
 
 %13
-\item The framework must be able to schedule thread-safe and non-thread-safe work appropriately.  
+\item The framework must be able to schedule tasks modules which require access to hardware accelerators, while ensuring coherence of the data, memory and I/O systems.  
 \end{itemize}
 
-Thread-safety implicitly includes a general requirement on developers that algorithms and their sub-algorithms do not store state information in a thread-unsafe manner.  Further, data exchange should be done in controlled ways to ensure thread-safety, e.g. via some service which manages transient data - again the implementation of this challenging aspect is left to the framework designers.
+At the same time the framework must be able to perform this scheduling in the context of different thread pools or memory maps which are commonly controlled  through different parallelism toolkits (i.e. OpenMP, Intel TBB, Intel OneAPI, OpenACC, etc...).  This needs to be done due to the way in which different toolkits can interact and result in oversubscription of resources.   For DUNE, where researchers may be leveraging major data science, machine learning or other commercial libraries, this is particularly important because it may imply that the task modules need to provide ``hints'' which will help the framework schedule the modules or change the sharing model that is used during portions of the code's execution.
+
+\begin{itemize}
+%10
+\item The framework should be compatible with the use of [external] multi-threaded data processing techniques and access to co-processors resources.  The framework should be capable of scheduling these resources in an efficient manner with respect to a given runtime environment. 
+\end{itemize}
+
+This type of parallel scheduling and access problem is an active topic across more domains than just HEP.  Developing a framework system that meets DUNE's needs will require both significant development work and not insignificant R\&D with regards to the computer science and data science techniques which will ultimately be used.  This investment is however has to potential to reap massive benefits to DUNE in terms of the execution times of the algorithm codes, and the ability of the collaboration to use the exa-scale computing platforms that will be dominate and supported across the DoE leadership computing facilities.
+
+%Multi-threading presents additional, well-documented challenges, particularly given that many important libraries are not thread-safe.  Summarizing briefly: algorithmic code, including sub-algorithms, should be thread-safe and must declare their compatibility to the framework.
 
 
+%Thread-safety implicitly includes a general requirement on developers that algorithms and their sub-algorithms do not store state information in a thread-unsafe manner.  Further, data exchange should be done in controlled ways to ensure thread-safety, e.g. via some service which manages transient data - again the implementation of this challenging aspect is left to the framework designers.
 
 \subsubsection{Externals including Machine Learning}
 Machine learning is already heavily used in analysis of \dword{protodune} data and the framework should give special attention to machine learning inference in the design, both to allow simple exchanges of inference backends and to record the provenance of those backends and all necessary versioning information.  Finally, the framework should be able to work with both \dword{nd} and \dword{fd} data on an equal footing, and within the same job.
