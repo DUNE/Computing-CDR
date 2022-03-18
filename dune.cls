@@ -10,12 +10,12 @@
 
 \newif\iffinal
 %% Switch between draft or final:
-\finalfalse
-%\finaltrue
+\finalfalse  %HMS - here is where you turn off stuff
+%\finaltrue  % turn this on to remove all but line numbers
 
 % Required values and their setters
 %\newcommand\thedoctitle{DRAFT Technical Design Report}
-\newcommand\thedoctitle{Conceptual Design Report}\newcommand\thedocsubtitle{Deep Underground Neutrino Experiment (DUNE)}
+\newcommand\thedoctitle{Conceptual Design Report DRAFT}\newcommand\thedocsubtitle{Deep Underground Neutrino Experiment (DUNE)}
 \def\titleextra{ }
 
 %%% numbers below count section digits (not the chapter digit)
@@ -23,7 +23,7 @@
 % "2" will show chapter/section/subsection
 % "3" will additionally include subsubsection
 % note, this also governs the depth of the PDF "Index"
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{3} 
 % set depth to which numbering is applied.  
 % "3" will number chapter/section/subsection/subsubsection
 % "4" will additionally number subsubsubsection 
@@ -124,7 +124,7 @@
 
 %% fixme: this needs to be controlled by "draft"
 % \RequirePackage[color]{showkeys}
-\RequirePackage[pagewise]{lineno}
+\RequirePackage[]{lineno}
 
 
 
@@ -171,7 +171,7 @@
 }
 \fancypagestyle{simple}{
   \fancyhf{}
-  \fancyhead[RO,LE]{\textsf{\footnotesize \thechapter--\thepage}}
+  \fancyhead[RO,LE]{\textsf{\footnotesize  \thechapter--\thepage}}
   \fancyhead[LO,RE]{\textsf{\footnotesize \leftmark}}
   \fancyfoot[CO,CE]{\textsf{\footnotesize \explong}}
 }
@@ -179,6 +179,7 @@
 % Package Fancyhdr Warning: \headheight is too small (12.0pt): 
 %  Make it at least 14.49998pt.
 \setlength{\headheight}{15pt}
+
 
 
 % Fancier tables
@@ -338,7 +339,8 @@
 \newcommand{\fixmehl}[1]{}
 \newcommand{\metainfo}[1]{}
 \newcommand{\forlbnc}[1]{}
-%\linenumbers  %<---- uncomment if you want ONLY linenumbers with otherwise print-ready copy
+\linenumbers  %<---- uncomment if you want ONLY linenumbers with otherwise print-ready copy
+% HMS uncommented for version 1.0, March 16, 2022
 \else
 % "draft"
 %Set default style for todonotes

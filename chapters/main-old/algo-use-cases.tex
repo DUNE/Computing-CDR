@@ -14,14 +14,14 @@ In addition to the challenges faced by HL-LHC experiments, as described in the H
 
 \section{Data Acquisition and Storage}
 
-Data Acquisition software and hardware are responsibilities of the \dword{daq} group, with significant interfaces to offline computing. Important factors include communication of calibration and configuration information between online and offline computing, high-speed networking for data, high-reliability networking for configuration and monitoring, and adequate disk and CPU on both ends of the connection to allow efficient data transfer and continued data collection in the event of an extended network interruption or component failure on either end.
+Data Acquisition software and hardware are responsibilities of the \dword{daq} group, with significant interfaces to offline computing. Important factors include communication of calibration and configuration information between online and offline computing, high-speed networking for data, high-reliability networking for configuration and monitoring, and adequate disk and CPU on both ends of the connection to allow efficient data transfer and continued data collection in the event of an extended network interruption or subsystem failure on either end.
 
 These considerations apply to \dword{proto}, where data taking occurs at CERN with offline databases and archival storage in the US,  and, in future, the far and near detectors in South Dakota. 
 
 Current status and proposed solutions are discussed in Chapters \ref{ch:db}(Databases) and \ref{ch:netw}(Networking). 
 
 \subsection{Data Transfer from the Experiment}
-Data need to be buffered locally and then transferred to permanent storage at the host lab(s).  Transfer activities include the generation of descriptive metadata, file transfer, writing the files to permanent storage and integrity checks.  Once data are confirmed to have successfully reached permanent storage, the local buffer may be cleared.  Current specifications call for the local buffers at remote sites to be able to store 3-7 days worth of data or 1 supernova trigger record's worth ($\sim 500$ TB) at a minimum. 
+Data need to be buffered locally and then transferred to permanent storage at the host lab(s).  Transfer activities include the generation of descriptive metadata, file transfer, writing the files to permanent storage and integrity checks.  Once data are confirmed to have successfully reached permanent storage, the local buffer may be cleared.  Current specifications call for the local buffers at remote sites to be able to store 3-7 days worth of data or one supernova trigger record's worth ($\sim 500$ TB) at a minimum. 
 
 %{\it Major concerns:  Network bandwidth and reliability between Sanford and Fermilab. The ability of host lab systems to absorb and redistribute those data quickly. }
 {\it Major challenges: Here the major area of concern is the remote location of the far detectors and space and power limitations at both the detector level and the surface. Other challenges include  the need for adequate lossless data compression to prevent data volume explosion. Chapter \ref{ch:netw} describes the status and plans for networking.}
@@ -51,10 +51,10 @@ Local online monitoring of data and experimental conditions will be done by the 
 
 {\it No novel concerns but substantial effort will be needed to build and maintain the system over the lifetime of the experiment.}
 
-\subsection{Offsite high level data filtering}
-This is not yet part of the data plan but there may be a need for offsite filtering of data before it is written to permanent storage. 
+\subsection{Offsite high-level data filtering}
+This is not yet part of the data plan, but there may be a need for offsite filtering of data before it is written to permanent storage. 
 
-{\it  Initiation of a High Level Trigger offsite remains a possibility if need arises. Local space, power and cooling issues make this difficult to do at Sanford.}
+{\it  Initiation of a High-Level Trigger offsite remains a possibility if the need arises. Local space, power and cooling issues make this difficult to do at Sanford.}
 
 \subsection{Outputs from DAQ and monitoring}
 At the end of data transfer and after acquisition of configuration information,  we assume that data, metadata and configuration/calibration/beam information from the detectors have been transferred to offline computing facilities and can them be distributed and reconstructed. 

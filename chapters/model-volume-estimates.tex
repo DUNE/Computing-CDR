@@ -1,76 +1,101 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
 
-\chapter{Data and Processing Volume Estimates \hideme{Schellman, Junk, Muether - started numbers and figures need updating}}
+\chapter{Data and Processing Volume Estimates \hideme{3/13 HMS numbers added solar neutrinos}}
+
 \label{ch:est}
-\fixme{Heidi: moved tables of numbers from intro to here.  Still needs better organization}
-%anne In this chapter we will 
-This chapter describes the assumptions that go into a bottoms-up estimate of data volumes and describe possible methods of reducing the total volumes while retaining physics capabilities. 
+%\fixme{Heidi: moved tables of numbers from intro to here.  Still needs better organization}
+ 
 
-\section{Introduction \hideme{Schellman - need a paragraph}}
+%HMS done 3/4 \fixme{Doug: Can the sentence above be put into the introduction with additional verbage}
+
+\section{Introduction \hideme{Schellman}}% - need a paragraph}}
+As a starting point to understand the resources needed for DUNE Computing and the development needed to utilize those resources, we start with an estimate of the data volumes and CPU needs from bottoms-up estimates. 
+In this chapter, we begin by describing the assumptions that go into the estimates of data volumes and describe possible methods of reducing the total volumes while retaining physics capabilities. 
+These assumptions have been coded into a python-based model and are updated frequently based upon changes to the \dword{fd} and \dword{nd} designs, and the physics requirements.
 
 
-\section{Assumptions \hideme{Schellman - draft}}
-\label{sec:est:assume}  %% fix label according to section
+%\section{Assumptions \hideme{Schellman - draft}}
+%\label{sec:est:assume}  %% fix label according to section
 
-\subsection{Raw Data Assumptions \hideme{Schellman - draft}}
-DUNE's detectors will produce information from a variety of technologies.  We anticipate that raw data volumes will be dominated by the digitized waveforms from \dword{lar} detectors, and to a lesser extent \dwords{pd}, in the prototype runs at the \dword{cern}, the \dword{fd}, and the \dword{nd}.  
-%anneThese raw data volumes can be reduced by the \dword{daq} system by several means.
+%\section{Raw Data Characteristics \hideme{Schellman - draft}}\label{sec:est:assume} 
+%anne 3/13DUNE's detectors will produce information from a variety of technologies.  We anticipate that raw data volumes will be dominated by the digitized waveforms from the \dword{lar} detectors, and to a lesser extent from the \dwords{pd}. \dwords{lartpc} read out over long time windows while the \dword{pd} detectors read out only above threshold, and we find that the \dword{lar} information dominates at the raw data level and drives the overall data volumes.
+DUNE's detectors will produce information from a variety of technologies.  We anticipate that raw data volumes will be dominated by the digitized waveforms from the \dword{lar} detectors, which are read out over long time windows. Since the \dword{pd} detectors are read out only above threshold, the \dword{lar} information dominates at the raw data level and drives the overall data volumes.% in the prototype runs at the \dword{cern}, the \dword{fd}, and the \dword{nd}.  
+
 The \dword{daq} system can reduce these raw data volumes by several means, i.e.,
 \begin{itemize} 
-\item triggered readout of particular time slices,
-\item triggered readout of particular geographic regions,
-\item lossless zero suppression,
-\item lossy zero suppression, and
+\item short readout windows tailored to one drift time;
+\item triggered readout of particular time slices;
+\item triggered readout of particular geographic regions;
+\item lossless compression; %Kirby\todo{trj: does this mean to say lossless compression?  ZS sounds lossy}
+\item lossy zero suppression; and/or
 \item hardware pattern recognition.
 \end{itemize}
 
-Overall, we assume that the above methods can reduce data volumes from the hundreds of exabytes that would be produced by continuous readout to a manageable 30\,PB/year. 
 
-\subsection{Derived Data Assumptions \hideme{Schellman - draft}}
+Overall, we assume that the above methods can reduce data volumes from the hundreds of exabytes that would be produced by continuous readout to a manageable 30\,PB/year. For beam and calibration events our assumption is that readouts of \dword{lar} detectors will  generally be confined to a single drift time window.
 
- \begin{dunetable}[Data Retention Policies]{llrrrr}{tab:est:retention}
-{Retention policies by data tier}
-Tier&Description&Tape copies& Lifetime &Disk Copies& Lifetime\\
-Raw & Physics data& 2 & indefinitely & 1 & 1 year\\
-Test & test and commissioning & 1 &6 months &1 & 6 months \\
-Hits & reconstructed hits & 1 & 10 years & 1 & 1 month \\
-Reco & pattern recognition &1 & 10 years & 2 & 2 years\\
-\end{dunetable}
+%\fixme{HMS 3/4 moved retention policies to later in the section. Doug: need text for the subsection that ties in the first table}
 
-\section{ProtoDUNE \hideme{Schellman - draft}}
+% \subsection{Derived Data Assumptions \hideme{Schellman - draft}}
+
+%  \begin{dunetable}[Data Retention Policies]{llrrrr}{tab:est:retention}
+% {Retention policies by data tier}
+% Tier&Description&Tape copies& Lifetime &Disk Copies& Lifetime\\ \toprowrule
+% Raw & Physics data& 2 & indefinitely & 1 & 1 year\\ \colhline
+% Test & test and commissioning & 1 &6 months &1 & 6 months \\ \colhline
+% Hits & reconstructed hits & 1 & 10 years & 1 & 1 month \\ \colhline
+% Reco & pattern recognition &1 & 10 years & 2 & 2 years\\
+% \end{dunetable}
+
+\section{ProtoDUNE Experience\hideme{Schellman - draft}}
 \label{sec:est:ProtoDUNE}  
 
-Our estimates  are largely based on our experience with the single and double-phase prototype detectors that ran at CERN in late 2018.  The \dword{pdsp} detector used \dword{hd} \dword{tpc} technology, read out by 6 \dwords{apa} and a mix of photon detectors. The corresponding first far detector module will have 150 \dwords{apa} and photon detectors based on the \dword{arapuca} technology. The second far detector will have single-phase vertical drift readout but shares technology with the dual-phase prototype.  Data rates and assumptions for protoDUNE have been documented in \href{docdb:20515}{https://docs.dunescience.org/cgi-bin/private/ShowDocument?docid=20515}.  Table \ref{tab:est:usefulpd} provides useful quantities for data volumes derived from the \dword{pdsp} experience. 
+Our estimates  are largely based on our experience with the  %\dword{sp} and \dword{dp} prototype detectors 
+\dwords{protodune} that ran at the \dword{cern} in 2018 (\dword{pdsp}) and 2019 (\dword{pddp}). 
 
- \begin{dunetable}[Useful quantities for computing far detector data volumes]{lrr}{tab:est:usefulpd}
+%anne The \dword{pdsp} detector used \dword{hd} \dword{lartpc} technology, read out by six \dwords{apa} and a mix of \dwords{pd}. The corresponding first \dword{fd} module will have 150 \dwords{apa} and \dwords{pd} based on the \dword{arapuca} technology. The second \dword{fd} module will have \dword{sp} vertical drift readout but will share technology with  \dword{pddp}. Data rates and parameters for \dword{protodune} have been documented in \todo{move doc to publicly-accessible place then add to bib \href{docdb:24732}{https://docs.dunescience.org/cgi-bin/sso/ShowDocument?docid=24732}. } Table~\ref{tab:est:usefulpd} and this information from the \dword{pdsp} experience has been used to determine the parameters used in the prediction of data volumes for \dword{dune}. 
+The \dword{hd} \dword{pdsp} detector was read out by six \dwords{apa} and a mix of \dwords{pd}. The corresponding first \dword{fd} module will have 150 \dwords{apa} and will use  \dwords{pd} based on the \dword{arapuca} technology. The second \dword{fd} module will use \dword{spvd} but will share some technology with  \dword{pddp}. Data rates and parameters for \dword{protodune} have been documented in \fixme{move doc to publicly accessible place then add to bib \href{docdb:24732}{https://docs.dunescience.org/cgi-bin/sso/ShowDocument?docid=24732}. } Table~\ref{tab:est:usefulpd}; the information from\dword{pdsp} has been used to determine the parameters used in the prediction of data volumes for \dword{dune}.
+
+\subsection{ProtoDUNE Single Phase Experience}
+
+The \dword{pdsp} data have been processed through three reconstruction campaigns with the first done in keepup mode 
+\fixme{(anne) a known term?}
+during data taking.  There have also been several \dword{pdsp} simulation campaigns after data taking was complete.  This work has resulted in both publications \cite{DUNE:2021hwx,DUNE:2020fgq,DUNE:2020cqd,DUNE:2020vmp}, and robust estimates of the computational characteristics of the data and processing. The characteristics of the \dword{pdsp} data are summarized in Table~\ref{tab:est:usefulpd}.
+
+ \begin{dunetable}[Useful quantities from the ProtoDUNE experience]{lrr}{tab:est:usefulpd}
 {Useful quantities for computing estimates for \dword{hd}
-readout based on \dword{pdsp} experience.  }%\rowtitlestyle
+readout based on \dword{pdsp} experience. These numbers assume 12-bit readout.  }%\rowtitlestyle
 Quantity&Value&Explanation\\
 \toprowrule
 %{\bf Far Detector Beam:}\\ \colhline
+Number of APAs&6\\
 Number of channels/APA&2,560&\\
 Readout time & 3 ms&\\
 \# of time slices & 6000&\\
 Single APA readout &23 MB& Uncompressed  estimate\\ \colhline
-APAs & 6 &\\
+%APAs & 6 &\\
 Full detector readout &178 MB& Uncompressed real \\ \colhline
 Full detector readout &71 MB& Compressed real \\ \colhline
 Effective compression factor &2.5&\\ \colhline
 Beam rep. rate&4.5 Hz&Average\\ \colhline
-Hit reconstruction time CPU time/APA& 30 sec&from MC/ProtoDUNE\\ \colhline
-Pattern recognition time CPU time event & 400 sec&from MC/ProtoDUNE\\ \colhline
-Simulation time CPU time event & 2700 sec&from MC/ProtoDUNE\\ \colhline
+Hit reconstruction CPU time/APA& 30 sec&from MC/ProtoDUNE\\ \colhline
+Pattern recognition CPU time/event & 400 sec&from MC/ProtoDUNE\\ \colhline
+Simulation CPU time event & 2,700 sec&from MC/ProtoDUNE\\ \colhline
 Memory footprint/APA&0.5-1GB&ProtoDUNE experience\\ 
 \end{dunetable}
 
  
 
-For example, uncompressed single phase data from \dword{pdsp} were observed to be around 178 MB in size, which is the amount expected for the number  of TPC channels read + a 20\% overhead for other detectors and headers.  Compressed SP data averages 71 MB, consistent with compression by a factor of 2.5.  
+For example, the uncompressed \dword{sp} raw data for a single \dword{pdsp} trigger record were observed to be around 178\,MB in size, which is the amount expected for the number  of \dword{tpc} channels read + a 20\% overhead for other detectors and headers.  Compressed \dword{sp} raw data averages 75\,MB, consistent with compression by a factor of 2.5.  
 
-Dual phase data read out 2 \dword{crp} units for the 2019 run.  Observed data size without compression  was 110MB.  %Numbers for 2018 and 2019 have been 
+%anne Dual phase data 
+\subsection{ProtoDUNE Dual Phase Experience}
 
-In Fall 2021, single-phase vertical drift readout has been tested in a smaller coldbox with full protoDUNE tests of both \dword{hd} and \dword{vd} technology with beam and cosmic rays slated for 2022-24. Data volume estimates include data and simulation for this second prototype test campaign. 
+\dword{pddp} recorded signals using two \dwords{crp} during the 2019 run.  Observed data size without compression  was 110\,MB.  %Numbers for 2018 and 2019 have been 
+
+In fall 2021, %annesingle-phase vertical drift
+\dword{spvd} readout was tested in a smaller \coldbox and successfuly reconstructed. Full \dword{protodune} tests of both \dword{hd} and \dword{vd} technologies with beam and cosmic rays are slated for 2022-24. The data volume estimates in Section~\ref{sec:est:volumes} include data and simulation for this second prototype test campaign. 
 
 % For the far detector with APA's we assume 
 
@@ -81,92 +106,145 @@ In Fall 2021, single-phase vertical drift readout has been tested in a smaller c
 
 % [DUNE-doc-20515-v9]
 
-\section{Far Detector data volume estimates \hideme{Schellman - draft}}
+\section{Far Detector Data Volume Estimates \hideme{Schellman - needs redo with new numbers}}
 \label{sec:est:FD}  
 
+The data volume estimates presented here are based on the %anne current (Winter 2022) 
+\dword{fd}  and \dword{nd} designs as of %winter 
+early 2022. This assumes that the first module will be \dword{sphd}, the second module \dfirst{spvd}, and a third module of type \dword{sphd} added in early 2030s. The \dword{nd} data volume is based on the final \dword{nd} design and ignores the phased approach that is currently planned in order to be conservative in our estimates. A separate discussion is provided for each \dword{fd} module type and the \dword{nd}. The summary plots and table at the end include data and simulation for all detectors.
+
 \subsection{Horizontal Drift}
-For \dword{hd} far detector data volumes, we use our \dword{pdsp} experience and assume that raw data sizes and hit finding CPU times scale with the number of \dwords{apa} while pattern recognition and simulation times scale with the number of interactions. 
+For \dword{hd} \dword{fd} data volumes, we use our \dword{pdsp} experience and assume that raw data sizes and hit-finding CPU times scale with the number of \dwords{apa}, while pattern recognition and simulation times scale with the number of interactions. 
 
  \begin{dunetable}[Useful quantities for computing \dshort{hd} data volume
-estimates]{lrr}{tab:est:usefulfd}
+estimates]{lrr}{tab:est:usefulfdhd}
 {Useful quantities for computing estimates for \dword{hd}
-readout.}%\rowtitlestyle
+readout based on the \dword{daq} requirements document of January 2022.  CPU times are scaled from \dword{pdsp} assuming all detectors are used in hit finding but interactions are confined to a subsection of the detector not much larger than \dword{pdsp}.}%\rowtitlestyle
 Quantity&Value&Explanation\\
 \toprowrule
-{\bf Far Detector Beam:}\\ \colhline
-Single APA readout &41.5 MB& Uncompressed 5.4 ms\\ \colhline
-APAs per module& 150&\\
-Compression factor &2.5 &\\
-One full module readout &6.22  GB& Uncompressed 5.4 ms\\ \colhline
-One full module readout &2.49  GB& Compressed 5.4 ms\\ \colhline
+{\bf Far Detector Horizontal Drift}\\ \colhline
+%Single APA readout &41.5 MB& Uncompressed 5.4 ms\\ \colhline
+APAs per module& 150&DAQ spec.\\
+TPC channels&	384,000&DAQ spec.\\
+TPC channel count per APA&	2560&DAQ spec.\\
+%TPC electronics 10 G links	1500
+TPC ADC sampling time& 512 ns&DAQ spec.\\
+TPC ADC dynamic range&	14 bits&DAQ spec.\\
+%PDS channels	6000
+%PDS electronics 4.8 G links	150
+FD module trigger record window &	2.6 ms&DAQ spec.\\
+Extended FD module trigger record window&	100 s&DAQ spec.\\
+Size of uncompressed trigger record&	3.8 GB&DAQ spec.\\
+Size of uncompressed extended trigger record &	140 TB&DAQ spec.\\
+Compression factor &TBD&\\
+%One full module readout &6.22  GB& Uncompressed &5.4 ms\\ \colhline
+%One full module readout &2.49  GB& Compressed 5.4 &ms\\ \colhline
 Beam rep. rate&\beamreprate&Untriggered\\ \colhline
-Hit finding CPU time/APA&30 sec&from MC/ProtoDUNE\\ \colhline
-Pattern recognition CPU time/event&400 sec&from MC/ProtoDUNE\\ \colhline
-Simulation time CPU time event & 2700 sec&from MC/ProtoDUNE\\ \colhline
-Memory footprint/APA&0.5-1GB&ProtoDUNE experience\\ \colhline
-{\bf Supernova:}\\ \colhline
-Single channel readout &300 MB& Uncompressed 100 s\\ \colhline
-Four module readout& 460 TB& Uncompressed 100 s\\ \colhline
-Four module readout& 184 TB& Compressed 100 s\\ \colhline
-Trigger rate&1  per month&(assumption)\\
+Hit finding CPU time&4500 sec&from MC/ProtoDUNE\\ %\colhline
+Pattern recognition CPU time &1500 sec&from MC/ProtoDUNE\\ %\colhline
+Simulation time CPU time event & 2700 sec&from MC/ProtoDUNE\\ %\colhline
+Memory footprint/APA&0.5-1GB&ProtoDUNE experience\\ 
+% {\bf Supernova:}\\ %\colhline
+% Single channel readout &300 MB& Uncompressed 100 s\\ %\colhline
+% Four module readout& 460 TB& Uncompressed 100 s\\ \colhline
+% Four module readout& 184 TB& Compressed 100 s\\ \colhline
+%Supernova Trigger rate&1  per month&(assumption)\\
 \end{dunetable}
 
 
-DUNE \href{docdb:14893}{https://docs.dunescience.org/cgi-bin/private/ShowDocument?docid=14983} describes the expected event rates for various signatures in a \dword{fd} module.  These can be combined with the above numbers to provide  the integrated data estimates shown in table \ref{tab:est:hdfdrates}. 
+DUNE \fixme{make public, then bib \href{docdb:14893}{https://docs.dunescience.org/cgi-bin/private/ShowDocument?docid=14983}} describes the expected event rates for various signatures in a \dword{fd} module.  These can be combined with the above numbers to provide  the integrated data estimates shown in Table~\ref{tab:est:hdfdrates}. 
 
  \begin{dunetable}
- [Horizontal Drift data volumes] {|l |r r r |}{tab:est:hdfdrates}
-{Data sizes and rates for different processes in each horizontal drift detector module.  Uncompressed data sizes are given. As readouts will be self-triggering an extended 2.6 ms readout window is used instead of the 3ms for the triggered \dword{pdsp} runs.  We assume beam uptime of 50\% and 100\% uptime for non-beam science. These numbers are derived from references \cite{bib:docdb16028} and \cite{bib:docdb14983}.}
+ [Horizontal drift data volumes] {|l |r r r |}{tab:est:hdfdrates}
+{Data sizes and rates for different processes in each horizontal drift detector module.  Uncompressed data sizes are given. As readouts will be self-triggering an extended 2.6\,ms readout window is used instead of the 3\,ms for the triggered \dword{pdsp} runs.  We assume beam uptime of 50\% and 100\% uptime for non-beam science. These numbers are derived from References~\cite{bib:docdb24732} and \cite{bib:docdb14983}.}
 %\rowtitlestyle
 %Quantity&Value&Explanation\\
 %\toprowrule
 %\begin{tabular}{|l |r r r |}
 %\hline
 Process & Rate/module & \qquad size/instance &\qquad  size/module/year\\
-\hline
+\toprowrule
 Beam event & 41/day & 3.8 GB&30 TB/year\\
 Cosmic rays &4,500/day&  3.8 GB& 6.2 PB/year\\
 Supernova trigger& 1/month& 140 TB& 1.7 PB/year\\
+Solar neutrinos&10,000/year&35 TB/year\\
 Calibrations&2/year&750 TB& 1.5 PB/year\\
-\hline 
+\colhline 
 Total& & &9.4 PB/year\\
 \end{dunetable}%
 
-\subsection{Far detector with vertical drift readout}
+\subsection{Far Detector Module with Vertical Drift Readout}
 
- Table~\ref{tab:est:vdfdrates} summarizes expected data rates and volume from physics signals of interest in a Far Detector based on Vertical drift technology.
- The data volume  corresponding  to calibration events can be considered to be similar to the one assumed in table ~\ref{tab:est:hdfdrates}, a more detailed estimation  is ongoing. 
- 
+ Table~\ref{tab:est:vdfdrates} summarizes expected data rates and volumes from physics signals of interest in % anne a Far Detector based on Vertical drift technology.
+ \dword{spvd}. % Anne: this dword doesn't quite work...
+ The data volume  corresponding  to calibration events can be considered to be similar to the one assumed in Table~\ref{tab:est:hdfdrates}; a more detailed estimation is ongoing. 
+
+\begin{dunetable}[Useful quantities for computing \dshort{spvd} data volume
+estimates]{lrr}{tab:est:usefulfdvd}
+{Useful quantities for computing estimates for \dword{vd}
+readout based on the \dword{daq} requirements document of January 2022.  CPU times are scaled from \dword{pdsp} assuming all detectors are used in hit finding but interactions are confined to a subsection of the detector not much larger than \dword{pdsp}.}%\rowtitlestyle
+Quantity&Value&Explanation\\
+\toprowrule
+{\bf Far Detector Vertical Drift}\\ \colhline
+%Single APA readout &41.5 MB& Uncompressed 5.4 ms\\ \colhline
+CRPs per module& 160&DAQ spec.\\
+TPC channels&491,520&DAQ spec.\\
+TPC channel count per CRP&	3,072&DAQ spec.\\
+%TPC electronics 10 G links	1500
+TPC ADC sampling time& 512 ns&DAQ spec.\\
+TPC ADC dynamic range&	14 bits&DAQ spec.\\
+%PDS channels	6000
+%PDS electronics 4.8 G links	150
+\dword{vd} module trigger record window &	4.25 ms&DAQ spec.\\
+Extended FD module trigger record window&	100 s&DAQ spec.\\
+Size of uncompressed trigger record&	8 GB&DAQ spec.\\
+Size of uncompressed extended trigger record &	180 TB&DAQ spec.\\
+Compression factor &TBD&\\
+%One full module readout &6.22  GB& Uncompressed &5.4 ms\\ \colhline
+%One full module readout &2.49  GB& Compressed 5.4 &ms\\ \colhline
+Beam rep. rate&\beamreprate&Untriggered\\ \colhline
+Hit finding CPU time&6,000 sec&from MC/ProtoDUNE\\ %\colhline
+Pattern recognition CPU time &1,500 sec&from MC/ProtoDUNE\\ %\colhline
+Simulation time CPU time event & 2,700 sec&from MC/ProtoDUNE\\ %\colhline
+Memory footprint/CRP&0.5-1GB&ProtoDUNE experience\\ \colhline
+% {\bf Supernova:}\\ %\colhline
+% Single channel readout &300 MB& Uncompressed 100 s\\ %\colhline
+% Four module readout& 460 TB& Uncompressed 100 s\\ \colhline
+% Four module readout& 184 TB& Compressed 100 s\\ \colhline
+%Supernova Trigger rate&1  per month&(assumption)\\
+\end{dunetable}
+
  \begin{dunetable}
- [Vertical Drift Far detector data volumes] {|l |r r r |}{tab:est:vdfdrates}
-{Data sizes and rates for different processes in a far detector module based on vertical drift technology.  Uncompressed data sizes are given. As readouts will be self-triggering an extended 4.25 ms readout window is used.  We assume beam uptime of 50\% and 100\% uptime for non-beam science.  These numbers are derived from references \cite{bib:docdb16028} and \cite{bib:docdb14983}.} 
-%\rowtitlestyle
-%Quantity&Value&Explanation\\
-%\toprowrule
-%\begin{tabular}{|l |r r r |}
-%\hline
+ [%anneVertical Drift Far detector 
+ \dshort{spvd} data volumes] {|l |r r r |}{tab:est:vdfdrates}
+{Data sizes and rates for different processes in \dword{spvd}. %anne a far detector module based on vertical drift technology. 
+Uncompressed data sizes are given. As readouts will be self-triggering, an extended 4.25\,ms readout window is used.  We assume beam uptime of 50\% and 100\% uptime for non-beam science~\cite{bib:docdb16028,bib:docdb14983}.  %anne These numbers are derived from references~\cite{bib:docdb16028} and~\cite{bib:docdb14983}.
+} 
 Process & Rate/module & \qquad event size  &\qquad  size/module/year\\
 \hline
 Beam event & 41/day & 8 GB& 63 TB/year\\
 Cosmic rays &4,500/day&  8 GB& 12.5 PB/year\\
-Supernova trigger& 1/month& 130 TB& 2 PB/year\\
+Supernova trigger& 1/month& 180 TB& 2 PB/year\\
+Solar neutrinos&10,000/year&46 TB/year\\
 Calibrations&2/year& & 1.5 PB/year\\
 \hline 
 Total& & &16 PB/year\\
 \end{dunetable}% 
-
+\todo{will have to fix all docdb references -no dune docdb docs are accessible to the public now}
 %The \dword{vd} numbers are computed assuming a  full module readout for a time window equals to 2.2 the the drift window. 
 
-\subsection{Far detector summary}
-Overall, bottoms-up estimates yield data volumes of around 9.4 and 16 PB/year/module.  Lossless compression and restriction of the readout to geographical regions of interest should reduce this volume substantially. However, additional modules will  increase these rates.  A maximum rate of 30PB/year across all modules and modes of operation has been specified.  We will note that 30 PB/year is  an average of 1.3 GB/sec, less than the rates already demonstrated for protoDUNE acquisition and storage.  In principle, at 2.5 CPU sec/MB of compressed input, a few thousand cores could keep up with these data rates  but this throughput must be maintained over many years.   In addition, supernova candidates may require bursts of  much higher acquisition and processing rates. %Table \ref{tab:exec-comp-bigpicture-es} summarizes the computational characteristics expected for \dword{fd} data. 
+\subsection{Far Detector Summary}
+
+Overall, bottoms-up estimates yield data volumes of around 9.4\,PB/year and 16\,PB/year for each \dword{sphd} and \dword{spvd} module respectively.  Lossless compression and restriction of the readout to geographical regions of interest should reduce this volume substantially. However, additional modules will  increase these rates.  A maximum rate of 30\,PB/year across all modules and modes of operation has been specified and it is assumed that \dword{daq} and detector configurations will change to meet this specification.  We  note that 30\,PB/year is  an average of 1.3\,GB/sec, less than the rates already demonstrated for \dword{protodune} %acquisition 
+\dword{daq} and storage.  In principle, at 2.5\,CPU-sec/MB of compressed input, a few thousand cores could keep up with these data rates,  but this throughput must be maintained over many years.   In addition, \dword{snb} candidates may require bursts of  much higher \dword{daq} and processing rates. %Table \ref{tab:exec-comp-bigpicture-es} summarizes the computational characteristics expected for \dword{fd} data. 
 
 
-\section{Near Detector data volumes \hideme{Schellman/Muether - needs significant update}}
+\section{Near Detector Data Volumes \hideme{HMS 3/5 I think we decided these were ok.}}
 \label{sec:est:ND}  
-\todo{Muether/Junk - Need to update these numbers}
-This section is based on the estimates provided in the Near Detector CDR \cite{DUNE:2021tad}. % \hideme{Add ND CDR citation}
+%\todo{Muether/Junk - Need to update these numbers}
+This section is based on the estimates provided in the near detector (\dword{nd}) \dword{cdr}~\cite{DUNE:2021tad}. % \hideme{Add ND CDR citation}
 
-Table \ref{tab:nd_data_volume_estimates} summarizes the expected data sizes from the near detector. Due to the much higher data density in the near detector, CPU times/beam spill are expected to be much higher and are estimated to be 300 CPU/sec/spill using current processors for $1.5\times 10^7$ spills/year. Simulated data samples will need to be an order of magnitude larger and thus require at least 10 times the CPU power.  This leads to a rough estimate of CPU needed for \dword{nd} reconstruction and simulation of approximately 3,000 core-years/year.
+The expected data sizes from the \dword{nd} are summarized in Table~\ref{tab:nd_data_volume_estimates}. Due to the much higher data density in the near detector, CPU times/beam spill are expected to be much higher and are estimated to be 300\,CPU/sec/spill using current processors for $1.5\times 10^7$ spills/year. Simulated data samples will need to be an order of magnitude larger and thus require at least 10 times the CPU power.  This leads to a rough estimate of CPU needed for \dword{nd} reconstruction and simulation of approximately 3,000 core-years/year.
 
 \begin{dunetable}[Near Detector Data Estimates]
 {l r}
@@ -184,11 +262,11 @@ Type & Volume/year\\ \toprowrule
     \quad\quad Calibration & 6 TB\\
     \quad\quad Total & 68 TB \\\toprowrule
     {\bf \dword{sand}}        & \\
-        \quad\quad In-spill data & 4 TB\\
-    \quad\quad Out-of-spill cosmics & 1 TB\\
+        \quad\quad In-spill data & 40 TB\\
+    \quad\quad Out-of-spill cosmics & 8 TB\\
     \quad\quad Calibration & 1 TB \\
-    \quad\quad Total & 6 TB \\\toprowrule
-    {\bf Total ND} & {\bf 250 TB}\\
+    \quad\quad Total & 49 TB \\\toprowrule
+    {\bf Total ND} & {\bf 293 TB}\\
 \end{dunetable}
 
 \begin{dunetable}
@@ -208,54 +286,68 @@ Type&time/event\\ \toprowrule
     \quad\quad Reconstruction & 10 s\\
 \end{dunetable}
 
-\section{Summary \hideme{Schellman - needs update}}
+\section{Data Retention Assumptions \hideme{Schellman - draft}} \label{ch:est:retention}
+
+The Computing Consortium has made the decision to require all data located on DUNE storage elements to be registered within the Data Management system and has a specific data retention policy associated with each file. The goal is to assure that there is no ``dark'' data occupying storage capacity and that these data retention policies will help minimize total resource needs and our ability to recycle/reuse storage media. A short summary of the currently planned retention policy is listed in Table \ref{tab:est:retention}.
+
+ \begin{dunetable}[Data Retention Policies]{llrrrr}{tab:est:retention}
+{Retention policies by data tier}
+Tier&Description&Tape copies& Lifetime &Disk Copies& Lifetime\\ \toprowrule
+Raw & Physics data& 2 & indefinitely & 1 & 1 year\\ \colhline
+Test & test and commissioning & 1 &6 months &1 & 6 months \\ \colhline
+Hits & reconstructed hits & 1 & 10 years & 1 & 1 month \\ \colhline
+Reco & pattern recognition &1 & 10 years & 2 & 2 years\\
+\end{dunetable}
+
+\section{Model Studies for Data and CPU Needs \hideme{Schellman 3/4 updated - draft}}
 \label{sec:est:volumes}
+%HMS fixed \fixme{Doug: All figures need the x axis fix for 2020-2040}
 
-Given the above estimates we can  estimate total disk and CPU needs every year.  The September 2021 version of these numbers are documented in \cite{bib:docdb23419}
-
-Figure \ref{fig:est:events} shows the assumed number of events/year for each detector type.  
+Given the above estimates we can  estimate total disk and CPU needs every year.  The March 2022 version of these numbers is documented in~\cite{bib:docdb24732}.  Parameters are entered via a json file and results generated using python scripts. Figure~\ref{fig:est:events} shows the assumed number of events/year for each detector type.  
 
 \begin{dunefigure}
 [Event estimates]
 {fig:est:events}
-{Number of events per year used in data volume estimates. Left is through 2030, right is the same through 2040.  }
-\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/soon/Events.png}
-\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Events.png}
+{Number of events per year used in data volume estimates. Left is through 2025, right is the same through 2040.  }
+\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2025/Parameters_2022-03-04-2025-Events.png}
+\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Parameters_2022-03-04-2040-Events.png}
 \end{dunefigure}
 
 CPU and size/readout are drawn from the above estimates. We then make the following assumptions about data sizes and retention.  
-Figures \ref{fig:est:disk}, \ref{fig:est:tape}, \ref{fig:est:cores} illustrate the estimated storage and CPU needs through 2026 and 2040.  In the early years, \dword{pd} and \dword{nd} prototype tests dominate while commissioning and operation of the first (and second) \dword{fd} and the \dword{nd} become important after 2026. 
 
 \begin{itemize}
-\item Two copies of raw data are retained indefinitely
-\item Commissioning data is marked test and one copy is retained on disk for 6 months. 
-\item Reconstruction is performed on the full data sample once/year and 2 copies are retained on disk for 2 years.  
+\item Two copies of raw data are retained indefinitely.
+\item Commissioning data is marked ``test'' and one copy is retained on disk (and tape) for six months. 
+\item Reconstruction is performed on the full data sample once/year and two copies are retained on disk for two years.  
 \item Analysis includes calibration and is  equivalent in CPU utilization to reconstruction but produces smaller outputs. 
 \end{itemize}
+
+Figures~\ref{fig:est:disk}, \ref{fig:est:tape}, and~\ref{fig:est:cores} illustrate the estimated storage and CPU needs through 2025 and 2040.  In the early years, \dword{pd} \fixme{(anne) should be FD not PD?} and \dword{nd} prototype tests dominate while commissioning and operation of the first (and second) \dwords{detmodule} and the \dword{nd} become important after 2025. We include actual numbers for 2021. CPU and disk utilization were lower in 2021 due to not performing a fifth reconstruction pass that year %in 2021 
+and delays in distributing a second copy of reconstruction output to remote sites. 
 
 \begin{dunefigure}
 [Disk estimates]
 {fig:est:disk}
-{Estimated size of various samples in PB. This estimate includes retention policies and multiple copies.}
-\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/soon/Cumulative-Disk.png}
-\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Cumulative-Disk.png}
+{Estimated size of various samples in PB. This estimate includes retention policies and multiple copies. Left is through 2025, right is the same through 2040. The points show actual use in 2021 which was lower than planned due to delays in distributing second copies of samples to remote sites.}
+\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2025/Parameters_2022-03-04-2025-Cumulative-Disk.png}
+\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Parameters_2022-03-04-2040-Cumulative-Disk.png}
 \end{dunefigure}
 
 \begin{dunefigure}
 [Tape estimates]
 {fig:est:tape}
-{Estimated size of various samples in PB. This estimate includes retention policies and multiple copies.}
-\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/soon/Cumulative-Tape.png}
-\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Cumulative-Tape.png}
+{Estimated size of various samples in PB. This estimate includes retention policies and multiple copies. Left is through 2025, right is the same through 2040.}
+\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2025/Parameters_2022-03-04-2025-Cumulative-Tape.png}
+\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Parameters_2022-03-04-2040-Cumulative-Tape.png}
 
 \end{dunefigure}
 
 \begin{dunefigure}
 [Tape estimates]
 {fig:est:cores}
-{Estimated CPU needs for  various samples.  The units are present day cores assuming 70\% efficiency.}
-\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/soon/Cores.png}
-\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Cores.png}
+{Estimated CPU needs for  various samples.  The units are present day cores  (2020 Vintage CPU's) assuming 70\% efficiency. Left is through 2025, right is the same through 2040. CPU utilization in 2021 was lower than the model due to the absence of a yearly reconstruction pass.}
+\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2025/Parameters_2022-03-04-2025-Cores.png}
+\includegraphics[width=0.49\textwidth]{graphics/IntroFigures/2040/Parameters_2022-03-04-2040-Cores.png}
 \end{dunefigure}
 
 

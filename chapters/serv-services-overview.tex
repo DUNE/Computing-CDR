@@ -11,21 +11,49 @@ DUNE computing is dependent on a number of services that are not operated by DUN
 Some of these are provided by the host lab, others are provided by the various remote sites where
 computing is done, and still others are operated by commercial companies and hosted in the cloud.
 
+% trj: added SharePoint -- March 2, 2022
+%ST complete rewrite based on %trj comments, split up into sections, added a lot more services.
 \section{Host Lab Provided Services}
-DUNE relies on the host lab to provide networking connections, authorization and authentication services, tape and disk based storage for data, code, and databases.  We use the conference scheduling services (currently Indico), we use the DocDB service,
-as well as a number of databases managed by the scientific databases group including but not limited to the hardware database,
-the IFBeam database, the SAM database, and several others.  The data management services at the host lab, namely Rucio and Metacat are also operated and managed by the Fermilab scientific computing division.  
-The host lab also provides a significant amount of interactive and batch computing, as well as the workload management
-system GlideinWMS to provision resources at remote sites around the world and the HEPCloud system to access high performance computing sites as well as commercial clouds if necessary.
-We expect that the Elastic Analysis Facility currently in beta will also be available to DUNE.
-Although the DUNE token issuer for WLCG tokens is hosted at CILogon.org this business relationship is managed by Fermilab
-on DUNE's behalf.
-The dunescience.org family of web sites including the Wiki is also hosted at Fermilab.
-\section{Remote Site Provided Services}
-DUNE receives compute and storage resources from a number of sites around the world as detailed in the section on the Computing Contributions Board. In addition DUNE also receives a few services that are hosted at CERN.  These include the EDMS document
-management system and  the MONIT monitoring system. 
+DUNE relies on the host lab, \dword{fnal}, to provide a wide variety of services.  These include web, database, computing, and storage services as well as cyber security.  The networking services are described in \ref{ch:netw}.  We summarize the other services briefly.
 
-\section{Cloud Hosted Services}
-DUNE uses the Github service for its code management, the Slack service for its interactive communication, the Overleaf service for textual editing of documents, the Zoom teleconferencing application.
-\todo{section on assumptions about external services that we depend on}
+\subsection{Web Services}
+The conference-scheduling service (currently Indico), Sharepoint, the DUNE Document Database, and the DUNE Wiki, as well as the main {\tt dunescience.org} web page, are all hosted at \dword{fnal}.  %anne There are also 
+\dword{fnal} also hosts authentication and authorization facilities such as \dword{voms}, and manages the business relationship with CILogon.org to provide X.509 certificates and \dword{wlcg} \dword{jwt} tokens for batch authentication. %as well.  
+The lab provides an electronic logbook service and %.  It also 
+hosts the web sites for a number of monitoring services. 
+
+\subsection{Database Services}
+\dword{fnal} maintains the collaboration database, which tracks the membership of the DUNE collaboration, and runs the \dword{ferry} 
+\fixme{add def in glossary-comp-cdr}
+database, which tracks compute permissions for DUNE collaborators.  The lab hosts the underlying databases for the data management
+services \dword{rucio} and \dword{metacat}, as well as the legacy \dword{sam} workflow management. It also hosts, or will host, the various conditions databases and beam conditions databases that are part of the DUNE Database activity.
+
+% trj: added sentences about Redmine March 4, 2022
+
+\subsection{Compute Services}
+\dword{fnal} provides the \dword{jobsub} service for batch job submission, the \dword{poms} workflow service to submit campaigns, and the \dword{glideinwms}
+and \dword{hepcloud} services to access remote sites including high performance computing and commercial clouds. It provides system administration and hardware maintenance of the various interactive and batch clusters (FermiGrid).  It also provides
+continuous integration facilities (Jenkins), and build service machines.  \dword{fnal}  hosts a code repository system called Redmine that provides support for version control repositories of types git, svn and cvs, as well as for wikis and issue tracking.  Redmine is mainly used for legacy software and documentation for DUNE software efforts, as many have migrated to GitHub.  \dword{fnal}  provides instances of code distribution services, namely \dword{cvmfs} and its associated Rapid Code Distribution Facility for user code.  Streaming of large auxiliary data files is accomplished using the Open Science Data Federation (until recently known as 
+Stashcache), which also uses the \dword{cvmfs} user interface. 
+The recently-established containerized Elastic Analysis Facility at \dword{fnal}  is available to DUNE.  The host lab also maintains
+the monitoring and log retrieval services for the batch and storage systems, collectively known as \dword{fifemon}. 
+\fixme{anne added dword, needs def.} The host lab is assisting DUNE and other experiments to transition to the Spack\footnote{Spack\copyright, \url{https://spack.io/}} code packaging system.  Significant effort is also provided on managing the \dword{larsoft} project.
+
+\subsection{Storage Services}
+The host lab provides archival tape storage, currently delivered through the \dword{enstore} tape library system.  The \dword{dcache} 
+disk caching system is the front end to this system, although also containing some standalone disk.  The lab also provides a number of data management and data movement services, including Fermi-File Transfer Service, \dword{sam}, \dword{rucio}, \dword{metacat}, and the Data Dispatcher. 
+
+
+
+\section{Remote Site Provided Services}
+DUNE receives compute and storage resources from a number of sites around the world, as detailed in %anne the section on the Computing Contributions Board 
+Section~\ref{sec:ccb}. DUNE also receives a few services that are hosted at the \dword{cern}.  These include the EDMS document
+management system and the MONIT monitoring system. Some DUNE meetings are organized using \dword{cern}'s Indico instance.  \dword{cern} also hosts the DUNE CRIC, which is the master list of all DUNE compute and storage resources as well as the means to track allocations. The ETF testing service, hosted and operated at \dword{cern}, routinely tests all remote compute sites on DUNE's behalf. %anne is also hosted and operated at \dword{cern}.
+
+%trj:  specified LaTeX for Overleaf March 2, and added Microsoft Teams.  Added a mention of CERN's indico instance
+
+\section{Cloud-Hosted Services}
+DUNE uses the GitHub service for its code management, the Slack and Microsoft Teams services for interactive communication, the Overleaf service for editing \LaTeX{} documents, and the Zoom teleconferencing application.  The cloud-hosted ServiceNow application is used for communication between DUNE liaisons and %anne the SCD facility 
+\dword{fnal}'s Computing Divisions with respect to outages and changes to service and also for %anne internal DUNE use to 
+tracking of issues and workflow requests such as production requests and data movement requests.
 \end{document}

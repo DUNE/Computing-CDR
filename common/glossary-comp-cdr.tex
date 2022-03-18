@@ -55,6 +55,9 @@ COMPASS is a multipurpose experiment at CERN’s Super Proton Synchrotron (SPS).
 
 \newduneabbrev{ml}{ML}{Machine Learning}{Machine Learning}
 
+\newduneword{datalake}{data lake}{The not-yet-realized concept of a storage service with multiple levels of quality of service in which the end user %does not have to be aware of where the data is being served from in order to access the data. }%Data lakes are not a reality yet}
+can access data without knowing from where the data are served}
+
 \newduneabbrev{proto}{ProtoDUNE}{ProtoDUNE}{The protoDUNE detectors at CERN, includes the single phase, dual phase and vertical drift prototypes.} %Anne - not needed; already have {protodune}
 
 \newduneabbrev{metacat}{MetaCat}{MetaCat}{Metadata Catalog, a modern replacement for the file description portion of the sam metadata catalog.}
@@ -74,13 +77,14 @@ COMPASS is a multipurpose experiment at CERN’s Super Proton Synchrotron (SPS).
 
 \newduneword{samparameter}{parameter}{A user or experiment described quantity describing a file in the \dword{sam} data catalog.}
 
-\newduneword{samproject}{project}{A server process running centrally that maintains a predefined list of files and delivers information about  their locations when asked by distributed processes. The project tracks success and failure of file processing.}
+\newduneword{samproject}{SAM-project}{A server process running centrally that maintains a predefined list of files and delivers information about  their locations when asked by distributed processes. The project tracks success and failure of file processing.}
 
 \newduneword{samconsumer}{consumer}{A client process that requests information about file locations from a \dword{samproject}, process the file and reports success or failure.}
 
-\newduneword{samdataset}{dataset}{ A dynamic collection of files defined by queries to the \dword{sam} data catalog.}
+\newduneword{samdataset}{SAM-dataset}{ A dynamic collection of files defined by queries to the \dword{sam} data catalog.}
+\newduneword{metacatdataset}{MetaCat-dataset}{ A fixed but mutable collection of files defined by queries to the \dword{metacat} data catalog.}
 
-\newduneword{samsnapshot}{snapshot}{A fixed collection of files corresponding to a \dword{sam} \dword{samdataset} at a particular point in time.}
+\newduneword{samsnapshot}{SAM-snapshot}{A fixed collection of files corresponding to a \dword{sam} \dword{samdataset} at a particular point in time.}
 
 \newduneabbrev{mql}{MQL}{\dword{metacat} Queryl Language} {A query language which supports queries of the \dword{metacat} data catalog, including parentage and logical functions such as union, join and subtraction.}
 
@@ -88,17 +92,21 @@ COMPASS is a multipurpose experiment at CERN’s Super Proton Synchrotron (SPS).
 
 \newduneword{pdvd}{ProtoDUNE-VD}{ProtoDUNE with vertical drift technology.  This refers to the \dword{crp}-based prototype to run in ProtoDUNE Run II.} 
 
+\newduneword{fdvd}{Far Detector-VD}{DUNE Far Detector module with vertical drift technology.} 
+\newduneword{fdhd}{Far Detector-VD}{DUNE Far Detector module with vertical drift technology.} 
+
+
 \newduneabbrev{ucondb}{uconDB}{Unstructured Conditions Database}{Unstructured conditions database developed for FNAL fixed target experiements\cite{bib:ucondb}.}
 
 \newduneabbrev{json}{JSON}{JavaScript Object Notation}{Open standard data interchange format that uses pair-value pairs and maps well onto python data formats such as tuples and lists.}
 
-\newduneabbrev{dqmd}{DQMD}{Data Quality and Monitoring Database}{Database storing the results of data quality monitoring.}
+\newduneabbrev{dqmdb}{DQMDB}{Data Quality and Monitoring Database}{Database storing the results of data quality monitoring.}
 
 \newduneabbrev{db}{DB}{Database}{Database, can have many formats based on optimal use.}
 
 \newduneabbrev{vm}{VM}{Virtual Machine}{Emulator of a physical computer that allows multiple users to configure different operating systems  while sharing physical hardware. }
 
-\newduneword{enstore}{enstore}{Enstore is a mass storage system developed by Fermilab that provides distributed access and management of data stored on tapes \cite{Litvintsev:2012dw}.}
+\newduneword{enstore}{Enstore}{Enstore is a mass storage system developed by Fermilab that provides distributed access and management of data stored on tapes \cite{Litvintsev:2012dw}.}
 
 %\newduneabbrev{nas}{NAS}{Network Attached Storage}{High performance disk available on interactive nodes.}
 
@@ -123,13 +131,109 @@ COMPASS is a multipurpose experiment at CERN’s Super Proton Synchrotron (SPS).
 
 \newduneword{hllhc}{HL-LHC}{High-luminosity \gls{lhc}} %anne added
 
-\newduneword{garfield}{GARFIELD}{add def} %anne added
-
 \newduneabbrevs{iov2}{IOV}{interval of validity}{intervals of validity}{Interval over which something is valid} %anne added - plural was wrong - may need to fix orig {iov} too
 
 \newduneword{fhicl}{FHICL}{Fermilab Hierarchical Configuration Language; a standard configuration language for the
 storage, communication, and manipulation of scientific parameter sets}  %anne added
 
+\newduneword{api}{API}{Application Programming Interface}
+
 \newduneword{hwdb}{HWDB}{hardware database}   %anne added
 
 \newduneword{singlecube}{SingleCube}{add def}  %anne added
+
+\newduneword{s3}{S3}{The Amazon cloud-based commercial storage service.}  %anne added
+
+\newduneword{openstack}{OpenStack}{An open source cloud software used to deploy instances of containers.}  %anne added
+
+\newduneword{cric}{CRIC}{The Computing Resource Information System (CRIC) is a framework providing a centralized (and flexible) way to describe which resources DUNE using and also how DUNE uses them.}  %anne added
+
+
+\newduneword{htcondorce}{HTCondor-CE}{add def}  %anne added
+
+\newduneabbrev{ccb}{CCB}{Computing Contributions Board}{The Computing Contributions is made up of institutional representatives for larger countried and laboratories. It meets annually to negotiate collaboration contributions to computing infrastructure.}
+
+\newduneword{garfield}{Garfield}{A simulation program\cite{Veenhof:1998tt} for gaseous detectors developed at CERN.}
+
+\newduneword{datatier}{data tier}{Differing data types produced in a processing sequence, for example, raw data, reconstructed, derived analysis sample, histograms.}
+
+\newduneabbrev{gpu}{GPU}{Graphical Processing Unit}{Specialized computing hardware optimized for image processing.}
+
+\newduneword{madx}{MAD-X}{framework that provides the de facto standard scripting language to describe particle accelerators, simulate beam dynamics and optimize beam optics at  \gls{cern}}
+
+\newduneabbrev{cpu}{CPU}{Central Processing Unit}{A computing processor, when used as a unit of processing, it generally refers to a single core.}
+
+%\newduneabbrev{fft}{FFT}{Fast Fourier Transform}{An algorithm that calculates the frequency components of a time-domain waveform in a computationally efficient manner.}
+
+\newduneword{grain}{GRAIN}{in \gls{sand}, a small cryostat containing liquid argon installed upstream of the straw-tube tracker inside the \gls{ecal}}
+
+\newduneword{coldbox}{cold box}{Electronics and detectors are tested in cold boxes at CERN. These tests range from electronics tests at cryogenic temperature to full readout capable of reconstructing cosmic rays.f}
+% coldbox is not needed; we have a def: \coldbox that renders as cold box. Anne
+
+\newduneword{voms}{VOMS}{Virtual Organization Membership Service (in grid computing)}
+
+\newduneword{cry}{CRY}{A cosmic ray shower library and software tool}
+
+\newduneword{jwt}{JWT}{\gls{json} web token}
+
+\newduneword{ferry}{FERRY}{FERRY is the Frontier Experiments RegistRY.  It is a central database that keeps track of all scientific computing users at Fermilab, as well as the experiments and groups of which they are members and the various capabilities they are allowed.}
+
+\newduneword{fifemon}{FIFEMON}{FIFE is the FabrIc for Frontier Experiments.  FIFEMON is its monitoring component.}
+
+
+%\newduneword{enstore}{ENSTORE}{the mass storage system developed and implemented at \gls{fnal} as the primary data store for scientific data sets. It provides access to data on tape to/from a user's machine onsite over the local area network, or over the wide area network through the \gls{dcache} disk caching system}
+
+\newduneword{perfsonar}{perfSONAR}{the performance Service-Oriented Network monitoring ARchitecture, a network measurement toolkit designed to provide federated coverage of paths and help to establish end-to-end usage expectations}
+
+\newduneword{ipv6}{IPv6}{the most recent version of the Internet communications protocol that provides an identification and location system for computers on networks and routes traffic across the Internet}
+
+\newduneword{monit}{MONIT}{MONIT is a suite of tools using Open Source technology used in the monitoring of the  CERN IT Data Centre and WLCG Infrastructure. }
+
+\newduneword{garana}{GArAna}{provides a facility for making an analysis ntuple from information stored in \gls{garsoft} data products}
+
+\newduneword{ci}{CI}{continuous integration}
+
+\newduneword{datadis}{Data Dispatcher}{The Data Dispatcher communicates between running processing jobs and the data delivery systems.  It provides file location information and basic book-keeping on file access and transfers.}
+
+\newduneabbrev{castor}{CASTOR}{CERN Advanced STORage manager}{CASTOR is a hierarchical storage system with tape and disk developed at CERN. It is being replaced by CTA.}
+
+\newduneabbrev{cta}{CTA}{CERN Tape Archive}{CTA is a hierarchical storage system with tape and disk developed at CERN. It is replacing CASTOR.}
+
+\newduneabbrev{sonic}{SONIC}{Services for Optimized
+Network Inference on Coprocessors}{Framework for implementing machine learning algorithms on coprocessors developed by Fermilab.}
+
+\newduneword{jobsub}{JobSub}{JobSub\cite{box2014fife} is the Fermilab Intensity Frontier job submissions client that supports user submission of complex workflows to HT-Condor.}
+
+\newduneword{hepcloud}{HEPCloud}{HEPCloud routes jobs to local or remote computing resources based on the policy for a particular experiment, workflow requirements, cost and efficiency of accessing the various resources. It expands the resources available to include \gls{hpc} centers and commercial cloud resources}
+
+\newduneword{wmsmon}{WMS monitoring}{\todo{add def}}
+
+%\newduneabbrev{sso}{SSO}{Single Sign On}{Method for providing uniform access to online resources across a site.}
+
+\newduneword{redmine}{Redmine}{Redmine is an open source code repository and issue tracking tool that was historically used by many of the Fermilab general computing projects and Intensity Frontier experiments.}
+
+\newduneword{slack}{Slack}{Slack is a commercial business communication platform.}
+
+\newduneword{servicenow}{ServiceNow}{ServiceNow is a commercial enterprise workflow system used by Fermilab for formal issue tracking and IT workflows such as user account preparation.}
+
+\newduneabbrev{rse}{RSE}{Rucio Storage Element}{A storage element that is known to the DUNE Rucio instance.}
+
+\newduneword{fermilab}{Fermilab}{Fermi National Accelerator Laboratory (\dword{fnal}).} 
+
+\newduneabbrev{caffea}{CAFFEA}{Columnar Object Framework For Effective Analysis}{Columnar data analysis framework\cite{Smith:2020pxs} developed at \dword{fermilab}.}
+
+\newduneword{nuisance}{Nuisance}{An open source C++ framework for studying neutrino interaction cross sections\cite{Stowell:2016jfr}.}
+
+ \newduneabbrev{highland}{HighLAND}{High Level Analysis at a Neutrino Detector}{Analysis framework developed by the \dword{t2k} collaboration.}
+ 
+ \newduneword{raii}{RAII}{Resource Acquisition Is Initialization.}
+ 
+ \newduneword{fts3}{FTS3}{File Transfer Service version 3, developed by CERN, and distinct from, the Fermilab File Transfer Service.}
+ 
+ \newduneabbrev{wfms}{WFMS}{Workflow Management System}{Workflow Management System}
+ 
+ \newduneword{condmeta}{Conditions metadata}{Conditions Metadata is defined as the information necessary to understand the context of physics data, e.g., beam data or calibrations.}
+ 
+ \newduneword{cdb}{Conditions DB}{The Conditions Database stores the \dword{condmeta} needed for data processing and analysis.}
+ 
+ \newduneword{rntuple}{RNtuple}{The next generation of the \dword{root} I/O system\cite{Blomer:2020usr, ROOTTeam:2020jal}}

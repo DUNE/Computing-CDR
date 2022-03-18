@@ -1,13 +1,14 @@
 \documentclass{dune} % Duke of English - Kirby
-% new version with rearranged section, Januay 7, 2021
+% new version with rearranged section, January 7, 2021
+
 \usepackage{subfiles}
+\newcommand{\myversion}{Version 1.1} % version 1.0 sent for review.  
 \renewcommand{\familydefault}{\sfdefault}
 \input{common/preamble}
 %\renewcommand\thedoctitle{\voltitletc} % defined in common/defs.tex
 %\newcommand\thevolumenumber{\volnumbertc} 
 
 \begin{document}
-
 \pagestyle{titlepage}
 %\includepdf[pages={-}]{name of cover file.pdf}
 \cleardoublepage
@@ -18,7 +19,7 @@
 %\renewcommand{\hideme}[1]{}
 \input{common/init}
 \cleardoublepage
-
+%\renewcommand{\hideme}[1]{}
 % comment these lines out once we no longer need the example
 % \setcounter{chapter}{-1}
 % \input{chapters/00_tutorial}
@@ -31,7 +32,7 @@
 % "chapter""section"variable where both "chapter" and "section" are abbreviations
 % with the Camel Caps used for readability
 % Note that you should not override the use of a variable defined in generated/parameters.tex
-https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
+%https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
 % e.g. MonEtfDevPeople is the amount of effort for development in the ETF section of the Monitoring chapter
 %  \FPset{MonEtfOpsPeople}{3.2}
 %  \FPset{MonEtfDevPeople}{1.0}
@@ -54,6 +55,8 @@ https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
 \label{part:overview}
 \subfile{chapters/intro-intro}
 \cleardoublepage
+\subfile{chapters/intro-organization}
+\cleardoublepage
 %\subfile{chapters/intro-global}
 %\cleardoublepage
 
@@ -61,7 +64,7 @@ https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
 %\cleardoublepage
 
 
-\part{Single interaction  scale}\label{part:event} %  Tom Junk, David Adams \label{part:event}
+\part{Single Interaction  Scale}\label{part:event} %  Tom Junk, David Adams \label{part:event}
 
 
 \subfile{chapters/algo-use-cases_v2}. %This text moves into different section 
@@ -86,6 +89,13 @@ https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
 
 \subfile{chapters/model-computing-model}
 \cleardoublepage
+
+\subfile{chapters/model-data-placement}
+\cleardoublepage
+
+\subfile{chapters/coll-preservation} %Clarke
+\cleardoublepage
+
 
 \subfile{chapters/model-data-management}
 \cleardoublepage
@@ -116,8 +126,8 @@ https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
 \subfile{chapters/serv-services-overview}
 \cleardoublepage
 
-\subfile{chapters/serv-information-systems}
-\cleardoublepage
+%\subfile{chapters/serv-information-systems}
+%\cleardoublepage
 
 \subfile{chapters/serv-monitoring}
 
@@ -131,8 +141,6 @@ https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
 \subfile{chapters/coll-train-and-doc} % David
 \cleardoublepage
 
-\subfile{chapters/coll-preservation} %Clarke
-\cleardoublepage
 
 \part{Conclusions and Resources} %Kirby
 
@@ -142,11 +150,11 @@ https://www.overleaf.com/project/5f5a7bb23f29aa0001f211d2
 \subfile{chapters/coll-org} %Schellman
 \cleardoublepage
 
-\subfile{chapters/intro-cooperation}
-\cleardoublepage
+%\subfile{chapters/intro-cooperation}
+%\cleardoublepage
 
-\subfile{chapters/coll-ccboard} %Clarke
-\cleardoublepage
+%\subfile{chapters/coll-ccboard} %Clarke
+%\cleardoublepage
 
 \printglossaries
 
