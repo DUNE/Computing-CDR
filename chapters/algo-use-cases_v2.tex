@@ -462,33 +462,79 @@ Figure \ref{fig:ch:use:fdagg} illustrates  readout structures for full DUNE \dwo
 \end{dunefigure}
 %\pagebreak
 
-\subsection{Signal Processing \hideme{Schellman-draft}}
-
 Reconstructing events in a \dword{lartpc} is challenging.  Each trigger record contains a large number of waveforms, one for each readout channel.  In \dword{pdsp}, the waveforms typically were 6000 time ticks long, with one \dword{adc} sample per time tick.  A detailed description of the reconstruction procedures, starting with these waveforms, is given in~\cite{Abi:2020mwi}, and summarized briefly here.
 
+\subsection{Signal Processing \hideme{Schellman-draft}}
 
-The signal processing step takes the raw waveforms, applies  basic channel-to-channel calibrations, removes noise and stuck bits, and performs 1D or \twod deconvolution.   In the \dword{tpc}, this processing step operates on large \twod data arrays and may be suitable for different architectures than conventional pattern recognition. For the \dword{pd}, 1D data arrays will be the input. It is anticipated that the signal processing step will not need to be done frequently. 
+The initial offline processing stage, labeled ``signal processing'' in Figure~\ref{fig:ch:use:pdii}, holds particular significance and challenges.
+Such a stage must be applied to data from both the \dword{pd} and \dword{tpc} readouts.
+It is the latter which poses the bulk of the challenges and here it is the focus.
+The source of the challenges are simple.
+The processing is relatively intensive in terms of CPU and memory as evaluated on a per-trigger basis and it is data intensive as it must be applied to the entirety of the TPC readouts.
+Unlike subsequent stages, there is no reasonable pre-selection criteria to reduce the input to this stage which has not already been exploited by the DAQ.
+The initial stage consists of a sequence of two primary data transformations.
 
-The input data at this point are quite uniform, effectively bit streams from \dword{tpc} and \dword{pd} channels.  There are correlations between channels in the \dword{tpc} data that require concurrent processing of multiple channels.  Segmentation at the level of a readout plane within an \dword{apa}  or \dword{lem} is desirable.  An uncompressed input \dword{apa} plane is of order 10\,MB of 12-bit words. 
+The first is known as data preparation or noise filtering.
+The raw data from the DAQ is input after being decoded and loaded into dense, per channel ADC waveform arrays.
+The transformation then attempts to remove features unrelated to those due to ionization electron signal while at the same time producing no significant alteration to those signal components.
+One important goal of this processing is to attenuate non-thermal noise such as that due to RF emissions in the cryostat and which induce waveforms coherently across many channels.
+Also mitigated are unwanted waveform features such as ``stuck'' ADC bits and transient artifacts.
+Some general-purpose algorithms have been developed by the LArTPC community but substantial effort is required to understand and invent solutions to problems specific to each given detector. 
+The output of this first step is effectively still in the form of full, dense ADC waveforms.
 
-%The output of this stage is still quite large even if lossless compression algorithms are applied. 
+The second major transform is known as signal-processing, proper. 
+It produces ``signal regions-of-interest'' (signal-ROI).
+It does so in two tightly coupled steps. 
+First, a \twod model (in the space of channel vs sample time) of the per-plane detector response is deconvolved from the prepared, filtered ADC waveforms. 
+This produces waveforms which are in units of number of ionized electrons in the region near a wire and per time sample.
+However, due to the bipolar nature of the detector response on the induction planes, this deconvolution necessarily amplifies low frequency noise.
+Left alone, this noise would overwhelm the resulting signal waveforms.
+To combat this, another algorithm operating in the time domain identifies small, regions-of-interest where signal is found to be above the low-frequency noise.
+Within each signal region-of-interest, the baseline of the waveform fragment is recalculated, thus effectively operating as an adaptive high-pass filter.
+The resulting data consists of very sparse, unipolar waveform fragments and substantial data reduction is achieved while retaining almost all signal information.
+This is a key operation for any induction-based LArTPC detector and the current best incarnation was developed and vetted in MicroBooNE~\cite{Adams:2018dra,Adams:2018gbi} and applied to ProtoDUNE~\cite{ref:pdune_signal_processing} and has since been applied to many other detectors including the prototypes for DUNE \dword{spvd}. 
+These latter, strip-based detectors pose new challenges related to the required precision of the detector response model. 
+This is an area of ongoing study but initial results show good performance.
+
+This initial stage (both major transformations) can run in parallel, multi-thread form at the level of data from one \dword{apa} (or equivalent detector module unit).
+In particular, the \dword{wct}~\cite{wirecell,ref:wire_cell_toolkit} in which the signal-processing and some forms of noise filtering are developed, implements an execution model that supports this level of parallelism.
+Furthermore, the \dword{fft} and other algorithms used heavily in this stage benefit from SIMD acceleration~\ref{Dong:2022wxg} such as provided by GPU devices. 
+These forms are also supported by and being further developed in \dword{wct} implementations.
+This execution model provides flexibility to scale this key stage from \dword{protodune} to DUNE by mapping these two very different data volumes to different classes of computing facilities.
 
 
-Typically, data from a single-phase \dword{lartpc} \dword{daq} are stored as compressed sequences of data frames, containing 128 or 256 channels worth of data on each time sample.  These must be decompressed and rearranged into sequences of \dword{adc} values corresponding to the original waveforms.  Additional decoder modules are run to unpack \dword{pds}, \dword{crt} trigger and timing \dword{daq} fragments.
-From there, mitigations are applied to correct, as best as possible, known failures of the front-end electronics.  As yet, these are only needed for the TPC readout electronics.  
+\subsection{Reconstruction Strategies}
 
-A particular failure mode in \dword{pdsp} is the sticky-code problem, which is mitigated by interpolating neighboring \dword{adc} samples in time.  Channel-to-channel gain corrections are applied, correlated noise is filtered out, the pedestal is found, and a correction is made for the \dword{ac} coupling between the preamp and the \dword{adc}.  The \dword{adc} mitigation, correlated noise removal, gain correction, pedestal finding and \dword{ac} coupling corrections are grouped into the data preparation module.  The \dword{wirecell} toolkit~\cite{wirecell,ref:wire_cell_toolkit,ref:pdune_signal_processing} provides a \twod deconvolution in wire index and charge arrival time, and it associates charge in the three views to produce a \threed image of the charge locations where it was produced.  
+Two primary reconstruction strategies have been developed in the LArTPC community, have been applied to \dword{protodune} and are expected to be applied to DUNE FD.
+They may be classified as ``view-first'' vs ``slice-first''. 
 
-{\it Major challenge: The \dword{tpc} data need to be processed with a minimum granularity of a readout plane as multiple wires must be combined to achieve the best \twod deconvolution.  Each plane produces of order 10 million 12-bit samples/readout window. After decompression into 32 bit words, the input data size %anne/APA
-per \dword{apa} is of order 30\,MB per plane. This phase of data processing is well suited to parallel processing on GPU's or \dwords{fpga} but imposes new requirements on the event reconstruction framework. }
+In ``view-first'', data from each wire plane view is initially processed. 
+Peaks are found in the waveform fragments output by the signal-processing and each is fit to a Gaussian model in a process called ``hit-finding''.
+These hits are then used as inputs to reconstruction algorithms, such as the SpacePointSolver~\cite{DUNE:2020ypp} \dword{pandora}~\cite{Marshall:2015rfa}, TrajCluster~\cite{ref:trajcluster}, and \dword{pma}~\cite{ref:PMA}, which identify clusters, tracks and showers in \threed by associating objects in the three \twod views. 
+The calorimetry modules sum up and calibrate the charge deposits for use in energy reconstruction and \dword{pid}. 
+The parameters of the clusters, tracks and showers are stored in \dword{root} trees that end users can analyze rapidly and repeatedly.
 
-\subsection{Hit Finding and Pattern Recognition}
+In ``slice-first'', data from one time slice across all wire plane views is initially processed. 
+The slice is chosen to span four to six samples in time which exploits the fact that signal processing naturally produces over-sampled waveforms and thus the data may be further reduced with no information loss.
+Next, a tomographic inversion is performed for each slice with an algorithm called ``wire-cell''~\cite{Qian:2018qbv} (that which gave the name to \dword{wct}).
+Stacking the per-slice inversions over the full readout results in sparse 3D regions of the detector volume that localize ionization electrons in a manner consistent with the original signal waveforms.
+The ambiguities inherent in the tomographic nature the \dword{tpc} also leads to portions of the solution not truly containing any ionization. 
+Further constraints, such as consistent charge in all three views, simple connectivity between regions of neighboring slices are applied to remove or reduce these ambiguities.
+This is done in a model-free manner in order to not bias the results.
+When bias-free constraints are exhausted, a local track-like model is used to allow collapsing regions of ambiguity, making the results yet more sparse and more tightly surrounding regions containing ionization.
+These results finally enable very accurate reconstruction of quantities such locations of interaction vertices, track branch points, and $dQ/dx$ and from there $dE/dx$ along tracks.
+These algorithms were initially developed for MicroBooNE~\cite{MicroBooNE:2021ojx} where they have been found to outperform others~\cite{MicroBooNE:2021rmx, MicroBooNE:2021nxr}. 
+There is an ongoing effort to generalize and ``port'' these algorithms into \dword{wct} for use by DUNE and other LArTPC detectors.
 
-The calibrated, filtered, deconvolved waveforms are then used as input to a hit-finding algorithm, which identifies peaks in the waveforms and fits Gaussians to each proposed peak.  These hits are then used as inputs to general reconstruction algorithms, such as the SpacePointSolver~\cite{DUNE:2020ypp} \dword{pandora}~\cite{Marshall:2015rfa}, TrajCluster~\cite{ref:trajcluster}, and \dword{pma}~\cite{ref:PMA}, which identify clusters, tracks and showers in \threed by associating objects in the three \twod views.  The calorimetry modules sum up and calibrate the charge deposits for use in energy reconstruction and \dword{pid}.  The parameters of the clusters, tracks and showers are stored in \dword{root} trees that end users can analyze rapidly and repeatedly.
+Either strategy results in a 3D model of the ionization distribution which is composed of a number of spacial clusters connected in some way through the 3D space of the detector volume.
+With these clusters as input, a process called ``flash matching'' attempts to associate processed \dword{pd} signals with the TPC clusters in order to determine when in time or equivalently where along the drift axis the cluster of ionization occurred.
+The offline software must arrange for these two data flows to merge on a per-trigger-record basis.
 
-Additional modules find hits in the \dword{pd} waveforms and group them into clusters called flashes.  The \dword{crt} data are analyzed in dedicated modules that produce associations between hits in the upstream and downstream \dword{crt} modules for use in analyses.
-
-Separating track-like energy deposits from shower-like deposits is a key part of many DUNE analyses.  This is accomplished with a \dword{cvn} called {\tt EmTrackMichelID} in Table~\ref{tab:protodune_cpu_reco_by_module}.  It is one of the most CPU-intensive operations in the \dword{pdsp} reconstruction chain, when the algorithm is run on a grid node lacking a GPU.  Recently, however, a \dword{gpuaas} technique has been developed~\cite{Wang:2020fjr}, enabling a speed-up on the order of a factor of ten, though it depends on the ratio of CPU-only nodes to GPU resources.
+From these relatively low-level reconstruction, various high-level reconstruction techniques follow.
+For example, separating track-like energy deposits from shower-like deposits is a key part of many DUNE analyses. 
+In one case, this is accomplished with a \dword{cvn} called {\tt EmTrackMichelID} in Table~\ref{tab:protodune_cpu_reco_by_module}. 
+It is one of the most CPU-intensive operations in the \dword{pdsp} reconstruction chain, when the algorithm is run on a grid node lacking a GPU. 
+Recently, however, a \dword{gpuaas} technique has been developed~\cite{Wang:2020fjr}, enabling a speed-up on the order of a factor of ten, though it depends on the ratio of CPU-only nodes to GPU resources.
 
 
 \subsection{ProtoDUNE Experience}

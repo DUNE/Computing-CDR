@@ -32,3 +32,6 @@ _region_.tex
 other
 generated/req-DP-FD-.tex
 generated/req-SP-FD-.tex
+latexmk-out
+auto
+main-v1.pdf
