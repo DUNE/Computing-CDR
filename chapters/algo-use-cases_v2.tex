@@ -498,7 +498,7 @@ This is an area of ongoing study but initial results show good performance.
 
 This initial stage (both major transformations) can run in parallel, multi-thread form at the level of data from one \dword{apa} (or equivalent detector module unit).
 In particular, the \dword{wct}~\cite{wirecell,ref:wire_cell_toolkit} in which the signal-processing and some forms of noise filtering are developed, implements an execution model that supports this level of parallelism.
-Furthermore, the \dword{fft} and other algorithms used heavily in this stage benefit from SIMD acceleration~\ref{Dong:2022wxg} such as provided by GPU devices. 
+Furthermore, the \dword{fft} and other algorithms used heavily in this stage benefit from SIMD acceleration~\cite{Dong:2022wxg} such as provided by GPU devices. 
 These forms are also supported by and being further developed in \dword{wct} implementations.
 This execution model provides flexibility to scale this key stage from \dword{protodune} to DUNE by mapping these two very different data volumes to different classes of computing facilities.
 
