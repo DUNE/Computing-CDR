@@ -1,6 +1,6 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Data Placement \hideme{draft 3/10 moved from end to right after data placement } }
+\chapter{Data Placement \hideme{draft 3/10 moved from end to right after data management } }
 \label{ch:place}
 \todo{Stu Fuess requests text on tape}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,8 +72,8 @@ DUNE collaborating institutions also contribute very substantial storage resourc
 \begin{dunefigure}
 [Storage Schematic]
 {fig:storage}
-{Storage systems for DUNE computing.  Thick lines denote mounts while thinner lines denote transfer methods such as ifdc and xroot streaming.}
-\includegraphics[width=0.8\textwidth]{graphics/DataManagement/StorageMap2.png}
+{Storage systems for \dword{fnal}-based DUNE computing.  Thick lines denote mounts while thinner lines denote transfer methods such as ifdc and xroot streaming. \dword{cern}-based computing shares access to the \dword{dcache} and \dword{cvmfs} systems but uses lxplus and eos for local interactive computing.}
+\includegraphics[width=0.8\textwidth]{graphics/DataManagement/StorageMap3.png}
 \end{dunefigure}
 
 \section{Storage systems at CERN}
@@ -100,9 +100,9 @@ system, including a full copy of the \dword{protodune} raw data in \dword{castor
 \begin{description}
     \item{\bf Raw data -}  Raw data from the TPC detectors comes in 4-8 GB files which are generally run through reconstruction algorithms that take of order 5-10 sec/MB to process. Raw data is generally accessed a few times for calibration and reconstruction as part of an organized production effort.  
     \item{\bf Reconstructed data -}  Reconstructed data from \dword{pdsp} is around three times smaller  than the raw data once the raw TPC waveforms are dropped. It is accessed many times by end users for algorithm development, calibration and production of physics analysis samples.   Observed data access rates range from 1 to 40 MB/sec depending on the amount of reprocessing done to data. 
-    \item{\bf Simulated data - } Simulated data are around twice as large as real data due to the large amount of simulation information that is kept.  Even after raw waveforms are dropped, records are still significantly larger. 
-    \item{\bf Analysis samples - } End-user analysis samples are significantly smaller.  For example the 1 GeV ProtoDUNE simulation sample consists of $\sim$80,000 4 GB files while the reduced analysis sample is around 8 GB total.  
-    \item{\bf Flux files - } Simulation and cross section extraction require access to large libraries of particle fluxes.  These are currently delivered via \dword{stashcache}. 
+    \item{\bf Simulated data - } Simulated data are around twice as large as real data due to the large amount of simulation information that is kept.  Even after raw waveforms are dropped, records are still significantly larger. The access pattern for simualted data is very similar to that of reconstructed data.
+    \item{\bf Analysis samples - } End-user analysis samples are significantly smaller.  For example the 1 GeV ProtoDUNE simulation sample consists of $\sim$80,000 4 GB files while the reduced analysis sample is around 8 GB total.  These samples are expected to be access multiple times a day for several months during the development and finalization of analyses.
+    \item{\bf Flux files - } Simulation and cross section extraction require access to large libraries of particle fluxes.  These are currently delivered via \dword{stashcache}. These files are accessed with regularity based upon the production schedule of simulated samples. This access pattern lends itself to caching for increased efficiency to distributed grid jobs.
     
 \end{description}
 

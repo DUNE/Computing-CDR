@@ -1,6 +1,6 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Training and Documentation \hideme{3/12 HMS updates}}
+\chapter{Training and Documentation \hideme{Addressed Anne's comments 4/29}}
 \label{ch:train}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\section{xyz}
@@ -19,8 +19,8 @@ provides the landing page and starting point for ``DUNE Computing." It acts as a
 their activities, and related resources. The template %has been 
 was revamped in early 2021 with a ``block'' design for a more visual and compact layout. As with the rest of the DUNE wiki, its access is restricted; users need a \dword{fnal} Single Sign-On (SSO) service domain since the wiki contains information about computing access, node names, and other sensitive information. \fixme{note that wiki is on the list for federation with CERN SSOs}
 
-A separate publicly accessible wiki for DUNE Computing is in preparation. The motivations for a dedicated public page are to make the information available for associated collaborations (e.g., \dword{osg}, \dword{wlcg}, \dword{hsf}), have a point of contact for newcomers not yet registered, and to show the DUNE Computing activities to the outside world, in general. This public portal will have six main blocks: management, operation, getting started, user area, developer area, and documentation. The management block informs about the consortium, the calendar of meetings, and lists the associated collaborations. The operation block redirects to monitoring pages that are essential during data taking and/or production (e.g., \dword{fife} tools). The block ``getting started'' will have pointers to the tutorials, training sessions, and how-tos. The block ``user area'' collects links about analysis tools, framework, and %anne helpdesk
-the \dword{fnal} service desk. The DUNE Computing working groups are listed on the developer area, and conveners of each working group will maintain their page. Last but not least, the ``documentation'' block gathers links about data policies and preservation, information protection, and the documents in progress.
+A separate publicly accessible wiki for DUNE Computing is in preparation. The motivations for a dedicated public page are to make the information available for associated collaborations (e.g., \dword{osg}, \dword{wlcg}, \dword{hsf}), have a point of contact for newcomers not yet registered, and to show the DUNE Computing activities to the outside world, in general. This public portal will have six main blocks: management, operation, getting started, user area, developer area, and documentation. The management block informs about the consortium, the calendar of meetings, and lists the associated collaborations. The operation block redirects to monitoring pages that are essential during data taking and/or production (e.g., \dword{fife} tools). The block ``getting started'' will have pointers to the tutorials, training sessions, and how-tos. The block ``user area'' collects links about analysis tools, framework, and %anne helpdesk HMS OK
+the \dword{fnal} helpdesk. The DUNE Computing working groups are listed on the developer area, and conveners of each working group will maintain their page. Last but not least, the ``documentation'' block gathers links about data policies and preservation, information protection, and the documents in progress.
 
 %\todo{trj: Do we really need to hide login commands and node names?}
 % HMS 3/12 I changed this to potentially. 
@@ -62,12 +62,16 @@ and a longer list, including documentation and plug-ins and error handling:
 
 \href{https://cdcvs.fnal.gov/redmine/projects/larsoft/wiki/Developing_With_LArSoft#Guidelines}{https://cdcvs.fnal.gov/redmine/projects/larsoft/wiki/Developing\_With\_LArSoft\#Guidelines}
 
+
+\subsection{Frequently Asked Questions}
+We are actively looking for a reliable \dword{faq}system.  We are currently using Github issues and projects as a place holder while we identify and implement a permanent solution.  Such a solution would be similar to Askbot\footnote{https://askbot.org}, an open source, web-based application offering user support with a question database whose answers are rated by relevance and popularity (inspired by the source-based websites Reddit and Stackoverflow). This choice is motivated by the positive feedback on the use of Askbot from the January 2021 training session.  However Askbot seems to no longer be available. 
+
 \section{User support}
 
 In addition to formal documentation, users often have questions, either how to do things or problems with systems.  \dword{dune} currently relies on two systems to support users, \dword{slack} and \dword{servicenow}.  
 
 \subsection{Slack}
-\dword{dune} uses the commercial \dword{slack} platform to communicate urgent user questions.  The \dword{slack} systems is staffed by other users, including collaboration experts, who can provide quick answers to simple questiosn. 
+\dword{dune} uses the commercial \dword{slack} platform to communicate urgent user questions.  The \dword{slack} systems is staffed by other users, including collaboration experts, who can provide quick answers to simple questions. 
 
 \subsection{Service Now}
 \dword{servicenow} is the official \dword{fermilab} issue reporting system. Problems, including operational issues that cannot be resolved with peer support through \dword{slack} are directed to the \dword{servicenow} system.
@@ -102,14 +106,12 @@ session highlights a particular software package or analysis toolkit.  All mater
 %platform for the training material. The lectures proceed through a dedicated wiki page containing %informative sections, 
 %descriptive passages, sets of commands to run, and numerous links pointing to further reading.
 Training materials are now hosted in \dword{github} using the Software Carpentries framework. 
-
-
-The DUNE Computing training group plans to create a dedicated FAQ to provide an efficient, crowd-based, and self-maintained platform for support. It would be similar to Askbot\footnote{https://askbot.org}, an open source, web-based application offering user support with a question database whose answers are rated by relevance and popularity (inspired by the source-based websites Reddit and Stackoverflow). This choice is motivated by the positive feedback on the use of Askbot from the January 2021 training session. \fixme{correct?} Askbot is no longer available, so for now, GoogleDocs is used %live documents (hosted on GoogleDoc) were shared 
+GoogleDocs is used %live documents (hosted on GoogleDoc) were shared 
 to %welcome 
-handle questions from the participants. For the future FAQ, anonymity is a key feature to encourage participation. %Participants could ask anonymously, a key feature as many young members are usually not daring to ask. 
+handle questions from the participants. For a future tutorial \dword{faq}, anonymity is a key feature to encourage participation. %Participants could ask anonymously, a key feature as many young members are usually not daring to ask. 
 Experts %then 
-should  provide written answers to the questions, and the FAQ will remain available from %. The numerous questions with their answers are later added to 
-the tutorial wiki pages. % anne - this doesn't add anything: Following this success, a dedicated FAQ instance would be an efficient, crowd-based, and self-maintained platform to eventually collect the most frequently asked questions, while offering the most relevant answers or solutions.
+should  provide written answers to the questions, and the tutorial \dword{faq} will remain available from %. The numerous questions with their answers are later added to 
+the tutorial wiki pages. % anne - this doesn't add anything: Following this success, a dedicated\dword{faq}instance would be an efficient, crowd-based, and self-maintained platform to eventually collect the most frequently asked questions, while offering the most relevant answers or solutions.
 
 In the future, DUNE %has the goal that training events will utilize 
 plans to use Jupyter\footnote{Jupyter\textcopyright{} \url{https://jupyter.org/}} notebooks, %and therefore 
@@ -151,10 +153,11 @@ The DUNE Computing training group is also committed to surveying the needs and %
 demands for particular %aspects and 
 skills the members would like to learn. Recent surveys have shown that \dword{larsoft} and \dword{pandora} are popular topics, as are %that there is a general interest to know the `
 best practices for building analysis code, %not to mention learning about 
-and machine learning techniques, such as Keras, Tensorflow and GPU libraries. %anne The breadth of the tutorial wish-list is too large to efficiently cover during one bi-annual DUNE training, but continued input from tutorial attendees allow the planning of future topic specific lectures and tutorials. Moreover, incoming students are each working 
-It is impossible to cover all the wish-list topics during any given bi-annual session, %Typically, students each work on a specific aspect of the DUNE project. A 
-so a project-based approach such as a hackathon would be an ideal format for some of these topics. Since  students typically each work on a specific aspect of the DUNE project, this would allow students to team up on %an aspect 
-a topic directly linked with their analysis, guided by an expert.
+and machine learning techniques, such as Keras, Tensorflow and GPU libraries.  The breadth of the tutorial wish-list is too large to efficiently cover during one bi-annual DUNE training, but continued input from tutorial attendees allow the planning of future topic specific lectures and tutorials. Moreover, incoming students are each working 
+%It is impossible to cover all the wish-list topics during any given bi-annual session, %Typically, students each work
+on a specific aspect of the DUNE project. A 
+ project-based approach such as a series of hackathons would be an ideal format for some of these more advanced topics. This would allow students to team up on an aspect 
+ directly linked with their analysis, guided by an expert.
 
 We anticipate that the computing project will continue to  provide infrastructure and support but not all content for algorithmic documentation by the physics groups.  %HMS added this. 
 

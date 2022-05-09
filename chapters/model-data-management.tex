@@ -97,7 +97,7 @@ The next four functions of \dword{sam} relate to the physical location and deliv
 \item{\bf \dshort{metacat}}  The catalog function will be replaced by a combination of a file metadata catalog \dword{metacat} and a run configuration database that stores run level information.
 \item{\bf \dshort{rucio}}  The file location function is replaced by \dword{rucio}~\cite{Barisits:2019fyl}, the file tracking system originally developed by the ATLAS collaboration. \dword{rucio} provides a location catalog for files and rule-based transfers between sites. 
 %\todo{(anne) Can we adjust the dword def of samproject to include SAM? Just 'project' is too general. HMS done for project but other consepts remain in new version os can't just say sam.}
-\item{\bf Data Dispatcher} The existing \dword{sam} system supports a station and \dword{samproject} ecosystem where \dwords{samdataset} are submitted for processing as \dwords{samproject}.  The \dword{samproject} is a server process that contains a list of files based on a \dword{samdataset} description  and, when asked, delivers location information for the next file in the list.  Request, delivery and processing are tracked and recorded. This allows resubmission on failure. A website allows users to see the details of file delivery. 
+\item{\bf Data Dispatcher} The existing \dword{sam} system supports a station and \dword{samproject} ecosystem where \dwords{samdataset} are submitted for processing as \dwords{samproject}.  The \dword{samproject} is a server process that contains a list of files based on a \dword{samdataset} description  and, when asked, delivers location information for the next file in the list.  Request, delivery and processing are tracked and recorded. This allows resubmission on failure.  A website allows users to see the details of file delivery. 
 %\item{\bf \dshort{fts}} \todo{(anne) missing content - HMS 3/9 decide to move elsewhere as this woudl be describibg an existing service parallel to but not part of sam}
 
 
@@ -158,7 +158,7 @@ later sections.
 \subsubsection{Event Catalog - Absence of}
 \dword{sam} currently does not contain a means of easily determining which file(s) contains a given event.  If a \dword{daq} system is writing multiple streams, an event from a given subrun could be in any stream.   Existing neutrino experiments are low enough rate that this has not been an issue but \dword{protodune} already needs this feature.
 The \dword{sam} replacement will require the development of a true two-way map between objects (events) and collections. 
-\fixme{(anne) I'd move this above 'existing SAM features, because it's NOT one!}
+%HMS - i like it better here, start with the positive \fixme{(anne) I'd move this above 'existing SAM features, because it's NOT one!}
  
 % All of these features are intended to assure that your data are well described and can be found. As \dword{sam} stores full location information, this means any sam-visible location. In addition, if parentage information is provided, you can determine and reproduce the full provenance of any file.
 
@@ -230,6 +230,10 @@ This functionality will move to \dword{rucio}, the data dispatcher and the workf
 % Should, in principle, list raw data files not yet processed by version 7 of reco to produce files of tier reconstructed. You would use this to find lost files in your reconstruction after a power outage.
 
 % It is good practice to also store the name of the head application configuration file for processing but this does not have a standard “value”
+\subsection{Data provenance and tracking}\label{sec:prov}
+Because \dword{sam} stores the ancestry of files, both children and parents, complex queries such as "give me all the raw data files of type X that do not have children processed and stored by code type Y versions Z-AA" are possible.  Complex queries such as this can be used to pick up missing files in reprocessing without creating duplicates. 
+
+An additional protection against duplicate files is requiring constrained filenames for output files based solely on the inputs and code characteristics. If variable fields such as timestamps are put into filenames, \dword{sam} will happily catalog duplicate instances of the same processing and the provenance information is then necessary to check for and remove duplicates. 
 
 
 
@@ -245,17 +249,17 @@ We propose to replace the \dword{sam} system with %a
 the following set of components: 
 
 \begin{itemize}
-\item Metadata Catalog: stores file characteristics but not locations - described in section \ref{metacat};    
+\item \dword{metacat} Metadata Catalog: stores file characteristics but not locations - described in section \ref{sec:metacat};    
     \item Data Ingest Manager: takes in data from detector sites, declares it to the catalog and transfers to the managed storage system;
     \item A \dword{rucio}-based Replica Manager: stores the physical location of files and provides tools to move them between storage elements; and
-    \item Data Dispatcher: interacts with user and production processing systems%.  It provides 
+    \item Data Dispatcher: interacts with user and production processing systems %.  It provides 
     to provide file location information from the Replica Manager to clients and can track file processing. 
 \end{itemize}
 
 The \dword{rucio} system is already being used for file movement.  We are testing use of \dword{metacat}/\dword{rucio} in hopes of putting them into production for \dword{pdsp2} runs late in 2022. 
 
 
-\section{Metadata Catalog \hideme{updated 3/9 may still be too long}}{sec:metacat}
+\section{Metadata Catalog \hideme{updated 3/9 may still be too long}}\label{sec:metacat}
 
 The current \dword{sam} data catalog combines file description with location and delivery.  The new \dword{metacat} catalog will provide the permanent file description information, with location and delivery handled by \dword{rucio} and a data dispatch system. 
 A prototype version of \dword{metacat} has been produced and is described in Reference~\cite{Mandrichenko:2021spd}. 
@@ -311,7 +315,7 @@ A single  ``logical'' file can have multiple ``physical'' replicas across multip
 The \dword{metacat} design builds on \dword{sam} experience, preserving the useful concepts while introducing additional flexibility and constraints where needed.   For example:
 
 \begin{itemize}  
-\item To enforce reproducibility, %anne free-form datasets no longer exist and must be explicitly modified. 
+\item To enforce reproducibility, %HMS anne free-form datasets no longer exist and must be explicitly modified. 
 free-form datasets no longer exist and  must be explicitly modified.
 \item Metadata values are more flexible.
 \item Namespaces are introduced to separate different functions (e.g., user %and
@@ -324,6 +328,8 @@ and production files)
 Although the main target user of the project is \dword{protodune}/DUNE, \dword{metacat} is supposed to be generic enough to be usable by %multiple 
 other experiments, as well.   
 
+
+\subsection{MetaCat requirements}
 \dword{metacat} has to satisfy the following general requirements: 
 
 \begin{itemize} 
@@ -331,7 +337,7 @@ other experiments, as well.
 The Metadata representation must be powerful, flexible and abstract enough to accommodate a wide range of metadata data types and possibly complex metadata structures. 
 
 \item
-It needs to scale to at least 100 million objects and likely into the tens of billions of objects. %Kirby - rough guess based on NOvA and MicroBooNE experience and 20 years of DUNE operations \todo{(anne) 100M OR beyond? How far beyond? This is ambiguous}
+It needs to scale to several 100 million objects, based on Fermilab fixed target experience, and likely to billions of objects by the end of \dword{dune} running. %HMS - made less ambigouous? Kirby - rough guess based on NOvA and MicroBooNE experience and 20 years of DUNE operations \todo{(anne) 100M OR beyond? How far beyond? This is ambiguous}
 
 \item
 The unit of operation of the catalog should be an abstract ``file'' or ``object'' with a  minimal but sufficient set of predefined   attributes and the ability to add user-defined   attributes in a flexible and convenient way. 
@@ -347,16 +353,21 @@ The \dword{metacat} should not need knowledge of physical file replicas, aside f
 
 Based on our experience with \dword{sam}, an important improvement is to provide a mechanism to use data from external metadata sources, such as conditions or runs databases, as part of metadata queries without copying the external data into or making it appear as part of the metadata database. 
 
-\section{Metacat Data Model \hideme{Updated 3/9}}
+%\section{New Metacat Data Description Catalog \hideme{Updated 3/9}}\label{sec:metacat}
+
+%In this section we describe the first of the systems that will replace portions of \dword{sam} functionality, the metadata catalog \dword{metacat} which contains the data description information. 
+
+\subsection{Metacat implementation} 
+
 In \dword{sam}, files were identified by a unique immutable name within a single namespace.  To support  multiple use cases (for example user and production spaces) \dword{metacat}'s objects %and 
 can be identified  by names within namespaces. The name of an object is unique within its namespace. A namespace/name pair uniquely identifies  an object in \dword{metacat}. In addition to namespace/name, files are assigned unique text identifiers. These identifiers are primarily for internal use within the \dword{metacat} database, but are available to the user. At the time of the file declaration, the user can specify a file ID, which must be unique, otherwise \dword{metacat} will generate a unique file ID. After a file is declared to \dword{metacat} it can be renamed. Both namespace and name can be changed, provided the new namespace/name pair is unique. However, file ID can not be changed. 
 
 As in \dword{sam}, \dword{metacat} stores metadata associated with files and datasets. %HMS tried to clean up this definition.  Made a new glossary term
-A \dword{metacatdataset} is a collection of files. A \dword{metacatdataset} can have child \dword{metacatdataset}.  %A dataset can be set to be ``monotonic,'' which means files can not be added to or removed from the dataset. %HMS 3/9, or be frozen. %anne  - files cannot be added or removed from the dataset. 
+A \dword{metacatdataset} is a collection of files. A \dword{metacatdataset} can have child \dword{metacatdataset}.  %HMS removed A dataset can be set to be ``monotonic,'' which means files can not be added to or removed from the dataset. %HMS 3/9, or be frozen. %anne  - files cannot be added or removed from the dataset. 
 Unlike the active \dwords{samdataset} defined   in \dword{sam}, files must be explicitly added to and removed from a \dword{metacatdataset}. 
-%\todo{(anne) a nonmonotonic dataset?}
+%HMS done \todo{(anne) a nonmonotonic dataset?}
 A file can belong to zero or more \dword{metacatdataset}. \hideme{HMS - I think this may confuse the reviewers suggest leaving it out There is no requirement that the file namespace  be related in any way to the namespace(s) of the \dword{metacatdataset}(s) the file belongs to. If a file belongs to a child \dword{metacatdataset}, it does not %anne mean it belongs HMS I like the necessarily 
-necessarily belong to its parent \dword{metacatdataset}. However, the query language discussed below allows recursive inclusion of files from child \dword{metacatdataset} into query results.}
+necessarily belong to its parent \dword{metacatdataset}. However, the query language discussed below allows recursive inclusion of files from child \dwords{metacatdataset} into query results.}
 
 
 As in \dword{sam} there can be a many-to-many provenance relationship between files. A file can have zero or more derived (child) files and zero or more parent files. The system makes sure the provenance relationship is not circular. 
@@ -366,17 +377,17 @@ Metadata attributes are name-value pairs. Any file or \dword{metacatdataset} can
 
 Here is an example \dword{metacat} entry for a processed data file from \dword{pdsp}. 
 \begin{verbatim}
-checksums      :    {'md5': 'ea8d1a009f23accf9582f9e2bd7f58fd', 'adler32': 'c689390f', 'enstore': '3896981774'}
-children       :    ['52593351']
+checksums :    {'md5': 'ea8d1a009f23accf9582f9e2bd7f58fd',
+                     'adler32': 'c689390f', 'enstore': '3896981774'}
+children  :    ['52593351']
 created_timestamp:  1616688097.41347
-creator        :    dunepro
-fid            :    52593202
-name           :    np04_raw_run005141_0006_dl1_reco1_
-            42477998_0_20210324T231631Z.root
-namespace      :    pdsp_det_reco
-parents        :    ['6606706']
-size           :    3599190934
-metadata       :   {
+creator   :    dunepro
+fid       :    52593202
+name:    np04_raw_run005141_0006_dl1_reco1_42477998_0_20210324T231631Z.root
+namespace :    pdsp_det_reco
+parents.  :    ['6606706']
+size      :    3599190934
+metadata. :   {
     'DUNE.campaign': 'PDSPProd4',
     'DUNE_data.DAQConfigName',
     'np04_WibsReal_Ssps_BeamTrig_00021',
@@ -401,8 +412,8 @@ metadata       :   {
 A \dword{metacat} user  is identified  by a unique username. A user can be a member of zero or more roles (groups). Namespaces and attribute categories have owners. A namespace or category owner can be either an individual user or a role. If the namespace or the category is owned by the role, %HMS OK anne it means 
 that means it is automatically owned by all role members. 
 The namespace owner automatically owns all the datasets and files in that namespace (either directly or via the role membership). Ownership does not automatically propagate along the dataset parent/child or file provenance relationships. 
-Only the owner of the dataset and file %anne owner 
-can add or remove files from the dataset. Only the owner of the dataset can change their metadata attributes. The same is true for files in that only the owner of a file can change their metadata attributes. %Kirby - clarified. Hopefully it's correct. \todo{(anne) the `and' and 'or' are significant here?}
+Only the owner of a dataset %HMS doneanne owner 
+can add or remove files from the dataset. Only the owner of a dataset can change its metadata attributes. The same is true for files in that only the owner of a file can change its metadata attributes. %HMS - clarified a bti? Kirby - clarified. Hopefully it's correct. \todo{(anne) the `and' and 'or' are significant here?}
 
 \subsection{Queries} 
 One of the most important parts of the \dword{metacat} functionality is the ability to query the database for ``interesting'' files. Essentially, the query is a logical expression in terms of file and/or dataset metadata attributes, file provenance relationship, and dataset parent/child relationship. There are two types of queries in \dword{metacat}-file queries and dataset queries. File queries return a set of files (a list of file IDs) whereas dataset queries return a list of datasets. The file and dataset lists are not guaranteed to have a consistent order, so they are in fact ``sets'' rather than ``lists.'' 
@@ -485,7 +496,7 @@ DUNE has contributed several features to the \dword{rucio} base software.  These
 
 We also have added a hook that requires any new files declared to \dword{rucio} to be also declared to the \dword{metacat} system.  We have modularized the \dword{vo} customization code, and we have made the command line client lighter-weight with fewer external dependencies and fewer conflicts with other Python software.  These contributions are being fed back to the main \dword{rucio} project.  
 
-\dword{rucio} has a internal metadata functionality but our evaluation indicates that it doesn't provide the full functionality required by DUNE physics and offline processing,%currently provided by the \dword{sam} catalog,
+\dword{rucio} has a internal metadata functionality but our evaluation indicates that it doesn't provide the full functionality required by DUNE physics and offline processing, %currently provided by the \dword{sam} catalog,
 and thus DUNE has proceeded to develop its own metadata catalog. 
 
 \section{Data Dispatcher \hideme{HMS 3/9 updated}}

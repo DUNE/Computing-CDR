@@ -1,11 +1,11 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Data Processing Considerations and Challenges\hideme{Ready? 3/13}}%\hideme{Has new final section 3/3 HMS}
+\chapter{Data Processing Considerations and Challenges\hideme{Anne's comments addressed 4/28}}%\hideme{Has new final section 3/3 HMS}
 %(anne 3/2 - could we retitle it to "Data Processing Considerations and Challenges"?}fdone
 \label{ch:use}
 \newcommand{\ignore}[1]{{}}
 %\hideme{Doug B: This chapter is mostly done - Near Detector Simulation and Reconstruction subsection needs to be added}
-Before describing the large scale data model for \dword{dune} we begin by describing the activities and algorithms that drive that model at the \dword{tr} scale. 
+Before describing the large scale data model for the \dword{dune} we begin by describing the activities and algorithms that drive that model at the \dword{tr} scale. 
 
 \section{Introduction \hideme{Schellman - draft}}
 
@@ -38,27 +38,25 @@ We note that, in addition to the challenges faced by \dword{hllhc} experiments, 
 
 % Other neutrino will also be able to provide fast information but the \dword{dune} information will be unique in its sensitivity to electron neutrinos. 
 
-
-
-
 % \todo{more test on the network and processing challenges}
 
 \section{Data Acquisition and Storage\hideme{Schellman - draft}}
 
-\Dword{daq} software and hardware are the responsibility of the \dword{daq} group, with significant interfaces to offline computing. Important factors include communication of calibration and configuration information between online and offline computing, high-speed networking for data, high-reliability networking for configuration and monitoring, and adequate disk and CPU on both ends of the connection to allow both efficient data transfer and continued data taking in the event of an extended network interruption. 
+\Dword{daq} software and hardware are the responsibility of the \dword{daq} group, with significant interfaces to offline computing. Important factors include communication of calibration and configuration information between online and offline computing, high-speed networking for data, high-reliability networking for configuration and monitoring, and adequate disk and CPU resources on both ends of the connection to allow both efficient data transfer and continued data taking in the event of an extended network interruption. 
 
-These considerations already apply to \dword{protodune}, where data taking occurs at the \dword{cern} with offline databases and archival storage in the US,  and, in the future, to the far and near detectors in South Dakota and Illinois, respectively. 
+These considerations already apply to \dword{protodune}, where data taking occurs at the \dword{cern} with offline databases and archival storage in the US,  and, in the future, will apply to the far and near detectors in South Dakota and Illinois, respectively. 
 
-Current status and proposed solutions are discussed in Chapters~\ref{ch:db}(Databases) and~\ref{ch:netw}(Networking). 
+Current status and proposed solutions are discussed in Chapters~\ref{ch:db} (Databases) and~\ref{ch:netw} (Networking). 
 
 \subsection{Data Transfer from the Experiment}
-Data needs to be buffered locally and then transferred to permanent storage at the host lab(s).  Data transfer activities include the generation of descriptive metadata, file transfer, writing the files to permanent storage, and integrity checks.  Once data are confirmed to have successfully reached permanent storage, the local buffer may be cleared.  Current specifications call for the local buffers at remote sites to be able to store 3-7 days worth of data or one \dword{snb}'s worth ($\sim 640$ TB) at a minimum. 
+Data needs to be buffered locally and then transferred to permanent storage at the host lab(s).  Data transfer activities include the generation of descriptive metadata, file transfer, writing the files to permanent storage, and integrity checks.  Once data are confirmed to have successfully reached permanent storage, the local buffer may be cleared.  Current specifications call for the local DAQ buffers at the FD remote site to be able to store 3-7 days worth of all triggered DAQ data or several \dword{snb}'s worth ($\sim 640$ TB) at a minimum. 
 
 %{\it Major concerns:  Network bandwidth and reliability between Sanford and Fermilab. The ability of host lab systems to absorb and redistribute those data quickly. }
-{\it Major challenges: %anne Here 
-The %major 
-primary areas of concern are the remote location of the far detector, and space and power limitations at both the \dword{4850l} detector level and the surface. Chapter \ref{ch:netw} describes the status and plans for wide-area networking.} %anne Other challenges include 
-%Another challenge is the need for adequate lossless data compression to prevent data volume explosion. Chapter \ref{ch:netw} describes the status and plans for networking.}
+{\it %Major challenges: %anne Here 
+Here the  % comment from ANne accepted HMS
+major areas of concern are the remote location of the far detector, and space and power limitations at both the \dword{4850l} detector level and the surface. Chapter \ref{ch:netw} describes the status and plans for wide-area networking. %anne 
+Other challenges include 
+the need for adequate lossless data compression to prevent data volume explosion. Chapter \ref{ch:netw} describes the status and plans for networking.} 
 
 \subsection{Control, Configuration, Conditions and Calibrations}
 %\subsubsection{Configuration and Monitoring}
@@ -67,11 +65,11 @@ This is the responsibility of the \dword{fnal} networking groups and the \dword{
 
 
 \subsubsection{Slow Controls}
-Data from slow control and monitoring systems need to be recorded for offline use.  Examples include set points and readback for \dword{hv}, %anne systems, 
+Data from slow control and monitoring systems need to be recorded for offline use.  Examples include set points and readback for \dword{hv} systems, %HMS done anne systems, 
 pressure, temperature and the outputs of purity monitors. 
 
-{\it Potential challenge: Commercial \dword{scada} systems tie us to proprietary software that may have limited interfaces, require expensive licenses and need migration to new systems if %the vendor stops support.
-vendor support becomes unavailable.}
+{\it Potential challenge: Commercial \dword{scada} systems tie us to proprietary software that may have limited interfaces, require expensive licenses and need migration to new systems if the vendor stops support.}
+%vendor support becomes unavailable.}  
 
 \subsubsection{Online Calibrations}
 Online calibration information (e.g., pedestal information for some subdetectors and trigger time offsets relative to an absolute time standard) needs to be passed to the offline systems. 
@@ -91,27 +89,27 @@ The offline computing consortium will provide fast feedback on data movement and
 
 \subsection{Offsite High-level Data Filtering}
 
-This is not yet part of the data plan but there may be a need for offsite filtering of data before %anne it is 
+This is not yet part of the data plan but there may be a need for offsite filtering of data before %HMS ok anne it is 
 it is written to permanent storage. 
  Initiation of a high-level trigger offsite remains a possibility if the need arises. Local space, power and cooling issues make this difficult to do at the \dword{surf}.
 
 \subsection{Data Compression}
 The data volumes and rates anticipated are significant. Storage and network resources can be optimized with zero-suppression (lossless or lossy) and data compression. Multiple avenues for data reduction are being explored, including on-board algorithms in the readout boards or downstream \dword{daq} systems, or before data are written to archival storage.  Considerations include the computational load of compression/decompression, especially of the very large data objects the far detector can produce, and irrevocable data loss in the cases of lossy methods.
 
-In \dword{pdsp} lossless compression was performed as part of the \dword{daq}. For \dword{pdsp2} this is not planned due to the need to keep processing overheads low in the \dword{daq}. Lossless compression of \dword{fd} \dword{tpc} data will need to be applied later in the processing chain, most likely using the intrinsic compression methods of the chosen data format(s).  \dword{root} allows implementation of lossless compression, as does \dword{hdf5}.  The \dword{nd} detector currently plan to take advantage of their higher signal/noise ratio and do lossy zero-suppression. 
+In \dword{pdsp} lossless compression was performed as part of the \dword{daq}. For \dword{pdsp2} this is not planned due to the need to keep processing overheads low in the \dword{daq}. Lossless compression of \dword{fd} \dword{tpc} data will need to be applied later in the processing chain, most likely using the intrinsic compression methods of the chosen data format(s).  \dword{root} allows implementation of lossless compression, as does \dword{hdf5}. The data model assumes that for \dword{pdhd} and \dword{pdvd} the same level of compression will be achievable as in \dword{pdsp}.  The \dword{nd}s currently plan to take advantage of their higher signal/noise ratio and do lossy zero-suppression. 
 
 
 \subsection{Outputs from DAQ and Monitoring}
 
 %\fixme{Doug: this sentence does not make sense.when it is compiled in LaTeX. HMS 3/3 I clarified it - just trying to say what the outputs should be. }
-The end result of data acquisition includes the transfer of the data themselves and of the %anne we assume 
+The end result of data acquisition includes the transfer of the data themselves and of the %HMS iI think this is ok anne we assume 
 metadata and configuration/calibration/beam information needed for offline processing. 
 
 
 \section{Simulation Chain \hideme{Junk and Schellman - draft}}
 
 % 
-The \dword{dune} simulation chain involves a large number of steps including beam simulation, event simulation, simulation of energy deposition and simulation of detector and electronics response. \dword{fd} and \dword{protodune} share a common simulation framework, based on \dword{art} and \dword{larsoft}, with other Fermilab \dword{lartpc} experiments while the \dword{nd} simulation framework is still under development. 
+The \dword{dune} simulation chain involves a large number of steps including beam simulation, particle interaction or decay simulation, simulation of energy deposition and simulation of detector and electronics response and noise. \dword{fd} and \dword{protodune} share a common simulation framework, based on \dword{art} and \dword{larsoft}, with other Fermilab \dword{lartpc} experiments while the \dword{nd} simulation framework is still under development. 
 
 %anne \subsection{MARS} - moved to under next section
 
@@ -119,10 +117,10 @@ The \dword{dune} simulation chain involves a large number of steps including bea
 \subsection{Beam Simulations}
 The \dword{mars}\cite{abs1} simulation is used in the design of the beamline and near detector systems and  for safety and environmental calculations.  It is a significant user of CPU time. 
 
-{\it Unique challenge: the \dword{mars}\ codes are not available outside of US.}
+{\it Unique challenge: the \dword{mars}\ codes are not available outside of the US.}
 
 Neutrino production in the \dword{lbnf} 
-beamline  is simulated using the \dword{g4lbnf} framework.  The \dword{proto} beamlines were designed and simulated using the \dword{madx} framework used at \dword{cern}\cite{PhysRevAccelBeams.20.111001}.
+beamline  is simulated using the \dword{g4lbnf} framework.  The ProtoDUNE beamlines were designed and simulated using the \dword{madx} framework used at \dword{cern}\cite{PhysRevAccelBeams.20.111001}.
 Inputs include random number seeds and the beamline and target region geometry and materials.  Outputs are flux files containing simulated particle  trajectories.  The flux files contain sufficient information to allow reweighting based on interaction cross sections.  These flux files must be cataloged and made available to offline simulation jobs.
 
 {\it Minor challenge:  Distribution of flux files to remote sites requires use of \dword{stashcache} and careful record keeping.}
@@ -130,32 +128,31 @@ Inputs include random number seeds and the beamline and target region geometry a
 \subsection{Detector Geometry Description \hideme{- NEW|| 2/19}}
 \label{sec:usecases:detectorgeometry}
 
-Offline event generation, simulation, reconstruction and visualization tasks require descriptions of the geometries of the relevant detectors.  In contrast to a colliding-beam experiment in which most physics processes of interest take place at a collision point in an evacuated beam pipe, a neutrino experiment's detector is the interaction target.  Therefore, the event generator must be aware of the spatial distribution of significant amounts of material, listed separately for each element's contribution, and the local densities.  Neutrino cross sections on some elements are poorly known and do not form the primary constituents of the detector materials, and a simplified geometry for use in the event generation is often useful.
+Offline event generation, simulation, reconstruction and visualization tasks require descriptions of the geometries of the relevant detectors.  Similar to some dark-matter and neutrino-less double-beta decay experiments, a neutrino experiment's detector is the interaction target.  Therefore, the event generator must be aware of the spatial distribution of significant amounts of material, listed separately for each element's contribution, and the local densities. Neutrino detectors contain some elements for which the neutrino-scattering cross sections are poorly known; when these do not contribute significantly to the detector volume, a simplified geometry containing only the key components is often useful.
 
-Once the primary interaction has been simulated, \dword{geant4}~\cite{geant4} requires a representation of the spatial locations of materials in order to simulate interactions of all particles except neutrinos.  As for the generator, a very detailed geometry with a cylinder of CuBe for each wire in a horizontal-drift \dword{apa}, uses a large amount of memory and CPU for a very small amount of non-fiducial interaction modeling, therefore %and so 
-simplified geometry descriptions are needed.
+Once the primary interaction has been simulated, \dword{geant4}~\cite{geant4} requires a representation of the spatial locations of materials in order to simulate the subsequent propagation and energy depositions of all particles except neutrinos.  As was the case for generating primary interactions, a simplified geometry descriptions is needed since a detailed geometry with a cylinder of CuBe for each wire in a horizontal-drift \dword{apa} would use a large amount of memory and CPU for a very small amount of non-fiducial interaction modeling.
 
-The common language used in DUNE for geometry description is Geometry Description Markup Language (\dword{gdml})~\cite{gdml}.  It is stored in human-readable text files.  Versions of each detector's geometry are saved alongside software source code in the code repository.  When a release is built, these \dword{gdml} files are copied into directories that are visible to running jobs.  At the time of writing, \dword{cvmfs} is the chosen distribution method for pre-compiled code and small auxiliary files like \dword{gdml} files.   Both \dword{geant4} and \dword{root} have functionality for reading \dword{gdml} files.
+The common language used in DUNE for geometry description is \dword{gdml}~\cite{gdml}.  It is stored in human-readable text files.  Versions of each detector's geometry are saved alongside software source code in the code repository.  When a release is built, these \dword{gdml} files are copied into directories that are visible to running jobs.  At the time of writing, \dword{cvmfs} is the chosen distribution method for pre-compiled code and small auxiliary files like \dword{gdml} files.   Both \dword{geant4} and \dword{root} have functionality for reading \dword{gdml} files.
 
 One notable 
 requirement %difference 
-fort code versioning is that all supported versions of the \dword{gdml} files for a detector must be available in each release.  If a geometry description is updated for a release of the software, the older versions must be kept, with the old \dword{gdml} filenames, in order to ensure backwards compatibility, as data files are stored on disk and tape, assuming the old geometry.  DUNE thus uses a simple additional versioning system by adding a version number to each detector's \dword{gdml} filename.  \dword{larsoft} and  \dword{garsoft} jobs allow for \dword{fhicl} configuration of the detector geometry \dword{gdml} file.  A \dword{larsoft}  job, if run as input with data from an earlier LArSoft job, will check the compatibility of the requested \dword{gdml} file and that used for the input.  By default, if there is a mismatch, an exception is thrown and the job stops.  Sometimes, however, it is desired to simulate and reconstruct \dword{mc} samples with different geometries, in order to simulate misalignments, for example.  In order to accommodate these cases, the geometry consistency check can be disabled by setting an appropriate \dword{fhicl} parameter.
+for code versioning is that all supported versions of the \dword{gdml} files for a detector must be available in each release.  If a geometry description is updated for a release of the software, the older versions must be kept, with the old \dword{gdml} filenames, in order to ensure backwards compatibility, as data files are stored on disk and tape with the presumption of the old geometry.  DUNE thus uses a simple additional versioning system by adding a version number to each detector's \dword{gdml} filename.  \dword{larsoft} and  \dword{garsoft} jobs allow for \dword{fhicl} configuration of the detector geometry \dword{gdml} file.  A \dword{larsoft}  job, if run as input with data from an earlier LArSoft job, will check the compatibility of the requested \dword{gdml} file and that used for the input.  By default, if there is a mismatch, an exception is thrown and the job stops.  Sometimes, however, it is desired to simulate and reconstruct \dword{mc} samples with different geometries, in order to simulate misalignments, for example.  In order to accommodate these cases, the geometry consistency check can be disabled by setting an appropriate \dword{fhicl} parameter.
 
-\dword{gdml}  files contain many similar blocks in them for detectors with repeated, similar structures.  The \dword{gdml}  files for the %Horizontal and Vertical Drift 
-\dword{sphd} and \dword{spvd} far detector modules and the \dwords{protodune} are made with Perl scripts and a number of small shell scripts to make final adjustments.  Some of the inputs are not repetitive, such as material mixture definitions, and these fragments are hand-edited.  \dword{gdml}  files for the near detectors are made with DUNENDGGD~\cite{ref:ggd}.  DUNENDGGD takes as input Python classes called ``builders'' 
+\dword{gdml}  files include many similar code blocks to allow simulation of detectors with repeated, similar structures.  The \dword{gdml}  files for the %Horizontal and Vertical Drift 
+\dword{sphd} and \dword{spvd} far detector modules and the \dwords{protodune} are made with Perl scripts and a number of small shell scripts to make final adjustments.  Some of the inputs are not repetitive, such as material mixture definitions, and these fragments are hand-edited.  \dword{gdml}  files for the near detectors are made with DUNENDGGD~\cite{ref:ggd}\footnote{https://github.com/dune/duneggd}.  DUNENDGGD takes as input Python classes called ``builders'' 
 and produces \dword{gdml}  files.  The near detector \dword{gdml}  file creation requires additional steps, as two of the detectors move off-axis while a third remains stationary.  Particles travel from \dword{ndlar} to the \dword{tms} and thus they must be simulated together, with a single \dword{gdml}  file.  In addition to a full hall description, detector working groups may prefer to work with a geometry that only has one detector element in it for computational convenience.
 
-Computational convenience also drives the need for workspace geometries for the far detetor modules.  A subset with only 12 \dwords{apa} instead of the full complement of 150 is a popular geometry to use for physics simulations, though care must be exercised regarding differences in event containment between the workspace geometry and the full geometry.
+Computational convenience also drives the need for workspace geometries for the far detector modules.  A subset with only 12 \dwords{apa} instead of the full complement of 150 is a popular geometry to use for physics simulations, though care must be exercised regarding differences in event containment between the workspace geometry and the full geometry.
 %anne went through the above section 3/2
 
 \subsection{Neutrino Event Generation}
 
 Extracting physics results from the DUNE experiment requires comparing the observed data with simulation, 
 %anne, 
-which included detailed simulations 
-of the physics processes under study as well as of the response of the detectors.  The physics simulation is performed by the neutrino generators \dword{genie}~\cite{Andreopoulos:2009rq}, NuWRO~\cite{NuWro2012}, GIBUU~\cite{Gallmeister:2016dnq}, NEUT~\cite{Hayato:2009zz}, and others. 
+which includes detailed simulations 
+of the physics processes under study as well as of the response of the detectors.  These physics processes can be simulated by any of several 'neutrino event generators', including \dword{genie}~\cite{Andreopoulos:2009rq}, NuWRO~\cite{NuWro2012}, GIBUU~\cite{Gallmeister:2016dnq}, NEUT~\cite{Hayato:2009zz}, and others. 
 
-Neutrino event generators are used to simulate neutrino interactions within a detector volume.  Input requirements are the neutrino beam flux, random number seeds and the detailed detector geometry. The output consists of four-vectors for final-state particles, including short-lifetime decay chains.  DUNE currently uses \dword{genie}~\cite{GENIE} as the default, but other default generators are possible. 
+Neutrino event generators are used to simulate neutrino interactions within a detector volume.  Input requirements are the neutrino beam flux, random number seeds and the detailed detector geometry. The output consists of four-vectors for final-state particles, where the final state of the interaction includes the decay of any short-lived particles and the subsequent particles produced. DUNE currently uses \dword{genie}~\cite{GENIE} as the default, but allows the possibility of simulating interactions with other generators.
 
 \subsection{Non-Beam Interaction Simulations}
 Simulations of non-standard model physics (e.g., neutron decay) and of cosmic ray and rock muon backgrounds are also used.  Cosmic ray simulations are performed with \dword{corsika}~\cite{Wentz:2003bp,Dembinski:2020wrp} for detectors on the surface, and MUSUN/MUSIC for detectors deep underground~\cite{Kudryavtsev:2008qh,LBNEDOCDB9673}.  Radiological decays are modeled with BXDECAY0~\cite{Ponkratenko:2000um} and \dword{larsoft}'s  radiological generator.
@@ -163,12 +160,12 @@ Simulations of non-standard model physics (e.g., neutron decay) and of cosmic ra
 Factorization of the simulation into a generation stage and a detector simulation stage is a common practice 
 in collider experiments, such as ATLAS and CMS.  The fact that the interactions simulated by generators for collider physics happen inside an evacuated beampipe means that the details of the detector geometry and materials are not relevant for most event generation, and lists of four-vectors of particles emerging from a primary vertex will suffice.  In a neutrino experiment, however, the detector material is the target material, and hence the generators must be aware of the detector geometry and materials, which affects the structure and performance of the generator code.  Currently \dword{genie}, \dword{corsika}, MUSUN/MUSIC, BXDECAY0 are integrated with \dword{larsoft}.  \dword{larsoft} also has custom generators for radiological decays and a text-file interface providing arbitrary four-vectors as inputs to the simulation. \dword{genie} is also integrated with \dword{garsoft}.
 
-{\it DUNE can rely on strong international efforts to produce standard generators. One challenge is the complexity of integrating multiple simulation code versions into our framework to ensure that there is timely evolution of the generators used as the physics understanding evolves.}
+{\it DUNE can rely on strong international efforts to produce standard generators, but it should be noted that these efforts are in general external to the \dword{dune} Collaboration. One challenge is the complexity of integrating multiple simulation code versions into our framework to ensure that there is timely evolution of the generators used as the physics understanding evolves.}
 
 \section{Far Detector and protoDUNE Detector Simulations}
 
 A large amount of code re-use and sharing via the design of \dword{larsoft} has allowed the shared development of simulation algorithms for \dword{pdsp}, \dword{pddp}, \dword{pdhd}
-and the \dword{spvd}  detector proposals.  Only the geometry, the field description,  and the anode plane channel models need to be updated; the rest of the simulation chain is re-used.  The \dword{nd} simulation differs substantially and is discussed below in 
+and the \dword{spvd}  detector proposals.  Only the geometry, the field description,  and the anode plane channel models need to be updated; the rest of the simulation chain is re-used.  It should be noted that modules and workflows may need to be developed in order to apply detector specific calibrations or physical effects, but that the general framework appears to be flexible enough to handle all such needs in simulation. The \dword{nd} simulation differs substantially and is discussed below in 
 Section~\ref{ch:use:nd}.
 
 Two classes of detector simulation for DUNE exist at the time of writing, parameterized fast simulations and full detector simulations that combine particle propagation codes such as \dword{geant4} that record energy deposits in active elements with detector response simulations of electron drift trajectories, photon paths and electronics performance. 
@@ -179,9 +176,9 @@ Parameterized, or ``fast'' detector simulations involve smearing truth-level phy
 \subsection{Particle Propagation Simulation}
 Full simulations are based on detailed geometry models and \dword{geant4}~\cite{Agostinelli:2002hh,Allison:2016lfl}, and are needed for extraction of publication-level results.
 
-A detector simulation such as \dword{geant4}~\cite{Allison:2016lfl} or FLUKA~\cite{Bohlen:2014buj} is used to simulate the interaction of the particles described by the four-vectors produced by the event generator. Input requirements are the geometry and 4-vectors and outputs are the tree of interactions and energy deposits in the active detector materials. 
-Energy thresholds need to be quite low, as the detector systems are sensitive to MeV-scale processes. The large uniform detector volumes in \dword{lar} detectors compensate for the low thresholds by requiring fewer volume crossings in a typical particle trajectory.  
-Hadronic cross section on \dword{lar} are not yet fully understood.  DUNE has developed a reweighting framework 
+A detector simulation such as \dword{geant4}~\cite{Allison:2016lfl} or FLUKA~\cite{Bohlen:2014buj} is used to simulate the interaction with the detector material and signals produce by the particles described by the four-vectors produced by the event generator. Input requirements are the geometry and 4-vectors and outputs are the tree of interactions and energy deposits in the active detector materials. 
+Energy thresholds need to be quite low O(100s keV), as the detector systems are sensitive to MeV-scale processes. The large uniform detector volumes in \dword{lar} detectors compensate for the low thresholds by requiring fewer \dword{geant4}-volume boundary crossings in a typical particle trajectory.  
+Hadronic cross sections on \dword{lar} are not yet fully understood.  DUNE has developed a reweighting framework 
 \dword{Geant4Reweight}~\cite{Calcutt:2021zck} to allow reuse of existing simulation as interaction rates are refined.
 
 {\it Major concern: 
@@ -201,9 +198,9 @@ After particle propagation simulation,
 %\subsection{TPC Simulation}
 
 Drifting electrons are simulated parametrically using a model based on the measured drift velocity, longitudinal and transverse diffusion coefficients, and a parametrized model of space charge.  This last effect is particularly pronounced at \dword{pdsp} and \dword{pddp} due to the large number of cosmic rays crossing the detector volume, giving rise to distortions in the apparent positions of particles of up to 30\,cm.  % anne There are also field distortions due to e - HMS for simplicity I think I will leave as is
-External imperfections such as the grounded electron diverters in \dword{pdsp} also cause field distortions.
+Based on the experience gained from  unintentionally grounded electron diverters in \dword{pdsp}, external imperfections need to be simulated as they can be the cause of field distortions.
 
-Once the electrons drift to the anode plane in wire-based \dwords{lartpc} in the simulation, a detailed \twod model of the wire responses is applied~\cite{Abi:2020mwi}.  The two dimensions are wire number and time, and the effects of induced currents on neighboring wires are included in the simulation.  The electronics response function is folded in to a final model of the observed waveforms.  Simulated waveforms have been compared with real ones  in \dword{pdsp} and are found to be very similar.
+Once the electrons drift to the anode plane in wire-based \dwords{lartpc} in the simulation, a detailed \twod model of the wire responses is applied using \dword{wct}~\cite{wirecell,ref:wire_cell_toolkit,Abi:2020mwi}.  The two dimensions are wire number and time, and the effects of induced currents on neighboring wires are included in the simulation.  The electronics response function is folded in to a final model of the observed waveforms.  Simulated waveforms have been compared with real ones  in \dword{pdsp} and are found to be very similar.
 In the pixel-based \dword{ndlar} and \dword{ndgar}, the electronics simulation is at a simpler level, as the electronics have not been fully designed.
 
 {\it Challenges:  
@@ -218,16 +215,16 @@ Photon simulation in large detectors is known to be highly computationally inten
 The sequence for photon simulation is:
 \begin{enumerate}
 \item perform particle track simulation in \dword{geant4} to produce the energy deposits along the track;
-\item  calculate the number of photon/electron emission at each vertex where energy deposits; \item 
+\item  calculate the number of photon/electron emissions at each vertex where energy is deposited; \item 
 simulate the photon transport in the detector (either full simulation or fast simulation); and
-\item  reconstruct the photons, including the hits and flashes.
+\item  reconstruct the photons into offline objects such as individual PDS hits and collective flashes of hits.
 \end{enumerate}
  
-In \dword{larsoft}, after particles are propagated using \dword{geant4}, energy deposits along tracks are recorded so that the number of electrons and photons generated at each step can be estimated using one of the available  ionization and scintillation methods. Once the number of photons is determined, the fraction of those photons that will actually reach a given photon detector is usually estimated using one of several fast light-simulation methods. This procedure is followed for both 128\,nm photons (Ar scintillation) and 176\,nm photons (Xe scintillation) to account for the wavelength-dependent Rayleigh scattering in the simulation of Xe-doped \dword{lar}. 
-Since a copious number of scintillation photons (25000\,ph/MeV at 500\,V/cm) is produced in \dword{lar}, it is very demanding computationally to propagate all photons individually using \dword{geant4}. Instead,  fast simulations for photons are implemented.
+In \dword{larsoft}, after particles are propagated using \dword{geant4}, energy deposits along tracks are recorded so that the number of ionization electrons and scintillation photons generated at each step can be estimated using the available ionization and scintillation methods. Once the number of photons is determined, the fraction of those photons that will actually reach a given photon detector is usually estimated using one of several fast light-simulation methods. This procedure can be followed for both 128\,nm photons (Ar scintillation) and 176\,nm photons (Xe scintillation) to account for the wavelength-dependent Rayleigh scattering in the simulation to cover the possibility of Xe-doped \dword{lar}. 
+Since a copious number of scintillation photons (25000\,$\gamma$/MeV at 500\,V/cm) is produced in \dword{lar}, it is very demanding computationally to propagate all photons individually using \dword{geant4}. Instead,  fast simulations for photons are implemented.
 %The photon simulation CPU time per event which depends on what kind of events are simulated and the simulation methods. 
 The full \dword{geant4}  photon simulation CPU time per event depends on the energy deposited. 
-In the fast simulation methods, using a library,  semi-analytic methods or machine-learning, the CPU time depends on the granularity of the detector. Generally speaking, the performance of the three fast simulations methods is at the same level. 
+In the fast simulation methods, using a library,  semi-analytic methods or machine-learning, the CPU time depends on the granularity of the detector. Generally speaking, the performance of the three fast simulations methods is at the same level and the usage of any particular choice will depend on the physics requirements of the sample. 
  
 \subsubsection{Optical Library Method}
 
@@ -255,8 +252,8 @@ The model inference also requires a relatively small amount of memory. The sampl
 far detector-like geometries show the required memory for the model inference is around 15\% of the \dword{geant4} simulation. Further, this memory use is not directly correlated to the size of the detectors. %\todo{anne: is the GEANT4 directly correlated to vol? %HMS -more likely area.  Changed to size   }
 
 \subsubsection{Semi-Analytical Photon Detection}
-In these methods, a large number of photons is generated at different points within the cryostat volume and propagated using \dword{geant4}. Gaisser-Hillas functions are fitted to the  number of 
-photons reaching the photon detectors as a function of source-detector distance and relative angle, and the resulting parameters are used during event simulation  in order 
+In these methods, large numbers of photons is generated at different points within the cryostat volume and propagated using \dword{geant4}. Once those propagation distributions have been simulated, Gaisser-Hillas functions are fitted to the  number of 
+photons reaching the photon detectors as a function of source-detector distance and relative angle. The resulting parameters are used during event simulation  in order 
 to extract the fraction of photons produced at a certain point that arrives at a given sensor.
  
 \subsubsection{Comparison Between Fast Simulation Methods}
@@ -271,8 +268,9 @@ It has been reported that the optical library struggles to properly describe lig
 %\todo{anne: did it work? - HMS don't know}
 
 
-%anne However, 
-\dword{sbnd}, however, observes better performance from the
+%anne HMS done
+However, 
+\dword{sbnd}, observes better performance from the
 semi-analytic model, with improved  resolution close-on axis
 (3.6\% vs 5.6\%), and less than 1\% bias. In contrast, the
 optical library is systematically biased (2.5-4.9\%), in particular for
@@ -308,9 +306,9 @@ default for fast simulations in the DUNE \dword{fd}.
 
 \subsection{Common Simulation Tools}
 
-The near detector simulation chain is diagrammed in Figure /ref{fig:ch:use:ndsimrecoflowdiagram}. The flux, geometry and generator stages are common across the ND detectors. 
-The model used to predict the neutrino flux at the near detector is a \dword{geant4}-based simulation of the incident proton beam, the target, the focusing horns, decay pipe and the hadron absorber, called \dword{g4lbnf}~\cite{DUNE:2020ypp}, and the dk2nu package.  The same simulation is used to predict the flux at the far detector, which differs from that at the near detector due to the angular and position acceptance of the near detetor, as well as neutrino oscillations.  Uncertainties on the flux are estimated using the \dword{ppfx} framework developed by the \dword{minerva} collaboration~\cite{Aliaga:2016oaz,AliagaSoplin:2016shs}.
-The detector geometries are generated with the DUNENDGGD package which produces a hall detector suite in the hall in GDML format, as described in Section~\ref{sec:usecases:detectorgeometry}. Neutrino interactions are simulated with \dword{genie} version 2.12.10\footnote{The simulations use the \texttt{DefaultPlusValenciaMEC} physics list.} \cite{Andreopoulos:2009rq}. An upgrade to GENIE~3 is in progress. Particles exiting the struck nucleus are propagated through the detectors using a \dword{geant4}-based model called edep-sim~\cite{ref:edep-sim}, which produces \dword{root} trees containing the simulated energy deposit information and associated truth labels. Detect response simulations are handled independently for each subdetector as described below. 
+The near detector simulation chain is diagrammed in Figure \ref{fig:ch:use:ndsimrecoflowdiagram}. The flux, geometry and generator stages are common across the ND detectors. 
+The model used to predict the neutrino flux at the near detector is a \dword{geant4}-based simulation of the incident proton beam, the target, the focusing horns, decay pipe and the hadron absorber, called \dword{g4lbnf}~\cite{DUNE:2020ypp}, and the dk2nu package.  The same simulation is used to predict the flux at the far detector, which differs from that at the near detector due to the angular and position acceptance of the near detector, as well as neutrino oscillations.  Uncertainties on the flux are estimated using the \dword{ppfx} framework developed by the \dword{minerva} collaboration~\cite{Aliaga:2016oaz,AliagaSoplin:2016shs}.
+The detector geometries are generated with the DUNENDGGD package which produces a hall detector suite in the hall in GDML format, as described in Section~\ref{sec:usecases:detectorgeometry}. Neutrino interactions are simulated with \dword{genie} version 2.12.10\footnote{The simulations use the \texttt{DefaultPlusValenciaMEC} physics list.} \cite{Andreopoulos:2009rq}. An upgrade to GENIE~3 is in progress. Particles exiting the struck nucleus are propagated through the detectors using a \dword{geant4}-based model called edep-sim~\cite{ref:edep-sim}, which produces \dword{root} trees containing the simulated energy deposit information and associated truth labels. Detector-response simulations are handled independently for each subdetector as described below. 
 
 \begin{dunefigure}
 [Diagram showing the components of the Near Detector simulation and reconstruction workflow]
@@ -324,10 +322,10 @@ The ND-LAr detector simulation is performed through a set of fully GPU-optimized
 
 The software takes as input energy deposits in the active volume as simulated by \texttt{edep-sim}. The \texttt{edep-sim} output ROOT files are converted into the HDF5 format by a dedicated script. The simulation takes into account quenching and drifting effects for the ionization electrons in the liquid argon and calculates the current induced on the pixels placed at the anode of each module. Subsequently, the electronics simulation produces the analog-to-digital counts and timestamps in the same format as the LArPix ASICs \cite{larpix}. The number of photons reaching the light readout system is calculated using a GPU-optimized lookup table. The output is saved in the HDF5 format. 
 
-The high flexibility of the software allows to easily implement different detector geometries. The software has been already employed to perform comparisons between the simulation and the data coming from the Module-0 and Module-1 runs \cite{module0} and it has been successfully used to produce full-spill ND-LAr simulations.
+The high flexibility of the software allows easy implementation of different detector geometries. The software has already been employed to perform comparisons between the simulation and the data coming from the ArgonCube Module-0 and Module-1 runs \cite{module0} and it has been successfully used to produce full-spill ND-LAr simulations.
 
 \subsection{TMS Detector Simulation}
-Currently detector response is handled with general hit smearing. A full detector response simulation is in progress. 
+Currently detector response is handled with resolutions incorporated at the hit level by smearing reconstructed quantities. A full detector response simulation is in progress. 
 
 \subsection{ND-GAr Detector Simulation}
 \label{sec:usecases_ndgardetsim}
@@ -344,11 +342,11 @@ The response of the calorimeter and the muon systems are parameterized versions 
 \subsection{SAND Detector Simulation}
 \label{sec:usecases_sanddetesim}
 
-\subsubsection{SAND Detector Design}
-\label{sec:usecases_sanddetdesign}
+%\subsubsection{SAND Detector Design}
+%\label{sec:usecases_sanddetdesign}
 
-The SAND detector comprises an active LAr target exploiting light read-out (\dword{grain}) placed upstream of a low-density tracker based on straw tube technology (STT). Both are surrounded by $4\pi$-hermeticity electromagnetic calorimeter (ECAL) and immersed in a 0.6 T magnetic field provided by a solenoidal magnet.
-The ECAL is read-out by 4880 photosensors, with an estimated 5500 total hits per spill or 33 kB of packed data per spill. The STT in the current design foresees 218,000 channels and a mean number of hits per spill of about 12,500 corresponding to 75.6 kB of packed data per spill. In the current design, \dword{grain} will be instrumented with up to 76 (32x32) \dword{sipm} matrices. The mean number of hits per spill is about 120,000 corresponding to 1.44 MB of packed data per spill. With these assumptions, the data volume from SAND comes to about 40 TB/year. The amount of data from out-of-spill cosmic rays is estimated to be 20\% of that of the in-spill data, or approximately 8~TB.
+%The SAND detector comprises an active LAr target exploiting light read-out (\dword{grain}) placed upstream of a low-density tracker based on straw tube technology (STT). Both are surrounded by $4\pi$-hermeticity electromagnetic calorimeter (ECAL) and immersed in a 0.6 T magnetic field provided by a solenoidal magnet.
+%The ECAL is read-out by 4880 photosensors, with an estimated 5500 total hits per spill or 33 kB of packed data per spill. The STT in the current design foresees 218,000 channels and a mean number of hits per spill of about 12,500 corresponding to 75.6 kB of packed data per spill. In the current design, \dword{grain} will be instrumented with up to 76 (32x32) \dword{sipm} matrices. The mean number of hits per spill is about 120,000 corresponding to 1.44 MB of packed data per spill. With these assumptions, the data volume from SAND comes to about 40 TB/year. The amount of data from out-of-spill cosmic rays is estimated to be 20\% of that of the in-spill data, or approximately 8~TB.
 
 \subsubsection{SAND Simulation Components}
 The SAND detector response simulation is performed by several tools developed in C++ and Python. The digits are built starting from the energy deposits provided by edep-sim, after the simulation of the detector response.
@@ -356,16 +354,16 @@ The SAND detector response simulation is performed by several tools developed in
  \begin{itemize}
 \item{ECAL:} The energy deposits in the scintillating fibers are converted into the number of generated photons randomly extracted by a Poisson distribution with mean of 25 photons per MeV of energy deposited. The number of photo-electrons is obtained taking into account the attenuation according to the fiber length traveled by the photons. The arrival time to the photo-sensors is assigned to each photo-electron taking into account the scintillation decay time, the propagation time along the fiber and a random jitter. The amplitude of the signal of the photo-sensor is proportional to the number of photo-electrons collected in a certain time window and the time of the signal is obtained simulating a 15\% constant fraction discriminator.
  
-\item{STT:} For each energy deposit in a straw tube, the electronic signal arrival time at the read-out is evaluated considering the electron drift time towards to wire, the electric signal propagation along the wire and a random jitter. The timing of the signal is given by the earliest electric signal reaching the tube read-out. The amplitude of the signal is proportional to the sum of the energy deposit in a certain time window.
+\item{STT:} For each energy deposit in a straw tube, the electronic signal arrival time at the read-out is evaluated considering the electron drift time to the wire, the electric signal propagation along the wire and a random jitter. The timing of the signal is given by the earliest electric signal reaching the tube read-out. The amplitude of the signal is proportional to the sum of the energy deposit in a certain time window.
  
 \item{GRAIN:} Argon scintillation in GRAIN is simulated using \dword{geant4}. For each energy deposit, a random number is extracted from a Gaussian distribution, with the mean value determined by the argon light yield and the fraction of the energy deposit that ends up producing photons (already calculated by edep-sim), and a dispersion given by the square root of this number. If the mean is less than 20, a Poisson distribution is used instead. For each photon, a random momentum, polarization, position along the step, time of emission, and energy are determined. The properties of argon are included: the singlet to triplet ratio, fast and slow, Rayleigh scattering, and the absorption length.
 The photons are then collected by cameras. A camera is composed of an optical system (either mask or lens) and a (32x32) \dword{sipm} matrix as photo-sensor. The simulation includes the geometry of the cameras, whether being lens-based or mask-based. The number of photons collected in each channel in a given time window and the time of the first photon impinging in each channel is stored for producing a two-dimensional image for each camera. 
-The photo-sensor response is simulated with custom software written in Python and OpenCL for GPU-accelerated computing. The \dword{sipm} matrix response waveform is computed with a heuristic function from the timing of impinging photons on the matrix surface. The \dword{sipm} characteristics such as PDE, crosstalk, afterpulses, and dark count rate are included in the simulation. A small quantity of white and rf noise is added as well. The waveform is then quantized and the and integrated over a fixed time window to simulate a DAQ composed by an ADC and a TDC for timing over a fixed threshold.
+The photo-sensor response is simulated with custom software written in Python and OpenCL for GPU-accelerated computing. The \dword{sipm} matrix response waveform is computed with a heuristic function from the timing of impinging photons on the matrix surface. The \dword{sipm} characteristics such as PDE, crosstalk, afterpulses, and dark count rate are included in the simulation. A small quantity of white and rf noise is added as well. The waveform is then quantized and integrated over a fixed time window to simulate a DAQ composed by an ADC and a TDC for timing over a fixed threshold.
 \end{itemize}
 
 
 \subsection{Overlays}
-In order to build full beam spills simulated events on rock, detector fiducial volumes and the corresponding anti-fiducial sample are overlayed to reproduce expected beam timing and intensity. The OverlayGenie package is the current overlay tool in use but alternative which are more integrated are being developed. 
+In order to build full beam spills simulated events on rock, detector fiducial volumes and the corresponding anti-fiducial sample are overlayed to reproduce expected beam timing and intensity. The OverlayGenie package is the current overlay tool in use but alternative which are more integrated are being developed. More details are listed in \ref{sec:usecases_overlays}. 
 
 
 \section{ProtoDUNE Simulation Experience \hideme{Yang - draft}}
@@ -391,7 +389,7 @@ the interactions of interest.  Libraries of properly formatted raw data can be c
 
 {\it Challenges: %We have 
 DUNE has not yet integrated overlays into the \dword{protodune} or \dword{fd}  frameworks. %anne To do this we will need to 
-Implementation of overlays will  require distribution of large volumes of overlay data to remote sites while maintaining randomness. Other experiments such as MicroBooNE and MINERvA have done this successfully. }
+To do this we will need to distribute large volumes of overlay data to remote sites while maintaining randomness. Other experiments such as MicroBooNE and MINERvA have done this successfully. }
 
 \subsection{Reweighting}
 If intermediate simulation steps  are stored they can be used to reweight interactions to reflect new knowledge about the underlying cross sections, neutrino flux, detector materials or detector properties. Examples include the \dword{ppfx} beamline simulation reweighting system and the implementation of different cross section and final-state interaction models in event generators. 
@@ -399,8 +397,8 @@ If intermediate simulation steps  are stored they can be used to reweight intera
 {\it This is not a major challenge, several reweighting packages have been developed for NuMI/DUNE \cite{Aliaga:2015wva, Calcutt:2021zck}.}
 
 \subsection{Outputs from Simulation}
-%anne At this point we should have simulated data 
-Once simulated data exists
+%anne At this point we should have simulated data  HMS done
+At this point we should have simulated data
 that is equivalent to the raw data coming from the detector, %. The 
 the next steps are calibration and reconstruction. In all cases, descriptive metadata needs to be produced that would allow reproduction of the simulation. 
 
@@ -442,7 +440,7 @@ the next steps are calibration and reconstruction. In all cases, descriptive met
 \begin{dunefigure}
 [Data flow diagram for standard ProtoDUNE reconstruction]
 {fig:ch:use:pdii}
-{Data flow diagram for standard \dword{protodune} data reconstruction. The central boxes show the processing steps, the right side shows the large-scale data flow,  and the left side shows the auxiliary information needed for processing. Thicker lines indicate particularly large data volumes.}
+{Data flow diagram for standard \dword{protodune} data reconstruction. All processing and data transfers shown are part of offline processing. The central boxes show the processing steps, the right side shows the large-scale data flow,  and the left side shows the auxiliary information needed for processing. Thicker lines indicate particularly large data volumes.}
 \includegraphics[width=0.8\textwidth]{graphics/IntroFigures/Data_processing_FD_v3.png}
 \end{dunefigure}
 
@@ -452,7 +450,7 @@ A detailed description of the \dword{pdsp} and Far Detector reconstruction algor
 Figure~\ref{fig:ch:use:pdii} shows the data flow for regular reconstruction in \dword{protodune}.  
 There are, in principle,  multiple stages in reconstruction that are each well suited to different computer architectures.  We expect the full \dword{fd} data processing to follow a similar path to that used by \dword{protodune}.  
 
-Figure \ref{fig:ch:use:fdagg} illustrates  readout structures for full DUNE \dword{fd} modules.  A readout consists of a large number (up to 150) of   30\,MB \dword{apa} readouts and a number of smaller readout fragments.  These need to be processed and  recombined into a single readout record. 
+Figure \ref{fig:ch:use:fdagg} illustrates  readout structures for full DUNE \dword{fd} modules.  A readout consists of a large number (up to 150) of  30\,MB \dword{apa} readout fragments and a number of smaller readout fragments that are much smaller than a 30\,MB APA fragment.  Details of trigger record volume can be found in Tables  \ref{tab:est:usefulfdhd} and \ref{tab:est:usefulfdvd}. These need to be processed and  recombined into a single readout record. 
 
 \begin{dunefigure}
 [Data aggregation diagram for FD]
@@ -462,9 +460,10 @@ Figure \ref{fig:ch:use:fdagg} illustrates  readout structures for full DUNE \dwo
 \end{dunefigure}
 %\pagebreak
 
-Reconstructing events in a \dword{lartpc} is challenging.  Each trigger record contains a large number of waveforms, one for each readout channel.  In \dword{pdsp}, the waveforms typically were 6000 time ticks long, with one \dword{adc} sample per time tick.  A detailed description of the reconstruction procedures, starting with these waveforms, is given in~\cite{Abi:2020mwi}, and summarized briefly here.
+Each trigger record contains a large number of waveforms, one for each readout channel.  In \dword{pdsp}, the waveforms typically were 6000 time ticks long, with one \dword{adc} sample per time tick.  A detailed description of the reconstruction procedures, starting with these waveforms, is given in~\cite{Abi:2020mwi}, and summarized briefly here.
 
 \subsection{Signal Processing \hideme{Schellman-draft}}
+\label{subsec:signal_processing}
 
 The initial offline processing stage, labeled ``signal processing'' in Figure~\ref{fig:ch:use:pdii}, holds particular significance and challenges.
 Such a stage must be applied to data from both the \dword{pd} and \dword{tpc} readouts.
@@ -526,16 +525,18 @@ These results finally enable very accurate reconstruction of quantities such loc
 These algorithms were initially developed for MicroBooNE~\cite{MicroBooNE:2021ojx} where they have been found to outperform others~\cite{MicroBooNE:2021rmx, MicroBooNE:2021nxr}. 
 There is an ongoing effort to generalize and ``port'' these algorithms into \dword{wct} for use by DUNE and other LArTPC detectors.
 
-Either strategy results in a 3D model of the ionization distribution which is composed of a number of spacial clusters connected in some way through the 3D space of the detector volume.
+Either strategy results in a 3D model of the ionization distribution which is composed of a number of spatial clusters connected in some way through the 3D space of the detector volume.
 With these clusters as input, a process called ``flash matching'' attempts to associate processed \dword{pd} signals with the TPC clusters in order to determine when in time or equivalently where along the drift axis the cluster of ionization occurred.
 The offline software must arrange for these two data flows to merge on a per-trigger-record basis.
 
 From these relatively low-level reconstruction, various high-level reconstruction techniques follow.
 For example, separating track-like energy deposits from shower-like deposits is a key part of many DUNE analyses. 
-In one case, this is accomplished with a \dword{cvn} called {\tt EmTrackMichelID} in Table~\ref{tab:protodune_cpu_reco_by_module}. 
+In one case, this is accomplished with a \dword{cvn} called {\tt EmTrackMichelID} in Table~\ref{tab:protodune_cpu_reco_by_module}.
+The signal processing is run in two modules: ``caldata'' includes all but 2D deconvolution and signal-finding which are handled in ``wclsdatasp''.
 It is one of the most CPU-intensive operations in the \dword{pdsp} reconstruction chain, when the algorithm is run on a grid node lacking a GPU. 
 Recently, however, a \dword{gpuaas} technique has been developed~\cite{Wang:2020fjr}, enabling a speed-up on the order of a factor of ten, though it depends on the ratio of CPU-only nodes to GPU resources.
 
+\pagebreak
 
 \subsection{ProtoDUNE Experience}
 
@@ -604,7 +605,7 @@ RootOutput(write)                        &     2.8\\%458               \\
 
 \section{Near Detector Reconstruction\hideme{Junk/Muether - needs revision}}
 
-The \dword{nd} Reconstruction primary exists as separate reconstructions for each individual ND sub-detector (described below). The ND software group are developing a common data model which will allow inter-detector software connection. For instance, an event matching algorithm between the \dword{ndlar} and TMS has been developed. Output from the Reconstruction will be written to common analysis files (CAF) that will enable physics analysis (Fig. \ref{fig:nd:reco}). The current ND data model is outlined in the DUNE ND Data Model document~\cite{bib:docdb24735}.
+The \dword{nd} Reconstruction primary exists as separate reconstructions for each individual ND sub-detector (described below). The ND software group are developing a common data model which will allow inter-detector software connection. For instance, an event matching algorithm between the \dword{ndlar} and TMS has been developed. Output from the Reconstruction will be written to common analysis files (CAF \footnote{The Common Analysis Format is a simplified ROOT-based ntuple and corresponding library of analysis tools, CAFAna, that was developed by the NOvA collaboration and is currently used by NOvA, DUNE, and SBND for the final stage of physics analysis.}) that will enable physics analysis (Fig. \ref{fig:nd:reco}). The current ND data model is outlined in the DUNE ND Data Model document~\cite{bib:docdb24735}.
 
 \begin{dunefigure}
 [ND Reconstruction Flow Chart Example]
@@ -613,12 +614,12 @@ The \dword{nd} Reconstruction primary exists as separate reconstructions for eac
 {\includegraphics[width=0.8\textwidth]{graphics/ND/ND-Reco-workflow.png}}
 \end{dunefigure}
 
-\subsection{LAR}
- Reconstruction algorithms for the \dword{ndlar} include both traditional and machine learning-based chains. The primary reconstruction is an automated machine-learning based package which has been demonstrated on full spill events on in native 3d detector readout. A parallel Pandora based reconstruction is also being prepared. These reconstruction algorithms are currently being tested on both simulated and prototype data. 
+\subsection{Near Detector Liquid Ar \dword{ndlar}}
+ Reconstruction algorithms for the \dword{ndlar} include both traditional and machine learning-based chains. The primary reconstruction is an automated machine-learning based package which has been demonstrated on full spill events on in native 3d detector readout. A parallel Pandora based reconstruction is also being prepared. These reconstruction algorithms are currently being tested on both simulated and prototype data. Rough estimates for CPU processing time is listed in Table \ref{tab:NDCPUPerEvent}.
  
 \subsubsection{ND LArTPC ML Reconstruction }
 
-A full data reconstruction chain for the LArTPC at DUNE ND consists of multiple machine learning algorithms optimized for multiple reconstruction tasks. An overall software design can be found in~\cite{Drielsma:2021jdv} and details of individual algorithm can be found in~\cite{Domine:2019zhm,Domine:2020tlx,DeepLearnPhysics:2020hut,Koh:2020snv,NeutrinoUQ}, including evaluations performed on a public LArTPC simulation dataset~\cite{Adams:2020vlj}. This reconstruction software is based on earlier development of applying powerful deep learning methods to LArTPC experiments~\cite{Acciarri:2016ryt,Radovic:2018dip,Adams:2018bvi}. In particular, these algorithms include deep convolutional and graph neural networks as well as analytical physics models (e.g. Multiple Coulomb Scattering for estimating momentum). The reconstruction chain takes voxelized 3D image (i.e. data recorded by the detector) as an input, and produces the output that organizes following information:
+A full data reconstruction chain for the LArTPC at DUNE ND consists of multiple machine learning algorithms optimized for multiple reconstruction tasks. An overall software design can be found in~\cite{Drielsma:2021jdv} and details of individual algorithm can be found in~\cite{Domine:2019zhm,Domine:2020tlx,DeepLearnPhysics:2020hut,Koh:2020snv,NeutrinoUQ}, including evaluations performed on a public LArTPC simulation dataset~\cite{Adams:2020vlj}. This reconstruction software is based on earlier development of applying powerful deep learning methods to LArTPC experiments~\cite{Acciarri:2016ryt,Radovic:2018dip,Adams:2018bvi}. In particular, these algorithms include deep convolutional and graph neural networks as well as analytical physics models (e.g. Multiple Coulomb Scattering for estimating momentum). The reconstruction chain takes voxelized 3D image (i.e. data recorded by the detector) as an input, and produces the output that organizes the following information:
 \begin{itemize}
     \item A list of neutrino interactions
     \item A list of particles in each neutrino interaction
@@ -627,7 +628,7 @@ A full data reconstruction chain for the LArTPC at DUNE ND consists of multiple 
         \item Particle type and kinematic information
         \item A cluster of pixels that resemble the particle's trajectory
         \item Particle hierarchy (e.g. a parentage information for a particle produced through a decay process)
-        \item Calibrated uncertainty quantification for (the most of) attributes listed above
+        \item Calibrated uncertainty quantification for (most of) the attributes listed above
     \end{itemize}
 \end{itemize}
 
@@ -646,7 +647,7 @@ The current \dword{tms} reconstruction approach is running the track finding and
 For the track finding stage, we are currently investigating three approaches. They all run in each view separately, and the 2D to 3D track matching and merging is done at a later stage.
 
 \begin{itemize}
-    \item Perform a Hough transform \cite{Hough:1959qva} in each view separately, and find which hits intersect the primary Hough line. Traverse the hits and group neighbouring hits into a track candidate. Take remaining hits (not belonging to a candidate) and repeat process to see if there is a $N^{th}$ track candidate. Due to the bending in the $x-z$ view, the Hough transform is often more successful in the $y-z$ view, and the neighbour clustering in $x-z$ is critically important.
+    \item Perform a Hough transform \cite{Hough:1959qva} in each view separately, and find which hits intersect the primary Hough line. Traverse the hits and group neighboring hits into a track candidate. Take remaining hits (not belonging to a candidate) and repeat process to see if there is a $N^{th}$ track candidate. Due to the bending in the $x-z$ view, the Hough transform is often more successful in the $y-z$ view, and the neighbor clustering in $x-z$ is critically important.
 
     \item Sort the hits in $z$, and run a custom A* path finding algorithm from first to last hit in $z$. The intent is to find the shortest path between the first and last hit, only traversing cells that have been hit. If no path is found from start to finish, repeat A* path finding running until the hit with second largest z, and continue.
     
@@ -658,30 +659,31 @@ Currently, the lepton candidate is assumed to be the longest track in the track 
 
 Preliminary studies show track length is by far the most important feature for a good muon KE measurement, with the energy deposits and track bending being secondary contributions. The current Kalman implementation in the \dword{tms} software includes effects from energy loss and multiple scattering, inspired by similar implementations in \dword{minos}, \dword{minerva}, and \dword{t2k}. Efforts towards integration of the \dword{ndlar} and \dword{tms} reconstructions are also ongoing.
 
-\subsection{Pixel-Based Gaseous Argon TPC Recontruction}
+\subsection{Pixel-Based Gaseous Argon TPC Reconstruction}
 \label{sec:algo:reco:gartpc:pixels}
 
 The \dword{ndgar} consists of two primary detectors -- a copy of the ALICE pixel-based \dword{tpc} in a 10-bar gas consisting predominantly of argon, surrounded by a calorimeter and a superconducting magnetic coil.  A muon system is envisaged outside of the calorimeter but is not included in the simulation or the reconstruction at the time of writing.  Data are unpacked and hits are found on the per-readout-pad waveforms, similarly to how the initial stages of reconstruction for a \dword{lartpc} are followed.  Hits are then clustered into TPC clusters, which reduces the memory and CPU usage of subsequent steps, and also increases the spatial resolution of individual clusters.  Vector hits are found by grouping TPC clusters into short line segments, and the vector hits themselves are grouped into track candidates by a pattern recognition module.  A track fit based on a Kalman filter then finds the best estimates of the track parameters.  Vertices are then found using tracks with nearby endpoints.  Because there is a cathode in the middle of the drift volume in the nominal \dword{ndgar} design, 
-a cathode stitch module is then run to associate track segments on either side of the cathode, bring them together by solving for the best interaction time that lines the segments up, and also moves the associated tracks and vertices.  Vees ($K^0_s$ and
-$\Lambda^0$ candidates) are found by pairing nearby tracks together, optionally requiring a displacement from another vertex, and forming the invariant mass.  The calorimeter consists of a mixture of strips and pads.  Calorimeter hits are found in the \dword{sipm} waveforms provided by the calorimeter \dword{daq}, and they are clustered together to form reconstructed three-dimensional energy deposit objects with positions, directions, and energies.  Calorimeter clusters are associated with tracks, and they must match both in position and in time.  Before association with a calorimeter cluster, a track's position along the drift direction is uncertain due to the unknown interaction time.
+a cathode stitch module is then run to associate track segments on either side of the cathode, bring them together by solving for the best interaction time that lines the segments up, and also moves the associated tracks and vertices. 
+%Vees ($K^0_s$ and $\Lambda^0$ candidates) are found by pairing nearby tracks together, optionally requiring a displacement from another vertex, and forming the invariant mass.
+The calorimeter consists of a mixture of strips and pads.  Calorimeter hits are found in the \dword{sipm} waveforms provided by the calorimeter \dword{daq}, and they are clustered together to form reconstructed three-dimensional energy deposit objects with positions, directions, and energies.  Calorimeter clusters are associated with tracks, and they must match both in position and in time.  Before association with a calorimeter cluster, a track's position along the drift direction is uncertain due to the unknown interaction time.
 The nanosecond-scale timing resolution of the calorimeter allows the updating of track positions along the drift direction.
 
 \subsection{SAND}
 
-For neutrino interactions in the STT, a first rough estimation of the vertex position is based on the STT digit spread in both the XZ and YZ views, where Y is the vertical axis, Z is the projection of the beam direction on the horizontal plane and X is perpendicular to the first two in a right-handed coordinate system. The vertex position is then used to apply a conformal transformation to the coordinates of the YZ digits $(y,z \rightarrow u,v)$. The YZ tracks are then identified as clusters of digits in the v/u distribution. The particle momentum in the bending plane is estimated with a circular fit of the YZ digits. To measure the dip angle, a transformation is first applied to the coordinates of the XZ digits $(x,z \rightarrow x,\rho)$ to linearize the trajectory, followed by a linear fit. A Kalman Filter based track reconstruction for the STT in under development.
+For neutrino interactions in the Straw Tube Tracker (STT), a first rough estimation of the vertex position is based on the STT digit spread in both the XZ and YZ views, where Y is the vertical axis, Z is the projection of the beam direction on the horizontal plane and X is perpendicular to the first two in a right-handed coordinate system. The vertex position is then used to apply a conformal transformation to the coordinates of the YZ digits $(y,z \rightarrow u,v)$. The YZ tracks are then identified as clusters of digits in the v/u distribution. The particle momentum in the bending plane is estimated with a circular fit of the YZ digits. To measure the dip angle, a transformation is first applied to the coordinates of the XZ digits $(x,z \rightarrow x,\rho)$ to linearize the trajectory, followed by a linear fit. A Kalman Filter based track reconstruction for the STT in under development.
 The longitudinal position and timing of the energy deposit in an ECAL cell is obtained by comparing the measured timing in the photo-sensors on both ends of the cell. Adjacent cells are grouped into cluster and the position, timing and energy deposit of each cell is used to obtain the position, timing, total energy deposit and direction of the cluster.
 The reconstruction for GRAIN lens-based light readout takes as input the two-dimensional images produced by the sub-set of the cameras which have observed each event. The first step of the reconstruction is aimed at identifying the track projections in the images and fitting them. The algorithm is based on the Hough transform~\cite{Hough:1959qva}, multi-Otsu thresholding~\cite{1979:ots} and DBSCAN~\cite{Ester96adensity-based} clustering to isolate, select and fit the tracks in each image. The second step combines the two-dimensional information to obtain a three-dimensional reconstruction of the event. Assuming the pinhole approximation, pixels associated to a reconstructed track are projected back into 3D space to find a volume compatible with their 2D projections. The final outputs are then the reconstructed tracks, an estimate of the energy deposited from each track based on the amount of the collected photon from the collected light and the 3D vertex candidate.
-The direct 3D reconstruction for GRAIN with Hadamard masks consists of a custom reconstruction algorithm that obtains a 3D map of the deposited energy. It is based on a probablitistic and combinatorial approach: each hit on the camera pixel is propagated in the detector volume through each mask hole, with an appropriate weight assigned to the segmented volume units (voxels), which measure 1 cm$^3$.  The algorithm is designed to be run on \dwords{gpu} to provide the required performance.
+The direct 3D reconstruction for GRAIN with Hadamard masks consists of a custom reconstruction algorithm that obtains a 3D map of the deposited energy. It is based on a probabilistic and combinatorial approach: each hit on the camera pixel is propagated in the detector volume through each mask hole, with an appropriate weight assigned to the segmented volume units (voxels), which measure 1 cm$^3$.  The algorithm is designed to be run on \dwords{gpu} to provide the required performance.
 The event analysis in case of mask-based light readout is not so different from the lens-based case. Clustering algorithms and fit procedures are used for the 2D reconstruction of the tracks. The single-pinhole approximation is assumed to combine the signals from different masks and to get the 3D view of the event. A new algorithm to avoid wrong associations of light pixels on different masks is under study. Also, for the masks, the final results are the vertex identification looking at the most probable 3D voxels and the calorimetric measurement.
  
 
 \subsection{Common ND analysis files}
 
 The final output format used to conduct physics analysis will be a simplified
-{\it analysis tree} file, which contains a reduced subset of the full simulation
+{\it analysis tree} file whose format has not yet been fully defined, which contains a reduced subset of the full simulation
 and reconstruction output. The first version of the analysis tree format is
 based on the ND CAFs, which are produced by applying a parametric response
-model to the \dword{geant4}-level ND simulation for use in long-baseline and other analyses.
+model to the \dword{geant4}-level ND simulation for use in long-baseline and other analyses. It is recognized that a more detailed definition of the simplified analysis will be needed in the future, but given the preliminary nature of the ND design greater definition is not possible right now.
 
 \begin{dunetable}
 [Average \dshort{ndgar} event wall-clock module execution times]
@@ -730,9 +732,9 @@ Before final pattern recognition can be applied to physics events,  the processe
 %anne starting to look at this 3/2
 Both raw and reconstructed data from each of DUNE's detectors must be visualized graphically in multiple ways in order to successfully design, commission and operate the detectors, and to extract meaningful physics results.  While reconstruction is automated and hand-scanning is no longer used to extract physics results, event displays are critical for a large number of necessary steps:
 \begin{enumerate}
-    \item {\bf Design of the detectors}   It is important to visualize interactions in the detectors in order to ascertain which among them are easy to identify and measure, and which ones are difficult.
+    \item {\bf Detector Design Development}   While designing detectors, it is important to visualize interactions in the design in order to ascertain which interactions are easy to identify and measure, and which ones are difficult in order to refine the design.
     \item{\bf Optimizing reconstruction algorithms}  Comparisons of true particle trajectories and energies with reconstructed versions thereof in simulated interactions provides guidance for improving reconstruction algorithms.  Quantitative metrics such as completeness and purity can be optimized, but it is easier to do so when viewing an event display that shows which pieces of which interactions have failed to reconstruct well.
-    \item{\bf Operating prototypes and learning from them}  Data from prototypes, such as the \dwords{coldbox}, the \dwords{protodune}, and \dword{iceberg} must be analyzed quickly to ascertain what the noise level is and to search for the presence of signals.  This is part of an iterative experimental process to commission the prototypes by searching for noise sources, checking \dword{hv} and cryogenic performance, drift medium purity, etc.  Dead channels or other artifacts such as long-range induction effects are plainly visible on raw data displays.  Various artifacts may be addressable with software, such as correcting for front-end amplifier artifacts, correlated noise, and \dword{adc} issues.  These are all discovered first with event visualization.
+    \item{\bf Operating prototypes and learning from them}  Data from prototypes, such as the \dword{coldbox}es, the \dwords{protodune}, and \dword{iceberg} must be analyzed quickly to ascertain what the noise level is and to search for the presence of signals.  This is part of an iterative experimental process to commission the prototypes by searching for noise sources, checking \dword{hv} and cryogenic performance, drift medium purity, etc.  Dead channels or other artifacts such as long-range induction effects are plainly visible on raw data displays.  Various artifacts may be addressable with software, such as correcting for front-end amplifier artifacts, correlated noise, and \dword{adc} issues.  These are all discovered first with event visualization.
     \item{\bf Interpreting calibration data}  Laser calibrations, neutron source data and radioactive source data must be inspected first before use, as unanticipated artifacts may confound the intended calibration use.
     \item{\bf Providing educational and public outreach materials}  Introducing new students to DUNE's physics program involves showing them what interactions look like in each of our detectors.  Materials for DUNEs public-facing web sites and press releases also require high-quality data visualizations.
 \end{enumerate}
@@ -751,7 +753,7 @@ optimized for X-Window connections.  Users can zoom in on rectangular subsets of
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/pdsp_larsoft_rawevent.png}
 \end{dunefigure}
 
-The raw data display provided by \dword{larsoft} is best run interactively.  The user can step through the events in a file, forwards or backwards, or skip to a desired event number.  This event display is not built for non-interactive use.  There are use cases in which large numbers of raw event displays need to be produced in a batch.  For this purpose, dedicated modules have been written in DUNE's \dword{larsoft}-based software that provide two-dimensional displays of raw data and data that have been processed through each step of data preparation. Examples are shown in Figure~\ref{fig:vis:dataprep} after four stages of data processing.
+The raw data display provided by \dword{larsoft} is best run interactively.  The user can step through the events in a file, forwards or backwards, or skip to a desired event number.  This event display is not built for non-interactive use.  There are use cases in which large numbers of raw event displays need to be produced in a batch.  For this purpose, dedicated modules have been written in DUNE's \dword{larsoft}-based software that provide two-dimensional displays of raw data and data that have been processed through each step of data preparation. Examples are shown in Figure~\ref{fig:vis:dataprep} after four stages of data processing. While there is definitely room for development of features and improved ease-of-use, this is currently the best resource for raw data viewing.
 
 
 \begin{dunefigure}[Two-Dimensional Displays of ProtoDUNE-SP Data in Stages of Data Preparation]{fig:vis:dataprep}{Example batch-mode event displays for a collection plane showing background reduction in successive stages of data processing.
@@ -843,7 +845,7 @@ An example of a reconstructed event in \dword{ndgar} is shown in Figure~\ref{fig
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/ndgar_evd3d.png}
 \end{dunefigure}
 
-The third component of the near detector, \dword{sand}, consists of a staw-tube tracker and a calorimeter inside a solenoidal magnet.  A small cryostat containing liquid argon, called \dword{grain}, %anne 3/3: I added a dword; check def
+The third component of the near detector, \dword{sand}, consists of a straw-tube tracker and a calorimeter inside a solenoidal magnet.  A small cryostat containing liquid argon, called \dword{grain}, %anne 3/3: I added a dword; check def
 is to be installed upstream of the straw-tube tracker inside the \dword{ecal}.  Design and performance studies are underway.  Basic event visualization tools have been developed to aid in the development of the reconstruction algorithms.  An example display of simulated and reconstructed particles in \dword{sand} is shown in Figure~\ref{fig:vis:sandevd}.
 
 \begin{dunefigure}
@@ -853,8 +855,8 @@ is to be installed upstream of the straw-tube tracker inside the \dword{ecal}.  
 \includegraphics[width=0.9 \textwidth]{graphics/EventDisplays/sand_detector_view_stt_17924.pdf}
 \end{dunefigure}
 
-\section{Event Classification}
-Events will need to be classified.  Much of this is now done using \dword{ml} techniques.  This can be done at any phase in processing from raw hits to the final stages of pattern recognition. Multiple groups are developing these algorithms and some are already part of the reconstruction chain.
+%\section{Event Classification}
+%Events will need to be classified.  Much of this is now done using \dword{ml} techniques.  This can be done at any phase in processing from raw hits to the final stages of pattern recognition. Multiple groups are developing these algorithms and some are already part of the reconstruction chain.
 
 
 \section{Analysis of Reduced Data Samples}

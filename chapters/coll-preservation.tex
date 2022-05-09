@@ -1,6 +1,6 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Data Lifetimes and Preservation: \hideme{coll-preservation.tex Norman, Clarke, Fuess - needed }}
+\chapter{Data Lifetimes and Preservation: \hideme{coll-preservation.tex Anne's comments addressed but do we need comments on US/EU compliance?  }}
 \label{ch:pres}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,12 +28,12 @@ The data lifecycle policies are applicable to the Raw instrument data from the D
 
 Test, commissioning, simulation, reconstruction and other generated data is expected to have a finite period of usefulness.  As such a data lifecycle plan must be followed to include lifetime information in the corresponding metadata at time of creation.  At the end of the lifetime a review process is instantiated to determine if the lifetime should be extended or the data may be deleted.
 
-\subsection{ Content and Format}
-The scientific data contains raw values from the various detector elements and derived values from analysis of the raw information.  The data is stored in standard HEP formats (ROOT and HDF5) and various databases (postgresql), all of which may evolve over time.  Software and documentation will be stored in industry standard repositories (github).
+\subsection{Content and Format}
+The scientific data contains raw values from the various detector elements and derived values from analysis of the raw information.  The data is stored in standard HEP formats (ROOT and HDF5) and various databases (\dword{postgres}), all of which may evolve over time.  Software and documentation will be stored in industry standard repositories (\dword{github}).
 
 \subsection{ Data Sharing}
 All scientific data is available to members of the DUNE collaboration and may be disseminated to collaborating institutions.  The data is globally accessible via the network to authenticated and authorized users.  The host lab is the principle location for data, but data may be copied to other collaborating sites for expediency of access and redundancy.
-Derived data that is to be directly linked to publications (for example tables) shall be granted the same access as the publication.  In the future meaningful and accessible data sets will be made publically available.
+Derived data that is to be directly linked to publications (for example tables) shall be granted the same access as the publication.  In the future meaningful and accessible data sets will be made publicly available.
 
 \subsection{Data Preservation}
 Fermilab, as the host laboratory, will maintain accessible copies of all raw data for a period dictated by lab and DOE policies, generally at least five years past the end of data taking.  A longer retention period may be negotiated.  Processed and derived data is retained for a lifetime deemed useful by the collaboration, which for ultimate processed results is also minimally five years past the end of data taking.  Published and other publicly accessible data sets will be retained as long as technically viable. The data will reside on COTS systems, requiring periodic migration to new technologies.

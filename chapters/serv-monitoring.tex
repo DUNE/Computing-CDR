@@ -1,6 +1,6 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Information Systems and Monitoring \hideme{ Steve Timm, Raja Nandakumar, Jon Hays - in progress}}
+\chapter{Information Systems and Monitoring \hideme{5/4 HMS included comments from Anne, Doug and Steve K. }}
 \label{ch:mon}
 
 % Create Parameter Values - most #'s will need to be handled this way
@@ -10,12 +10,12 @@
 \FPset{MonEtfDevPeople}{1.0} % FTE
 \FPadd\MonEtfTotalPeople\MonEtfOpsPeople\MonEtfDevPeople %FTE
 
-This section %anne concerns 
-describes the monitoring of services and resources on the grid. % anne The actual monitoring of the jobs that are submitted by DUNE 
-Monitoring of DUNE jobs is provided as part of the Workflow System (see Chapter \ref{ch:wkflow}).
+This section %HMS I like describes better anne concerns 
+describes the monitoring of services and resources on the grid.  The actual monitoring of individual jobs that are submitted by DUNE 
+is provided as part of the Workflow System (see Chapter \ref{ch:wkflow}).
 
-As the global infrastructure is broadly similar to that used by the current \dword{lhc} experiments, DUNE plans to reuse the relevant monitoring tools (\dword{etf}, \dword{perfsonar}) developed for this purpose by the \dword{wlcg}. %anne, which we cover in this section.
-These tools are described here. 
+As the global infrastructure is broadly similar to that used by the current \dword{lhc} experiments, DUNE plans to reuse the relevant monitoring tools (\dword{etf}, \dword{perfsonar}) developed for this purpose by the \dword{wlcg} which we cover in this section.  %anne, which we cover in this section.
+%These tools are described here. 
 
 %Going forward, DUNE plans to be agile and keep up with upcoming developments in this field. If there is a paradigm change in the resources made available, there may be a need to develop new tools to keep on top of the available resources and display them in a transparent manner. An example can be the widespread deployment of ipv6\cite{bib:ipv6TaskForce} networking requiring possible re-evaluation of various tools for computing. The ETF and perfSonar tools are already ipv6 compatible and can be deployed to test resources offering ipv6 connectivity in either pure or dual-stack mode.
 Going forward, DUNE plans to be agile, keep up with upcoming developments in this field, and develop new tools as needed. For example, the widespread deployment of \dword{ipv6}~\cite{bib:ipv6TaskForce} networking may require re-evaluation of some of our computing tools.  The \dword{etf} and \dword{perfsonar} tools are already \dword{ipv6} compatible and can be deployed to test resources offering \dword{ipv6} connectivity in either pure or dual-stack mode.
@@ -40,20 +40,20 @@ An evaluation of \dword{cric} is being done, with information about sites obtain
 
 \subsection{Experiment Test Framework (ETF)}
 
-DUNE jobs run at a number of computer data centers across the grid. Checking the status of these jobs is one way of keeping an eye on whether a given site or resource is functioning normally. Given that issues can and usually do have multiple sources, it is essential to have an independent resource monitoring system to %anne keep an eye on what is happening to help 
+DUNE jobs run at a number of computer data centers across the grid. Checking the status of these jobs is one way of keeping an eye on whether a given site or resource is functioning normally. Given that issues can and usually do have multiple sources, it is essential to have an independent resource monitoring system to monitor and %anne keep an eye on what is happening to help 
 catch issues quickly. %The framework that is being successfully used for this is \dword{etf}. %, is already in the \dword{wlcg}. % WLCG is the ETF system.
 \dword{etf}, framework that is being successfully used for this, is the \dword{wlcg} % WLCG is the ETF system.
- Experiments Tests Framework\cite{bib:ETFDoc},\cite{bib:ETFStatus}. It  has been known by different names, but the underlying framework remains the same. The \dword{cern} plans to support this framework for as long as \dword{lhc} experiments require availability and reliability metrics from an independent source.
+ Experiments Tests Framework\cite{bib:ETFDoc, bib:ETFStatus}. It  has been known by different names, but the underlying framework remains the same. The \dword{cern} plans to support this framework for as long as \dword{lhc} experiments require availability and reliability metrics from an independent source.
  
-\dword{etf} is a system of tools that regularly test all the available resources for different experiments, i.e., \dwords{vo}. It has been developed and run on behalf of the \dword{wlcg} %anne experiments (VOs) 
- \dwords{vo} for well over a decade. % now. 
+\dword{etf} is a system of tools that regularly test all the available resources for different experiments, i.e., \dwords{vo}. It has been developed and run on behalf of the \dword{wlcg} Virtual Organizations ( %anne experiments (VOs) 
+ \dwords{vo}) for well over a decade. % now. 
 % This framework supports each \dword{vo} running tests customized to the application and systems required by the VOs to enable a true picture (availability, reliability) of the resources available for the VO. The ETF tests run hourly and feed into the MONIT framework which keeps history information and the most recent test logs for enabling debugging and metric measurement.
 This framework runs tests customized to the \dword{vo}'s application and systems to provide a true picture of the  available resources and their reliability. The \dword{etf} tests run hourly and feed into the \dword{monit} 
 framework, which keeps history information and the most recent test logs to enable debugging and metric measurement.
 
 The \dword{etf} framework currently involves 
 \begin{enumerate}
-\item high-level functional testing of about 90 hosts defined in the \dword{glideinwms} configuraton;
+\item high-level functional testing of about 90 hosts defined in the \dword{glideinwms} configuration;
 \item dashboard (checkmk) to show results; and
 \item plugins conforming to Nagios\footnote{Nagios\textregistered, \url{https://www.nagios.com/}} standard. 
 \end{enumerate}
@@ -96,8 +96,8 @@ It is installed on dedicated hardware (\dword{perfsonar} boxes) at %all the site
 each resource site. % that provides resources. 
 The data from these \dword{perfsonar} boxes %is 
 can be aggregated by a variety of tools and algorithms to %see 
-visualize the connectivity in different ways, as described in the following web pages: %anne  in various (kibana, grafana, checkmk, ...) ways, enumerated below.
-\fixme{ideally we'd make these each references and cite them. (anne)}
+visualize the connectivity in different ways, as described in  in various (kibana, grafana, checkmk, ...) ways, enumerated below.
+%\fixme{ideally we'd make these each references and cite them. (anne)}
 \begin{enumerate}
     \item \url{https://psetf.opensciencegrid.org/etf/check_mk/index.py}
     \item \url{https://toolkitinfo.opensciencegrid.org/}

@@ -10,8 +10,8 @@
 
 \newif\iffinal
 %% Switch between draft or final:
-\finalfalse  %HMS - here is where you turn off stuff
-%\finaltrue  % turn this on to remove all but line numbers
+%\finalfalse  %HMS - here is where you turn off stuff
+\finaltrue  % turn this on to remove all but line numbers
 
 % Required values and their setters
 %\newcommand\thedoctitle{DRAFT Technical Design Report}

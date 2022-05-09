@@ -1,19 +1,29 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Resource Needs Summary\hideme{coll-org.tex}}
+\chapter{Resource Needs Summary\hideme{coll-org.tex Anne's comments addressed}}
 \label{ch:resource}
 
 \section{Hardware Resources}
-Chapter~\ref{ch:est} describes the projected compute and storage needs through 2040, many of which are being met through collaboration contributions. Chapter~\ref{ch:netw} describes networking. 
+Chapter~\ref{ch:est} describes the projected compute and storage needs through 2040, these resources are a shared collaboration responsibility and are requested and monitored via the \dword{ccb}, described in section \ref{sec:ccb}. Chapter~\ref{ch:netw} describes networking. 
 
 
 
 \section{%Personnel Needs
-Human Resources} %anne: seems to be the more current term in use
+Software Development and Operations Resources} %anne: seems to be the more current term in use
 Building and managing a project of this complexity also requires a large number of %personnel
-dedicated people.  Figure~\ref{fig:resources} shows a timeline for estimated human resource needs.   Efforts are currently spread across a large number of highly expert people working part-time on DUNE computing, aside from the five dedicated \dword{doe}-funded postdocs.  We anticipate that these early-career people will move into leadership roles in computing in the future.  Although the current FTE %are 
+dedicated people. Section \ref{org:internal} showed the top level organizational structure while Figure~\ref{fig:resources} shows a timeline for estimated human resource needs.   Efforts are currently spread across a large number of highly expert people working part-time on DUNE computing, adding up to around eight FTE/year, in addition to  the five dedicated \dword{doe}-funded postdocs.  We anticipate that these early-career people will move into leadership roles in computing in the future. 
+
+Although the current FTE %are 
 number is close to %the number 
-what is needed, there is some mismatch in skill sets. In particular, we anticipate needing several person-years of effort on framework development, which is not available in the current mix of personnel.
+the identified need, there is some mismatch in skill sets. In particular, we anticipate needing several person-years of effort on framework development, after \dword{pd2} but well before \dword{fd} and \dword{nd} start, which is not yet available in the current mix of personnel.
+
+\begin{dunefigure}
+[Development personnel needs]
+{fig:resources}
+{Estimated computing infrastructure personnel needs through 2030.  The dark colors show development areas where experts are needed while the lighter colors show operations tasks where non-experts can contribute. The dashed line shows the estimated effort formally allocated to the project including additional effort from 2022-2024 from the three-year DOE grant and enhanced UK project funding.}
+{\includegraphics[width=0.9 \textwidth]{graphics/Resources/FTENeeds-2022-03.jpg}}
+\end{dunefigure}
+%\fixme{HMS - Need to restore the dashed line}
 
 %These roles do not include the large number of people at multiple sites who support generic activites such as storage and grid activities.  The roles listed are people working on \dword{dune} specific projects. 
 The listed roles are limited to people working on DUNE-specific projects and do not include the large number of people at multiple sites who support generic activities in areas such as storage and grid.  
@@ -22,7 +32,7 @@ The listed roles are limited to people working on DUNE-specific projects and do 
 \subsection{Technical Roles}
 \label{subsec:coll-org:Tech}
 
-Technical roles require substantial computing expertise.  They appear as the darker areas in Figure~\ref{fig:resources}, adding up to approximately: 
+Technical roles require substantial computing expertise. The numbers listed below are the estimated FTE/year, not FTE-years, as the needs will generally be ongoing.  They appear as the darker areas in Figure~\ref{fig:resources}, adding up to approximately: 
 
 \begin{description}
 
@@ -132,18 +142,18 @@ Coordinators oversee management of the computing project.
 \end{description}
 
 
-
-\begin{dunefigure}
-[Development personnel needs]
-{fig:resources}
-{Estimated computing infrastructure personnel needs through 2030.  The dark colors show development areas where experts are needed while the lighter colors show operations tasks where non-experts can contribute. The dashed line shows the estimated effort formally allocated to the project including additional effort from 2022-2024 from the three-year DOE grant and enhanced UK project funding.}
-{\includegraphics[width=0.9 \textwidth]{graphics/Resources/FTENeeds-2022-03.jpg}}
-\end{dunefigure}
+% moved up HMS
+% \begin{dunefigure}
+% [Development personnel needs]
+% {fig:resources}
+% {Estimated computing infrastructure personnel needs through 2030.  The dark colors show development areas where experts are needed while the lighter colors show operations tasks where non-experts can contribute. The dashed line shows the estimated effort formally allocated to the project including additional effort from 2022-2024 from the three-year DOE grant and enhanced UK project funding.}
+% {\includegraphics[width=0.9 \textwidth]{graphics/Resources/FTENeeds-2022-03.jpg}}
+% \end{dunefigure}
 %\fixme{HMS - Need to restore the dashed line}
 
-\chapter{Summary}
+%\chapter{Summary}
 
-This is a summary chapter that will be completed after the internal DUNE review. If you read this far, email michael.kirby@cern.ch for your free coffee at R1.
+%This is a summary chapter that will be completed after the internal DUNE review. If you read this far, email michael.kirby@cern.ch for your free coffee at R1.
 
 %Kirby done. \fixme{this short section/blurb is unnecessary (anne)}
 %This document has described most aspects of \dword{dune} offline computing. Our computing model relies on significant contributions across the collaboration.  
