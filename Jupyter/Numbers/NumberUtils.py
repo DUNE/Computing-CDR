@@ -48,12 +48,18 @@ def DrawDet(Name,Value,Years,Data,Types,Units,detcolors,detlines,points=None):
     ax.spines['bottom'].set_position('zero')
     toplot = Data[Value]
     for type in Types:
-      ax.plot(Years,toplot[type],color=detcolors[type],linestyle=detlines[type],label="model "+type)
+      if type not in detcolors:
+        print (type, "not in ",detcolors)
+      else:
+        ax.plot(Years,toplot[type],color=detcolors[type],linestyle=detlines[type],label="model "+type)
     if points != None:
         for y in points:
             for t in points[y]:
                 print ("t is ",t)
-                ax.plot(y,points[y][t],color=detcolors[t],marker="s",label="actual "+ t,markerfacecolor='none')
+                if t in detcolors:
+                  ax.plot(y,points[y][t],color=detcolors[t],marker="s",label="actual "+ t,markerfacecolor='none')
+                else:
+                  print (t ,"not in ", detcolors)
     ax.legend(frameon=False)
     ax.set_title(Value)
     ax.set_xlabel("Year")
@@ -86,7 +92,10 @@ def DrawType(Name,Value,Years,Data,Types,Units,typecolors,typelines,points=None,
     if contributions != None:
         for y in contributions:
             for t in contributions[y]:
-                ax.plot(y,contributions[y][t],color=typecolors[t],marker="s",label="actual  "+t)
+                if t in typecolors:
+                  ax.plot(y,contributions[y][t],color=typecolors[t],marker="s",label="actual  "+t)
+                else:
+                  print (" no such color",t, typecolors)
     ax.legend(frameon=False)
     ax.set_xlabel("Year")
     ax.set_ylabel(Value + ", " + Units[Value])
@@ -97,9 +106,9 @@ def DrawType(Name,Value,Years,Data,Types,Units,typecolors,typelines,points=None,
     
     plt.show()
 
-def DrawTex(figure,caption,label):
+def DrawTex(shortname,figure,caption,label):
     s = "\\begin{figure}[h]\n\\centering"
-    s += "\\includegraphics[height=0.4\\textwidth]{%s}"%figure
+    s += "\\includegraphics[height=0.4\\textwidth]{%s-%s}"%(shortname,figure)
     s += "\\label{%s}\n"%label
     s += "\\caption{%s}\n"%caption
     s += "\\end{figure}\n"
