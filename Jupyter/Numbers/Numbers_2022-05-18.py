@@ -142,7 +142,8 @@ from NumberUtils import DrawType
 # get parameters into config
 
 configfile = "Parameters_2022-05-21-2040.json"
-
+if len(sys.argv) > 1:
+  configfile = sys.argv[1]
 #configfile = "Parameters_2022-03-04-2040.json"
 #configfile = "Parameters_2022-01-16-2040-newformat.json"
 
@@ -254,7 +255,11 @@ print(s)
 table.write(s)
 tex.write(s.replace("_","\_").replace("\n","\\\\\n  "))
 #tex.write("\hline\n")
-tex.write("\\input intro.tex\n ")
+if "Intro" in config:
+  Intro = config["Intro"]
+else:
+  Intro = "intro.tex"
+tex.write("\\input "+Intro+"\n ")
 s = "Fiscal year starts: %s\nTape is accounted for at: %s\nDisk is accounted for on: %s\nCPU is accounted for at: %s\n"%(config["FiscalYearStart"],config["Tape Accounting"],config["Disk Accounting"],config["CPU Accounting"])
 table.write(s)
 print(s)

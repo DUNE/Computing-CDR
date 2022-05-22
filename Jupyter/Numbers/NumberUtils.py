@@ -44,7 +44,10 @@ def DrawDet(Name,Value,Years,Data,Types,Units,detcolors,detlines,points=None):
     fig=plt.figure()
     ax = fig.add_axes([0.2,0.2,0.7,0.7])
     ax.set_xlim(Years[0],maxyears)
-    ax.xaxis.set_major_locator(MultipleLocator(5))
+    if len(Years)<10:
+      ax.xaxis.set_major_locator(MultipleLocator(1))
+    else:
+      ax.xaxis.set_major_locator(MultipleLocator(5))
     ax.spines['bottom'].set_position('zero')
     toplot = Data[Value]
     for type in Types:
@@ -80,7 +83,10 @@ def DrawType(Name,Value,Years,Data,Types,Units,typecolors,typelines,points=None,
     ax = fig.add_axes([0.2,0.2,0.7,0.7])
     maxyears = Years[-1]
     ax.set_xlim(Years[0],maxyears)
-    ax.xaxis.set_major_locator(MultipleLocator(5))
+    if len(Years)<10:
+      ax.xaxis.set_major_locator(MultipleLocator(1))
+    else:
+      ax.xaxis.set_major_locator(MultipleLocator(5))
     ax.spines['bottom'].set_position('zero')
     for type in Types:
       ax.plot(Years,Data[type][Value],color=typecolors[type],linestyle=typelines[type],label="model "+type)
