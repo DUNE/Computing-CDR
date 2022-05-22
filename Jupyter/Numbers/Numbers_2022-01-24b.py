@@ -141,7 +141,8 @@ from NumberUtils import DrawType
 
 # get parameters into config
 
-configfile = "Parameters_2022-01-24-2026.json"
+configfile = "Parameters_2022-01-16-2026.json"
+shortname =configfile.replace(".json","")
 
 if os.path.exists(configfile):
   with open(configfile,'r') as f:
