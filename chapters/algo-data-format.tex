@@ -3,7 +3,9 @@
 \chapter{Data Formats}
 \label{ch:format}
 
-\section{Introduction \hideme{Schellman/Norman}} 
+
+
+\section{Introduction \hideme{ Anne's comment's addressed? }} 
 
 \dword{dune} data are stored and processed in a variety of forms and representations which facilitate and are tuned to the analysis that is performed on them.
 In general, %organization, 
@@ -72,7 +74,7 @@ efficient ``columnar'' analysis of data (i.e. analysis of one or more variables 
 %ROOT works in branches, it supports columnar very well, but when we write code that 
 % explicitly uses rows... it's not magic.  Hence RDataFrame.
 %compared to the same type of operation performed on more traditional ``row-wise'' or event record based organizations which often incur greater overheads in the retrieval of information from across records.  
-The format also has native support for parallel data access, and in particular for parallel reading and writing of compressed data.  This support extends to highly parallel filesystems, such as those found in leadership computing facilities, and has been tuned to scale extremely well using the MPI protocol in these environments.  
+The format also has native support for parallel data access, and in particular for parallel reading and writing of compressed data.  This support extends to highly parallel file systems, such as those found in leadership computing facilities, and has been tuned to scale extremely well using the MPI protocol in these environments.  
 For the large \dword{dune} event data, which can be highly compressed, this support for parallel I/O is advantageous, especially in the near realtime data acquisition environment.  As a result of these features, and the use of the format in other segments of \dword{dune}, we expect to support the \dword{hdf5} format as part of our computing model.
 
 In contrast to the \dword{hdf5} format,
@@ -82,6 +84,8 @@ is naturally
 %has also been highly 
 integrated with the \dword{root} data analysis framework which, while domain specific to \dword{hep}, is nonetheless one of the largest and most robust toolkits for \dword{hep} data analysis.  We also expect that support for parallel I/O within the \dword{root} I/O systems will be expanded greatly by the time of the \dword{dune} era, and that the parallel reading and writing of compressed data will be supported.  Similarly we expect that in the \dword{dune} era, new organization and representations of tree'd data structures (e.g. n-tuple or TTree like structures) will be available through the \dword{rntuple} system\cite{Blomer:2020usr, ROOTTeam:2020jal}. It is expected that \dword{rntuple} will provide columnar data access and performance similar to \dword{hdf5}. Indeed, the \dword{lhc} experiments are expected to migrate to the \dword{rntuple} format on the timescale of \dword{dune}.
 As a result of these features of the format, and the use of the format across \dword{hep}, we expect to support the \dword{root} format as part of our computing model. 
+
+One concern that arose during our format evaluation was the availability of a streaming option for \dword{hdf5}. Our large-scale offline processing is most efficient with a mix of both streaming and direct copies of input data.   Streaming also allows any \dword{dune} site to access centrally stored data transparently.  For this reason \dword{hdf5} streaming is very desirable.  We have successfully adapted the \dword{dune} \dword{larsoft} framework to read  local \dword{hdf5} input and very recently have demonstrated streaming via \dword{xrootd} in test mode.  
 
 In addition to the \dword{root} and \dword{hdf5} data formats, we expect that the \dword{dune} data representations will need to be flexible and adapt to changing technologies and evolutions in the data science and physics communities.  For this reason we expect to allow for the addition of other data representations and have placed requirements on the software frameworks used by \dword{dune}, as discussed in chapter~\ref{ch:fworks}, to support multiple data formats and I/O layers, as well as requirements on the data management and cataloging systems to support multiple data formats.
 

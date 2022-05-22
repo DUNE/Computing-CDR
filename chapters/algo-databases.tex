@@ -1,6 +1,6 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Databases \hideme{Buchanan and Laycock - draft}}
+\chapter{Databases \hideme{Buchanan and Laycock -Anne's comments accepted}}
 \label{ch:db}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -27,7 +27,7 @@ The \dword{protodune2} experiment will provide a further testbed for the databas
 %Conditions Metadata 
 is defined as the information necessary to understand the context of physics data, e.g., beam data or calibrations.
 %special run data
-Metadata can be indexed by %anne either 
+Metadata can be indexed by either %HMS OK anne either 
 time, run, or fraction of a run (subrun). 
 %Additionally, 
 An \dword{iov}
@@ -90,7 +90,7 @@ Data Quality & Good runs list & \Dword{dqm}  \\
 
 A \dword{dune} metadata task force was assembled in 2020 and a resulting report discussing the interfaces between online and offline systems can be found in reference~\cite{bib:docdb22983}.
 
-\section{\dword{cdb}  \hideme{Buchanan and Laycock - draft}}
+\section{Conditions Database}
 \label{sec:db:conditions} 
 
 The \dword{cdb} is a high-level database that provides an interface to offline users and processes. The motivation for such a centralized database is to provide an easy-to-use interface for users and to reduce the number of database connections required by offline processes. This will ensure that jobs will be ``lightweight'' and processing time will not be extended due to database accesses.  The granularity and content of the \dword{cdb} will be well-matched to offline needs by design. which will allow the heavy use of caching technologies to optimize resource usage. The design of the interface between the data processing software framework (see chapter \ref{ch:fworks}) and the \dword{cdb} will play an important role if all of the access patterns needed by \dword{dune} are to be well supported. Experience from other \dword{hep} experiments with distributed computing resources show that careful design of this interface is crucial to the success of the computing model \footnote{Overlays (see section \ref{sec:usecases_overlays} are an example of a workflow that can cause issues for \dword{cdb} access if this interface is not well designed.}.
@@ -290,8 +290,8 @@ beyond the scope of the database group to dictate how the consortia will handle 
 
 Most, if not all, of the \dword{dune} databases will operate in advance of the full \dword{dune} experiment coming online and these databases will need to be maintained and serviced once they are operational. 
 
-The second run of the \dword{protodune} experiment (\dword{protodune2}) will employ a suite of databases that will be the precursors to the full database system that will be in place for \dword{dune}. Each of these databases (run configuration, beam instrumentation, conditions, slow controls, and hardware) will require stable monitoring, maintenance, and service to address operational issues that will arise in the lead up to and during %anne the running of the \dword{protodune} II experiment. 
-\dword{protodune2} operations.
+The second run of the \dword{protodune} experiment (\dword{protodune2}) will employ a suite of databases that will be the precursors to the full database system that will be in place for \dword{dune}. Each of these databases (run configuration, beam instrumentation, conditions, slow controls, and hardware) will require stable monitoring, maintenance, and service to address operational issues that will arise in the lead up to and during the running of the \dword{protodune} II experiment. 
+%\dword{protodune2} operations.  Anne's comment accepted HMS
 
 % We need a reference for the web-based monitoring tools. 
 Monitoring will be achieved using automated web-based tools and responses to offline database issues will be made within an 8-hour period corresponding to a typical operation or production ``shift'', i.e. 5 days a week

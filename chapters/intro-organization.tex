@@ -15,7 +15,7 @@ This section describes the formal Computing Consortium that concentrates on deve
 {\includegraphics[width=0.9\textwidth]{graphics/IntroFigures/MTOrgChartFeb22.png}}
 \end{dunefigure}
 
-Figure \ref{fig:orgchart} shows the Computing Consortium organization as of February 2022.  The Consortium leadership consists of a Consortium Lead, responsible for overall coordination, two technical leads, one US-based and the other from the international collaboration and a Computing Architect.  There is an Algorithms Liaison responsible for coordinating with the Physics group and an independent Computing Contributions Board described in Section \ref{sec:ccb} that negotiates resource contributions from global collaborators. 
+Figure \ref{fig:orgchart} shows the Computing Consortium organization as of February 2022.  The Consortium leadership consists of a Consortium Lead, responsible for overall coordination, two technical leads, one US-based and the other from the international collaboration and a Computing Architect.  There is an Algorithms Liaison responsible for coordinating with the Physics group and an independent \dword{ccb} described in Section \ref{sec:ccb} that negotiates resource contributions from global collaborators. 
 
 The Computing Consortium is not formally part of the \dword{dune} construction project but has representation on the Executive Board.  The Computing Consortium is part of the interface document matrix with the construction consortia and interface agreements exist in the CERN EDMS \cite{dune-edms} system and are listed in Table \ref{tab:intro:interfacedocs}. The most important interfaces are 1) data-management and networking with the DAQ and calibration groups and 2) databases with the DAQ and hardware construction groups. 
 
@@ -23,7 +23,7 @@ The Computing Consortium is not formally part of the \dword{dune} construction p
 [Interface documents with hardware consortia]
 {l l}
 {tab:intro:interfacedocs}
-{Offline computing \dword{edms} interface documents with hardware consortia. }
+{ \dword{edms} interface documents between the Joint Offline Computing (JT COM) with various DUNE hardware and physics consortia. }
 Document title&EDMS ID\\
 JT COM and SP APA Consortium Interface Document	&2145145 v.4\\
 %		
@@ -44,7 +44,7 @@ JT COM to Facility Interface	&2145167	v.1 \\
 \end{dunetable}
 
 
-\section{Internal organization}
+\section{Internal organization}\label{org:internal}
 
 Within the Consortium there are specific development groups responsible for particular components of the computing infrastructure.  Many of these activities are described in greater detail in separate chapters. 
 
@@ -81,9 +81,9 @@ Most personnel working on \dword{dune} computing are supported by their institut
 
 In addition to the formal Consortium, CPU and storage resources are contributed by sites and countries through formal pledges facilitated by the \dword{ccb}. 
 
-The \dword{ccb} has been set up to formalize the contribution of DUNE partners to the computing and storage capacity required for computing production. In order to remain scale-able, the \dword{ccb} considers a nation as the natural unit of aggregation to request and then seek pledges for resources. The \dword{ccb} does, however, recognize that whilst within some countries centralized coordination is natural, this is not true for others. Nevertheless, requests will be published at a national granularity, with the assumption that Institutes within each nation can coordinate.
+The \dword{ccb} has been set up to formalize the contribution of DUNE partners to the computing and storage capacity required for computing production. In order to remain scaleable, the \dword{ccb} considers a nation as the natural unit of aggregation to request and then seek pledges for resources. The \dword{ccb} does, however, recognize that whilst within some countries centralized coordination is natural, this is not true for others. Nevertheless, requests will be published at a national granularity, with the assumption that Institutes within each nation can coordinate.
 
-In order to set a fair-share request for computing capacity, the \dword{ccb} will eventually use a proxy metric for the relative proportion of each nation in DUNE. This is likely to be PhD paper authors once in the exploitation phase. This is, however, not relevant during construction as the current listing of DUNE members in the data base is a very poor proxy for this. Therefore, during construction all nations with more than a minimum number of DUNE participants or providing Tier-1 or large Tier-2 capacity to LHC experiments, are asked to provide a "reasonable" share (see below). We refer to these as compute-active-nations.
+In order to set a fair-share request for computing capacity, the \dword{ccb} will eventually use a proxy metric for the relative proportion of each nation in DUNE. This is likely to be PhD paper authors once in the exploitation phase. This is, however, not relevant during construction as the current listing of DUNE members in the database is a very poor proxy for this. Therefore, during construction all nations with more than a minimum number of DUNE participants or providing Tier-1 or large Tier-2 capacity to LHC experiments, are asked to provide a "reasonable" share (see below). We refer to these as compute-active-nations.
 This is very flexible and is up to each nation to decide if it wishes to be classified as a compute-active-nation.
 
 At present the \dword{ccb} is composed of a Chair, one member per compute-active-nation, one member for each of FNAL, CERN and BNL, and the Computing and Software Consortium  Management ex officio.
@@ -98,7 +98,9 @@ The \dword{ccb} may also receive requests and information from the Computing Con
 Chapter \ref{ch:cm:intro} describes the impact of  collaboration contributions in more detail. 
 
 \section{Collaborations with other Organizations}
-\todo{Kirby will write 1 paragraph}
+%\todo{Kirby will write 1 paragraph}
+
+DUNE Computing is actively engaged with multiple other computing organizations around the globe with the intent of both drawing from and contributing to the community knowledge of computing solutions. As a member of the Open Science Grid Council, DUNE is helping define the direction of High Throughput Computing withing North America. DUNE Computing is also an observing member of the \dword{wlcg} and is utilizing multiple services and solutions developed within the scope of the \dword{wlcg}. DUNE intends to continue to maintain these partnerships as part of both sharing new computing developments and efficiently integrating new services into our computing model.
 
 
 % \hideme{I propose moving the subsections here into the appropriate later chapters and using this section to describe the global compute model}

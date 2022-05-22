@@ -10,8 +10,8 @@
 
 \newif\iffinal
 %% Switch between draft or final:
-\finalfalse  %HMS - here is where you turn off stuff
-%\finaltrue  % turn this on to remove all but line numbers
+%\finalfalse  %HMS - here is where you turn off stuff
+\finaltrue  % turn this on to remove all but line numbers
 
 % Required values and their setters
 %\newcommand\thedoctitle{DRAFT Technical Design Report}
@@ -23,7 +23,7 @@
 % "2" will show chapter/section/subsection
 % "3" will additionally include subsubsection
 % note, this also governs the depth of the PDF "Index"
-\setcounter{tocdepth}{3} 
+\setcounter{tocdepth}{1} % HMS raise to 2 for LBNC
 % set depth to which numbering is applied.  
 % "3" will number chapter/section/subsection/subsubsection
 % "4" will additionally number subsubsubsection 

@@ -38,24 +38,34 @@ The architecture can also provision resources on \dword{hpc} resources, such as 
 \end{figure*}
 
 Choosing a Glidein-based system at this stage of the experiment had several advantages. DUNE was able to quickly leverage the existing FIFE~\cite{herner2019advances} toolset, including \dword{poms} and \dword{jobsub}, negating the
-need for significant effort from the experiment in getting jobs running quickly (let alone in designing a completely new system). Since the system is in use by other neutrino experiments at \dword{fnal}, it is easy for new DUNE collaboration members coming from these experiments to 
+need for significant effort from the experiment in getting jobs running quickly. Since the system is in use by other neutrino experiments at \dword{fnal}, it is easy for new DUNE collaboration members coming from these experiments to 
 begin submitting jobs quickly as they are working with a familiar system. The DUNE production workflows were also able to leverage the existing infrastructure support teams in place to serve other collaborations and consortia such as 
 CMS and \dword{osg}. Finally, as \dword{glideinwms} is widely used in HEP, setting up new sites becomes extremely straightforward, especially if the site is already supporting another experiment that uses \dword{glideinwms}. Our integration times for new 
-DUNE sites are typically less than one week and successful production jobs immediately after opening up the site are now the rule rather than the exception. This ease of setup has been a key enabler of DUNE's international expansion. International sites routinely deliver more than 50\% of \dword{dune}'s \dword{cpu} resources as illustrated by  the total DUNE Production wall hours for August 2021  shown in Figure~\ref{fig-country}. International sites regularly run the full suite of DUNE jobs, including \dword{protodune} data reconstruction and user analysis. % DUNE is also considering the creation of a global GlideinWMS pool similar to the CMS Global Pool~\cite{cmsgp,cmsgp2}, which would enable multiple institutions to set up their own submission hosts if they desired to do so.
+DUNE sites are typically less than one week and successful production jobs immediately after opening up the site are now the rule rather than the exception. This ease of setup has been a key enabler of DUNE's international expansion. International sites routinely deliver more than 50\% of \dword{dune}'s \dword{cpu} resources as illustrated by  the total DUNE Production wall hours for August 2021  shown in Figure~\ref{fig:country}. International sites regularly run the full suite of DUNE jobs, including \dword{protodune} data reconstruction and user analysis. % DUNE is also considering the creation of a global GlideinWMS pool similar to the CMS Global Pool~\cite{cmsgp,cmsgp2}, which would enable multiple institutions to set up their own submission hosts if they desired to do so.
 
-\begin{figure*}[htb]
-\centering
-\includegraphics[width=.8\textwidth]{graphics/Workflow/August2021.png}
-\caption{Wall time-weighted distribution of successful DUNE Production jobs for August 2021. Inner ring: distribution by country. Outer ring: distribution by site. Sites outside the U.S. delivered 60\%\ of the total wall hours for the jobs shown here.}
-\label{fig-country}       % Give a unique label
-\end{figure*}
+% \begin{figure*}[htb]
+% \centering
+% \includegraphics[width=.8\textwidth]{graphics/Workflow/August2021.png}
+% \caption{Wall time-weighted distribution of successful DUNE Production jobs for August 2021. Inner ring: distribution by country. Outer ring: distribution by site. Sites outside the U.S. delivered 60\%\ of the total wall hours for the jobs shown here.}
+% \label{fig-country}       % Give a unique label
+% \end{figure*}
+\begin{dunefigure}
+[Wall time distribution of Production jobs FY22]
+{fig:country}
+{Distribution of wall time for DUNE production jobs, October 2021 to March 2022. Inner ring: country. Outer ring: site. Over 50\% of wall hours have come from outside the United States in Fiscal Year 2022.}
+{\includegraphics[height=3.5in,width=0.5\textwidth]{graphics/Workflow/walltimeplot.png}
+\includegraphics[height=3.5in,width=0.12\textwidth]{graphics/Workflow/walltimecountry.png}
+\includegraphics[height=3.5in,width=0.15\textwidth]{graphics/Workflow/walltimesite1.png}
+\includegraphics[height=3.5in,width=0.15\textwidth]{graphics/Workflow/walltimesite2.png}}
+\end{dunefigure}
+
 
 \subsection{%DUNE 
 Software, Input Data Distribution, and Output File Handling}
 \label{subsec:io}
 DUNE builds its software suite for  Scientific Linux. Since October 2019 DUNE jobs %will 
 have been automatically run inside a Singularity container at supported sites via a \dword{glideinwms} mechanism that requires no user knowledge of Singularity other than specifying the desired image. This %reducing the possibility of errors and guaranteeing a 
-reduces the possibility of errors and guarantees ahomogeneous environment across all sites.
+reduces the possibility of errors and guarantees a homogeneous environment across all sites.
 
 For its file catalog, DUNE uses \dword{fnal}'s \dword{sam} system~\cite{Illingworth:2014mba}, which handles input file selection and delivery for each job, and has been successfully used by numerous HEP experiments for well over a decade. As described in Chapter \ref{ch:datamgmt},  in future we expect \dword{rucio}~\cite{Barisits:2019fyl} will  take over most of these functions. Production jobs typically stream input data files via \dword{xrootd}, though in some cases they will copy a file to the worker node and directly read the local copy. The data source can be any storage system reachable from the worker
 node and to which DUNE has access. This is frequently \dword{fnal} \dword{dcache}, but \dword{eos} at the \dword{cern} and other storage elements in Europe are also used (jobs run at \dword{cern} would get their inputs from \dword{cern} \dword{eos}, for example). 
@@ -172,7 +182,7 @@ The Archiver agent has responsibility for removing information about requests, s
 \section{Workflow Allocator}
 \label{sec:flow:allocator}
 
-Once a generic job arrives at a worker node, it contacts the Workflow Allocator service which determines which unallocated file from one stage best matches that worker node. This matching includes the characteristics of the worker node job slot (memory, time limit etc), and whether the site is eligible to access a replica of that data file. The matching takes into account that some stage definitions allow access to remote input files anywhere on the grid, and others require files to be at a ``nearby'' site. Replicas are prioritised based on whether the worker node and replica are at the same site, ``nearby'', or elsewhere but still eligible. 
+Once a generic job arrives at a worker node, it contacts the Workflow Allocator service which determines which unallocated file from one stage best matches that worker node. This matching includes the characteristics of the worker node job slot (memory, time limit etc), and whether the site is eligible to access a replica of that data file. The matching takes into account that some stage definitions allow access to remote input files anywhere on the grid, and others require files to be at a ``nearby'' site. Replicas are prioritized based on whether the worker node and replica are at the same site, ``nearby'', or elsewhere but still eligible. 
 
 The bootstrap script to run and details of the request and stage are returned to the generic job. The script can use these details to request a series of files to process with the application it invokes. Each input file successfully processed by the application is reported to the Workflow Allocator so that the input file’s status can be updated from Allocated to Processed. Unprocessed input files are returned to the unallocated state for processing in another job. 
 
@@ -195,7 +205,7 @@ The Workflow Dashboard is also intended to be used for all large scale productio
 
 A prototype implementation has been produced, which includes the Workflow Database, Workflow Allocator service, command line tool, generic job script, and the monitoring aspects of the Workflow Dashboard. Tasks to be carried out asynchronously by the various agents are currently done with ad-hoc scripts, which are gradually being replaced by agents.
 
-Using this prototype, we have created requests based on existing productions, populated them with lists of files and replicas held by RUCIO, and then processed the files within generic jobs executing the bootstrap script included in the stage definitions, as sites, using matching perfomed by the Workflow Allocator.
+Using this prototype, we have created requests based on existing productions, populated them with lists of files and replicas held by RUCIO, and then processed the files within generic jobs executing the bootstrap script included in the stage definitions, as sites, using matching performed by the Workflow Allocator.
 
 \section{Implementation Plan \hideme{McNab/Timm/Herner needed}}
 \label{sec:flow:implementation}

@@ -1,6 +1,6 @@
 \documentclass[../main-v1.tex]{subfiles}
 \begin{document}
-\chapter{Data Placement \hideme{draft 3/10 moved from end to right after data placement } }
+\chapter{Data Placement \hideme{draft 3/10 moved from end to right after data management } }
 \label{ch:place}
 \todo{Stu Fuess requests text on tape}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,8 +40,8 @@ The \dword{nas} disks {\tt /dune/app} and {\tt /dune/data} are not accessible as
 
 \begin{itemize}
     \item {\tt /pnfs/dune/scratch}  is a scratch area used mainly for files returning from grid jobs.  Files are automatically removed to accommodate new files. Typical lifetimes are 1 month. 
-     \item {\tt /pnfs/dune/persistent} is a $\approx 800$ TB area for persistent storage of user files.  Files must be removed by their owner. Half of this volume is currently controlled with physics group based quotas, while the other half will soon be trainsitioned to quota-controlled usage.
-      \item {\tt /pnfs/dune/tape\_backed} is a $\sim 3.2$ PB disk cache sitting in front of the \dword{enstore} tape system. Files in this area are cataloged and tracked by the \dword{sam} system and, in future, by \dword{rucio}. Users may need to prestage samples to make them rapidly accessible. 
+     \item {\tt /pnfs/dune/persistent} is a $\approx 800$ TB area for persistent storage of user files.  Files must be removed by their owner. Half of this volume is currently controlled with physics group based quotas, while the other half will soon be transitioned to quota-controlled usage.
+      \item {\tt /pnfs/dune/tape\_backed} is a $\sim 3.2$ PB disk cache sitting in front of the \dword{enstore} tape system. Files in this area are cataloged and tracked by the \dword{sam} system and, in future, by \dword{rucio}. Files that have been flushed from the tape-backed cache need to be prestaged before they can be used.  At the moment, individual users can do this but we anticipate, once most samples have been moved to DUNE controlled disk, that users will need to request prestage to avoid drive contention. 
 \end{itemize}
 
 \item{\bf Tape -} DUNE shares the Public instance (separate from a CMS instance) of the tape storage infrastructure.  The physical system is currently (March 2022) composed of two IBM TS4500 tape libraries with LTO8 drives (72 total) with over 100 PB capacity per library.  In addition there is a legacy Oracle SL8500 library being replaced with a 150 PB capacity library (vendor selection and purchase pending).  Current DUNE utilization of the tape complex is 21 PB of the total (non-CMS) active utilization of 168 PB.
@@ -55,7 +55,7 @@ The tape storage software used is \dword{enstore}.  Fermilab is actively pursuin
 \begin{itemize}
     \item {\tt /cvmfs/ } mounts of DUNE-specific code,  shared executables such as \dword{larsoft}, and general utilities are distributed via \dword{cvmfs}. Version control is provided by the Fermilab \dword{ups} system. 
     
-    \item \dword{stashcache} is used to deliver larger payloads such as flux files and shower libraries to grid jobs.
+    \item \dword{stashcache} a.k.a. Xcache is used to deliver larger payloads such as flux files and shower libraries to grid jobs.
     
     \item A \dword{cvmfs}-based  {\tt dropbox} is also available to transfer user executables to grid jobs. 
     
@@ -72,8 +72,8 @@ DUNE collaborating institutions also contribute very substantial storage resourc
 \begin{dunefigure}
 [Storage Schematic]
 {fig:storage}
-{Storage systems for DUNE computing.  Thick lines denote mounts while thinner lines denote transfer methods such as ifdc and xroot streaming.}
-\includegraphics[width=0.8\textwidth]{graphics/DataManagement/StorageMap2.png}
+{Storage systems for \dword{fnal}-based DUNE computing.  Thick lines denote mounts while thinner lines denote transfer methods such as ifdc and xroot streaming. \dword{cern}-based computing shares access to the \dword{dcache} and \dword{cvmfs} systems but uses lxplus and eos for local interactive computing.}
+\includegraphics[width=0.8\textwidth]{graphics/DataManagement/StorageMap3.png}
 \end{dunefigure}
 
 \section{Storage systems at CERN}
@@ -100,9 +100,9 @@ system, including a full copy of the \dword{protodune} raw data in \dword{castor
 \begin{description}
     \item{\bf Raw data -}  Raw data from the TPC detectors comes in 4-8 GB files which are generally run through reconstruction algorithms that take of order 5-10 sec/MB to process. Raw data is generally accessed a few times for calibration and reconstruction as part of an organized production effort.  
     \item{\bf Reconstructed data -}  Reconstructed data from \dword{pdsp} is around three times smaller  than the raw data once the raw TPC waveforms are dropped. It is accessed many times by end users for algorithm development, calibration and production of physics analysis samples.   Observed data access rates range from 1 to 40 MB/sec depending on the amount of reprocessing done to data. 
-    \item{\bf Simulated data - } Simulated data are around twice as large as real data due to the large amount of simulation information that is kept.  Even after raw waveforms are dropped, records are still significantly larger. 
-    \item{\bf Analysis samples - } End-user analysis samples are significantly smaller.  For example the 1 GeV ProtoDUNE simulation sample consists of $\sim$80,000 4 GB files while the reduced analysis sample is around 8 GB total.  
-    \item{\bf Flux files - } Simulation and cross section extraction require access to large libraries of particle fluxes.  These are currently delivered via \dword{stashcache}. 
+    \item{\bf Simulated data - } Simulated data are around twice as large as real data due to the large amount of simulation information that is kept.  Even after raw waveforms are dropped, records are still significantly larger. The access pattern for simualted data is very similar to that of reconstructed data.
+    \item{\bf Analysis samples - } End-user analysis samples are significantly smaller.  For example the 1 GeV ProtoDUNE simulation sample consists of $\sim$80,000 4 GB files while the reduced analysis sample is around 8 GB total.  These samples are expected to be access multiple times a day for several months during the development and finalization of analyses.
+    \item{\bf Flux files - } Simulation and cross section extraction require access to large libraries of particle fluxes.  These are currently delivered via \dword{stashcache}. These files are accessed with regularity based upon the production schedule of simulated samples. This access pattern lends itself to caching for increased efficiency to distributed grid jobs.
     
 \end{description}
 
