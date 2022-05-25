@@ -238,9 +238,9 @@ for f in SplitsEarly:
 
 PerYear = config["PerYear"]
 print (TapeLifetimes)
-table = open(configfile.replace("json","txt"),'w')
+table = open(shortname+".txt",'w')
 
-tex = open(configfile.replace("json","tex"),'w')
+tex = open(shortname+".tex",'w')
 s = "\\documentclass[12pt]{article}\n\\usepackage{graphicx}\n"
 s += "\\usepackage{hyperref}\n"
 s += "\\parindent=0pt\n\\setlength{\\textwidth=7in}\n"
