@@ -1,23 +1,0 @@
-% This file is generated, any edits may be lost.
-
-% It defines macros which expand to corresponding
-% specification values for subsystem ~{{ code }}~
-
-~{ set mod,ss = code.lower().split('-') }~
-
-\begin{longtable}{p{0.25\textwidth}p{0.7\textwidth}}   
-\caption{Specification for ~{{ code }}~ \fixmehl{ref \texttt{tab:specs:~{{ code }}~}}} \\
-
-~{ for num in [1,2,3,4,5] -}~
-\input{generated/req-SP-FD-~{{ "%02d"|format(num) }}~.tex}
-~{ endfor -}~
-~{ for num in selected -}~
-~{- if num > 5 -}~
-\input{generated/req-SP-FD-~{{ "%02d"|format(num) }}~.tex}
-~{ endif -}~
-~{ endfor }~
-~{ for req in subsys -}~
-\input{generated/req-~{{ code }}~-~{{ "%02d"|format(req.ssid) }}~.tex}
-~{ endfor }~
-\label{tab:specs:~{{ code }}~}
-\end{longtable}
