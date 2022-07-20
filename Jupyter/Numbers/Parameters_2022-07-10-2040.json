@@ -23,7 +23,7 @@
   "MinYears":3,
   "Units":
   {"Events":"Million", "Raw":"PB", "Test":"PB", "Reco":"PB", "CPU":"MHr", "Sim Events":"M", "Sim":"PB", "Sim-CPU":"MHr", "All":"PB", "Years":"", "Total-CPU":"MHr", "Cumulative Tape":"PB", "Cumulative Disk":"PB",
-    "Tape":"PB", "Disk":"PB","Cores":"2020 Vintage Core-yr","SPEC06":"kSPEC06-yr","WALL":"MWallHr"
+    "Tape":"PB", "Disk":"PB","Cores":"2020 Vintage Core-yr","HS06":"kHS06-yr","WALL":"MWallHr"
   },
   "CombinedDetectors":["ProtoDUNE","FD","ND"],
   
