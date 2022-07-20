@@ -528,7 +528,7 @@ Data["Total-CPU"]["Total"] += Data["Total-CPU"]["Analysis"]
 # and make a special data type for cores
 
 Data["Cores"] = {}
-Data["SPEC06"] = {}
+Data["HS06"] = {}
 Data["WALL"] = {}
  
 MHrsPerYear = 1000000./365/24
@@ -540,7 +540,7 @@ for k in Data["Total-CPU"].keys():
     
   scaleTo2020 = config["Cores"]["2020Units"]
   Data["Cores"][k] = Data["Total-CPU"][k]*MHrsPerYear/efficiency/scaleTo2020
-  Data["SPEC06"][k] = Data["Total-CPU"][k]*MHrsPerYear/efficiency/scaleTo2020*config["kHEPSPEC06PerCPU"]
+  Data["HS06"][k] = Data["Total-CPU"][k]*MHrsPerYear/efficiency/scaleTo2020*config["kHEPSPEC06PerCPU"]
   Data["WALL"][k] = Data["Total-CPU"][k]/efficiency
   
 
@@ -644,11 +644,11 @@ cores = Data["Cores"]["Total"]
 
 if "MARS" in Data["Total-CPU"]:
   cpu = Data["Total-CPU"]["Total"]-Data["Total-CPU"]["MARS"]
-  hep = Data["SPEC06"]["Total"]-Data["SPEC06"]["MARS"]
+  hep = Data["HS06"]["Total"]-Data["HS06"]["MARS"]
   wall = Data["WALL"]["Total"]-Data["WALL"]["MARS"]
 else:
   cpu = Data["Total-CPU"]["Total"]
-  hep = Data["SPEC06"]["Total"]
+  hep = Data["HS06"]["Total"]
   wall = Data["WALL"]["Total"]
   Data["WALL"]["MARS"] = np.zeros(len(Years))
 disk = Data["Total"]["Cumulative Disk"]
@@ -684,7 +684,7 @@ for i in range(MinYears,len(Years)):
     s += (format)%(Years[i],round(cpu[i]), round(wall[i]),round(wall[i]*.25),round(Data["WALL"]["MARS"][i]),round(wall[i]*.75),round(cores[i]),tape[i],tapeF[i],tapeCE[i],tapeC[i],disk[i],diskF[i],diskCE[i],diskC[i])
 print (s)
 table.write(s)
-caption = "Assume present core is %4.0f SPEC06. CPU number is real CPU. Cores and SPEC06 are Walltime with CPU/Walltime = %5.2f. "%(config["kHEPSPEC06PerCPU"]*1000, config["Cores"]["Efficiency"])
+caption = "Assume present core is %4.0f HS06. CPU number is real CPU. Cores and HS06 are Walltime with CPU/Walltime = %5.2f. "%(config["kHEPSPEC06PerCPU"]*1000, config["Cores"]["Efficiency"])
 caption += " F means FNAL, C means CERN. Assume CERN storage is only  for ProtoDUNE."
 caption += " CPU should be divided 25\% FNAL, 75\% Collab, MARS is not included in the 25\% FNAL contribution."
 tex.write(s.replace("\n","\\\\\n").replace(",","&"))
@@ -709,7 +709,7 @@ tex.write(s.replace("\n","\\\\\n").replace(",","&"))
 tex.write("\\end{tabular}\n\\caption{%s}"%caption)
 tex.write("\\normalsize\n \\end{table}\n")
 
-asssume = "Assume present core is %6.3f kSPEC06 \nCPU # is real CPU, Cores and SPEC06 are Walltime with CPU/Walltime = %5.2f\n"%(config["kHEPSPEC06PerCPU"], config["Cores"]["Efficiency"])
+asssume = "Assume present core is %6.3f kHS06 \nCPU # is real CPU, Cores and HS06 are Walltime with CPU/Walltime = %5.2f\n"%(config["kHEPSPEC06PerCPU"], config["Cores"]["Efficiency"])
 
 print (s)
 table.write(s)
@@ -722,7 +722,7 @@ table.write(s)
 DrawDet(shortname,"Total-CPU",Years,Data,Types,Units,DetColors,DetLines,cpuactual)
 DrawDet(shortname,"Cores",Years,Data,Types,Units,DetColors,DetLines,coreactual)
 DrawDet(shortname,"WALL",Years,Data,Types,Units,DetColors,DetLines,wallactual)
-DrawDet(shortname,"SPEC06",Years,Data,Types,Units,DetColors,DetLines,wallactual)
+DrawDet(shortname,"HS06",Years,Data,Types,Units,DetColors,DetLines,wallactual)
 
 
 
